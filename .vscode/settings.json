@@ -1,2 +1,54 @@
 {
+  // Explorer
+  "explorer.confirmDragAndDrop": false,
+
+  // Editor - Format
+  "editor.formatOnPaste": true,
+  "editor.formatOnSave": true,
+
+  // Editor - Indentation
+  "editor.detectIndentation": true,
+  "editor.insertSpaces": true,
+  "editor.tabSize": 2,
+
+  // Git
+  "git.autofetch": true,
+  "git.confirmSync": false,
+
+  // Diff Editor
+  "diffEditor.ignoreTrimWhitespace": false,
+
+  // Terminal
+  "terminal.integrated.scrollback": 1000000000,
+  "terminal.integrated.rendererType": "auto",
+
+  // Extensions
+  "extensions.ignoreRecommendations": false,
+
+  // Files
+  "files.insertFinalNewline": true,
+  "files.trimFinalNewlines": true,
+  "files.trimTrailingWhitespace": true,
+
+  // VSIcons
+  "workbench.iconTheme": "vscode-icons",
+  "vsicons.projectDetection.autoReload": true,
+  "vsicons.dontShowNewVersionMessage": true,
+
+  // GitLens
+  "gitlens.views.repositories.files.layout": "auto",
+  "gitlens.views.fileHistory.enabled": true,
+  "gitlens.views.lineHistory.enabled": true,
+  "gitlens.advanced.messages": {
+    "suppressCommitHasNoPreviousCommitWarning": false,
+    "suppressCommitNotFoundWarning": false,
+    "suppressFileNotUnderSourceControlWarning": false,
+    "suppressGitVersionWarning": false,
+    "suppressLineUncommittedWarning": false,
+    "suppressNoRepositoryWarning": false,
+    "suppressResultsExplorerNotice": false,
+    "suppressShowKeyBindingsNotice": true,
+    "suppressUpdateNotice": true,
+    "suppressWelcomeNotice": true
+  }
 }

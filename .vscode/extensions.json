@@ -1,0 +1,13 @@
+{
+  "recommendations": [
+    // Theme
+    "vscode-icons-team.vscode-icons",
+    // Git
+    "eamodio.gitlens"
+  ],
+  "unwantedRecommendations": [
+    // Azure
+    "ms-vscode.azurecli",
+    "azuredevspaces.azds"
+  ]
+}
