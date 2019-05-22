@@ -1,0 +1,35 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/lib/core.sh"
+
+function main() {
+
+  echo -e "${OK_COLOR}==> Upgrading boilerplate..."
+
+  # "z" to keep remote at the bottom
+  # to prevent auto-push
+  REMOTE_NAME="zboilerplate"
+
+  if ! git remote -v | grep "${REMOTE_NAME}" >/dev/null; then
+    (
+      set -x
+      git remote add \
+        "${REMOTE_NAME}" \
+        "https://bitbucket.org/nabstudio/boilerplates.git"
+    )
+  fi
+
+  (
+    set -x
+    git fetch \
+      --tags \
+      --prune \
+      "${REMOTE_NAME}"
+  )
+
+}
+
+main "$@" ||
+  catch "$?" &&
+  finally
