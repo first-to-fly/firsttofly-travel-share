@@ -9,6 +9,6 @@ function main() {
 
 }
 
-prefix "$@"
-main "$@"
-suffix "$@"
+main "$@" ||
+  catch "$?" &&
+  finally
