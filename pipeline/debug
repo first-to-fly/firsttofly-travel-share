@@ -11,6 +11,8 @@ function main() {
 
   echo -e "${OK_COLOR}==> Debugging app..."
 
+  checkNodeVersion
+
   (
     set -x
     npm run dev

@@ -7,6 +7,8 @@ function main() {
 
   echo -e "${OK_COLOR}==> Running app..."
 
+  checkNodeVersion
+
   (
     set -x
     npm start
