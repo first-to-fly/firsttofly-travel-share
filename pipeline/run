@@ -5,6 +5,9 @@ export SHOULD_LOG_TIME=true
 # shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/lib/core.sh"
 
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/lib/node.sh"
+
 function main() {
 
   echo -e "${OK_COLOR}==> Running app..."
