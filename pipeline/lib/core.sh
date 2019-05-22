@@ -135,6 +135,8 @@ function logFormat() {
   done
 }
 
+echo
+exec 3>&1
 exec > >(logFormat)
 exec 2> >(logFormat --error)
 
@@ -194,6 +196,10 @@ function finally() {
 
   # Wait for all piped output to be printed
   sleep 0.2s
+
+  # Clear log output
+  exec 1>&3 3>&-
+  echo
 
   exit "${CATCHED_EXIT_CODE:-}"
 }
