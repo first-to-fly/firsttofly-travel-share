@@ -69,7 +69,10 @@
   "markdownlint.config": {
     // Allow punctuation marks (?!) in headers
     "MD026": false
-  }
+  },
 
   // Prettier
+  "prettier.eslintIntegration": true,
+  "prettier.tslintIntegration": true,
+  "prettier.stylelintIntegration": true
 }
