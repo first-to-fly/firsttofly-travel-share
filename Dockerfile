@@ -8,7 +8,7 @@ WORKDIR /app
 
 COPY ./pipeline ./pipeline
 
-RUN ./pipeline/install
+RUN ./pipeline/install --production
 
 # RUN find . -type f
 
