@@ -8,6 +8,5 @@
     "start": "node ./src"
   },
   "repository": {},
-  "license": "ISC",
-  "homepage": "https://bitbucket.org/nabstudio/boilerplates#readme"
+  "license": "Apache"
 }
