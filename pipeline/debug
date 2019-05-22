@@ -6,7 +6,7 @@ source "${BASH_SOURCE[0]%/*}/lib/core.sh"
 function main() {
 
   if [[ ! -d "./node_modules" ]]; then
-    "$(dirname "${BASH_SOURCE[0]}")/install"
+    "${BASH_SOURCE[0]%/*}/install"
   fi
 
   echo -e "${OK_COLOR}==> Debugging app..."
