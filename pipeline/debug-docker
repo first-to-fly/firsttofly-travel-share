@@ -1,8 +1,28 @@
 #!/usr/bin/env bash
 
-(
-  set -x
-  docker-compose \
-    --file "./docker-compose.debug.yml" \
-    up
-)
+# shellcheck disable=SC1090
+source "$(dirname "${BASH_SOURCE[0]}")/lib/core.sh"
+
+function main() {
+
+  DOCKER_COMPOSE_FILE="./docker-compose.debug.yml"
+
+  (
+    set -x
+    docker-compose \
+      --file "${DOCKER_COMPOSE_FILE}" \
+      build
+  )
+
+  (
+    set -x
+    docker-compose \
+      --file "${DOCKER_COMPOSE_FILE}" \
+      up
+  )
+
+}
+
+prefix "$@"
+main "$@"
+suffix "$@"

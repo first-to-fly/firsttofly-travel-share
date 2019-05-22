@@ -13,7 +13,5 @@ RUN ./pipeline/install
 # RUN find . -type f
 
 ENTRYPOINT [ \
-  "/bin/sh", \
-  "-c", \
   "./pipeline/run" \
   ]
