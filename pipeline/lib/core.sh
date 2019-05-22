@@ -101,6 +101,8 @@ WARN_COLOR="${YELLOW_COLOR}"
 # Output
 function logFormat() {
 
+  local LOCAL_SHOULD_LOG_TIME="${SHOULD_LOG_TIME:-}"
+
   SCRIPT_PATH=""
   for BASH_SOURCE_ITEM in "${BASH_SOURCE[@]}"; do
     if [[ "${BASH_SOURCE_ITEM}" != "${BASH_SOURCE[0]}" ]]; then
@@ -124,13 +126,18 @@ function logFormat() {
 
     fi
 
-    TIME="$(
-      date +"%Y-%m-%d %H:%M:%S %Z"
-    )"
+    PREFIX=""
 
-    PREFIX="${DARK_GRAY_COLOR}${TIME} ${SCRIPT_PATH}${NO_COLOR}"
+    if [[ -n "${LOCAL_SHOULD_LOG_TIME}" ]]; then
+      TIME="$(
+        date +"%Y-%m-%d %H:%M:%S %Z"
+      )"
+      PREFIX="${PREFIX}${DARK_GRAY_COLOR}${TIME} "
+    fi
 
-    echo -e "${PREFIX} ${LINE}${NO_COLOR}"
+    PREFIX="${PREFIX}${SCRIPT_PATH} "
+
+    echo -e "${PREFIX}${NO_COLOR}${LINE}${NO_COLOR}"
 
   done
 }
