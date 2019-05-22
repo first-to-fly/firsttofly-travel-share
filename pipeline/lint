@@ -5,12 +5,7 @@ source "$(dirname "${BASH_SOURCE[0]}")/lib/core.sh"
 
 function main() {
 
-  echo -e "${OK_COLOR}==> Installing dependencies..."
-
-  (
-    set -x
-    npm install "$@"
-  )
+  echo -e "${OK_COLOR}==> Linting code..."
 
 }
 

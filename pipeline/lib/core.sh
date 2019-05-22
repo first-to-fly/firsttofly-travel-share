@@ -135,6 +135,9 @@ function logFormat() {
   done
 }
 
+exec > >(logFormat)
+exec 2> >(logFormat --error)
+
 # Dependencies
 function dependency() {
 
@@ -146,7 +149,7 @@ function dependency() {
 
     case "${DEPENDENCY_NAME}" in
     envkey-source)
-      if command -v "brew"; then
+      if command -v "brew" >/dev/null; then
         (
           set -x
           brew install "envkey"
@@ -158,16 +161,8 @@ function dependency() {
         )
       fi
       ;;
-    nvm)
-      if command -v "brew"; then
-        (
-          set -x
-          brew install "nvm"
-        )
-      fi
-      ;;
     terraform)
-      if command -v "brew"; then
+      if command -v "brew" >/dev/null; then
         (
           set -x
           brew install "terraform"
@@ -188,15 +183,17 @@ function dependency() {
   fi
 }
 
-function prefix() {
+# Try Catch
+CATCHED_EXIT_CODE=0
 
-  # Log
-  exec > >(logFormat)
-  exec 2> >(logFormat --error)
+function catch() {
+  CATCHED_EXIT_CODE=${1}
 }
 
-function suffix() {
+function finally() {
 
   # Wait for all piped output to be printed
   sleep 0.2s
+
+  exit "${CATCHED_EXIT_CODE:-}"
 }
