@@ -1,0 +1,9 @@
+version: '2.1'
+
+services:
+
+  my-project:
+    image: my-project
+    build:
+      context: .
+      dockerfile: Dockerfile

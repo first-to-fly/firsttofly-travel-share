@@ -2,9 +2,42 @@
   "recommendations": [
     // Theme
     "vscode-icons-team.vscode-icons",
+
     // Git
-    "eamodio.gitlens"
+    "codezombiech.gitignore",
+    "sidneys1.gitconfig",
+    "donjayamanne.githistory",
+    "eamodio.gitlens",
+
+    // All Languages
+    "esbenp.prettier-vscode",
+    "coenraads.bracket-pair-colorizer",
+    "wmaurer.change-case",
+    "streetsidesoftware.code-spell-checker",
+
+    // .env
+    "mikestead.dotenv",
+
+    // Docker
+    "PeterJausovec.vscode-docker",
+
+    // Markdown
+    "DavidAnson.vscode-markdownlint",
+    "bierner.markdown-preview-github-styles",
+    "yzhang.markdown-all-in-one",
+
+    // Jenkins
+    "secanis.jenkinsfile-support",
+
+    // Shell
+    "timonwong.shellcheck",
+    "foxundermoon.shell-format",
+    "remisa.shellman",
+
+    // JSON
+    "eriklynd.json-tools"
   ],
+
   "unwantedRecommendations": [
     // Azure
     "ms-vscode.azurecli",
