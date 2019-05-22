@@ -34,6 +34,12 @@
     "foxundermoon.shell-format",
     "remisa.shellman",
 
+    // Node
+    "christian-kohler.npm-intellisense",
+    "eg2.vscode-npm-script",
+    "dbaeumer.vscode-eslint",
+    "joelday.docthis",
+
     // JSON
     "eriklynd.json-tools"
   ],
