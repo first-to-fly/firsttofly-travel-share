@@ -1,1 +1,14 @@
 #!/usr/bin/env bash
+
+# shellcheck disable=SC1090
+source "$(dirname "${BASH_SOURCE[0]}")/lib/core.sh"
+
+function main() {
+
+  echo -e "${OK_COLOR}==> Installing dependencies..."
+
+}
+
+prefix "$@"
+main "$@"
+suffix "$@"
