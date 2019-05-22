@@ -32,7 +32,10 @@
     // Shell
     "timonwong.shellcheck",
     "foxundermoon.shell-format",
-    "remisa.shellman"
+    "remisa.shellman",
+
+    // JSON
+    "eriklynd.json-tools"
   ],
 
   "unwantedRecommendations": [
