@@ -5,6 +5,7 @@
   "description": "Some description.",
   "main": "./src",
   "scripts": {
+    "dev": "node ./src",
     "start": "node ./src"
   },
   "repository": {},

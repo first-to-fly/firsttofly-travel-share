@@ -7,6 +7,11 @@ function main() {
 
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
+  (
+    set -x
+    npm install "$@"
+  )
+
 }
 
 prefix "$@"

@@ -7,6 +7,11 @@ function main() {
 
   echo -e "${OK_COLOR}==> Running app..."
 
+  (
+    set -x
+    npm start
+  )
+
 }
 
 prefix "$@"
