@@ -22,5 +22,13 @@ module.exports = {
 
   plugins: ['react'],
 
-  rules: {},
+  rules: {
+    'array-element-newline': ['error', 'always'],
+  },
+
+  settings: {
+    react: {
+      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
+    },
+  },
 };
