@@ -3,9 +3,19 @@
 # shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/lib/core.sh"
 
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/lib/node.sh"
+
 function main() {
 
   echo -e "${OK_COLOR}==> Linting code..."
+
+  checkNodeVersion
+
+  (
+    set -x
+    npm run lint
+  )
 
 }
 

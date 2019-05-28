@@ -56,6 +56,12 @@
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
+  "[less]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[scss]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
 
   // Docker
   "[dockerfile]": {
@@ -64,6 +70,9 @@
 
   // Javascript
   "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[javascriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
@@ -77,6 +86,9 @@
 
   // Typescript
   "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+  "[typescriptreact]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
@@ -100,7 +112,12 @@
         "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
       },
       {
-        "match": "\\.sass$",
+        "match": "\\.less$",
+        "isAsync": false,
+        "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
+      },
+      {
+        "match": "\\.sss$",
         "isAsync": false,
         "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
       }
