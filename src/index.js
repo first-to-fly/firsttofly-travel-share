@@ -3,6 +3,7 @@ import sampleCSS from './sample.scss';
 
 console.log(sample);
 console.log(sampleCSS);
+console.log(sampleCSS.myClass);
 
 const someArray = [
   'foo',

@@ -20,6 +20,7 @@ module.exports = {
 
   extends: [
     'airbnb',
+
     'plugin:@typescript-eslint/recommended',
 
     // 'plugin:prettier/recommended',
@@ -28,11 +29,13 @@ module.exports = {
     // - "plugins": ["prettier"],
     // - "rules": { "prettier/prettier": "error" }
     // WHY DON'T?
-    // It breaks whenever the plugin is added (extend and rules don't matter).
+    // It breaks whenever the plugin and rule are added (extend doesn't matter).
     // - prettier-vscode uses prettier-eslint but doesn't respect this config,
     //   while prettier-eslint CLI does.
     // - eslint-vscode with auto-fix works but always changes result every save.
     //   This happens with conflicting rules like 'array-bracket-newline'.
+
+    'plugin:css-modules/recommended',
   ],
 
   globals: {
@@ -54,14 +57,16 @@ module.exports = {
   },
 
   plugins: [
-    'react',
-
     '@typescript-eslint',
 
     'prettier',
     // WHY DON'T? See "extends".
     // Notes: Disabling this with the rule on causes
     //   "Definition for rule 'prettier/prettier' was not found."
+
+    'css-modules',
+
+    'react',
   ],
 
   rules: {
