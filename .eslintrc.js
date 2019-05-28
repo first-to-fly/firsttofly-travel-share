@@ -7,10 +7,10 @@
 //    + prettier-vscode extension (formatter)
 
 // This section ignores ESLint rules conflicting with Prettier auto-formatter.
-/*
-  eslint-disable
-    array-element-newline
-*/
+/* eslint-disable
+  array-bracket-newline,
+  array-element-newline,
+ */
 module.exports = {
   env: {
     browser: true,
@@ -58,6 +58,8 @@ module.exports = {
   ],
 
   rules: {
+    // Enforce separated lines for Git
+    'array-bracket-newline': ['error', 'always'],
     'array-element-newline': ['error', 'always'],
   },
 
