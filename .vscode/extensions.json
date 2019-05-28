@@ -40,6 +40,9 @@
     "dbaeumer.vscode-eslint",
     "joelday.docthis",
 
+    // Stylelint
+    "shinnn.stylelint",
+
     // JSON
     "eriklynd.json-tools"
   ],
