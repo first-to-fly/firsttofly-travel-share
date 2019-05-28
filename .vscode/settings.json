@@ -52,9 +52,19 @@
     "suppressWelcomeNotice": true
   },
 
+  // CSS
+  "[css]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
   // Docker
   "[dockerfile]": {
     "editor.defaultFormatter": "PeterJausovec.vscode-docker"
+  },
+
+  // Javascript
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 
   // JSON
@@ -62,6 +72,11 @@
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
   "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Typescript
+  "[typescript]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
   },
 

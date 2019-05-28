@@ -20,6 +20,7 @@ module.exports = {
 
   extends: [
     'airbnb',
+    'plugin:@typescript-eslint/recommended',
 
     // 'plugin:prettier/recommended',
     // DON'T: This totally ignores ESLint rules conflicting with Prettier,
@@ -33,6 +34,9 @@ module.exports = {
     // DON'T: This causes unexpected behavior, like:
     //  const someArray = ['foo',
     //  'bar']; <-- Notice there's no indentation
+
+    // 'prettier/@typescript-eslint',
+    // DON'T: This also ignores ESLint rules conflicting with Prettier.
   ],
 
   globals: {
@@ -40,15 +44,22 @@ module.exports = {
     SharedArrayBuffer: 'readonly',
   },
 
+  parser: '@typescript-eslint/parser',
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
     },
     ecmaVersion: 2018,
     sourceType: 'module',
+
+    // @typescript-eslint/parser
+    // project: './tsconfig.json',
+    // DON'T: This breaks ESLint rules
+    tsconfigRootDir: '.',
   },
 
   plugins: [
+    '@typescript-eslint',
     'react',
 
     // 'prettier',
@@ -61,9 +72,18 @@ module.exports = {
     // Enforce separated lines for Git
     'array-bracket-newline': ['error', 'always'],
     'array-element-newline': ['error', 'always'],
+
+    // @typescript-eslint
+    '@typescript-eslint/indent': ['error', 2], // Ignoring this will remove all indents
   },
 
   settings: {
+    'import/resolver': {
+      node: {
+        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+      },
+    },
+
     // eslint-plugin-react
     react: {
       version: 'detect',
