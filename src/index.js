@@ -10,6 +10,13 @@ const someArray = [
 ];
 console.log(someArray);
 
+if (someArray.length === 0) {
+  console.log(1);
+} else {
+  console.log(2);
+}
+
 let someString = '';
-someString = 5;
+someString = 'abc';
+someString = 5; // <-- ts error
 console.log(someString);

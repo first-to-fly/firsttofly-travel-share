@@ -23,20 +23,16 @@ module.exports = {
     'plugin:@typescript-eslint/recommended',
 
     // 'plugin:prettier/recommended',
-    // DON'T: This totally ignores ESLint rules conflicting with Prettier,
-    // including those intended (like 'array-element-newline').
-    // Note: This already includes these:
+    // Notes: This equals all these:
     // - "extends": ["prettier"]
     // - "plugins": ["prettier"],
     // - "rules": { "prettier/prettier": "error" }
-
-    // 'prettier',
-    // DON'T: This causes unexpected behavior, like:
-    //  const someArray = ['foo',
-    //  'bar']; <-- Notice there's no indentation
-
-    // 'prettier/@typescript-eslint',
-    // DON'T: This also ignores ESLint rules conflicting with Prettier.
+    // WHY DON'T?
+    // It breaks whenever the plugin is added (extend and rules don't matter).
+    // - prettier-vscode uses prettier-eslint but doesn't respect this config,
+    //   while prettier-eslint CLI does.
+    // - eslint-vscode with auto-fix works but always changes result every save.
+    //   This happens with conflicting rules like 'array-bracket-newline'.
   ],
 
   globals: {
@@ -53,19 +49,19 @@ module.exports = {
     sourceType: 'module',
 
     // @typescript-eslint/parser
-    // project: './tsconfig.json',
-    // DON'T: This breaks ESLint rules
+    project: './tsconfig.json',
     tsconfigRootDir: '.',
   },
 
   plugins: [
-    '@typescript-eslint',
     'react',
 
-    // 'prettier',
-    // DON'T:
-    // - prettier-vscode already show detailed errors
-    // - This plugin only show the error as "prettier" without any details
+    '@typescript-eslint',
+
+    'prettier',
+    // WHY DON'T? See "extends".
+    // Notes: Disabling this with the rule on causes
+    //   "Definition for rule 'prettier/prettier' was not found."
   ],
 
   rules: {
@@ -73,8 +69,15 @@ module.exports = {
     'array-bracket-newline': ['error', 'always'],
     'array-element-newline': ['error', 'always'],
 
+    // Allows "console" in code. These should be removed automatically in production.
+    'no-console': 'off',
+
     // @typescript-eslint
-    '@typescript-eslint/indent': ['error', 2], // Ignoring this will remove all indents
+    '@typescript-eslint/indent': ['error', 2], // 'off' will indent with 0
+
+    // prettier
+    // 'prettier/prettier': 'error',
+    // WHY DON'T? See "extends" and "plugins".
   },
 
   settings: {

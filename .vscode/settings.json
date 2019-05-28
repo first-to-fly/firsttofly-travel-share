@@ -70,10 +70,14 @@
 
   // Javascript
   "[javascript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false
   },
   "[javascriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false
   },
 
   // JSON
@@ -86,10 +90,14 @@
 
   // Typescript
   "[typescript]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false
   },
   "[typescriptreact]": {
-    "editor.defaultFormatter": "esbenp.prettier-vscode"
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false
   },
 
   // MarkdownLint
@@ -104,22 +112,22 @@
       {
         "match": "\\.css$",
         "isAsync": false,
-        "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
+        "cmd": "cd \"${workspaceRoot}\" && npx tcm --pattern \"${file}\" && npx prettier-eslint \"${file}.d.ts\" --write"
       },
       {
         "match": "\\.scss$",
         "isAsync": false,
-        "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
+        "cmd": "cd \"${workspaceRoot}\" && npx tcm --pattern \"${file}\" && npx prettier-eslint \"${file}.d.ts\" --write"
       },
       {
         "match": "\\.less$",
         "isAsync": false,
-        "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
+        "cmd": "cd \"${workspaceRoot}\" && npx tcm --pattern \"${file}\" && npx prettier-eslint \"${file}.d.ts\" --write"
       },
       {
         "match": "\\.sss$",
         "isAsync": false,
-        "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
+        "cmd": "cd \"${workspaceRoot}\" && npx tcm --pattern \"${file}\" && npx prettier-eslint \"${file}.d.ts\" --write"
       }
     ],
     "autoClearConsole": true,
@@ -127,7 +135,13 @@
   },
 
   // ESLint
-  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+  "eslint.autoFixOnSave": true,
+  "eslint.validate": [
+    { "language": "javascript", "autoFix": true },
+    { "language": "javascriptreact", "autoFix": true },
+    { "language": "typescript", "autoFix": true },
+    { "language": "typescriptreact", "autoFix": true }
+  ],
 
   // Prettier
   "prettier.eslintIntegration": true,
