@@ -109,6 +109,9 @@
     "shell": "bash"
   },
 
+  // ESLint
+  "eslint.validate": ["javascript", "javascriptreact", "typescript", "typescriptreact"],
+
   // Prettier
   "prettier.eslintIntegration": true,
   "prettier.tslintIntegration": false, // Use ESLint for TypeScript files

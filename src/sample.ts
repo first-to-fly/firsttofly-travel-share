@@ -10,4 +10,5 @@ let someString2 = '';
 someString2 = 5;
 console.log(someString2);
 
-export default someString2;
+const abc = 'def';
+export default abc;

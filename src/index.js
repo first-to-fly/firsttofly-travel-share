@@ -1,6 +1,8 @@
 import sample from './sample';
+import sampleCSS from './sample.scss';
 
 console.log(sample);
+console.log(sampleCSS);
 
 const someArray = [
   'foo',
