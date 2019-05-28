@@ -1,6 +1,9 @@
 console.log('Hello world');
 
-const someArray2 = ['foo', 'bar'];
+const someArray2 = [
+  'foo',
+  'bar',
+];
 console.log(someArray2);
 
 if (someArray2.length === 0) {
