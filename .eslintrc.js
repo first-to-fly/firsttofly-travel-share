@@ -18,7 +18,22 @@ module.exports = {
     node: true,
   },
 
-  extends: ['airbnb'],
+  extends: [
+    'airbnb',
+
+    // 'plugin:prettier/recommended',
+    // DON'T: This totally ignores ESLint rules conflicting with Prettier,
+    // including those intended (like 'array-element-newline').
+    // Note: This already includes these:
+    // - "extends": ["prettier"]
+    // - "plugins": ["prettier"],
+    // - "rules": { "prettier/prettier": "error" }
+
+    // 'prettier',
+    // DON'T: This causes unexpected behavior, like:
+    //  const someArray = ['foo',
+    //  'bar']; <-- Notice there's no indentation
+  ],
 
   globals: {
     Atomics: 'readonly',
@@ -33,7 +48,14 @@ module.exports = {
     sourceType: 'module',
   },
 
-  plugins: ['react'],
+  plugins: [
+    'react',
+
+    // 'prettier',
+    // DON'T:
+    // - prettier-vscode already show detailed errors
+    // - This plugin only show the error as "prettier" without any details
+  ],
 
   rules: {
     'array-element-newline': ['error', 'always'],
