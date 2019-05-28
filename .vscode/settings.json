@@ -73,6 +73,6 @@
 
   // Prettier
   "prettier.eslintIntegration": true,
-  "prettier.tslintIntegration": true,
+  "prettier.tslintIntegration": false, // Use ESLint for TypeScript files
   "prettier.stylelintIntegration": true
 }

@@ -1,3 +1,16 @@
+// Notes:
+// - This file is ignored by ESLint by default.
+//   When reverse-ignored in .eslintignore, it will be considered by:
+//    + prettier-eslint-cli (formatter)
+//    + vscode-eslint extension (linter)
+//   but still ignored by:
+//    + prettier-vscode extension (formatter)
+
+// This section ignores ESLint rules conflicting with Prettier auto-formatter.
+/*
+  eslint-disable
+    array-element-newline
+*/
 module.exports = {
   env: {
     browser: true,
@@ -27,8 +40,9 @@ module.exports = {
   },
 
   settings: {
+    // eslint-plugin-react
     react: {
-      version: 'detect', // Tells eslint-plugin-react to automatically detect the version of React to use
+      version: 'detect',
     },
   },
 };
