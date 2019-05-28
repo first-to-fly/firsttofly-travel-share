@@ -69,6 +69,13 @@
   "markdownlint.config": {
     // Allow punctuation marks (?!) in headers
     "MD026": false
+  },
+
+  // Run on Save
+  "emeraldwalk.runonsave": {
+    "commands": [],
+    "autoClearConsole": true,
+    "shell": "bash"
   }
 
   // Prettier
