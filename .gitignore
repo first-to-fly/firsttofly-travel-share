@@ -2,3 +2,8 @@
 .env.*
 
 node_modules
+
+# typed-css-modules
+*.css.d.ts
+*.scss.d.ts
+*.sass.d.ts

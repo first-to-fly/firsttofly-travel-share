@@ -86,6 +86,29 @@
     "MD026": false
   },
 
+  // Run on Save
+  "emeraldwalk.runonsave": {
+    "commands": [
+      {
+        "match": "\\.css$",
+        "isAsync": false,
+        "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
+      },
+      {
+        "match": "\\.scss$",
+        "isAsync": false,
+        "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
+      },
+      {
+        "match": "\\.sass$",
+        "isAsync": false,
+        "cmd": "\"${workspaceRoot}/node_modules/.bin/tcm\" --pattern \"${file}\""
+      }
+    ],
+    "autoClearConsole": true,
+    "shell": "bash"
+  },
+
   // Prettier
   "prettier.eslintIntegration": true,
   "prettier.tslintIntegration": false, // Use ESLint for TypeScript files
