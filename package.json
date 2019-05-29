@@ -12,8 +12,8 @@
     "lint:js": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:css": "stylelint \"./src/**/*.{css,less,scss,sss}\"",
     "lint": "npm run lint:js && npm run lint:css",
-    "test:unit": "mocha -r ts-node/register \"./test/**/*\"",
-    "test": "npm run test:unit",
+    "test:mocha": "mocha -r ts-node/register \"./test/**/*\"",
+    "test": "npm run test:mocha",
     "coverage": "nyc npm run test",
     "lint:staged": "lint-staged"
   },
