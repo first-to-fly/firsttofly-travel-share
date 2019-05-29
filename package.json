@@ -7,6 +7,7 @@
   "pre-commit": "lint:staged",
   "scripts": {
     "dev": "node ./src",
+    "build": "",
     "start": "node ./src",
     "lint:js": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:css": "stylelint \"./src/**/*.{css,less,scss,sss}\"",
