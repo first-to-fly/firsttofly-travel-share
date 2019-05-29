@@ -3,9 +3,3 @@
 
 node_modules
 build/
-
-# typed-css-modules
-*.css.d.ts
-*.less.d.ts
-*.scss.d.ts
-*.sss.d.ts

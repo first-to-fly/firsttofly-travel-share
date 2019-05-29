@@ -1,9 +1,9 @@
 import sample from './sampleTS';
-import sampleCSS from './sampleSCSS.scss';
+// import sampleCSS from './sampleSCSS.scss';
 
 console.log(sample);
-console.log(sampleCSS);
-console.log(sampleCSS.myClass);
+// console.log(sampleCSS);
+// console.log(sampleCSS.myClass);
 
 const someArray = [
   'foo',

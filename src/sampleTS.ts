@@ -17,12 +17,6 @@ someString2 = 'def';
 // someString2 = 5; // <-- ts error
 console.log(someString2);
 
-declare const styles: {
-  readonly myClass: string;
-};
-
-console.log(styles);
-
 const testHash: {
   abc?: string;
 } = {};
