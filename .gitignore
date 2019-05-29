@@ -5,5 +5,6 @@ node_modules
 
 # typed-css-modules
 *.css.d.ts
+*.less.d.ts
 *.scss.d.ts
-*.sass.d.ts
+*.sss.d.ts
