@@ -78,7 +78,7 @@ module.exports = {
     'no-console': 'off',
 
     // @typescript-eslint
-    '@typescript-eslint/indent': ['error', 2], // 'off' will indent with 0
+    '@typescript-eslint/indent': ['error', 2], // This overrides 'indent'. 'off' ignores indent.
 
     // prettier
     // 'prettier/prettier': 'error',
@@ -94,7 +94,7 @@ module.exports = {
 
     // eslint-plugin-react
     react: {
-      version: 'detect',
+      version: 'latest',
     },
   },
 };
