@@ -14,7 +14,7 @@ if (someArray2.length === 0) {
 
 let someString2 = '';
 someString2 = 'def';
-someString2 = 5; // <-- ts error
+// someString2 = 5; // <-- ts error
 console.log(someString2);
 
 declare const styles: {
