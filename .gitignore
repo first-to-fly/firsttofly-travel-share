@@ -2,6 +2,7 @@
 .env.*
 
 node_modules
+build
 
 # typed-css-modules
 *.css.d.ts

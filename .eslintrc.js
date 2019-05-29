@@ -73,12 +73,19 @@ module.exports = {
     // Enforce separated lines for Git
     'array-bracket-newline': ['error', 'always'],
     'array-element-newline': ['error', 'always'],
+    'object-curly-newline': 'error',
+    'object-property-newline': 'error',
 
     // Allows "console" in code. These should be removed automatically in production.
     'no-console': 'off',
 
+    // React
+    // Disable "JSX not allowed in files with extension '.tsx'" warnings
+    'react/jsx-filename-extension': 'off',
+
     // @typescript-eslint
     '@typescript-eslint/indent': ['error', 2], // This overrides 'indent'. 'off' ignores indent.
+
 
     // prettier
     // 'prettier/prettier': 'error',
