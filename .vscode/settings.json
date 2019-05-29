@@ -57,6 +57,11 @@
     "editor.defaultFormatter": "PeterJausovec.vscode-docker"
   },
 
+  // YAML
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
   // JSON
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
