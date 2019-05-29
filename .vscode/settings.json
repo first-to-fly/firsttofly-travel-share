@@ -115,6 +115,7 @@
         "cmd": "cd \"${workspaceRoot}\" && ./pipeline/generate-css-module \"${file}\""
       }
     ],
+    "autoClearConsole": false,
     "shell": "bash"
   },
 
