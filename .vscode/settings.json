@@ -74,7 +74,7 @@
   // Run on Save
   "emeraldwalk.runonsave": {
     "commands": [],
-    "autoClearConsole": true,
+    "autoClearConsole": false,
     "shell": "bash"
   }
 
