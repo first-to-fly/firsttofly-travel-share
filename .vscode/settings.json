@@ -110,32 +110,16 @@
   "emeraldwalk.runonsave": {
     "commands": [
       {
-        "match": "\\.css$",
+        "match": "\\.(css|less|scss|sss)$",
         "isAsync": false,
-        "cmd": "cd \"${workspaceRoot}\" && npx tcm --pattern \"${file}\" && npx prettier-eslint \"${file}.d.ts\" --write"
-      },
-      {
-        "match": "\\.scss$",
-        "isAsync": false,
-        "cmd": "cd \"${workspaceRoot}\" && npx tcm --pattern \"${file}\" && npx prettier-eslint \"${file}.d.ts\" --write"
-      },
-      {
-        "match": "\\.less$",
-        "isAsync": false,
-        "cmd": "cd \"${workspaceRoot}\" && npx tcm --pattern \"${file}\" && npx prettier-eslint \"${file}.d.ts\" --write"
-      },
-      {
-        "match": "\\.sss$",
-        "isAsync": false,
-        "cmd": "cd \"${workspaceRoot}\" && npx tcm --pattern \"${file}\" && npx prettier-eslint \"${file}.d.ts\" --write"
+        "cmd": "cd \"${workspaceRoot}\" && ./pipeline/generate-css-module \"${file}\""
       }
     ],
-    "autoClearConsole": true,
     "shell": "bash"
   },
 
   // ESLint
-  "eslint.autoFixOnSave": true,
+  "eslint.autoFixOnSave": false,
   "eslint.validate": [
     { "language": "javascript", "autoFix": true },
     { "language": "javascriptreact", "autoFix": true },
