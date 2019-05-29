@@ -3,9 +3,23 @@
 # shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/lib/core.sh"
 
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/lib/node.sh"
+
 function main() {
 
+  if [[ ! -d "./node_modules" ]]; then
+    "${BASH_SOURCE[0]%/*}/install"
+  fi
+
   echo -e "${OK_COLOR}==> Testing app..."
+
+  checkNodeVersion
+
+  (
+    set -x
+    npm "test"
+  )
 
 }
 

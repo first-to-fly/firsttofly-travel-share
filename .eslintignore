@@ -1,2 +1,2 @@
 # Config file is ignored by default
-!.eslintrc.js
+!*.eslintrc.js

@@ -86,7 +86,6 @@ module.exports = {
     // @typescript-eslint
     '@typescript-eslint/indent': ['error', 2], // This overrides 'indent'. 'off' ignores indent.
 
-
     // prettier
     // 'prettier/prettier': 'error',
     // WHY DON'T? See "extends" and "plugins".
