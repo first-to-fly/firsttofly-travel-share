@@ -9,7 +9,6 @@ function main() {
   FILE_NAME="${FILE##*/}"
   TEMP_FILE="./pipeline/${FILE_NAME}.css"
 
-  rm -rf "${FILE}.d.ts"
   cp -a "${FILE}" "${TEMP_FILE}"
 
   (
@@ -22,7 +21,7 @@ function main() {
       --write \
       "${TEMP_FILE}.d.ts"
 
-    ./node_modules/.bin/eslint_d \
+    ./node_modules/.bin/eslint \
       --fix \
       --no-ignore \
       "${TEMP_FILE}.d.ts"
