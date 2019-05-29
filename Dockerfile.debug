@@ -4,17 +4,10 @@ FROM node:${NODE_VERSION}-alpine
 
 RUN \
   apk add \
-  "bash"
+  "bash" \
+  "jq"
 
 WORKDIR /app
-
-COPY ./pipeline ./pipeline
-COPY ./package.json .
-COPY ./package-lock.json .
-
-RUN ./pipeline/install
-
-COPY ./src ./src
 
 # RUN find . -type f
 
