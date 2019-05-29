@@ -42,5 +42,7 @@
     "typed-css-modules": "^0.4.2",
     "typescript": "^3.4.5"
   },
-  "dependencies": {}
+  "dependencies": {
+    "react": "^16.8.6"
+  }
 }

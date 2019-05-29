@@ -101,7 +101,7 @@ module.exports = {
 
     // eslint-plugin-react
     react: {
-      version: 'latest',
+      version: 'detect',
     },
   },
 };
