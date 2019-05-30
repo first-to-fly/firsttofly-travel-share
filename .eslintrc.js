@@ -79,6 +79,9 @@ module.exports = {
     'object-curly-newline': 'error',
     'object-property-newline': 'error',
 
+    // Follow Prettier config
+    'max-len': ['error', 120],
+
     // Allows "console" in code. These should be removed automatically in production.
     'no-console': 'off',
 
