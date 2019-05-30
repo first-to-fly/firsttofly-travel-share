@@ -38,6 +38,7 @@
     // Node
     "christian-kohler.npm-intellisense",
     "eg2.vscode-npm-script",
+    "pflannery.vscode-versionlens",
     "dbaeumer.vscode-eslint",
     "joelday.docthis",
 
