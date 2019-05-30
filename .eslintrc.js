@@ -36,6 +36,9 @@ module.exports = {
     //   This happens with conflicting rules like 'array-bracket-newline'.
 
     'plugin:css-modules/recommended',
+
+    // 'prettier/@typescript-eslint',
+    // 'prettier/react',
   ],
 
   globals: {
@@ -43,7 +46,7 @@ module.exports = {
     SharedArrayBuffer: 'readonly',
   },
 
-  parser: '@typescript-eslint/parser',
+  parser: '@typescript-eslint/parser', // default: babel-eslint
   parserOptions: {
     ecmaFeatures: {
       jsx: true,
@@ -59,12 +62,12 @@ module.exports = {
   plugins: [
     '@typescript-eslint',
 
+    'css-modules',
+
     'prettier',
     // WHY DON'T? See "extends".
     // Notes: Disabling this with the rule on causes
     //   "Definition for rule 'prettier/prettier' was not found."
-
-    'css-modules',
 
     'react',
   ],
@@ -79,15 +82,19 @@ module.exports = {
     // Allows "console" in code. These should be removed automatically in production.
     'no-console': 'off',
 
+    // Allows "_foo" and "foo_" variable names
+    'no-underscore-dangle': 'off',
+
     // React
     // Disable "JSX not allowed in files with extension '.tsx'" warnings
     'react/jsx-filename-extension': 'off',
 
     // @typescript-eslint
     '@typescript-eslint/indent': ['error', 2], // This overrides 'indent'. 'off' ignores indent.
+    '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
 
     // prettier
-    // 'prettier/prettier': 'error',
+    // 'prettier/prettier': 'warn',
     // WHY DON'T? See "extends" and "plugins".
   },
 
