@@ -20,6 +20,10 @@ function main() {
 
   if [[ -f "${HEADER_FILE}" ]]; then
 
+    CONTENT="$(cat "${HEADER_FILE}")"
+    echo "/* eslint-disable import/prefer-default-export */" >"${HEADER_FILE}"
+    echo "${CONTENT}" >>"${HEADER_FILE}"
+
     (
       set -x
 
