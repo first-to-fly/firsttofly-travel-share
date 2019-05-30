@@ -11,6 +11,10 @@
   array-bracket-newline,
   array-element-newline,
  */
+
+/* eslint-disable-next-line @typescript-eslint/no-var-requires */
+const prettierConfig = require('./prettier.config');
+
 module.exports = {
   env: {
     browser: true,
@@ -80,7 +84,7 @@ module.exports = {
     'object-property-newline': 'error',
 
     // Follow Prettier config
-    'max-len': ['error', 120],
+    'max-len': ['error', prettierConfig.printWidth],
 
     // Allows "console" in code. These should be removed automatically in production.
     'no-console': 'off',
@@ -93,7 +97,7 @@ module.exports = {
     'react/jsx-filename-extension': 'off',
 
     // @typescript-eslint
-    '@typescript-eslint/indent': ['error', 2], // This overrides 'indent'. 'off' ignores indent.
+    '@typescript-eslint/indent': ['error', prettierConfig.tabWidth], // This overrides 'indent'. 'off' ignores indent.
     '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
 
     // prettier
