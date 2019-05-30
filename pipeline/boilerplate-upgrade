@@ -1,0 +1,27 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/lib/core.sh"
+
+function main() {
+
+  echo -e "${OK_COLOR}==> Upgrading boilerplate..."
+
+  echo "Which of these boilerplate branches do you want to upgrade to?"
+
+  git branch --remotes | grep "zboilerplate" | sed "s|.*zboilerplate/|- |"
+
+  read -r BRANCH
+
+  (
+    set -x
+    git merge \
+      --allow-unrelated-histories \
+      "zboilerplate/${BRANCH}"
+  )
+
+}
+
+main "$@" ||
+  catch "$?" &&
+  finally
