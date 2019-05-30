@@ -10,3 +10,9 @@ function checkNodeVersion() {
     exit 1
   fi
 }
+
+if [[ -d "./node_modules" ]]; then
+  PATH="${PWD}/node_modules/.bin:${PATH}"
+fi
+
+checkNodeVersion

@@ -8,13 +8,7 @@ source "${BASH_SOURCE[0]%/*}/lib/node.sh"
 
 function main() {
 
-  if [[ ! -d "./node_modules" ]]; then
-    "${BASH_SOURCE[0]%/*}/install"
-  fi
-
   echo -e "${OK_COLOR}==> Testing app..."
-
-  checkNodeVersion
 
   (
     set -x

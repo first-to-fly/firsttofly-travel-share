@@ -53,9 +53,9 @@
     "stylelint": "^10.0.1",
     "stylelint-config-recommended-scss": "^3.3.0",
     "stylelint-config-standard": "^18.3.0",
-    "stylelint-scss": "^3.6.1",
+    "stylelint-scss": "^3.7.0",
     "ts-node": "^8.2.0",
-    "typed-css-modules": "^0.4.2",
+    "typed-scss-modules": "^0.0.10",
     "typescript": "^3.4.5"
   }
 }

@@ -10,8 +10,6 @@ function main() {
 
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
-  checkNodeVersion
-
   (
     set -x
     npm install "$@"

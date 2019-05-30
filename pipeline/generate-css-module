@@ -6,30 +6,35 @@ source "${BASH_SOURCE[0]%/*}/lib/core.sh"
 function main() {
 
   FILE="${1}"
-  FILE_NAME="${FILE##*/}"
-  TEMP_FILE="./pipeline/${FILE_NAME}.css"
 
-  cp -a "${FILE}" "${TEMP_FILE}"
+  if [[ -d "./node_modules" ]]; then
+    PATH="${PWD}/node_modules/.bin:${PATH}"
+  fi
 
   (
     set -x
-
-    ./node_modules/.bin/tcm \
-      "./pipeline"
-
-    ./node_modules/.bin/prettier \
-      --write \
-      "${TEMP_FILE}.d.ts"
-
-    ./node_modules/.bin/eslint \
-      --fix \
-      --no-ignore \
-      "${TEMP_FILE}.d.ts"
+    tsm "${FILE}"
   )
 
-  cp -a "${TEMP_FILE}.d.ts" "${FILE}.d.ts"
+  HEADER_FILE="${FILE}.d.ts"
 
-  rm -rf "${TEMP_FILE}"*
+  if [[ -f "${HEADER_FILE}" ]]; then
+
+    (
+      set -x
+
+      prettier \
+        --write \
+        "${HEADER_FILE}"
+
+      eslint \
+        --fix \
+        --no-ignore \
+        "${HEADER_FILE}"
+    )
+
+  fi
+
 }
 
 main "$@" ||
