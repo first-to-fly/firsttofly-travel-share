@@ -6,16 +6,16 @@
 //   but still ignored by:
 //    + prettier-vscode extension (formatter)
 
-// This section ignores ESLint rules conflicting with Prettier auto-formatter.
-/* eslint-disable
-  array-bracket-newline,
-  array-element-newline,
- */
+// CommonJS
+/* eslint-disable @typescript-eslint/no-var-requires */
 
-/* eslint-disable-next-line @typescript-eslint/no-var-requires */
 const prettierConfig = require('./prettier.config');
 
+
+const minItems = 2;
+
 module.exports = {
+
   env: {
     browser: true,
     es6: true,
@@ -23,6 +23,9 @@ module.exports = {
   },
 
   extends: [
+
+    'eslint:recommended',
+
     'airbnb',
 
     'plugin:@typescript-eslint/recommended',
@@ -55,10 +58,10 @@ module.exports = {
     ecmaFeatures: {
       jsx: true,
     },
-    ecmaVersion: 2015,
+    ecmaVersion: 2018,
     sourceType: 'module',
 
-    // @typescript-eslint/parser
+    // ==> @typescript-eslint/parser
     project: './tsconfig.json',
     tsconfigRootDir: '.',
   },
@@ -77,42 +80,161 @@ module.exports = {
   ],
 
   rules: {
-    // Enforce separated lines for Git
-    'array-bracket-newline': ['error', 'always'],
-    'array-element-newline': ['error', 'always'],
-    'object-curly-newline': 'error',
-    'object-property-newline': 'error',
 
-    // Follow Prettier config
-    'max-len': ['error', prettierConfig.printWidth],
+    // ==> ESLint & AirBnB
+
+    // Enforce separated lines for Git
+
+    'array-bracket-newline': [
+      'error',
+      {
+        multiline: true, // Force newline if there is line-break in-between
+        minItems: minItems, // Force newline if >= items
+      },
+    ],
+
+    'array-element-newline': [
+      'error',
+      {
+        multiline: true, // Force newline if there is line-break in-between
+        minItems: minItems, // Force newline if >= items
+      },
+    ],
+
+    'object-curly-newline': [
+      'error',
+      {
+        ObjectExpression: {
+          minProperties: minItems,
+          multiline: true,
+          consistent: true,
+        },
+        ObjectPattern: {
+          minProperties: minItems,
+          multiline: true,
+          consistent: true,
+        },
+        ImportDeclaration: {
+          minProperties: minItems,
+          multiline: true,
+          consistent: true,
+        },
+        ExportDeclaration: {
+          minProperties: minItems,
+          multiline: true,
+          consistent: true,
+        },
+      },
+    ],
+
+    'object-property-newline': [
+      'error',
+      {
+        allowAllPropertiesOnSameLine: false,
+        allowMultiplePropertiesPerLine: false,
+      },
+    ],
+
+    // Prevent bugs when changing variable names also changes return object structure,
+    // while the caller doesn't know about it.
+    'object-shorthand': [
+      'error',
+      'never',
+    ],
+
+    // Enforce:
+    // - foo = 1 +
+    //         2;
+    // - foo = isSomething() ?
+    //         trueValue :
+    //         falseValue;
+    // - if (someCondition ||
+    //       otherCondition) {
+    //   }
+    'operator-linebreak': [
+      'error',
+      'after',
+    ],
+
+    // Max-len follows Prettier config
+    'max-len': [
+      'error',
+      {
+        ignoreUrls: true,
+        ignoreComments: false,
+        ignoreRegExpLiterals: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+        code: prettierConfig.printWidth,
+        tabWidth: prettierConfig.tabWidth,
+        ignoreTrailingComments: false,
+      },
+    ],
 
     // Allows "console" in code. These should be removed automatically in production.
     'no-console': 'off',
 
-    // Allows "_foo" and "foo_" variable names
-    'no-underscore-dangle': 'off',
+    // ==> eslint-plugin-import
 
-    // React
+    // Always add 2 lines after every import block
+    'import/newline-after-import': [
+      'error',
+      {
+        count: 2,
+      },
+    ],
+
+    // ==> eslint-plugin-react
+
     // Disable "JSX not allowed in files with extension '.tsx'" warnings
-    'react/jsx-filename-extension': 'off',
+    'react/jsx-filename-extension': [
+      'error',
+      {
+        extensions: [
+          '.js',
+          '.jsx',
+          '.ts',
+          '.tsx',
+        ],
+      },
+    ],
 
-    // @typescript-eslint
-    '@typescript-eslint/indent': ['error', prettierConfig.tabWidth], // This overrides 'indent'. 'off' ignores indent.
-    '@typescript-eslint/explicit-member-accessibility': ['error', { accessibility: 'no-public' }],
+    // ==> @typescript-eslint
 
-    // prettier
+    // Overrides 'indent'
+    '@typescript-eslint/indent': [
+      'error',
+      prettierConfig.tabWidth,
+    ],
+
+    // Only explicit non-publics (private, ...)
+    '@typescript-eslint/explicit-member-accessibility': [
+      'error',
+      {
+        accessibility: 'no-public',
+      },
+    ],
+
+    // ==> prettier
     // 'prettier/prettier': 'warn',
     // WHY DON'T? See "extends" and "plugins".
   },
 
   settings: {
+
+    // ==> eslint-plugin-import
     'import/resolver': {
       node: {
-        extensions: ['.js', '.jsx', '.ts', '.tsx'],
+        extensions: [
+          '.js',
+          '.jsx',
+          '.ts',
+          '.tsx',
+        ],
       },
     },
 
-    // eslint-plugin-react
+    // ==> eslint-plugin-react
     react: {
       version: 'detect',
     },
