@@ -7,9 +7,21 @@ function main() {
 
   echo -e "${OK_COLOR}==> Upgrading boilerplate..."
 
+  # "z" to keep remote at the bottom
+  # to prevent auto-push
+  REMOTE_NAME="zboilerplate"
+
+  (
+    set -x
+    git fetch \
+      --tags \
+      --prune \
+      "${REMOTE_NAME}"
+  )
+
   echo "Which of these boilerplate branches do you want to upgrade to?"
 
-  git branch --remotes | grep "zboilerplate" | sed "s|.*zboilerplate/|- |"
+  git branch --remotes | grep "${REMOTE_NAME}" | sed "s|.*${REMOTE_NAME}/|- |"
 
   read -r BRANCH
 
@@ -17,7 +29,7 @@ function main() {
     set -x
     git merge \
       --allow-unrelated-histories \
-      "zboilerplate/${BRANCH}"
+      "${REMOTE_NAME}/${BRANCH}"
   )
 
 }
