@@ -21,6 +21,7 @@
   "repository": {},
   "license": "Apache",
   "dependencies": {
+    "deepcopy": "^2.0.0",
     "react": "^16.8.6"
   },
   "devDependencies": {
