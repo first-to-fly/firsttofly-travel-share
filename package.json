@@ -61,6 +61,6 @@
     "stylelint-scss": "^3.7.0",
     "ts-node": "^8.2.0",
     "typed-scss-modules": "^0.0.10",
-    "typescript": "^3.4.5"
+    "typescript": "^3.5.1"
   }
 }
