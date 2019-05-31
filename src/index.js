@@ -1,5 +1,6 @@
-import sampleJS from './sampleJS';
-import sampleTS from './sampleTS';
+import sampleJS from "./sampleJS";
+import sampleTS from "./sampleTS";
+
 
 export {
   sampleJS,

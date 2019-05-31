@@ -1,4 +1,4 @@
-import sample from './sampleTS';
+import sample from "./sampleTS";
 // import sampleCSS from './sampleSCSS.scss';
 
 console.log(sample);
@@ -6,8 +6,8 @@ console.log(sample);
 // console.log(sampleCSS.myClass);
 
 const someArray = [
-  'foo',
-  'bar',
+  "foo",
+  "bar",
 ];
 console.log(someArray);
 
@@ -17,8 +17,8 @@ if (someArray.length === 0) {
   console.log(2);
 }
 
-let someString = '';
-someString = 'abc';
+let someString = "";
+someString = "abc";
 // someString = 5; // <-- ts error
 console.log(someString);
 

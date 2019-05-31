@@ -9,7 +9,7 @@
 // CommonJS
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const prettierConfig = require('./prettier.config');
+const prettierConfig = require("./prettier.config");
 
 
 const minItems = 2;
@@ -24,11 +24,11 @@ module.exports = {
 
   extends: [
 
-    'eslint:recommended',
+    "eslint:recommended",
 
-    'airbnb',
+    "airbnb",
 
-    'plugin:@typescript-eslint/recommended',
+    "plugin:@typescript-eslint/recommended",
 
     // 'plugin:prettier/recommended',
     // Notes: This equals all these:
@@ -42,41 +42,39 @@ module.exports = {
     // - eslint-vscode with auto-fix works but always changes result every save.
     //   This happens with conflicting rules like 'array-bracket-newline'.
 
-    'plugin:css-modules/recommended',
+    "plugin:css-modules/recommended",
 
     // 'prettier/@typescript-eslint',
     // 'prettier/react',
   ],
 
   globals: {
-    Atomics: 'readonly',
-    SharedArrayBuffer: 'readonly',
+    Atomics: "readonly",
+    SharedArrayBuffer: "readonly",
   },
 
-  parser: '@typescript-eslint/parser', // default: babel-eslint
+  parser: "@typescript-eslint/parser", // default: babel-eslint
   parserOptions: {
-    ecmaFeatures: {
-      jsx: true,
-    },
+    ecmaFeatures: { jsx: true },
     ecmaVersion: 2018,
-    sourceType: 'module',
+    sourceType: "module",
 
     // ==> @typescript-eslint/parser
-    project: './tsconfig.json',
-    tsconfigRootDir: '.',
+    project: "./tsconfig.json",
+    tsconfigRootDir: ".",
   },
 
   plugins: [
-    '@typescript-eslint',
+    "@typescript-eslint",
 
-    'css-modules',
+    "css-modules",
 
-    'prettier',
+    "prettier",
     // WHY DON'T? See "extends".
     // Notes: Disabling this with the rule on causes
     //   "Definition for rule 'prettier/prettier' was not found."
 
-    'react',
+    "react",
   ],
 
   rules: {
@@ -85,80 +83,25 @@ module.exports = {
 
     // Enforce separated lines for Git
 
-    'array-bracket-newline': [
-      'error',
+    "array-bracket-newline": [
+      "error",
       {
         multiline: true, // Force newline if there is line-break in-between
         minItems: minItems, // Force newline if >= items
       },
     ],
 
-    'array-element-newline': [
-      'error',
+    "array-element-newline": [
+      "error",
       {
         multiline: true, // Force newline if there is line-break in-between
         minItems: minItems, // Force newline if >= items
       },
-    ],
-
-    'object-curly-newline': [
-      'error',
-      {
-        ObjectExpression: {
-          minProperties: minItems,
-          multiline: true,
-          consistent: true,
-        },
-        ObjectPattern: {
-          minProperties: minItems,
-          multiline: true,
-          consistent: true,
-        },
-        ImportDeclaration: {
-          minProperties: minItems,
-          multiline: true,
-          consistent: true,
-        },
-        ExportDeclaration: {
-          minProperties: minItems,
-          multiline: true,
-          consistent: true,
-        },
-      },
-    ],
-
-    'object-property-newline': [
-      'error',
-      {
-        allowAllPropertiesOnSameLine: false,
-        allowMultiplePropertiesPerLine: false,
-      },
-    ],
-
-    // Prevent bugs when changing variable names also changes return object structure,
-    // while the caller doesn't know about it.
-    'object-shorthand': [
-      'error',
-      'never',
-    ],
-
-    // Enforce:
-    // - foo = 1 +
-    //         2;
-    // - foo = isSomething() ?
-    //         trueValue :
-    //         falseValue;
-    // - if (someCondition ||
-    //       otherCondition) {
-    //   }
-    'operator-linebreak': [
-      'error',
-      'after',
     ],
 
     // Max-len follows Prettier config
-    'max-len': [
-      'error',
+    "max-len": [
+      "error",
       {
         ignoreUrls: true,
         ignoreComments: false,
@@ -172,47 +115,150 @@ module.exports = {
     ],
 
     // Allows "console" in code. These should be removed automatically in production.
-    'no-console': 'off',
+    "no-console": "off",
+
+    // Allows "_foo" - classes' private vars
+    "no-underscore-dangle": "off",
+
+    // - Our code uses double quotes a lot -> less diff
+    // - Convert from JSON -> JS with less diff
+    quotes: [
+      "error",
+      "double",
+    ],
+
+    "object-curly-newline": [
+      "error",
+      {
+        ObjectExpression: {
+          minProperties: minItems,
+          multiline: true,
+        },
+        ObjectPattern: {
+          minProperties: minItems,
+          multiline: true,
+        },
+        ImportDeclaration: {
+          minProperties: minItems,
+          multiline: true,
+        },
+        ExportDeclaration: {
+          minProperties: minItems,
+          multiline: true,
+        },
+      },
+    ],
+
+    "object-property-newline": [
+      "error",
+      {
+        allowAllPropertiesOnSameLine: false,
+        allowMultiplePropertiesPerLine: false,
+      },
+    ],
+
+    // Prevent bugs when changing variable names also changes return object structure,
+    // while the caller doesn't know about it.
+    "object-shorthand": [
+      "error",
+      "never",
+    ],
+
+    // Enforce:
+    // - foo = 1 +
+    //         2;
+    // - foo = isSomething() ?
+    //         trueValue :
+    //         falseValue;
+    // - if (someCondition ||
+    //       otherCondition) {
+    //   }
+    "operator-linebreak": [
+      "error",
+      "after",
+    ],
+
+    "padding-line-between-statements": [
+      "error",
+      {
+        blankLine: "always",
+        prev: "class",
+        next: "*",
+      },
+    ],
 
     // ==> eslint-plugin-import
 
     // Always add 2 lines after every import block
-    'import/newline-after-import': [
-      'error',
-      {
-        count: 2,
-      },
+    "import/newline-after-import": [
+      "error",
+      { count: 2 },
     ],
 
     // ==> eslint-plugin-react
 
     // Disable "JSX not allowed in files with extension '.tsx'" warnings
-    'react/jsx-filename-extension': [
-      'error',
+    "react/jsx-filename-extension": [
+      "error",
       {
         extensions: [
-          '.js',
-          '.jsx',
-          '.ts',
-          '.tsx',
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx",
         ],
       },
     ],
 
+    // This is temporarily disabled as this will break our current components
+    "react/jsx-one-expression-per-line": "off",
+
     // ==> @typescript-eslint
 
-    // Overrides 'indent'
-    '@typescript-eslint/indent': [
-      'error',
+    // Overrides 'indent', follow AirBnB's
+    "@typescript-eslint/indent": [
+      "error",
       prettierConfig.tabWidth,
+      {
+        SwitchCase: 1,
+        VariableDeclarator: 1,
+        outerIIFEBody: 1,
+        FunctionDeclaration: {
+          parameters: 1,
+          body: 1,
+        },
+        FunctionExpression: {
+          parameters: 1,
+          body: 1,
+        },
+        CallExpression: { arguments: 1 },
+        ArrayExpression: 1,
+        ObjectExpression: 1,
+        ImportDeclaration: 1,
+        flatTernaryExpressions: false,
+        ignoredNodes: [
+          "JSXElement",
+          "JSXElement > *",
+          "JSXAttribute",
+          "JSXIdentifier",
+          "JSXNamespacedName",
+          "JSXMemberExpression",
+          "JSXSpreadAttribute",
+          "JSXExpressionContainer",
+          "JSXOpeningElement",
+          "JSXClosingElement",
+          "JSXText",
+          "JSXEmptyExpression",
+          "JSXSpreadChild",
+        ],
+        ignoreComments: false,
+      },
     ],
 
     // Only explicit non-publics (private, ...)
-    '@typescript-eslint/explicit-member-accessibility': [
-      'error',
-      {
-        accessibility: 'no-public',
-      },
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      { accessibility: "no-public" },
     ],
 
     // ==> prettier
@@ -223,20 +269,18 @@ module.exports = {
   settings: {
 
     // ==> eslint-plugin-import
-    'import/resolver': {
+    "import/resolver": {
       node: {
         extensions: [
-          '.js',
-          '.jsx',
-          '.ts',
-          '.tsx',
+          ".js",
+          ".jsx",
+          ".ts",
+          ".tsx",
         ],
       },
     },
 
     // ==> eslint-plugin-react
-    react: {
-      version: 'detect',
-    },
+    react: { version: "detect" },
   },
 };

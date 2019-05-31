@@ -1,6 +1,7 @@
 // ESLint config file always in CommonJS
 /* eslint-disable @typescript-eslint/no-var-requires */
-const config = require('../.eslintrc');
+const config = require("../.eslintrc");
+
 
 module.exports = {
   ...config,
@@ -12,15 +13,13 @@ module.exports = {
 
   plugins: [
     ...config.plugins,
-    'mocha',
+    "mocha",
   ],
 
   extends: [
     ...config.extends,
-    'plugin:mocha/recommended',
+    "plugin:mocha/recommended",
   ],
 
-  rules: {
-    ...config.rules,
-  },
+  rules: { ...config.rules },
 };
