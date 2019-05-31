@@ -6,6 +6,7 @@
   "main": "./src",
   "pre-commit": "lint:staged",
   "scripts": {
+    "postinstall": "patch-package",
     "dev": "ts-node ./src",
     "build": "",
     "start": "ts-node ./src",
@@ -45,6 +46,7 @@
     "node-sass": "^4.12.0",
     "npm": "6.9.0",
     "nyc": "^14.1.1",
+    "patch-package": "^6.1.2",
     "pre-commit": "^1.2.2",
     "prettier": "^1.17.1",
     "prettier-eslint": "^8.8.2",
