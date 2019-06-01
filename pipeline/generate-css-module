@@ -5,7 +5,27 @@ source "${BASH_SOURCE[0]%/*}/lib/core.sh"
 
 function main() {
 
-  FILE="${1}"
+  FILE="${1:-}"
+
+  if [[ -z "${FILE}" ]]; then
+
+    find . \
+      -type f \
+      \( \
+      -iname "*.css" \
+      -o \
+      -iname "*.scss" \
+      -o \
+      -iname "*.less" \
+      -o \
+      -iname "*.sss" \
+      \) |
+      while IFS= read -r OTHER_FILE; do
+        echo "${OTHER_FILE}"
+      done
+
+    return
+  fi
 
   if [[ -d "./node_modules" ]]; then
     PATH="${PWD}/node_modules/.bin:${PATH}"
