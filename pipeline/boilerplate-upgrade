@@ -28,6 +28,7 @@ function main() {
     echo "Which of these boilerplate branches do you want to upgrade to?"
     git branch --remotes | grep "${REMOTE_NAME}" | sed "s|.*${REMOTE_NAME}/|- |"
     read -r BRANCH
+    echo "{\"branch\":\"${BRANCH}\"}" | jq >"${CONFIG_FILE}"
   fi
 
   (
