@@ -1,8 +1,8 @@
-console.log('Hello world');
+console.log("Hello world");
 
 const someArray2 = [
-  'foo',
-  'bar',
+  "foo",
+  "bar",
 ];
 console.log(someArray2);
 
@@ -12,8 +12,8 @@ if (someArray2.length === 0) {
   console.log(2);
 }
 
-let someString2 = '';
-someString2 = 'def';
+let someString2 = "";
+someString2 = "def";
 // someString2 = 5; // <-- ts error
 console.log(someString2);
 
@@ -23,5 +23,5 @@ const testHash: {
 
 console.log(testHash);
 
-const abc = 'def';
+const abc = "def";
 export default abc;
