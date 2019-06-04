@@ -5,9 +5,15 @@ source "${BASH_SOURCE[0]%/*}/lib/core.sh"
 
 function main() {
 
-  echo -e "${OK_COLOR}==> Delivering app..."
+  DOCKER_COMPOSE_FILE="./docker-compose.yml"
 
-  "${BASH_SOURCE[0]%/*}/docker-build"
+  (
+    set -x
+    docker-compose \
+      --file "${DOCKER_COMPOSE_FILE}" \
+      build
+  )
+
 }
 
 main "$@" ||
