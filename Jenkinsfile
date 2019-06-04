@@ -36,6 +36,7 @@ pipeline {
     }}}
 
     stage('Integration') { steps { script {
+      sh "./pipeline/install"
       sh "./pipeline/lint"
       sh "./pipeline/test"
     }}}

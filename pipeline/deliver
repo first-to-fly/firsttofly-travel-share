@@ -7,6 +7,7 @@ function main() {
 
   echo -e "${OK_COLOR}==> Delivering app..."
 
+  "${BASH_SOURCE[0]%/*}/docker-build"
 }
 
 main "$@" ||
