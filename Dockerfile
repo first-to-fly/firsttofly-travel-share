@@ -9,13 +9,14 @@ RUN \
 
 WORKDIR /app
 
-COPY ./pipeline ./pipeline
+COPY ./.nvmrc .
 COPY ./package.json .
 COPY ./package-lock.json .
+COPY ./pipeline ./pipeline
 
 RUN ./pipeline/install --production
 
-COPY ./src ./src
+COPY ./build ./build
 
 # RUN find . -type f
 
