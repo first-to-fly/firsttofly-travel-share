@@ -7,7 +7,7 @@ function main() {
 
   DOCKER_COMPOSE_FILE="./docker-compose.yml"
 
-  NODE_VERSION="$(jq --raw-output ".devDependencies.node" "./package.json")"
+  NODE_VERSION="$(head -n 1 ./.nvmrc)"
 
   (
     set -x

@@ -10,9 +10,11 @@ function main() {
 
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
+  NPM="$(command -v npm)"
+
   (
     set -x
-    npm install "$@"
+    "${NPM}" install "$@"
   )
 
 }

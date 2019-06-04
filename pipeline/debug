@@ -14,9 +14,11 @@ function main() {
 
   echo -e "${OK_COLOR}==> Debugging app..."
 
+  NPM="$(command -v npm)"
+
   (
     set -x
-    npm run dev
+    "${NPM}" run dev
   )
 
 }

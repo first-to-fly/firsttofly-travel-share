@@ -31,9 +31,11 @@ function main() {
     PATH="${PWD}/node_modules/.bin:${PATH}"
   fi
 
+  TSM="$(command -v tsm)"
+
   (
     set -x
-    tsm "${FILE}"
+    "${TSM}" "${FILE}"
   )
 
   HEADER_FILE="${FILE}.d.ts"
