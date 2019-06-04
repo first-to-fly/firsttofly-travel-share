@@ -10,14 +10,6 @@ source "${BASH_SOURCE[0]%/*}/lib/node.sh"
 
 function main() {
 
-  if [[ ! -d "./node_modules" ]]; then
-    "${BASH_SOURCE[0]%/*}/install"
-  fi
-
-  if [[ ! -d "./build" ]]; then
-    "${BASH_SOURCE[0]%/*}/build"
-  fi
-
   echo -e "${OK_COLOR}==> Running app..."
 
   NPM="$(command -v npm)"
