@@ -4,8 +4,7 @@ FROM node:${NODE_VERSION}-alpine
 
 RUN \
   apk add \
-  "bash" \
-  "jq"
+  "bash"
 
 WORKDIR /app
 
