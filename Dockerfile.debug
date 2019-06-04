@@ -4,11 +4,10 @@ FROM node:${NODE_VERSION}-alpine
 
 RUN \
   apk add \
-  "bash"
+  "bash" \
+  "ca-certificates"
 
 WORKDIR /app
-
-# RUN find . -type f
 
 ENTRYPOINT [ \
   "./pipeline/debug" \

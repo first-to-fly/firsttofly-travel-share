@@ -6,7 +6,7 @@
   "main": "./src",
   "pre-commit": "lint:staged",
   "scripts": {
-    "postinstall": "patch-package",
+    "postinstall": "patch-package && npm uninstall --no-save patch-package",
     "dev": "ts-node ./src",
     "build": "tsc",
     "start": "node ./build",
@@ -22,6 +22,7 @@
   "license": "Apache",
   "dependencies": {
     "deepcopy": "^2.0.0",
+    "patch-package": "^6.1.2",
     "react": "^16.8.6"
   },
   "devDependencies": {
@@ -46,7 +47,6 @@
     "nock": "^10.0.6",
     "node-sass": "^4.12.0",
     "nyc": "^14.1.1",
-    "patch-package": "^6.1.2",
     "pre-commit": "^1.2.2",
     "prettier": "^1.17.1",
     "prettier-eslint": "^8.8.2",
