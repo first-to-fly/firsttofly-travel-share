@@ -35,6 +35,7 @@ function pushBranch() {
 
       GIT_MERGE_OUTPUT="$(
         set -x
+        cd "${TEMP_DIR}" || return
         git merge "origin/${BRANCH}"
       )"
       if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
@@ -47,6 +48,7 @@ function pushBranch() {
       (
         set -x
         rm -rf "${TEMP_DIR}"
+        cd "${PWD}" || return
       )
 
       pushBranch "${TO_BRANCH}"
