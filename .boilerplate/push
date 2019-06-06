@@ -33,13 +33,21 @@ function pushBranch() {
           "${TEMP_DIR}"
       )
 
-      GIT_MERGE_OUTPUT="$(git merge "origin/${BRANCH}")"
+      GIT_MERGE_OUTPUT="$(
+        set -x
+        git merge "origin/${BRANCH}"
+      )"
       if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
         echo "${GIT_MERGE_OUTPUT}" >&2
         echo "Please resolve the conflict and press Return to continue..." >&2
         stree "${TEMP_DIR}"
         read -r
       fi
+
+      (
+        set -x
+        rm -rf "${TEMP_DIR}"
+      )
 
       pushBranch "${TO_BRANCH}"
 
