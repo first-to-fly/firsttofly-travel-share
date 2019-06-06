@@ -17,6 +17,11 @@ function main() {
     return 1
   fi
 
+  if [[ -n "$(git status -s)" ]]; then
+    echo "Please commit your changes." >&2
+    return 1
+  fi
+
 }
 
 main "$@" ||
