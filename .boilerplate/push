@@ -20,7 +20,7 @@ function pushBranch() {
     while IFS='' read -r TO_BRANCH; do
 
       echo
-      echo "==> Pushing ${BRANCH} => ${TO_BRANCH}..."
+      echo -e "${COLOR_YELLOW}==> Pushing ${BRANCH} => ${TO_BRANCH}..."
 
       TEMP_DIR="$(mktemp -d)"
 
@@ -33,9 +33,10 @@ function pushBranch() {
           "${TEMP_DIR}"
       )
 
+      cd "${TEMP_DIR}" || return
+
       GIT_MERGE_OUTPUT="$(
         set -x
-        cd "${TEMP_DIR}" || return
         git merge "origin/${BRANCH}"
       )"
       if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
@@ -47,9 +48,15 @@ function pushBranch() {
 
       (
         set -x
-        rm -rf "${TEMP_DIR}"
-        cd "${PWD}" || return
+        git push
       )
+
+      (
+        set -x
+        rm -rf "${TEMP_DIR}"
+      )
+
+      cd "${PWD}" || return
 
       pushBranch "${TO_BRANCH}"
 
