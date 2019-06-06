@@ -19,24 +19,28 @@ function main() {
       "${REMOTE_NAME}"
   )
 
-  CONFIG_FILE="./boilerplate.config.json"
+  CONFIG_FILE="./.boilerplate/config.json"
   if [[ -f "${CONFIG_FILE}" ]]; then
     BRANCH="$(jq --raw-output ".branch" "${CONFIG_FILE}")"
   fi
 
-  if [[ -z "${BRANCH:-}" ]]; then
+  if [[ -z "${BRANCH:-}" || "${BRANCH:-}" == "null" ]]; then
+
     echo "Which of these boilerplate branches do you want to upgrade to?"
     git branch --remotes | grep "${REMOTE_NAME}" | sed "s|.*${REMOTE_NAME}/|- |"
+
     read -r BRANCH
-    echo "{\"branch\":\"${BRANCH}\"}" | jq >"${CONFIG_FILE}"
+
+    NEW_CONFIG="$(jq --raw-output ".branch = \"${BRANCH}\"" "${CONFIG_FILE}")"
+    echo "${NEW_CONFIG}" >"${CONFIG_FILE}"
   fi
 
-  (
-    set -x
-    git merge \
-      --allow-unrelated-histories \
-      "${REMOTE_NAME}/${BRANCH}"
-  )
+  # (
+  #   set -x
+  #   git merge \
+  #     --allow-unrelated-histories \
+  #     "${REMOTE_NAME}/${BRANCH}"
+  # )
 
 }
 

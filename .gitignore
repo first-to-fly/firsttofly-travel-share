@@ -1,8 +1,10 @@
 .env
 .env.*
 
-# NodeJS
+# NodeJS (due to large number of files)
 node_modules
+
+# NodeJS
 build/
 
 # nyc
