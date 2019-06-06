@@ -24,43 +24,45 @@ function pushBranch() {
       echo
       echo -e "${YELLOW_COLOR}==> Pushing ${BRANCH} => ${TO_BRANCH}..."
 
-      # TEMP_DIR="$(mktemp -d)"
+      local TEMP_DIR
+      TEMP_DIR="$(mktemp -d)"
 
-      # (
-      #   set -x
-      #   git clone \
-      #     --branch "${TO_BRANCH}" \
-      #     --recurse-submodules \
-      #     "${GIT_REMOTE_URL}" \
-      #     "${TEMP_DIR}"
-      # )
+      (
+        set -x
+        git clone \
+          --branch "${TO_BRANCH}" \
+          --recurse-submodules \
+          "${GIT_REMOTE_URL}" \
+          "${TEMP_DIR}"
+      )
 
-      # PROJECT_DIR="${PWD}"
+      local PROJECT_DIR="${PWD}"
 
-      # cd "${TEMP_DIR}" || return
+      cd "${TEMP_DIR}" || return
 
-      # GIT_MERGE_OUTPUT="$(
-      #   set -x
-      #   git merge "origin/${BRANCH}"
-      # )"
-      # if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
-      #   echo "${GIT_MERGE_OUTPUT}" >&2
-      #   echo "Please resolve the conflict and press Return to continue..." >&2
-      #   stree "${TEMP_DIR}"
-      #   read -r
-      # fi
+      local GIT_MERGE_OUTPUT
+      GIT_MERGE_OUTPUT="$(
+        set -x
+        git merge "origin/${BRANCH}"
+      )"
+      if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
+        echo "${GIT_MERGE_OUTPUT}" >&2
+        echo "Please resolve the conflict and press Return to continue..." >&2
+        stree "${TEMP_DIR}"
+        read -r
+      fi
 
-      # (
-      #   set -x
-      #   git push
-      # )
+      (
+        set -x
+        git push
+      )
 
-      # (
-      #   set -x
-      #   rm -rf "${TEMP_DIR}"
-      # )
+      (
+        set -x
+        rm -rf "${TEMP_DIR}"
+      )
 
-      # cd "${PROJECT_DIR}" || return
+      cd "${PROJECT_DIR}" || return
 
       pushBranch "${TO_BRANCH}"
 
