@@ -10,6 +10,7 @@
 /* eslint-disable @typescript-eslint/no-var-requires */
 
 const prettierConfig = require("./prettier.config");
+const packageJSON = require("./package.json");
 
 
 const minItems = 2;
@@ -281,6 +282,9 @@ module.exports = {
     },
 
     // ==> eslint-plugin-react
-    react: { version: "detect" },
+    react: {
+      // Detect React version only if it is installed
+      version: packageJSON.dependencies.react ? "detect" : "latest",
+    },
   },
 };

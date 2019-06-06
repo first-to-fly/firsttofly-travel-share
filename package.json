@@ -21,14 +21,11 @@
   "repository": {},
   "license": "Apache",
   "dependencies": {
-    "deepcopy": "^2.0.0",
-    "patch-package": "^6.1.2",
-    "react": "^16.8.6"
+    "patch-package": "^6.1.2"
   },
   "devDependencies": {
     "@types/chai": "^4.1.7",
     "@types/mocha": "^5.2.7",
-    "@types/react": "^16.8.19",
     "@typescript-eslint/eslint-plugin": "^1.9.0",
     "@typescript-eslint/parser": "^1.9.0",
     "chai": "^4.2.0",
