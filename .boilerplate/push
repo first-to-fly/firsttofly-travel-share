@@ -7,20 +7,21 @@ function main() {
 
   echo -e "${OK_COLOR}==> Pushing published changes from current branch to others..."
 
-  if [[ "$(git config --get remote.origin.url)" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
+  GIT_REMOTE_URL="$(git config --get remote.origin.url)"
+  if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
     echo "This script can only run in the boilerplate project." >&2
     return 1
   fi
 
-  if [[ -n "$(git status -s)" ]]; then
+  GIT_STATUS="$(git status --short --porcelain)"
+  if [[ -n "${GIT_STATUS}" ]]; then
     echo "Please commit your changes." >&2
     echo "\"$(git status -s)\"" >&2
     return 1
   fi
 
-  CURRENT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
-
-  if [[ -n "$(git log "origin/${CURRENT_BRANCH}..HEAD")" ]]; then
+  GIT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
+  if [[ -n "$(git log "origin/${GIT_BRANCH}..HEAD")" ]]; then
     echo "Please commit your changes." >&2
     return 1
   fi
