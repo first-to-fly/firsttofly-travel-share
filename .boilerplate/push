@@ -7,6 +7,11 @@ function main() {
 
   echo -e "${OK_COLOR}==> Pushing published changes from current branch to others..."
 
+  if [[ "$(git config --get remote.origin.url)" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
+    echo "This script can only run in the boilerplate project." >&2
+    return 1
+  fi
+
   if [[ -n "$(git status -s)" ]]; then
     echo "Please commit your changes." >&2
     return 1
