@@ -16,11 +16,11 @@ function pushBranch() {
     grep "origin" |
     sed 's|^.*origin/||' |
     grep --invert-match "^${BRANCH}\$" |
-    grep "${BRANCH_FILTER}" |
+    (grep "${BRANCH_FILTER}" || true) |
     while IFS='' read -r TO_BRANCH; do
 
       echo
-      echo "Pushing ${BRANCH} => ${TO_BRANCH}..."
+      echo "==> Pushing ${BRANCH} => ${TO_BRANCH}..."
 
       TEMP_DIR="$(mktemp -d)"
 
