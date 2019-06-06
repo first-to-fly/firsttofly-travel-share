@@ -19,7 +19,7 @@ function main() {
       "${REMOTE_NAME}"
   )
 
-  CONFIG_FILE="./boilerplate.config.json"
+  CONFIG_FILE="./.boilerplate/config.json"
   if [[ -f "${CONFIG_FILE}" ]]; then
     BRANCH="$(jq --raw-output ".branch" "${CONFIG_FILE}")"
   fi
