@@ -3,6 +3,66 @@
 # shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
+function pushBranch() {
+
+  BRANCH="${1:-}"
+
+  BRANCH_FILTER="^${BRANCH}-.*$"
+  if [[ "${BRANCH}" == "master" ]]; then
+    BRANCH_FILTER='^[a-z0-9]\+$'
+  fi
+
+  git branch --list --remote |
+    grep "origin" |
+    sed 's|^.*origin/||' |
+    grep --invert-match "^${BRANCH}\$" |
+    (grep "${BRANCH_FILTER}" || true) |
+    while IFS='' read -r TO_BRANCH; do
+
+      echo
+      echo -e "${YELLOW_COLOR}==> Pushing ${BRANCH} => ${TO_BRANCH}..."
+
+      TEMP_DIR="$(mktemp -d)"
+
+      (
+        set -x
+        git clone \
+          --branch "${TO_BRANCH}" \
+          --recurse-submodules \
+          "${GIT_REMOTE_URL}" \
+          "${TEMP_DIR}"
+      )
+
+      cd "${TEMP_DIR}" || return
+
+      GIT_MERGE_OUTPUT="$(
+        set -x
+        git merge "origin/${BRANCH}"
+      )"
+      if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
+        echo "${GIT_MERGE_OUTPUT}" >&2
+        echo "Please resolve the conflict and press Return to continue..." >&2
+        stree "${TEMP_DIR}"
+        read -r
+      fi
+
+      (
+        set -x
+        git push
+      )
+
+      (
+        set -x
+        rm -rf "${TEMP_DIR}"
+      )
+
+      cd "${PWD}" || return
+
+      pushBranch "${TO_BRANCH}"
+
+    done
+}
+
 function main() {
 
   echo -e "${OK_COLOR}==> Pushing published changes from current branch to others..."
@@ -29,6 +89,8 @@ function main() {
     echo "${GIT_UNPUSHED_COMMITS}" >&2
     return 1
   fi
+
+  pushBranch "${GIT_BRANCH}"
 
 }
 
