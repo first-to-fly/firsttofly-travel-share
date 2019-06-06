@@ -5,7 +5,12 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 function main() {
 
-  echo -e "${OK_COLOR}==> Pushing changes in current branch to others..."
+  echo -e "${OK_COLOR}==> Pushing published changes from current branch to others..."
+
+  if [[ -n "$(git status -s)" ]]; then
+    echo "Please commit your changes." >&2
+    return 1
+  fi
 
 }
 
