@@ -33,6 +33,8 @@ function pushBranch() {
           "${TEMP_DIR}"
       )
 
+      PROJECT_DIR="${PWD}"
+
       cd "${TEMP_DIR}" || return
 
       GIT_MERGE_OUTPUT="$(
@@ -56,7 +58,7 @@ function pushBranch() {
         rm -rf "${TEMP_DIR}"
       )
 
-      cd "${PWD}" || return
+      cd "${PROJECT_DIR}" || return
 
       pushBranch "${TO_BRANCH}"
 
