@@ -5,12 +5,14 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 function pushBranch() {
 
-  BRANCH="${1:-}"
+  local BRANCH="${1:-}"
 
-  BRANCH_FILTER="^${BRANCH}-.*$"
+  local BRANCH_FILTER="^${BRANCH}-.*$"
   if [[ "${BRANCH}" == "master" ]]; then
     BRANCH_FILTER='^[a-z0-9]\+$'
   fi
+
+  local TO_BRANCH
 
   git branch --list --remote |
     grep "origin" |
@@ -22,6 +24,7 @@ function pushBranch() {
       echo
       echo -e "${YELLOW_COLOR}==> Pushing ${BRANCH} => ${TO_BRANCH}..."
 
+      local TEMP_DIR
       TEMP_DIR="$(mktemp -d)"
 
       (
@@ -33,10 +36,11 @@ function pushBranch() {
           "${TEMP_DIR}"
       )
 
-      PROJECT_DIR="${PWD}"
+      local PROJECT_DIR="${PWD}"
 
       cd "${TEMP_DIR}" || return
 
+      local GIT_MERGE_OUTPUT
       GIT_MERGE_OUTPUT="$(
         set -x
         git merge "origin/${BRANCH}"
