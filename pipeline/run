@@ -3,7 +3,7 @@
 export SHOULD_LOG_TIME=true
 
 # shellcheck disable=SC1090
-source "${BASH_SOURCE[0]%/*}/lib/core.sh"
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 function main() {
 
