@@ -17,7 +17,9 @@ function main() {
     return 1
   fi
 
-  if [[ -n "$(git status -s)" ]]; then
+  CURRENT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
+
+  if [[ -n "$(git log "origin/${CURRENT_BRANCH}..HEAD")" ]]; then
     echo "Please commit your changes." >&2
     return 1
   fi
