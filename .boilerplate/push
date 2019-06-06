@@ -61,7 +61,7 @@ function main() {
     echo "There are uncommitted changes. Please commit them before continue." >&2
     echo >&2
     echo "${GIT_STATUS}" >&2
-    # return 1
+    return 1
   fi
 
   GIT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
@@ -70,7 +70,7 @@ function main() {
     echo "There are unpushed commits. Please push them before continue." >&2
     echo >&2
     echo "${GIT_UNPUSHED_COMMITS}" >&2
-    # return 1
+    return 1
   fi
 
   pushBranch "${GIT_BRANCH}"
