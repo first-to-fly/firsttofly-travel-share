@@ -14,6 +14,7 @@ function main() {
 
   if [[ -n "$(git status -s)" ]]; then
     echo "Please commit your changes." >&2
+    echo "\"$(git status -s)\"" >&2
     return 1
   fi
 
