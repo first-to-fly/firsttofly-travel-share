@@ -16,14 +16,15 @@ function main() {
   GIT_STATUS="$(git status --short --porcelain)"
   if [[ -n "${GIT_STATUS}" ]]; then
     echo "There are uncommitted changes. Please commit them before continue." >&2
+    echo "${GIT_STATUS}" >&2
     return 1
   fi
 
   GIT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
   GIT_UNPUSHED_COMMITS="$(git log "origin/${GIT_BRANCH}..HEAD")"
-  echo "${GIT_UNPUSHED_COMMITS}"
   if [[ -n "${GIT_UNPUSHED_COMMITS}" ]]; then
     echo "There are unpushed commits. Please push them before continue." >&2
+    echo "${GIT_UNPUSHED_COMMITS}" >&2
     return 1
   fi
 
