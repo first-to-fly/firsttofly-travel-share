@@ -35,12 +35,12 @@ function main() {
     echo "${NEW_CONFIG}" >"${CONFIG_FILE}"
   fi
 
-  # (
-  #   set -x
-  #   git merge \
-  #     --allow-unrelated-histories \
-  #     "${REMOTE_NAME}/${BRANCH}"
-  # )
+  (
+    set -x
+    git merge \
+      --allow-unrelated-histories \
+      "${REMOTE_NAME}/${BRANCH}"
+  )
 
 }
 
