@@ -20,7 +20,7 @@ function pushBranch() {
     while IFS='' read -r TO_BRANCH; do
 
       echo
-      echo -e "${COLOR_YELLOW}==> Pushing ${BRANCH} => ${TO_BRANCH}..."
+      echo -e "${YELLOW_COLOR}==> Pushing ${BRANCH} => ${TO_BRANCH}..."
 
       TEMP_DIR="$(mktemp -d)"
 
