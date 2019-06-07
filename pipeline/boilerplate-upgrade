@@ -31,8 +31,10 @@ function main() {
 
     read -r -p "> " BRANCH
 
-    NEW_CONFIG="$(jq --raw-output ".branch = \"${BRANCH}\"" "${CONFIG_FILE}")"
-    echo "${NEW_CONFIG}" >"${CONFIG_FILE}"
+    if [[ -f "${CONFIG_FILE}" ]]; then
+      NEW_CONFIG="$(jq --raw-output ".branch = \"${BRANCH}\"" "${CONFIG_FILE}")"
+      echo "${NEW_CONFIG}" >"${CONFIG_FILE}"
+    fi
   fi
 
   (
