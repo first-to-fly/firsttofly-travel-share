@@ -47,9 +47,15 @@ function pushBranch() {
       )"
       if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
         echo "${GIT_MERGE_OUTPUT}" >&2
-        echo "Please resolve the conflict and press Return to continue..." >&2
+        echo "Please resolve the conflict and type \"done\" to continue..." >&2
         stree "${TEMP_DIR}"
-        read -r
+        while true; do
+          local INPUT
+          read -r INPUT
+          if [[ "${INPUT}" == "done" ]]; then
+            break
+          fi
+        done
       fi
 
       (
