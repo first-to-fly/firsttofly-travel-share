@@ -6,13 +6,6 @@ RUN \
 
 WORKDIR /app
 
-COPY ./lib/bash ./lib/bash
-COPY ./pipeline ./pipeline
-
-RUN ./pipeline/install
-
-# RUN find . -type f
-
 ENTRYPOINT [ \
   "./pipeline/debug" \
   ]
