@@ -45,6 +45,8 @@ function main() {
       "${REMOTE_NAME}"
   )
 
+  "${BASH_SOURCE[0]%/*}/boilerplate-upgrade.sh"
+
   echo "Project name (ex. \"My Project\"): "
   (
     local PROJECT_NAME
