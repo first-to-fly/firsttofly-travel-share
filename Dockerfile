@@ -6,6 +6,7 @@ RUN \
 
 WORKDIR /app
 
+COPY ./lib/bash ./lib/bash
 COPY ./pipeline ./pipeline
 
 RUN ./pipeline/install --production
