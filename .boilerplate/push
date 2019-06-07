@@ -52,6 +52,7 @@ function pushBranch() {
         while true; do
           local INPUT
           read -r INPUT
+          echo "= ${INPUT}"
           if [[ "${INPUT}" == "done" ]]; then
             break
           fi
