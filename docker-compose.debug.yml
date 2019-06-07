@@ -1,8 +1,8 @@
 version: '3.7'
 
 services:
-  my-project:
-    image: my-project
+  myproject:
+    image: myproject
     build:
       context: .
       dockerfile: Dockerfile.debug
