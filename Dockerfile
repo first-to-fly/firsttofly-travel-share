@@ -29,6 +29,7 @@ WORKDIR /app
 COPY "./.nvmrc" "."
 COPY "./package.json" "."
 COPY "./package-lock.json" "."
+COPY "./lib/bash" "./lib/bash"
 COPY "./pipeline" "./pipeline"
 RUN ./pipeline/install
 
@@ -56,6 +57,7 @@ WORKDIR /app
 COPY "./.nvmrc" "."
 COPY "./package.json" "."
 COPY "./package-lock.json" "."
+COPY "./lib/bash" "./lib/bash"
 COPY "./pipeline" "./pipeline"
 
 COPY --from=node_builder "/app/node_modules" "./node_modules"
