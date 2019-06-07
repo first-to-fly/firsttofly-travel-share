@@ -51,7 +51,7 @@ function pushBranch() {
         stree "${TEMP_DIR}"
         while true; do
           local INPUT
-          read -r INPUT
+          read -r -p "> " INPUT
           echo "= ${INPUT}"
           if [[ "${INPUT}" == "done" ]]; then
             break
