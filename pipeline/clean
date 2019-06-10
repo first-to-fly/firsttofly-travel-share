@@ -7,6 +7,11 @@ function main() {
 
   echo -e "${OK_COLOR}==> Cleaning...${NO_COLOR}"
 
+  (
+    set -x
+    rm -rf "./build"
+  )
+
 }
 
 main "$@" ||
