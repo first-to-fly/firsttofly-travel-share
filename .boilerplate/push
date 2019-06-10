@@ -47,7 +47,7 @@ function pushBranch() {
       )"
       if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
         echo "${GIT_MERGE_OUTPUT}" >&2
-        echo "Please resolve the conflict and type \"done\" to continue..." >&2
+        echo "Please resolve the conflict, push, and try again..." >&2
         stree "${TEMP_DIR}"
         return 1
       fi
