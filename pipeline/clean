@@ -9,10 +9,11 @@ function main() {
 
   (
     set -x
-    rm -rf "./node_modules"
     rm -rf "./build"
+    rm -rf "./node_modules"
     rm -rf "./.nyc_output"
   )
+
 }
 
 main "$@" ||
