@@ -1,11 +1,9 @@
 .env
 .env.*
+build/
 
 # NodeJS (due to large number of files)
 node_modules
-
-# NodeJS
-build/
 
 # nyc
 .nyc_output
