@@ -1,10 +1,12 @@
 version: '3.7'
 
 services:
-  myproject:
-    image: myproject
+  main:
+    image: ${PROJECT_KEY}:${GIT_COMMIT_HASH}
     build:
       context: .
       dockerfile: Dockerfile.debug
+      args:
+        - NODE_VERSION=${NODE_VERSION}
     volumes:
       - .:/app
