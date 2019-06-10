@@ -10,7 +10,7 @@ function replace() {
 
   grep -E --recursive "${OLD_TEXT}" . |
     grep '^\./' |
-    grep --invert-match '^\./\.git/\|^\./pipeline/' |
+    grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-init' |
     awk '{print $1}' |
     sed 's|:.*$||' |
     uniq |

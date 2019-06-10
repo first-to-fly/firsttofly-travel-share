@@ -5,13 +5,20 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 function main() {
 
-  DOCKER_COMPOSE_FILE="./docker-compose.yml"
+  local DOCKER_COMPOSE_FILE="./docker-compose.yml"
+
+  PROJECT_KEY="myproject"
+  export PROJECT_KEY="${PROJECT_KEY}"
+
+  GIT_COMMIT_HASH="$(git rev-parse --short HEAD)"
+  export GIT_COMMIT_HASH="${GIT_COMMIT_HASH}"
 
   (
     set -x
     docker-compose \
       --file "${DOCKER_COMPOSE_FILE}" \
-      build
+      build \
+      --parallel
   )
 
 }
