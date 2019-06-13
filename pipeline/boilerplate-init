@@ -24,27 +24,6 @@ function main() {
 
   echo -e "${OK_COLOR}==> Initializing boilerplate..."
 
-  # "z" to keep remote at the bottom
-  # to prevent auto-push
-  REMOTE_NAME="zboilerplate"
-
-  if ! git remote -v | grep "${REMOTE_NAME}" >/dev/null; then
-    (
-      set -x
-      git remote add \
-        "${REMOTE_NAME}" \
-        "https://bitbucket.org/nabstudio/boilerplates.git"
-    )
-  fi
-
-  (
-    set -x
-    git fetch \
-      --tags \
-      --prune \
-      "${REMOTE_NAME}"
-  )
-
   "${BASH_SOURCE[0]%/*}/boilerplate-upgrade"
 
   echo "Project name (ex. \"My Project\"): "
