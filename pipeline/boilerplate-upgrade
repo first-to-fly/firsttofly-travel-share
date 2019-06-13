@@ -7,19 +7,12 @@ function main() {
 
   echo -e "${OK_COLOR}==> Upgrading boilerplate..."
 
-  # "z" to keep remote at the bottom
-  # to prevent auto-push
-  REMOTE_NAME="zboilerplate"
+  local REMOTE_URL="https://bitbucket.org/nabstudio/boilerplates.git"
 
-  (
-    set -x
-    git fetch \
-      --tags \
-      --prune \
-      "${REMOTE_NAME}"
-  )
+  # Get Branch
+  local BRANCH
 
-  CONFIG_FILE="./.boilerplate/config.json"
+  local CONFIG_FILE="./.boilerplate/config.json"
   if [[ -f "${CONFIG_FILE}" ]]; then
     BRANCH="$(jq --raw-output ".branch" "${CONFIG_FILE}")"
   fi
@@ -27,22 +20,83 @@ function main() {
   if [[ -z "${BRANCH:-}" || "${BRANCH:-}" == "null" ]]; then
 
     echo "Which of these boilerplate branches do you want to upgrade to?"
-    git branch --remotes | grep "${REMOTE_NAME}" | sed "s|.*${REMOTE_NAME}/|- |"
+    git ls-remote "${REMOTE_URL}" | awk '{print $2}' | grep '^refs/' | sed 's|^refs/heads/|- |'
 
     read -r -p "> " BRANCH
 
     if [[ -f "${CONFIG_FILE}" ]]; then
+      local NEW_CONFIG
       NEW_CONFIG="$(jq --raw-output ".branch = \"${BRANCH}\"" "${CONFIG_FILE}")"
       echo "${NEW_CONFIG}" >"${CONFIG_FILE}"
     fi
   fi
 
-  (
-    set -x
-    git merge \
-      --allow-unrelated-histories \
-      "${REMOTE_NAME}/${BRANCH}"
-  )
+  #
+  if [[ -d "./.git" ]]; then
+    # Current folder is Git root
+
+    # "z" to keep remote at the bottom
+    # to prevent auto-push
+    local REMOTE_NAME="zboilerplate"
+
+    if ! git remote -v | grep "${REMOTE_NAME}" >/dev/null; then
+      (
+        set -x
+        git remote add \
+          "${REMOTE_NAME}" \
+          "${REMOTE_URL}"
+      )
+    fi
+
+    (
+      set -x
+      git fetch \
+        --tags \
+        --prune \
+        "${REMOTE_NAME}"
+    )
+
+    (
+      set -x
+      git merge \
+        --allow-unrelated-histories \
+        "${REMOTE_NAME}/${BRANCH}"
+    )
+
+  else
+    # Current folder is not Git root -> Git subtree
+
+    local GIT_ROOT
+    GIT_ROOT="$(git rev-parse --show-toplevel)"
+
+    local SUBTREE_PREFIX="${PWD/#"${GIT_ROOT}"\//}"
+
+    (
+      set -x
+
+      cd "${GIT_ROOT}" || true
+
+      git subtree pull \
+        --squash \
+        --prefix "${SUBTREE_PREFIX}" \
+        "${REMOTE_URL}" \
+        "${BRANCH}" || (
+
+        rm -rf "${SUBTREE_PREFIX}" &&
+          git subtree add \
+            --prefix "${SUBTREE_PREFIX}" \
+            "${REMOTE_URL}" \
+            "${BRANCH}" &&
+          git subtree pull \
+            --squash \
+            --prefix "${SUBTREE_PREFIX}" \
+            "${REMOTE_URL}" \
+            "${BRANCH}"
+      )
+
+    )
+
+  fi
 
 }
 
