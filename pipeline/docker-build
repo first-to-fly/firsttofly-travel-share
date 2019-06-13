@@ -21,8 +21,7 @@ function main() {
     docker-compose \
       --file "${DOCKER_COMPOSE_FILE}" \
       build \
-      --parallel \
-      --build-arg "NODE_VERSION=${NODE_VERSION}"
+      --parallel
   )
 
 }
