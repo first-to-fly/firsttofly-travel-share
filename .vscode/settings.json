@@ -112,17 +112,15 @@
   },
 
   // Run on Save
-  "emeraldwalk.runonsave": {
-    "commands": [
-      {
-        "match": "\\.(css|less|scss|sss)$",
-        "isAsync": false,
-        "cmd": "cd \"${workspaceRoot}\" && ./pipeline/generate-css-module \"${file}\""
-      }
-    ],
-    "autoClearConsole": false,
-    "shell": "bash"
-  },
+  "runOnSave.commands": [
+    {
+      "match": "\\.(css|less|scss|sss)$",
+      "command": "cd \"${workspaceFolder}\" && ./pipeline/generate-css-module \"${file}\"",
+      "runIn": "backend",
+      "runningStatusMessage": "Generating TS header for ${fileBasename}...",
+      "finishStatusMessage": "TS header generated."
+    }
+  ],
 
   // ESLint
   "eslint.autoFixOnSave": true,

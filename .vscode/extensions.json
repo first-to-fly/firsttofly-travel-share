@@ -14,7 +14,7 @@
     "coenraads.bracket-pair-colorizer",
     "wmaurer.change-case",
     "streetsidesoftware.code-spell-checker",
-    "emeraldwalk.runonsave",
+    "pucelle.run-on-save",
 
     // .env
     "mikestead.dotenv",
