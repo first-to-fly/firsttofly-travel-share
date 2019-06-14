@@ -7,7 +7,7 @@ function pushBranch() {
 
   local BRANCH="${1:-}"
 
-  local BRANCH_FILTER="^${BRANCH}-.*$"
+  local BRANCH_FILTER="^${BRANCH}-[a-z0-9]\\+$"
   if [[ "${BRANCH}" == "master" ]]; then
     BRANCH_FILTER='^[a-z0-9]\+$'
   fi
