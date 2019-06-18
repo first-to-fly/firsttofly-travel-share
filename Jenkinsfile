@@ -1,5 +1,12 @@
 #!/usr/bin/env groovy
 
+import java.text.SimpleDateFormat
+import java.util.*
+import groovy.json.*
+
+
+def JENKINS_CONFIG
+
 
 // Declarative Pipeline
 // https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline
@@ -18,7 +25,7 @@ pipeline {
 
   stages {
 
-    stage('Setup') { steps { script {
+    stage('Setup') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
       wrap([$class: 'BuildUser']) { script {
         try {
@@ -32,32 +39,78 @@ pipeline {
         }
       }}
 
-      sh "printenv | sort"
-    }}}
+      def JENKINS_CONFIG_JSON_STRING = readFile(file:"${WORKSPACE}/jenkins.config.json")
+      JENKINS_CONFIG = new JsonSlurperClassic().parseText(JENKINS_CONFIG_JSON_STRING)
 
-    stage('Integration') { steps { script {
+      sh "printenv | sort"
+
+    }}}}
+
+    stage('Integration') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+
       sh "./pipeline/install"
       sh "./pipeline/lint"
       sh "./pipeline/test"
-    }}}
 
-    stage('Delivery') { steps { script {
-      sh "./pipeline/deliver"
-    }}}
+    }}}}
 
-    stage('Deploy') { steps { script {
-      sh "./pipeline/deploy"
-    }}}
+    stage('Delivery') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+
+      JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
+
+        if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
+
+          echo "Matched '${BRANCH_PATTERN}'"
+
+          JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
+
+            withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
+              sh "./pipeline/deliver"
+            }
+
+          }
+        }
+      }
+
+    }}}}
+
+    stage('Deployment') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+
+      JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
+
+        if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
+
+          echo "Matched '${BRANCH_PATTERN}'"
+
+          JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
+
+            withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
+              sh "./pipeline/deploy"
+            }
+
+          }
+        }
+      }
+
+    }}}}
   }
 
   post {
 
-    failure { script {
-      echo "Failure"
-    }}
+    failure { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
-    success { script {
-      echo "Success"
-    }}
+      load("./lib/jenkins/slack.groovy").sendFailure(
+        channel: JENKINS_CONFIG.slack.channel
+      )
+
+    }}}
+
+    success { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+
+      load("./lib/jenkins/slack.groovy").sendSuccess(
+        channel: JENKINS_CONFIG.slack.channel
+      )
+
+    }}}
   }
 }
