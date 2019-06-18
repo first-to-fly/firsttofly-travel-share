@@ -40,11 +40,16 @@ function pushBranch() {
 
       cd "${TEMP_DIR}" || return
 
+      set +e
+
       local GIT_MERGE_OUTPUT
       GIT_MERGE_OUTPUT="$(
         set -x
         git merge "origin/${BRANCH}"
       )"
+
+      set -e
+
       if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
         echo "${GIT_MERGE_OUTPUT}" >&2
         echo "Please resolve the conflict, push, and try again..." >&2
