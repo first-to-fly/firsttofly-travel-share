@@ -42,6 +42,10 @@ RUN ./pipeline/build
 RUN rm -rf "./node_modules"
 RUN ./pipeline/install --production
 
+# Prune
+RUN curl -sfL "https://install.goreleaser.com/github.com/tj/node-prune.sh" | bash
+RUN ./bin/node-prune "./node_modules"
+
 
 # ===== Production =====
 FROM node:${NODE_VERSION}-alpine
