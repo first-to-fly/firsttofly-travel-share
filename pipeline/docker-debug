@@ -5,6 +5,8 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 function main() {
 
+  echo -e "${OK_COLOR}==> Debugging app in Docker..."
+
   local DOCKER_COMPOSE_FILE="./docker-compose.debug.yml"
 
   PROJECT_KEY="myproject"
@@ -30,6 +32,4 @@ function main() {
 
 }
 
-main "$@" ||
-  catch "$?" &&
-  finally
+main "$@"

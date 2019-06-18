@@ -7,9 +7,11 @@ function main() {
 
   echo -e "${OK_COLOR}==> Delivering app..."
 
-  "${BASH_SOURCE[0]%/*}/docker-build"
+  (
+    set -x
+    "${BASH_SOURCE[0]%/*}/docker-build"
+    "${BASH_SOURCE[0]%/*}/../lib/bash/aws-ecr-push"
+  )
 }
 
-main "$@" ||
-  catch "$?" &&
-  finally
+main "$@"
