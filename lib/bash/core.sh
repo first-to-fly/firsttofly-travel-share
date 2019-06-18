@@ -106,10 +106,11 @@ function logFormat() {
   SCRIPT_PATH=""
   for BASH_SOURCE_ITEM in "${BASH_SOURCE[@]}"; do
     if [[ "${BASH_SOURCE_ITEM}" != "${BASH_SOURCE[0]}" ]]; then
-      SCRIPT_PATH="${NO_COLOR}[${BLUE_COLOR}${BASH_SOURCE_ITEM}${SCRIPT_PATH}${NO_COLOR}]"
+      SCRIPT_PATH="${SCRIPT_PATH}${NO_COLOR}[${BLUE_COLOR}${BASH_SOURCE_ITEM##*/}${NO_COLOR}]"
     fi
   done
 
+  local LINE
   while IFS= read -r LINE; do
 
     if [[ -n "${1:-}" && "${1:-}" == "--error" ]]; then
@@ -126,9 +127,10 @@ function logFormat() {
 
     fi
 
-    PREFIX=""
+    local PREFIX=""
 
     if [[ -n "${LOCAL_SHOULD_LOG_TIME}" ]]; then
+      local TIME
       TIME="$(
         date +"%Y-%m-%d %H:%M:%S %Z"
       )"
@@ -142,15 +144,19 @@ function logFormat() {
   done
 }
 
-echo
-exec 3>&1
-exec > >(logFormat)
-exec 2> >(logFormat --error)
+function registerLogger() {
+  echo
+  exec 3>&1
+  exec > >(logFormat)
+  exec 2> >(logFormat --error)
+}
+
+registerLogger
 
 # Dependencies
 function dependency() {
 
-  DEPENDENCY_NAME="${1:-}"
+  local DEPENDENCY_NAME="${1:-}"
 
   if ! command -v "${DEPENDENCY_NAME}" >/dev/null; then
 
@@ -180,33 +186,14 @@ function dependency() {
       ;;
     *)
       echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
-      exit 1
+      return 1
       ;;
     esac
 
     if ! command -v "${DEPENDENCY_NAME}" >/dev/null; then
       echo "Dependency \"${DEPENDENCY_NAME}\" not found after installing." >&2
-      exit 1
+      return 1
     fi
 
   fi
-}
-
-# Try Catch
-CATCHED_EXIT_CODE=0
-
-function catch() {
-  CATCHED_EXIT_CODE=${1}
-}
-
-function finally() {
-
-  # Wait for all piped output to be printed
-  sleep 0.2s
-
-  # Clear log output
-  exec 1>&3 3>&-
-  echo
-
-  exit "${CATCHED_EXIT_CODE:-}"
 }

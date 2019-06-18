@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/core.sh"
+
+function main() {
+
+  echo -e "${OK_COLOR}==> Pushing current Docker image to AWS ECR..."
+
+  if [[ -z "${DEPLOY_ENVKEY:-}" && -f "./.env" ]]; then
+    # shellcheck disable=SC1091
+    source "./.env"
+  fi
+
+  if [[ -z "${DEPLOY_ENVKEY:-}" ]]; then
+    echo "Missing DEPLOY_ENVKEY." >&2
+    return 1
+  fi
+
+  eval "$(envkey-source "${DEPLOY_ENVKEY}")"
+
+  if [[ -z "${AWS_DEFAULT_REGION:-}" ]]; then
+    local AWS_DEFAULT_REGION="us-east-1"
+    export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION}"
+  fi
+
+  eval "$(
+    aws ecr get-login \
+      --no-include-email \
+      --region "${AWS_DEFAULT_REGION}"
+  )"
+
+  local PROJECT_KEY
+  PROJECT_KEY="myproject"
+
+  local GIT_COMMIT_HASH
+  GIT_COMMIT_HASH="$(git rev-parse --short HEAD)"
+
+  local LOCAL_IMAGE="${PROJECT_KEY}:${GIT_COMMIT_HASH}"
+  local REMOTE_IMAGE="${AWS_ECS_REPO_URI}:${GIT_COMMIT_HASH}"
+
+  docker tag "${LOCAL_IMAGE}" "${REMOTE_IMAGE}"
+  docker push "${REMOTE_IMAGE}"
+}
+
+main "$@"
