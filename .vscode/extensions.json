@@ -20,7 +20,7 @@
     "mikestead.dotenv",
 
     // Docker
-    "PeterJausovec.vscode-docker",
+    "ms-azuretools.vscode-docker",
 
     // Markdown
     "DavidAnson.vscode-markdownlint",
