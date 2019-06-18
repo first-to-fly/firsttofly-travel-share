@@ -46,7 +46,7 @@ function checkNodeVersion() {
   echo
 
   if [[ "${CURRENT_NODE_VERSION}" != "v${EXPECTED_NODE_VERSION}" ]]; then
-    exit 1
+    return 1
   fi
 }
 

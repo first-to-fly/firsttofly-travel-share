@@ -63,6 +63,4 @@ function main() {
 
 }
 
-main "$@" ||
-  catch "$?" &&
-  finally
+main "$@"

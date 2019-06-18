@@ -18,6 +18,30 @@ function main() {
   NODE_VERSION="$(head -n 1 ./.nvmrc)"
   export NODE_VERSION="${NODE_VERSION}"
 
+  local VENDOR_FOLDER="./node_modules/node-sass/vendor"
+  if [[ -d "${VENDOR_FOLDER}" ]]; then
+
+    local ARCHITECTURE
+    ARCHITECTURE="$(
+      find "${VENDOR_FOLDER}" -depth 1 |
+        head -n 1 |
+        sed \
+          -e 's|\./.*/||' \
+          -e 's|-.*||'
+    )"
+
+    local EXPECTED_ARCHITECTURE="linux_musl"
+
+    if [[ "${ARCHITECTURE}" != "${EXPECTED_ARCHITECTURE}" ]]; then
+      echo "\"node_modules\" architecture is \"${ARCHITECTURE}\". Expect \"${EXPECTED_ARCHITECTURE}\"."
+      (
+        set -x
+        "${BASH_SOURCE[0]%/*}/clean"
+      )
+    fi
+
+  fi
+
   (
     set -x
     docker-compose \
