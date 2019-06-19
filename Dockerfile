@@ -1,14 +1,20 @@
 ARG NODE_VERSION="lts"
 
 
-# ===== Node Builder =====
-FROM node:${NODE_VERSION}-alpine as node_builder
+# ===== Builder =====
+FROM node:${NODE_VERSION}-alpine as builder
+
+WORKDIR /app
 
 RUN \
   apk add \
   --virtual "shared-dependencies" \
   "bash" \
   "ca-certificates"
+
+# Core
+COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
+COPY "./lib/bash/node.sh" "./lib/bash/node.sh"
 
 RUN \
   apk add \
@@ -23,19 +29,19 @@ RUN \
   "python" \
   "wget"
 
-WORKDIR /app
+RUN curl -sfL "https://install.goreleaser.com/github.com/tj/node-prune.sh" | bash
 
 # Install
-COPY "./.nvmrc" "."
-COPY "./package.json" "."
-COPY "./package-lock.json" "."
-COPY "./lib/bash" "./lib/bash"
-COPY "./pipeline" "./pipeline"
+COPY "./.nvmrc" "./.nvmrc"
+COPY "./package.json" "./package.json"
+COPY "./package-lock.json" "./package-lock.json"
+COPY "./pipeline/install" "./pipeline/install"
 RUN ./pipeline/install
 
 # Build
-COPY "./tsconfig.json" "."
+COPY "./tsconfig.json" "./tsconfig.json"
 COPY "./src" "./src"
+COPY "./pipeline/build" "./pipeline/build"
 RUN ./pipeline/build
 
 # Install (Production)
@@ -43,12 +49,13 @@ RUN rm -rf "./node_modules"
 RUN ./pipeline/install --production
 
 # Prune
-RUN curl -sfL "https://install.goreleaser.com/github.com/tj/node-prune.sh" | bash
 RUN ./bin/node-prune "./node_modules"
 
 
 # ===== Production =====
 FROM node:${NODE_VERSION}-alpine
+
+WORKDIR /app
 
 RUN \
   apk add \
@@ -56,16 +63,19 @@ RUN \
   "bash" \
   "ca-certificates"
 
-WORKDIR /app
+# Core
+COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
+COPY "./lib/bash/node.sh" "./lib/bash/node.sh"
 
-COPY "./.nvmrc" "."
-COPY "./package.json" "."
-COPY "./package-lock.json" "."
-COPY "./lib/bash" "./lib/bash"
-COPY "./pipeline" "./pipeline"
+# Run
+COPY "./.nvmrc" "./.nvmrc"
+COPY "./package.json" "./package.json"
+COPY "./package-lock.json" "./package-lock.json"
+COPY "./pipeline/run" "./pipeline/run"
 
-COPY --from=node_builder "/app/node_modules" "./node_modules"
-COPY --from=node_builder "/app/build" "./build"
+# Built
+COPY --from=builder "/app/node_modules" "./node_modules"
+COPY --from=builder "/app/build" "./build"
 
 ENTRYPOINT [ \
   "./pipeline/run" \

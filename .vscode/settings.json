@@ -65,7 +65,7 @@
 
   // Docker
   "[dockerfile]": {
-    "editor.defaultFormatter": "PeterJausovec.vscode-docker"
+    "editor.defaultFormatter": "ms-azuretools.vscode-docker"
   },
 
   // YAML

@@ -2,12 +2,13 @@ ARG NODE_VERSION="lts"
 
 FROM node:${NODE_VERSION}-alpine
 
+WORKDIR /app
+
 RUN \
   apk add \
+  --virtual "shared-dependencies" \
   "bash" \
   "ca-certificates"
-
-WORKDIR /app
 
 ENTRYPOINT [ \
   "./pipeline/debug" \
