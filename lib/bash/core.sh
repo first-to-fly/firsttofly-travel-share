@@ -197,3 +197,7 @@ function dependency() {
 
   fi
 }
+
+function projectKey() {
+  jq --raw-output '.name' "./package.json"
+}
