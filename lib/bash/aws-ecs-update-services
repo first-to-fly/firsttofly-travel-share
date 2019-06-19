@@ -188,10 +188,10 @@ function main() {
             set -x
             aws ecs wait services-stable \
               --cluster "${CLUSTER}" \
-              --services "${SERVICE}" &
-          )
+              --services "${SERVICE}"
+          ) &
 
-          WAIT_PID=$!
+          WAIT_PID="$!"
 
         else
           # Service is deployed with CodeDeploy
@@ -227,7 +227,7 @@ function main() {
               ]
             }
           '
-          echo "APP_SPEC_CONTENT_TEMPLATE = ${APP_SPEC_CONTENT_TEMPLATE}"
+          # echo "APP_SPEC_CONTENT_TEMPLATE = ${APP_SPEC_CONTENT_TEMPLATE}"
 
           local APP_SPEC_CONTENT="${APP_SPEC_CONTENT_TEMPLATE}"
           APP_SPEC_CONTENT="${APP_SPEC_CONTENT//\"/\\\"}"
@@ -268,30 +268,62 @@ function main() {
           )"
           echo "DEPLOYMENT_ID = ${DEPLOYMENT_ID}"
 
+          (
+            while true; do
+              local DEPLOYMENT_STATUS
+              DEPLOYMENT_STATUS="$(
+                aws deploy get-deployment --deployment-id "${DEPLOYMENT_ID}" |
+                  jq --raw-output '.deploymentInfo.status'
+              )"
+              echo "Deployment ${DEPLOYMENT_ID} status is ${DEPLOYMENT_STATUS}..."
+              case "${DEPLOYMENT_STATUS}" in
+              Succeeded | Failed | Stopped)
+                break
+                ;;
+              *)
+                sleep 15s
+                ;;
+              esac
+            done
+          ) &
+
           # A deploy can take ~1 hour, so it's best not to wait!
           # (
           #   set -x
           #   aws deploy wait deployment-successful \
-          #     --deployment-id "${DEPLOYMENT_ID}" &
-          # )
-          # WAIT_PID=$!
+          #     --deployment-id "${DEPLOYMENT_ID}"
+          # ) &
+
+          WAIT_PID="$!"
 
         fi
 
         # Continue
-        WAIT_PIDS="${WAIT_PIDS} ${WAIT_PID}"
+        if [[ -n "${WAIT_PID:-}" ]]; then
+          if [[ -n "${WAIT_PIDS:-}" ]]; then
+            WAIT_PIDS="${WAIT_PIDS} ${WAIT_PID}"
+          else
+            WAIT_PIDS="${WAIT_PID}"
+          fi
+        fi
 
       fi
 
     done
 
     # Wait for all PIDs
-    for WAIT_PID in ${WAIT_PIDS:-}; do
-      (
-        set -x
-        wait "${WAIT_PID}"
-      )
-    done
+    if [[ -n "${WAIT_PIDS:-}" ]]; then
+      for WAIT_PID in ${WAIT_PIDS}; do
+        # (
+        #   set -x
+        #   wait "${WAIT_PID}" Wait often returns error "pid * is not a child of this shell"
+        # )
+        echo "Waiting for process ${WAIT_PID}..."
+        while [ -e "/proc/${WAIT_PID}" ]; do
+          sleep 1s
+        done
+      done
+    fi
 
   done
 
