@@ -1,17 +1,43 @@
-FROM alpine:latest
+ARG VERSION="latest"
 
-RUN \
-  apk add \
-  "bash"
+
+# ===== Builder =====
+FROM alpine:${VERSION} as builder
 
 WORKDIR /app
 
-COPY ./lib/bash ./lib/bash
-COPY ./pipeline ./pipeline
+RUN \
+  apk add \
+  --virtual "shared-dependencies" \
+  "bash"
 
-RUN ./pipeline/install --production
+# Core
+COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
 
-# RUN find . -type f
+# Install
+COPY "./pipeline/install" "./pipeline/install"
+RUN ./pipeline/install
+
+# Build
+COPY "./pipeline/build" "./pipeline/build"
+RUN ./pipeline/build
+
+
+# ===== Production =====
+FROM alpine:${VERSION}
+
+WORKDIR /app
+
+RUN \
+  apk add \
+  --virtual "shared-dependencies" \
+  "bash"
+
+# Core
+COPY "./lib/bash/core.sh" "./lib/bash"
+
+# RUN
+COPY "./pipeline/run" "./pipeline/run"
 
 ENTRYPOINT [ \
   "./pipeline/run" \

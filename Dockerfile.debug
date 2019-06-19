@@ -1,10 +1,13 @@
-FROM alpine:latest
+ARG VERSION="latest"
+
+FROM alpine:${VERSION}
+
+WORKDIR /app
 
 RUN \
   apk add \
+  --virtual "shared-dependencies" \
   "bash"
-
-WORKDIR /app
 
 ENTRYPOINT [ \
   "./pipeline/debug" \
