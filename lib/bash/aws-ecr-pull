@@ -31,7 +31,7 @@ function main() {
   )"
 
   local PROJECT_KEY
-  PROJECT_KEY="myproject"
+  PROJECT_KEY="$(projectKey)"
 
   local GIT_COMMIT_HASH
   GIT_COMMIT_HASH="$(git rev-parse --short HEAD)"

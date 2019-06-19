@@ -197,3 +197,7 @@ function dependency() {
 
   fi
 }
+
+function projectKey() {
+  echo "myproject"
+}

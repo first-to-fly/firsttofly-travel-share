@@ -9,7 +9,7 @@ function main() {
 
   local DOCKER_COMPOSE_FILE="./docker-compose.yml"
 
-  PROJECT_KEY="myproject"
+  PROJECT_KEY="$(projectKey)"
   export PROJECT_KEY="${PROJECT_KEY}"
 
   GIT_COMMIT_HASH="$(git rev-parse --short HEAD)"
