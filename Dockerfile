@@ -34,7 +34,7 @@ RUN \
   "bash"
 
 # Core
-COPY "./lib/bash/core.sh" "./lib/bash"
+COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
 
 # RUN
 COPY "./pipeline/run" "./pipeline/run"
