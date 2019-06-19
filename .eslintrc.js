@@ -13,8 +13,6 @@ const prettierConfig = require("./prettier.config");
 const packageJSON = require("./package.json");
 
 
-const minItems = 2;
-
 module.exports = {
 
   env: {
@@ -86,18 +84,12 @@ module.exports = {
 
     "array-bracket-newline": [
       "error",
-      {
-        multiline: true, // Force newline if there is line-break in-between
-        minItems: minItems, // Force newline if >= items
-      },
+      "consistent",
     ],
 
     "array-element-newline": [
       "error",
-      {
-        multiline: true, // Force newline if there is line-break in-between
-        minItems: minItems, // Force newline if >= items
-      },
+      "consistent",
     ],
 
     // Max-len follows Prettier config
@@ -132,20 +124,20 @@ module.exports = {
       "error",
       {
         ObjectExpression: {
-          minProperties: minItems,
           multiline: true,
+          consistent: true,
         },
         ObjectPattern: {
-          minProperties: minItems,
           multiline: true,
+          consistent: true,
         },
         ImportDeclaration: {
-          minProperties: minItems,
           multiline: true,
+          consistent: true,
         },
         ExportDeclaration: {
-          minProperties: minItems,
           multiline: true,
+          consistent: true,
         },
       },
     ],
