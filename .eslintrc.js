@@ -171,6 +171,18 @@ module.exports = {
       "after",
     ],
 
+    "padded-blocks": [
+      "error",
+      {
+        // blocks: "never", Allows both "if" blocks and function blocks padding
+        classes: "always",
+        switches: "always",
+      },
+      {
+        allowSingleLineBlocks: true,
+      },
+    ],
+
     "padding-line-between-statements": [
       "error",
       {
