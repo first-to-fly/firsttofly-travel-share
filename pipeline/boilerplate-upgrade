@@ -63,6 +63,12 @@ function main() {
         "${REMOTE_NAME}/${BRANCH}"
     )
 
+    (
+      set -x
+      git remote remove \
+        "${REMOTE_NAME}"
+    )
+
   else
     # Current folder is not Git root -> Git subtree
 
