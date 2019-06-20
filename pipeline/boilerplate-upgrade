@@ -65,6 +65,13 @@ function main() {
 
     (
       set -x
+      git submodule update \
+        --init \
+        --recursive
+    )
+
+    (
+      set -x
       git remote remove \
         "${REMOTE_NAME}"
     )
