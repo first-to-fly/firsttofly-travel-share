@@ -8,6 +8,10 @@ function replace() {
   local OLD_TEXT="${1:-}"
   local NEW_TEXT="${2:-}"
 
+  if [[ -z "${NEW_TEXT:-}" ]]; then
+    return 0
+  fi
+
   grep -E --recursive "${OLD_TEXT}" . |
     grep '^\./' |
     grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-init' |
