@@ -9,7 +9,8 @@ WORKDIR /app
 RUN \
   apk add \
   --virtual "shared-dependencies" \
-  "bash"
+  "bash" \
+  "jq"
 
 # Core
 COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
@@ -31,7 +32,8 @@ WORKDIR /app
 RUN \
   apk add \
   --virtual "shared-dependencies" \
-  "bash"
+  "bash" \
+  "jq"
 
 # Core
 COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
