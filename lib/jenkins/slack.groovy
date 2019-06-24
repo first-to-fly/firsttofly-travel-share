@@ -8,7 +8,7 @@ String currentRunDescription() {
 
 void send(Map args) { // String channel, String message, String<good|normal|warning|danger> color, Map fields, Map actions, boolean excludeParams
 
-  def text = "${args.message.replace('#BUILD', currentRunDescription())} [<${RUN_DISPLAY_URL}|Log>]"
+  def text = "${args.message.replace('#BUILD', currentRunDescription())} [<${BUILD_URL}/console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]\nAuthor: ${GIT_AUTHOR}"
   args.actions.each { String key, String value ->
     text = "${text} [<${value}|${key}>]"
   }
