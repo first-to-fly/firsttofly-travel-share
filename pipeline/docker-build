@@ -15,6 +15,10 @@ function main() {
   GIT_COMMIT_HASH="$(git rev-parse --short HEAD)"
   export GIT_COMMIT_HASH="${GIT_COMMIT_HASH}"
 
+  if [[ ! -f "./.env" ]]; then
+    touch "./.env"
+  fi
+
   (
     set -x
     docker-compose \
