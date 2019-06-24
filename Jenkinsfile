@@ -39,7 +39,7 @@ pipeline {
         }
       }}
 
-      env.GIT_AUTHOR = sh label: 'hello',
+      env.GIT_AUTHOR = sh label: 'Find Git Author',
         returnStdout: true,
         script: 'git --no-pager show --format="%aN <%aE>" | head -n 1'
 
