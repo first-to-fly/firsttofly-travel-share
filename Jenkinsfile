@@ -56,6 +56,8 @@ pipeline {
 
     stage('Delivery') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
+      boolean DELIVERED = false
+
       JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
 
         if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
@@ -66,10 +68,15 @@ pipeline {
 
             withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
               sh "./pipeline/deliver"
+              DELIVERED = true
             }
 
           }
         }
+      }
+
+      if (!DELIVERED) {
+        sh "./pipeline/docker-build"
       }
 
     }}}}
