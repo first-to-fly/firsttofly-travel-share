@@ -31,7 +31,6 @@ function pushBranch() {
         set -x
         git clone \
           --branch "${TO_BRANCH}" \
-          --recurse-submodules \
           "${GIT_REMOTE_URL}" \
           "${TEMP_DIR}"
       )
