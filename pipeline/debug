@@ -9,7 +9,9 @@ function main() {
 
   if [[ -z "${ENVKEY:-}" && -f "./.env" ]]; then
     while IFS='' read -r LINE; do
-      export "${LINE?}"
+      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
+        export "${LINE?}"
+      fi
     done <"./.env"
   fi
 
