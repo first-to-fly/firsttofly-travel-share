@@ -18,6 +18,10 @@ function main() {
   NODE_VERSION="$(head -n 1 ./.nvmrc)"
   export NODE_VERSION="${NODE_VERSION}"
 
+  if [[ ! -f "./.env" ]]; then
+    touch "./.env"
+  fi
+
   (
     set -x
     docker-compose \
