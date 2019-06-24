@@ -115,7 +115,7 @@ function logFormat() {
 
     if [[ -n "${1:-}" && "${1:-}" == "--error" ]]; then
 
-      if [[ "${LINE}" == "+ "* ]]; then
+      if [[ "${LINE}" == [+]*" "* ]]; then
         echo
         echo -e "${BOLD_COLOR}${LINE} ${NO_COLOR}"
         echo
@@ -169,11 +169,29 @@ function dependency() {
           set -x
           brew install "envkey"
         )
+        echo
       else
         (
           set -x
           curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
         )
+      fi
+      ;;
+    jq)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "jq"
+        )
+        echo
+      elif command -v "apt-get" >/dev/null; then
+        (
+          set -x
+          sudo apt-get install "jq"
+        )
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
       fi
       ;;
     terraform)
@@ -182,6 +200,7 @@ function dependency() {
           set -x
           brew install "terraform"
         )
+        echo
       fi
       ;;
     *)
@@ -197,6 +216,8 @@ function dependency() {
 
   fi
 }
+
+dependency "jq"
 
 function projectKey() {
   echo "myproject"
