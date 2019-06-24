@@ -10,7 +10,8 @@ RUN \
   apk add \
   --virtual "shared-dependencies" \
   "bash" \
-  "ca-certificates"
+  "ca-certificates" \
+  "jq"
 
 # Core
 COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
@@ -61,7 +62,8 @@ RUN \
   apk add \
   --virtual "shared-dependencies" \
   "bash" \
-  "ca-certificates"
+  "ca-certificates" \
+  "jq"
 
 # Core
 COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
