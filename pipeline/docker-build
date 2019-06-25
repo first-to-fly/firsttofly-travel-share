@@ -27,6 +27,11 @@ function main() {
       --parallel
   )
 
+  (
+    set -x
+    docker system prune --force
+  )
+
 }
 
 main "$@"
