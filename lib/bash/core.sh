@@ -117,12 +117,12 @@ function logFormat() {
 
       if [[ "${LINE}" == [+]*" "* ]]; then
         echo
-        echo -e "${BOLD_COLOR}${LINE} ${NO_COLOR}"
+        echo -e "${BOLD_COLOR} ${LINE} ${NO_COLOR}"
         echo
         continue
       fi
 
-      echo -e "${ERROR_COLOR}STDERR ${NO_COLOR}${LINE} ${NO_COLOR}"
+      echo -e "${ERROR_COLOR}STDERR${NO_COLOR} ${LINE} ${NO_COLOR}"
       continue
 
     fi
@@ -139,7 +139,7 @@ function logFormat() {
 
     PREFIX="${PREFIX}${SCRIPT_PATH} "
 
-    echo -e "${PREFIX}${NO_COLOR}${LINE} ${NO_COLOR}"
+    echo -e "${PREFIX}${NO_COLOR} ${LINE} ${NO_COLOR}"
 
   done
 }
