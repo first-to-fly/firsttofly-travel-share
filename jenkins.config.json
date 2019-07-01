@@ -2,6 +2,7 @@
   "deployEnvkey": {
     ".*": []
   },
+  "testEnvkey": "",
   "slack": {
     "channel": "jenkins"
   }
