@@ -110,12 +110,6 @@ module.exports = {
     // Allows "console" in code. These should be removed automatically in production.
     "no-console": "off",
 
-    // Example: fail when:
-    // import { merge } from 'module';
-    // import something from 'another-module';
-    // import { find } from 'module';
-    "no-duplicate-imports": "error",
-
     // Allows "_foo" - classes' private vars
     "no-underscore-dangle": "off",
 
@@ -139,11 +133,11 @@ module.exports = {
         },
         ImportDeclaration: {
           multiline: true,
-          minProperties: 2,
+          consistent: true,
         },
         ExportDeclaration: {
           multiline: true,
-          minProperties: 2,
+          consistent: true,
         },
       },
     ],
