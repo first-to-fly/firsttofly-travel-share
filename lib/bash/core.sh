@@ -222,3 +222,7 @@ dependency "jq"
 function projectKey() {
   echo "myproject"
 }
+
+if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
+  git config "core.hooksPath" ".githooks"
+fi
