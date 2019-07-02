@@ -10,6 +10,10 @@ function main() {
 
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
+  if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
+    git config "core.hooksPath" ".githooks"
+  fi
+
   NPM="$(command -v npm)"
 
   (
