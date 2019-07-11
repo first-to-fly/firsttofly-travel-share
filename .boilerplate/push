@@ -111,6 +111,17 @@ function main() {
 
   pushBranch "${GIT_BRANCH}"
 
+  # Clean up
+  (
+    find /var/folders -type d -name ".boilerplate" 2>/dev/null ||
+      true
+  ) | while IFS="" read -r BOILERPLATE_FOLDER; do
+    (
+      set -x
+      rm -rf "${BOILERPLATE_FOLDER%/*}"
+    )
+  done
+
 }
 
 main "$@"
