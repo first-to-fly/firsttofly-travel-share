@@ -27,15 +27,16 @@ function pushBranch() {
       local TEMP_DIR
       TEMP_DIR="$(mktemp -d)"
 
+      local PROJECT_DIR="${PWD}"
+
       (
         set -x
         git clone \
+          --reference "${PROJECT_DIR}" \
           --branch "${TO_BRANCH}" \
           "${GIT_REMOTE_URL}" \
           "${TEMP_DIR}"
       )
-
-      local PROJECT_DIR="${PWD}"
 
       cd "${TEMP_DIR}" || return
 
@@ -99,6 +100,14 @@ function main() {
     echo "${GIT_UNPUSHED_COMMITS}" >&2
     return 1
   fi
+
+  (
+    set -x
+    git fetch \
+      --tags \
+      --prune \
+      "origin"
+  )
 
   pushBranch "${GIT_BRANCH}"
 
