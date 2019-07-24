@@ -14,7 +14,10 @@ function main() {
 
   (
     set -x
-    "${NPM}" install "$@"
+    # "--unsafe-perm" is required, else postinstall won't run during Docker build
+    "${NPM}" install \
+      --unsafe-perm \
+      "$@"
   )
 
 }
