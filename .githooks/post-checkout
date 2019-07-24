@@ -23,9 +23,17 @@ function main() {
     echo "JIRA-123 - Message" >"${COMMIT_TEMPLATE_FILE}"
   fi
 
-  git config commit.template "${COMMIT_TEMPLATE_FILE}"
+  (
+    set -x
+    git config commit.template "${COMMIT_TEMPLATE_FILE}"
+  )
 
-  git submodule update --init --recursive
+  cat "${COMMIT_TEMPLATE_FILE}"
+
+  (
+    set -x
+    git submodule update --init --recursive
+  )
 
 }
 
