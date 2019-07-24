@@ -36,6 +36,7 @@ RUN curl -sfL "https://install.goreleaser.com/github.com/tj/node-prune.sh" | bas
 COPY "./.nvmrc" "./.nvmrc"
 COPY "./package.json" "./package.json"
 COPY "./package-lock.json" "./package-lock.json"
+COPY "./patches" "./patches"
 COPY "./pipeline/install" "./pipeline/install"
 RUN ./pipeline/install
 
