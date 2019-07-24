@@ -25,6 +25,8 @@ function main() {
 
   git config commit.template "${COMMIT_TEMPLATE_FILE}"
 
+  git submodule update --init --recursive
+
 }
 
 main "$@"
