@@ -26,7 +26,7 @@ function main() {
 
   (
     set -x
-    "${NPM}" run dev
+    "${NPM}" run dev "$@"
   )
 
 }
