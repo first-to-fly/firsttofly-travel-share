@@ -6,102 +6,200 @@ set -o pipefail # Catch mysqldump fails
 set -o nounset  # Exit when using undeclared variables
 
 # Colors
-# shellcheck disable=SC2034
-NO_COLOR="\033[0m"
-# shellcheck disable=SC2034
-BOLD_COLOR="\033[1m"
-# shellcheck disable=SC2034
-DIM_COLOR="\033[2m"
-# shellcheck disable=SC2034
-UNDERLINED_COLOR="\033[4m"
-# shellcheck disable=SC2034
-BLINK_COLOR="\033[5m"
-# shellcheck disable=SC2034
-INVERTED_COLOR="\033[7m"
-# shellcheck disable=SC2034
-HIDDEN_COLOR="\033[8m"
+if [[ -n "${BOILERPLATE_NO_COLOR:-}" ]]; then
 
-# shellcheck disable=SC2034
-DEFAULT_COLOR="\033[39m"
-# shellcheck disable=SC2034
-BLACK_COLOR="\033[30m"
-# shellcheck disable=SC2034
-RED_COLOR="\033[31m"
-# shellcheck disable=SC2034
-GREEN_COLOR="\033[32m"
-# shellcheck disable=SC2034
-YELLOW_COLOR="\033[33m"
-# shellcheck disable=SC2034
-BLUE_COLOR="\033[34m"
-# shellcheck disable=SC2034
-MAGENTA_COLOR="\033[35m"
-# shellcheck disable=SC2034
-CYAN_COLOR="\033[36m"
-# shellcheck disable=SC2034
-LIGHT_GRAY_COLOR="\033[37m"
-# shellcheck disable=SC2034
-DARK_GRAY_COLOR="\033[90m"
-# shellcheck disable=SC2034
-LIGHT_RED_COLOR="\033[91m"
-# shellcheck disable=SC2034
-LIGHT_GREEN_COLOR="\033[92m"
-# shellcheck disable=SC2034
-LIGHT_YELLO_COLOR="\033[93m"
-# shellcheck disable=SC2034
-LIGHT_BLUE_COLOR="\033[94m"
-# shellcheck disable=SC2034
-LIGHT_MAGENTA_COLOR="\033[95m"
-# shellcheck disable=SC2034
-LIGHT_CYAN_COLOR="\033[96m"
-# shellcheck disable=SC2034
-WHITE_COLOR="\033[97m"
+  # shellcheck disable=SC2034
+  NO_COLOR=""
+  # shellcheck disable=SC2034
+  BOLD_COLOR=""
+  # shellcheck disable=SC2034
+  DIM_COLOR=""
+  # shellcheck disable=SC2034
+  UNDERLINED_COLOR=""
+  # shellcheck disable=SC2034
+  BLINK_COLOR=""
+  # shellcheck disable=SC2034
+  INVERTED_COLOR=""
+  # shellcheck disable=SC2034
+  HIDDEN_COLOR=""
 
-# shellcheck disable=SC2034
-BG_DEFAULT_COLOR="\033[49m"
-# shellcheck disable=SC2034
-BG_BLACK_COLOR="\033[40m"
-# shellcheck disable=SC2034
-BG_RED_COLOR="\033[41m"
-# shellcheck disable=SC2034
-BG_GREEN_COLOR="\033[42m"
-# shellcheck disable=SC2034
-BG_YELLOW_COLOR="\033[43m"
-# shellcheck disable=SC2034
-BG_BLUE_COLOR="\033[44m"
-# shellcheck disable=SC2034
-BG_MAGENTA_COLOR="\033[45m"
-# shellcheck disable=SC2034
-BG_CYAN_COLOR="\033[46m"
-# shellcheck disable=SC2034
-BG_LIGHT_GRAY_COLOR="\033[47m"
-# shellcheck disable=SC2034
-BG_DARK_GRAY_COLOR="\033[100m"
-# shellcheck disable=SC2034
-BG_LIGHT_RED_COLOR="\033[101m"
-# shellcheck disable=SC2034
-BG_LIGHT_GREEN_COLOR="\033[102m"
-# shellcheck disable=SC2034
-BG_LIGHT_YELLOW_COLOR="\033[103m"
-# shellcheck disable=SC2034
-BG_LIGHT_BLUE_COLOR="\033[104m"
-# shellcheck disable=SC2034
-BG_LIGHT_MAGENTA_COLOR="\033[105m"
-# shellcheck disable=SC2034
-BG_LIGHT_CYAN_COLOR="\033[106m"
-# shellcheck disable=SC2034
-BG_WHITE_COLOR="\033[107m"
+  # shellcheck disable=SC2034
+  DEFAULT_COLOR=""
+  # shellcheck disable=SC2034
+  BLACK_COLOR=""
+  # shellcheck disable=SC2034
+  RED_COLOR=""
+  # shellcheck disable=SC2034
+  GREEN_COLOR=""
+  # shellcheck disable=SC2034
+  YELLOW_COLOR=""
+  # shellcheck disable=SC2034
+  BLUE_COLOR=""
+  # shellcheck disable=SC2034
+  MAGENTA_COLOR=""
+  # shellcheck disable=SC2034
+  CYAN_COLOR=""
+  # shellcheck disable=SC2034
+  LIGHT_GRAY_COLOR=""
+  # shellcheck disable=SC2034
+  DARK_GRAY_COLOR=""
+  # shellcheck disable=SC2034
+  LIGHT_RED_COLOR=""
+  # shellcheck disable=SC2034
+  LIGHT_GREEN_COLOR=""
+  # shellcheck disable=SC2034
+  LIGHT_YELLO_COLOR=""
+  # shellcheck disable=SC2034
+  LIGHT_BLUE_COLOR=""
+  # shellcheck disable=SC2034
+  LIGHT_MAGENTA_COLOR=""
+  # shellcheck disable=SC2034
+  LIGHT_CYAN_COLOR=""
+  # shellcheck disable=SC2034
+  WHITE_COLOR=""
 
-# shellcheck disable=SC2034
-OK_COLOR="${GREEN_COLOR}"
-# shellcheck disable=SC2034
-ERROR_COLOR="${RED_COLOR}"
-# shellcheck disable=SC2034
-WARN_COLOR="${YELLOW_COLOR}"
+  # shellcheck disable=SC2034
+  BG_DEFAULT_COLOR=""
+  # shellcheck disable=SC2034
+  BG_BLACK_COLOR=""
+  # shellcheck disable=SC2034
+  BG_RED_COLOR=""
+  # shellcheck disable=SC2034
+  BG_GREEN_COLOR=""
+  # shellcheck disable=SC2034
+  BG_YELLOW_COLOR=""
+  # shellcheck disable=SC2034
+  BG_BLUE_COLOR=""
+  # shellcheck disable=SC2034
+  BG_MAGENTA_COLOR=""
+  # shellcheck disable=SC2034
+  BG_CYAN_COLOR=""
+  # shellcheck disable=SC2034
+  BG_LIGHT_GRAY_COLOR=""
+  # shellcheck disable=SC2034
+  BG_DARK_GRAY_COLOR=""
+  # shellcheck disable=SC2034
+  BG_LIGHT_RED_COLOR=""
+  # shellcheck disable=SC2034
+  BG_LIGHT_GREEN_COLOR=""
+  # shellcheck disable=SC2034
+  BG_LIGHT_YELLOW_COLOR=""
+  # shellcheck disable=SC2034
+  BG_LIGHT_BLUE_COLOR=""
+  # shellcheck disable=SC2034
+  BG_LIGHT_MAGENTA_COLOR=""
+  # shellcheck disable=SC2034
+  BG_LIGHT_CYAN_COLOR=""
+  # shellcheck disable=SC2034
+  BG_WHITE_COLOR=""
+
+  # shellcheck disable=SC2034
+  OK_COLOR=""
+  # shellcheck disable=SC2034
+  ERROR_COLOR=""
+  # shellcheck disable=SC2034
+  WARN_COLOR=""
+
+else
+
+  # shellcheck disable=SC2034
+  NO_COLOR="\033[0m"
+  # shellcheck disable=SC2034
+  BOLD_COLOR="\033[1m"
+  # shellcheck disable=SC2034
+  DIM_COLOR="\033[2m"
+  # shellcheck disable=SC2034
+  UNDERLINED_COLOR="\033[4m"
+  # shellcheck disable=SC2034
+  BLINK_COLOR="\033[5m"
+  # shellcheck disable=SC2034
+  INVERTED_COLOR="\033[7m"
+  # shellcheck disable=SC2034
+  HIDDEN_COLOR="\033[8m"
+
+  # shellcheck disable=SC2034
+  DEFAULT_COLOR="\033[39m"
+  # shellcheck disable=SC2034
+  BLACK_COLOR="\033[30m"
+  # shellcheck disable=SC2034
+  RED_COLOR="\033[31m"
+  # shellcheck disable=SC2034
+  GREEN_COLOR="\033[32m"
+  # shellcheck disable=SC2034
+  YELLOW_COLOR="\033[33m"
+  # shellcheck disable=SC2034
+  BLUE_COLOR="\033[34m"
+  # shellcheck disable=SC2034
+  MAGENTA_COLOR="\033[35m"
+  # shellcheck disable=SC2034
+  CYAN_COLOR="\033[36m"
+  # shellcheck disable=SC2034
+  LIGHT_GRAY_COLOR="\033[37m"
+  # shellcheck disable=SC2034
+  DARK_GRAY_COLOR="\033[90m"
+  # shellcheck disable=SC2034
+  LIGHT_RED_COLOR="\033[91m"
+  # shellcheck disable=SC2034
+  LIGHT_GREEN_COLOR="\033[92m"
+  # shellcheck disable=SC2034
+  LIGHT_YELLO_COLOR="\033[93m"
+  # shellcheck disable=SC2034
+  LIGHT_BLUE_COLOR="\033[94m"
+  # shellcheck disable=SC2034
+  LIGHT_MAGENTA_COLOR="\033[95m"
+  # shellcheck disable=SC2034
+  LIGHT_CYAN_COLOR="\033[96m"
+  # shellcheck disable=SC2034
+  WHITE_COLOR="\033[97m"
+
+  # shellcheck disable=SC2034
+  BG_DEFAULT_COLOR="\033[49m"
+  # shellcheck disable=SC2034
+  BG_BLACK_COLOR="\033[40m"
+  # shellcheck disable=SC2034
+  BG_RED_COLOR="\033[41m"
+  # shellcheck disable=SC2034
+  BG_GREEN_COLOR="\033[42m"
+  # shellcheck disable=SC2034
+  BG_YELLOW_COLOR="\033[43m"
+  # shellcheck disable=SC2034
+  BG_BLUE_COLOR="\033[44m"
+  # shellcheck disable=SC2034
+  BG_MAGENTA_COLOR="\033[45m"
+  # shellcheck disable=SC2034
+  BG_CYAN_COLOR="\033[46m"
+  # shellcheck disable=SC2034
+  BG_LIGHT_GRAY_COLOR="\033[47m"
+  # shellcheck disable=SC2034
+  BG_DARK_GRAY_COLOR="\033[100m"
+  # shellcheck disable=SC2034
+  BG_LIGHT_RED_COLOR="\033[101m"
+  # shellcheck disable=SC2034
+  BG_LIGHT_GREEN_COLOR="\033[102m"
+  # shellcheck disable=SC2034
+  BG_LIGHT_YELLOW_COLOR="\033[103m"
+  # shellcheck disable=SC2034
+  BG_LIGHT_BLUE_COLOR="\033[104m"
+  # shellcheck disable=SC2034
+  BG_LIGHT_MAGENTA_COLOR="\033[105m"
+  # shellcheck disable=SC2034
+  BG_LIGHT_CYAN_COLOR="\033[106m"
+  # shellcheck disable=SC2034
+  BG_WHITE_COLOR="\033[107m"
+
+  # shellcheck disable=SC2034
+  OK_COLOR="${GREEN_COLOR}"
+  # shellcheck disable=SC2034
+  ERROR_COLOR="${RED_COLOR}"
+  # shellcheck disable=SC2034
+  WARN_COLOR="${YELLOW_COLOR}"
+
+fi
 
 # Output
 function logFormat() {
 
-  local LOCAL_SHOULD_LOG_TIME="${SHOULD_LOG_TIME:-}"
+  local LOCAL_BOILERPLATE_LOG_TIME="${BOILERPLATE_LOG_TIME:-}"
 
   SCRIPT_PATH=""
   for BASH_SOURCE_ITEM in "${BASH_SOURCE[@]}"; do
@@ -129,7 +227,7 @@ function logFormat() {
 
     local PREFIX=""
 
-    if [[ -n "${LOCAL_SHOULD_LOG_TIME}" ]]; then
+    if [[ -n "${LOCAL_BOILERPLATE_LOG_TIME}" ]]; then
       local TIME
       TIME="$(
         date +"%Y-%m-%d %H:%M:%S %Z"

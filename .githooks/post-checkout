@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+
+export BOILERPLATE_NO_COLOR="true"
+
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+function main() {
+
+  local CURRENT_BRANCH
+  CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+  local JIRA_ISSUE_ID
+  JIRA_ISSUE_ID="$(
+    echo "${CURRENT_BRANCH}" |
+      sed -E "s|^.*/([A-Z]+-[0-9]+)-.*$|\1|"
+  )"
+
+  local COMMIT_TEMPLATE_FILE="${PWD}/.git/commit_msg_template.txt"
+  if [[ -n "${JIRA_ISSUE_ID}" && "${JIRA_ISSUE_ID}" != "${CURRENT_BRANCH}" ]]; then
+    echo "${JIRA_ISSUE_ID} - Message" >"${COMMIT_TEMPLATE_FILE}"
+  else
+    echo "JIRA-123 - Message" >"${COMMIT_TEMPLATE_FILE}"
+  fi
+
+  git config commit.template "${COMMIT_TEMPLATE_FILE}"
+
+}
+
+main "$@"

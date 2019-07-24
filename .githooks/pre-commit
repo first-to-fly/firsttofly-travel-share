@@ -1,3 +1,14 @@
 #!/usr/bin/env bash
 
-"${BASH_SOURCE[0]%/*}/../pipeline/lint"
+export BOILERPLATE_NO_COLOR="true"
+
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+function main() {
+
+  "${BASH_SOURCE[0]%/*}/../pipeline/lint"
+
+}
+
+main "$@"
