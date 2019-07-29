@@ -9,7 +9,7 @@
       "request": "launch",
       "name": "Debug",
       "runtimeExecutable": "${workspaceFolder}/pipeline/debug",
-      "console": "integratedTerminal",
+      "console": "internalConsole",
       "port": 9229
     }
   ]
