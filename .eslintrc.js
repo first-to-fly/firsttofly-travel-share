@@ -200,6 +200,8 @@ module.exports = {
       { count: 2 },
     ],
 
+    "import/prefer-default-export": "off",
+
     // ==> eslint-plugin-react
 
     // Disable "JSX not allowed in files with extension '.tsx'" warnings
