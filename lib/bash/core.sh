@@ -256,6 +256,10 @@ function dependency() {
 
   local DEPENDENCY_NAME="${1:-}"
 
+  if [[ "${PATH}" != *"/usr/local/bin"* ]]; then
+    export PATH="/usr/local/bin:${PATH}"
+  fi
+
   if ! command -v "${DEPENDENCY_NAME}" >/dev/null; then
 
     echo "Dependency \"${DEPENDENCY_NAME}\" not found."
