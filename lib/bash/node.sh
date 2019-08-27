@@ -41,6 +41,9 @@ function checkNodeVersion() {
 
     echo "$PATH"
 
+    command -v node
+    node -v
+
     CURRENT_NODE_VERSION="$(node -v)"
 
   fi
