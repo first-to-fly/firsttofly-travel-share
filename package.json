@@ -6,8 +6,8 @@
   "main": "./src",
   "scripts": {
     "postinstall": "patch-package && npm uninstall --no-save patch-package",
-    "dev": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:9229 --require ts-node/register ./src",
-    "build": "tsc",
+    "dev": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:9229 --require ts-node/register --require tsconfig-paths/register ./src",
+    "build": "rm -rf ./build && tsc && find './build' -name '*.js' -exec sed -i.bak 's|require(\"@nabstudio/|require(\"./@nabstudio/|g' {} \\; && find './build' -name '*.js.bak' -exec rm -rf {} \\;",
     "start": "NODE_ENV=production node ./build",
     "lint:js": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:css": "stylelint --allow-empty-input \"./src/**/*.{css,less,scss,sss}\"",
@@ -30,6 +30,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^5.0.0",
+    "eslint-import-resolver-alias": "^1.1.2",
     "eslint-plugin-css-modules": "^2.11.0",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
@@ -51,6 +52,7 @@
     "stylelint-config-standard": "^18.3.0",
     "stylelint-scss": "^3.8.0",
     "ts-node": "^8.3.0",
+    "tsconfig-paths": "^3.8.0",
     "typed-scss-modules": "^0.0.10",
     "typescript": "^3.5.2"
   }

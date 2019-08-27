@@ -277,7 +277,10 @@ module.exports = {
 
     // ==> eslint-plugin-import
     "import/resolver": {
-      node: {
+      alias: {
+        map: [
+          ["@nabstudio", "./src/@nabstudio"],
+        ],
         extensions: [
           ".js",
           ".jsx",
