@@ -37,7 +37,10 @@ function checkNodeVersion() {
       fnm use "${EXPECTED_NODE_VERSION}"
     )
 
-    eval "$(fnm env --multi)"
+    (
+      set -x
+      eval "$(fnm env --multi)"
+    )
 
     CURRENT_NODE_VERSION="$(node -v)"
 
