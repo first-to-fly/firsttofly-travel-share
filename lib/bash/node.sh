@@ -37,6 +37,17 @@ function checkNodeVersion() {
       fnm use "${EXPECTED_NODE_VERSION}"
     )
 
+    eval "$(
+      fnm env \
+        --multi \
+        --use-on-cd
+    )"
+
+    echo "$PATH"
+
+    command -v node
+    node -v
+
     CURRENT_NODE_VERSION="$(node -v)"
 
   fi
@@ -44,7 +55,7 @@ function checkNodeVersion() {
   echo
 
   if [[ "${CURRENT_NODE_VERSION}" != "v${EXPECTED_NODE_VERSION}" ]]; then
-    echo "Expect NodeJS version ${EXPECTED_NODE_VERSION} but have ${CURRENT_NODE_VERSION}." >&2
+    echo "After installing, expect NodeJS version ${EXPECTED_NODE_VERSION} but have ${CURRENT_NODE_VERSION}." >&2
     return 1
   fi
 }
