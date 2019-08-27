@@ -32,8 +32,6 @@ function checkNodeVersion() {
       )
     fi
 
-    fnm use "${EXPECTED_NODE_VERSION}"
-
     eval "$(fnm env --multi --use-on-cd)"
 
     echo "$PATH"
