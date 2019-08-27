@@ -32,10 +32,9 @@ function checkNodeVersion() {
       )
     fi
 
-    (
-      set -x
-      fnm use "${EXPECTED_NODE_VERSION}"
-    )
+    fnm use "${EXPECTED_NODE_VERSION}"
+
+    eval "$(fnm env)"
 
     echo "$PATH"
     command -v node
