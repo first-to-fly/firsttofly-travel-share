@@ -37,10 +37,7 @@ function checkNodeVersion() {
       fnm use "${EXPECTED_NODE_VERSION}"
     )
 
-    (
-      set -x
-      eval "$(fnm env --multi)"
-    )
+    eval "$(fnm env --multi)"
 
     CURRENT_NODE_VERSION="$(node -v)"
 
@@ -49,6 +46,7 @@ function checkNodeVersion() {
   echo
 
   if [[ "${CURRENT_NODE_VERSION}" != "v${EXPECTED_NODE_VERSION}" ]]; then
+    echo "Expect NodeJS version ${EXPECTED_NODE_VERSION} but have ${CURRENT_NODE_VERSION}." >&2
     return 1
   fi
 }
