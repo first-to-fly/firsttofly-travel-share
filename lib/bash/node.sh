@@ -39,6 +39,8 @@ function checkNodeVersion() {
 
     eval "$(fnm env --multi)"
 
+    echo "$PATH"
+
     CURRENT_NODE_VERSION="$(node -v)"
 
   fi
