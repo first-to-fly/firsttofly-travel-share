@@ -2,7 +2,7 @@
 
 function checkNodeVersion() {
 
-  EXPECTED_NODE_VERSION="$(head -n 1 ./.nvmrc)"
+  EXPECTED_NODE_VERSION="$(head -n 1 ./.node-version)"
   CURRENT_NODE_VERSION="$(node -v)"
 
   if [[ "${CURRENT_NODE_VERSION}" != "v${EXPECTED_NODE_VERSION}" ]]; then

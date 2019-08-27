@@ -33,7 +33,7 @@ RUN \
 RUN curl -sfL "https://install.goreleaser.com/github.com/tj/node-prune.sh" | bash
 
 # Install
-COPY "./.nvmrc" "./.nvmrc"
+COPY "./.node-version" "./.node-version"
 COPY "./package.json" "./package.json"
 COPY "./package-lock.json" "./package-lock.json"
 COPY "./patches" "./patches"
@@ -71,7 +71,7 @@ COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
 COPY "./lib/bash/node.sh" "./lib/bash/node.sh"
 
 # Run
-COPY "./.nvmrc" "./.nvmrc"
+COPY "./.node-version" "./.node-version"
 COPY "./package.json" "./package.json"
 COPY "./package-lock.json" "./package-lock.json"
 COPY "./pipeline/run" "./pipeline/run"
