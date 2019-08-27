@@ -24,6 +24,8 @@ function checkNodeVersion() {
       fi
     fi
 
+    eval "$(fnm env --multi)"
+
     # Check if expected version is already installed
     if ! fnm ls | grep "${EXPECTED_NODE_VERSION}" >/dev/null; then
       (
@@ -32,7 +34,7 @@ function checkNodeVersion() {
       )
     fi
 
-    eval "$(fnm env --multi --use-on-cd)"
+    fnm use "${EXPECTED_NODE_VERSION}"
 
     echo "$PATH"
     command -v node
