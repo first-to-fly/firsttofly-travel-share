@@ -135,10 +135,5 @@
     { "language": "javascriptreact", "autoFix": true },
     { "language": "typescript", "autoFix": true },
     { "language": "typescriptreact", "autoFix": true }
-  ],
-
-  // Prettier
-  "prettier.eslintIntegration": true,
-  "prettier.tslintIntegration": false, // Use ESLint for TypeScript files
-  "prettier.stylelintIntegration": true
+  ]
 }
