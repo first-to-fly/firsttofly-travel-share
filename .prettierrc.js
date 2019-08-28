@@ -12,16 +12,16 @@ module.exports = {
   semi: true,
 
   // 'foo' -> less string processing for most languages
-  singleQuote: true,
+  singleQuote: false,
 
   // { foo: ... } -> better property autocompletion
-  quoteProps: 'as-needed',
+  quoteProps: "as-needed",
 
   // 'foo' -> less string processing
   jsxSingleQuote: true,
 
   // -> better Git line diff
-  trailingComma: 'all',
+  trailingComma: "all",
 
   // { foo: bar } -> cleaner code
   bracketSpacing: true,
@@ -30,15 +30,15 @@ module.exports = {
   jsxBracketSameLine: false,
 
   // foo => {} -> cleaner code
-  arrowParens: 'avoid',
+  arrowParens: "avoid",
 
   // Format files with & without pragma
   requirePragma: false,
   insertPragma: false,
 
   // -> format does not break visible HTML
-  htmlWhitespaceSensitivity: 'css',
+  htmlWhitespaceSensitivity: "css",
 
   // Only "\n" -> simpler line-splitting in scripts
-  endOfLine: 'lf',
+  endOfLine: "lf",
 };
