@@ -9,7 +9,7 @@
 // CommonJS
 /* eslint-disable @typescript-eslint/no-var-requires */
 
-const prettierConfig = require("./prettier.config");
+const prettierConfig = require("./.prettierrc.js");
 const packageJSON = require("./package.json");
 
 
