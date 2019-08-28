@@ -14,12 +14,37 @@ function main() {
 
   echo -e "${OK_COLOR}==> Building app..."
 
+  (
+    set -x
+    rm -rf "./build"
+  )
+
   NPM="$(command -v npm)"
 
   (
     set -x
     "${NPM}" run build
   )
+
+  # Fix module alias (for ts-node)
+  find "./build" -name "*.js" |
+    while IFS="" read -r FILE; do
+
+      (grep -E 'require\("@nabstudio/' <"${FILE}" || true) |
+        sed \
+          -e 's|^.*require("@nabstudio/|@nabstudio/|g' \
+          -e 's|".*$||g' |
+        while IFS="" read -r MODULE; do
+          if [[ -e "./build/${MODULE}" ]]; then
+            sed -i.bak "s|require(\"${MODULE}\")|require(\"./${MODULE}\")|g" "${FILE}"
+          fi
+        done
+
+      sed -i.bak 's|require(\"@/|require(\"./|g' "${FILE}"
+
+      rm -rf "${FILE}.bak"
+
+    done
 
 }
 

@@ -7,7 +7,7 @@
   "scripts": {
     "postinstall": "patch-package && npm uninstall --no-save patch-package",
     "dev": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:9229 --require ts-node/register --require tsconfig-paths/register ./src",
-    "build": "rm -rf ./build && tsc && find './build' -name '*.js' -exec sed -i.bak 's|require(\"@nabstudio/|require(\"./@nabstudio/|g' {} \\; && find './build' -name '*.js.bak' -exec rm -rf {} \\;",
+    "build": "tsc",
     "start": "NODE_ENV=production node ./build",
     "lint:js": "eslint \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:css": "stylelint --allow-empty-input \"./src/**/*.{css,less,scss,sss}\"",

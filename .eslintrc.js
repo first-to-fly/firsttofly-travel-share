@@ -280,6 +280,7 @@ module.exports = {
       alias: {
         map: [
           ["@nabstudio", "./src/@nabstudio"],
+          ["@", "./src"],
         ],
         extensions: [
           ".js",
