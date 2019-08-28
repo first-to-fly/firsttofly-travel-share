@@ -3,7 +3,7 @@
 build/
 
 # NodeJS (due to large number of files)
-node_modules
+node_modules/
 
 # nyc
-.nyc_output
+.nyc_output/
