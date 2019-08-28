@@ -74,6 +74,8 @@ module.exports = {
     //   "Definition for rule 'prettier/prettier' was not found."
 
     "react",
+
+    "simple-import-sort",
   ],
 
   rules: {
@@ -192,6 +194,10 @@ module.exports = {
       },
     ],
 
+    // Conflicts with "import/order"
+    // => Use "eslint-plugin-simple-import-sort"
+    "sort-imports": "off",
+
     // ==> eslint-plugin-import
 
     // Always add 2 lines after every import block
@@ -199,6 +205,10 @@ module.exports = {
       "error",
       { count: 2 },
     ],
+
+    // Conflicts with "sort-imports"
+    // => Use "eslint-plugin-simple-import-sort"
+    "import/order": "off",
 
     "import/prefer-default-export": "off",
 
@@ -221,6 +231,14 @@ module.exports = {
     "react/jsx-one-expression-per-line": "off",
 
     // ==> @typescript-eslint
+
+    "@typescript-eslint/explicit-function-return-type": "off",
+
+    // Only explicit non-publics (private, ...)
+    "@typescript-eslint/explicit-member-accessibility": [
+      "error",
+      { accessibility: "no-public" },
+    ],
 
     // Overrides 'indent', follow AirBnB's
     "@typescript-eslint/indent": [
@@ -262,15 +280,12 @@ module.exports = {
       },
     ],
 
-    // Only explicit non-publics (private, ...)
-    "@typescript-eslint/explicit-member-accessibility": [
-      "error",
-      { accessibility: "no-public" },
-    ],
-
     // ==> prettier
     // 'prettier/prettier': 'warn',
     // WHY DON'T? See "extends" and "plugins".
+
+    // ==> simple-import-sort
+    "simple-import-sort/sort": "warn",
   },
 
   settings: {
