@@ -1,6 +1,7 @@
 # Config file is ignored by default
 !*.eslintrc.js
 
-node_modules
-**/node_modules
-build
+build/
+node_modules/
+**/node_modules/
+.nyc_output/
