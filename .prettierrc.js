@@ -12,7 +12,7 @@ module.exports = {
   semi: true,
 
   // 'foo' -> less string processing for most languages
-  singleQuote: true,
+  singleQuote: false,
 
   // { foo: ... } -> better property autocompletion
   quoteProps: "as-needed",
