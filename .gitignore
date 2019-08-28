@@ -3,4 +3,4 @@
 build/
 
 # NodeJS (due to large number of files)
-node_modules
+node_modules/
