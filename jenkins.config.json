@@ -1,8 +1,24 @@
 {
   "deployEnvkey": {
+    "develop": [
+      "jenkins-credential-envkey-deploy-dev"
+    ],
+    "release/.*": [
+      "jenkins-credential-envkey-deploy-staging"
+    ],
+    "hotfix/.*": [
+      "jenkins-credential-envkey-deploy-staging"
+    ],
+    "master": [
+      "jenkins-credential-envkey-deploy-live"
+    ],
     ".*": []
   },
-  "testEnvkey": "",
+  "testEnvkey": {
+    ".*": [
+      "jenkins-credential-envkey-test"
+    ]
+  },
   "slack": {
     "channel": "jenkins"
   }
