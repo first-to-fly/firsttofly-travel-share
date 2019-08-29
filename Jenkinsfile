@@ -70,6 +70,10 @@ pipeline {
 
           JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
 
+            if (DEPLOY_ENVKEY_CREDENTIAL ==~ /jenkins-.*/) {
+              return
+            }
+
             withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
               sh "./pipeline/deliver"
               DELIVERED = true
@@ -94,6 +98,10 @@ pipeline {
           echo "Matched '${BRANCH_PATTERN}'"
 
           JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
+
+            if (DEPLOY_ENVKEY_CREDENTIAL ==~ /jenkins-.*/) {
+              return
+            }
 
             withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
               sh "./pipeline/deploy"
