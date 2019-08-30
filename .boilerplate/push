@@ -115,7 +115,7 @@ function main() {
   (
     find /var/folders -type d -name ".boilerplate" 2>/dev/null ||
       true
-  ) | while IFS="" read -r BOILERPLATE_FOLDER; do
+  ) | while IFS='' read -r BOILERPLATE_FOLDER; do
     (
       set -x
       rm -rf "${BOILERPLATE_FOLDER%/*}"
