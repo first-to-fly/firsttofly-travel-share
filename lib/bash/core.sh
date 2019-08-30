@@ -6,6 +6,9 @@ set -o pipefail # Catch mysqldump fails
 set -o nounset  # Exit when using undeclared variables
 
 # Colors
+export FORCE_COLOR=1
+export TERM="xterm-256color"
+
 if [[ -n "${BOILERPLATE_NO_COLOR:-}" ]]; then
 
   # shellcheck disable=SC2034
@@ -209,7 +212,7 @@ function logFormat() {
   done
 
   local LINE
-  while IFS= read -r LINE; do
+  while IFS='' read -r LINE; do
 
     if [[ -n "${1:-}" && "${1:-}" == "--error" ]]; then
 
