@@ -7,6 +7,7 @@ set -o nounset  # Exit when using undeclared variables
 
 # Colors
 export FORCE_COLOR=1
+export TERM="xterm-256color"
 
 if [[ -n "${BOILERPLATE_NO_COLOR:-}" ]]; then
 
