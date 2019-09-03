@@ -50,6 +50,32 @@ pipeline {
 
     }}}}
 
+    stage('Build Infrastructure') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+
+      JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
+
+        if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
+
+          echo "Matched '${BRANCH_PATTERN}'"
+
+          JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
+
+            withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
+
+              dir("${WORKSPACE}/terraform") {
+                sh "./apply.sh cluster"
+              }
+
+            }
+
+          }
+
+        }
+
+      }
+
+    }}}}
+
     stage('Integration') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
       sh "./pipeline/install"
