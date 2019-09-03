@@ -60,12 +60,14 @@ pipeline {
 
           JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
 
-            withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
+            if (DEPLOY_ENVKEY_CREDENTIAL ==~ /jenkins-.*/) {
+              return
+            }
 
+            withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
               dir("${WORKSPACE}/terraform") {
                 sh "./apply.sh cluster"
               }
-
             }
 
           }
