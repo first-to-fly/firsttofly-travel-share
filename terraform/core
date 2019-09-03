@@ -1,0 +1,48 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+# shellcheck disable=SC2034
+NAME="$(git config --get remote.origin.url | sed "s|.*/\([^.]*\)\.git|\1|g")"
+
+# shellcheck disable=SC2034
+PLAN_FILE="./terraform.tfplan"
+
+function main() {
+
+  if [[ -z "${DEPLOY_ENVKEY:-}" && -f "./.env" ]]; then
+    set -o allexport
+    # shellcheck disable=SC1091
+    source "./.env"
+    set +o allexport
+  fi
+
+  if [[ -z "${DEPLOY_ENVKEY:-}" ]]; then
+    echo "ERROR: Missing DEPLOY_ENVKEY." >&2
+    exit 1
+  fi
+
+  eval "$(envkey-source "${DEPLOY_ENVKEY}")"
+
+  if [[ -z "${AWS_DEFAULT_REGION:-}" ]]; then
+    local AWS_DEFAULT_REGION="us-east-1"
+    export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION}"
+  fi
+
+  if [[ ! -f "${BASH_SOURCE[0]%/*}/variables.tfvars" ]]; then
+
+    cat <<'EOF' >"${BASH_SOURCE[0]%/*}/variables.tfvars"
+aws_access_key = "__AWS_ACCESS_KEY_ID__"
+aws_secret_key = "__AWS_SECRET_ACCESS_KEY__"
+name = "__NAME__"
+subnet_name = "__SUBNET_NAME__"
+load_balancer_name = "__LOAD_BALANCER_NAME__"
+namespace_id = "__NAMESPACE_ID__"
+service_envkey = "__SERVICE_ENVKEY__"
+image_tag = "__IMAGE_TAG__"
+EOF
+  fi
+}
+
+main "$@"

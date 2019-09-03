@@ -9,6 +9,7 @@ function main() {
 
   (
     set -x
+    "${BASH_SOURCE[0]%/*}/../terraform/apply-ecr"
     "${BASH_SOURCE[0]%/*}/../lib/bash/aws-ecr-pull"
     "${BASH_SOURCE[0]%/*}/docker-build"
     "${BASH_SOURCE[0]%/*}/../lib/bash/aws-ecr-push"

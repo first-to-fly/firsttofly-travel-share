@@ -7,3 +7,9 @@ node_modules/
 
 # nyc
 .nyc_output/
+
+# Terraform
+terraform/.terraform
+terraform/variables.tfvars
+terraform/*.tfstate.backup
+terraform/*.tfplan
