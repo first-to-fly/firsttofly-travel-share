@@ -51,10 +51,10 @@ function main() {
       fi
     elif [[ "${EXTENSION}" == "sh" || "${EXTENSION}" == "bash" ]]; then
       SHELL_FILES+=("${FILE_PATH}")
-    elif [[ "${EXTENSION}" =~ ^(js|js|ts|tsx) ]]; then
+    elif [[ "${EXTENSION}" == "js" || "${EXTENSION}" == "jsx" || "${EXTENSION}" == "ts" || "${EXTENSION}" == "tsx" ]]; then
       ESLINT_FILES+=("${FILE_PATH}")
       TSC_FILES+=("${FILE_PATH}")
-    elif [[ "${EXTENSION}" =~ ^(css|less|scss|sss) ]]; then
+    elif [[ "${EXTENSION}" == "css" || "${EXTENSION}" == "less" || "${EXTENSION}" == "scss" || "${EXTENSION}" == "sss" ]]; then
       STYLELINT_FILES+=("${FILE_PATH}")
     fi
 
