@@ -30,9 +30,24 @@ function main() {
 
   cat "${COMMIT_TEMPLATE_FILE}"
 
+  # Update submodules
   (
     set -x
     git submodule update --init --recursive
+  )
+
+  # Remove untracked submodules
+  (
+    set -x
+    git ls-files "${PWD}" --exclude-standard --others |
+      while IFS='' read -r UNTRACKED; do
+        if [[ -f "${UNTRACKED}/.git" ]]; then
+          (
+            set -x
+            rm -rf "${UNTRACKED}"
+          )
+        fi
+      done
   )
 
 }
