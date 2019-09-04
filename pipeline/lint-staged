@@ -49,7 +49,7 @@ function main() {
       if [[ "${FIRST_LINE}" == "#!/"*"bash" ]]; then
         SHELL_FILES+=("${FILE_PATH}")
       fi
-    elif [[ "${EXTENSION}" =~ ^(sh|bash) ]]; then
+    elif [[ "${EXTENSION}" == *".sh" || "${EXTENSION}" == *".bash" ]]; then
       SHELL_FILES+=("${FILE_PATH}")
     elif [[ "${EXTENSION}" =~ ^(js|js|ts|tsx) ]]; then
       ESLINT_FILES+=("${FILE_PATH}")
