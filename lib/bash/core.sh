@@ -6,8 +6,10 @@ set -o pipefail # Catch mysqldump fails
 set -o nounset  # Exit when using undeclared variables
 
 # Colors
-export FORCE_COLOR=1
-export TERM="xterm-256color"
+if [[ "${BOILERPLATE_NO_COLOR:-}" != "true" ]]; then
+  export FORCE_COLOR=1
+  export TERM="xterm-256color"
+fi
 
 if [[ -n "${BOILERPLATE_NO_COLOR:-}" ]]; then
 
@@ -304,6 +306,15 @@ function dependency() {
         (
           set -x
           brew install "terraform"
+        )
+        echo
+      fi
+      ;;
+    shellcheck)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "shellcheck"
         )
         echo
       fi

@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+# shellcheck disable=SC1090
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+dependency "shellcheck"
+
+function main() {
+
+  echo -e "${OK_COLOR}==> Linting staged changes..."
+
+  (
+    set -x
+    git stash push \
+      --keep-index \
+      --include-untracked
+  )
+
+  SHELL_FILES=()
+
+  local FILE_PATHS
+  FILE_PATHS="$(
+    git status --porcelain |
+      sed -E "s|^ *[A-Z]+ +||"
+  )"
+
+  while IFS='' read -r FILE_PATH; do
+
+    if [[ ! -f "${FILE_PATH}" ]]; then
+      continue
+    fi
+
+    local FILE="${FILE_PATH##*/}"
+
+    local EXTENSION="${FILE##*.}"
+    if [[ "${EXTENSION}" == "${FILE}" ]]; then
+      EXTENSION=""
+    fi
+    if [[ -n "${EXTENSION}" ]]; then
+      EXTENSION="$(tr '[:upper:]' '[:lower:]' <<<"${EXTENSION}")"
+    fi
+
+    if [[ -z "${EXTENSION}" ]]; then
+      local FIRST_LINE
+      FIRST_LINE=$(head -n 1 "${FILE_PATH}")
+      if [[ "${FIRST_LINE}" == "#!/"*"bash" ]]; then
+        SHELL_FILES+=("${FILE_PATH}")
+      fi
+    elif [[ "${EXTENSION}" =~ ^(sh|bash) ]]; then
+      SHELL_FILES+=("${FILE_PATH}")
+    fi
+
+  done <<<"${FILE_PATHS}"
+
+  if ((${#SHELL_FILES[@]} > 0)); then
+    set +e
+    (
+      set -x
+      shellcheck "${SHELL_FILES[@]}"
+    )
+    local EXIT_CODE=$?
+    if ((EXIT_CODE != 0)); then
+      (
+        set -x
+        git stash pop
+      )
+      exit ${EXIT_CODE}
+    fi
+    set -e
+  fi
+
+  (
+    set -x
+    git stash pop
+  )
+
+}
+
+main "$@"
