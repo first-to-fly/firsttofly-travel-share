@@ -29,3 +29,7 @@ variable "image_tag" {
 variable "service_envkey" {
 
 }
+
+variable "image_id" {
+
+}

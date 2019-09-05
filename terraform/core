@@ -41,6 +41,7 @@ load_balancer_name = "__LOAD_BALANCER_NAME__"
 namespace_id = "__NAMESPACE_ID__"
 service_envkey = "__SERVICE_ENVKEY__"
 image_tag = "__IMAGE_TAG__"
+image_id = "__IMAGE_ID__"
 EOF
   fi
 }

@@ -12,6 +12,7 @@ function main() {
   # terraform plan \
   #   -var-file="./variables.tfvars" \
   #   -out="${PLAN_FILE}" \
+  #   -state="${STATE_FILE}" \
   #   -target="module.${NAME}.aws_ecr_repository.ecr_repo" \
   #   -target="module.${NAME}.aws_ecs_cluster.ecs_cluster" \
   #   -target="module.${NAME}.aws_autoscaling_group.autoscaling_group" \
@@ -28,6 +29,8 @@ function main() {
   # git add "${STATE_FILE}"
   # git commit -m ""
   # git push
+
+  # terraform apply -var-file="./variables.tfvars" -state="${STATE_FILE}" -auto-approve
 
 }
 
