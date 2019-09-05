@@ -2,7 +2,7 @@ variable "name" {
 
 }
 
-variable "subnet_id" {
+variable "subnet_name" {
 
 }
 
