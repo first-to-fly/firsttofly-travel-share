@@ -270,19 +270,28 @@ function dependency() {
     echo "Dependency \"${DEPENDENCY_NAME}\" not found."
 
     case "${DEPENDENCY_NAME}" in
-    envkey-source)
+    aws)
       if command -v "brew" >/dev/null; then
         (
           set -x
-          brew install "envkey"
+          brew install "awscli"
         )
         echo
-      else
+      elif command -v "pip3" >/dev/null; then
         (
           set -x
-          curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
+          pip3 install --upgrade --user "awscli"
         )
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
       fi
+      ;;
+    envkey-source)
+      (
+        set -x
+        curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
+      )
       ;;
     jq)
       if command -v "brew" >/dev/null; then
@@ -301,20 +310,20 @@ function dependency() {
         return 1
       fi
       ;;
-    terraform)
-      if command -v "brew" >/dev/null; then
-        (
-          set -x
-          brew install "terraform"
-        )
-        echo
-      fi
-      ;;
     shellcheck)
       if command -v "brew" >/dev/null; then
         (
           set -x
           brew install "shellcheck"
+        )
+        echo
+      fi
+      ;;
+    terraform)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "terraform"
         )
         echo
       fi
