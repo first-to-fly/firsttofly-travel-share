@@ -3,6 +3,8 @@
 # shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
+dependency "shellcheck"
+
 # shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
@@ -13,6 +15,11 @@ function main() {
   fi
 
   echo -e "${OK_COLOR}==> Linting code..."
+
+  (
+    set -x
+    shellcheck "./lib/bash/"* "./pipeline/"*
+  )
 
   NPM="$(command -v npm)"
 

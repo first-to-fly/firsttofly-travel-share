@@ -3,6 +3,9 @@
 # shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
+dependency "aws"
+dependency "envkey-source"
+
 # shellcheck disable=SC2034
 NAME="$(git config --get remote.origin.url | sed "s|.*/\([^.]*\)\.git|\1|g")"
 

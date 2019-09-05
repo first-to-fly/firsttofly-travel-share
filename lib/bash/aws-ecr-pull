@@ -3,6 +3,9 @@
 # shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/core.sh"
 
+dependency "aws"
+dependency "envkey-source"
+
 function main() {
 
   echo -e "${OK_COLOR}==> Pulling Docker image for current commit from AWS ECR..."
