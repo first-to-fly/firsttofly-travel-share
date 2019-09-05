@@ -9,15 +9,10 @@ function main() {
 
   terraform init
 
-  # terraform plan \
-  #   -var-file="./variables.tfvars" \
-  #   -out="${PLAN_FILE}" \
-  #   -state="${STATE_FILE}" \
-  #   -target="module.${NAME}.aws_ecr_repository.ecr_repo" \
-  #   -target="module.${NAME}.aws_ecs_cluster.ecs_cluster" \
-  #   -target="module.${NAME}.aws_autoscaling_group.autoscaling_group" \
-  #   -target="module.${NAME}.aws_launch_configuration.launch_configuration" \
-  #   -target="module.${NAME}.aws_security_group.security_group"
+  terraform plan \
+    -var-file="./variables.tfvars" \
+    -out="${PLAN_FILE}" \
+    -state="${STATE_FILE}"
 
   # if ! (terraform show "${PLAN_FILE}" | grep "This plan does nothing."); then
 

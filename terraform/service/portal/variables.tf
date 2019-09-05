@@ -1,4 +1,4 @@
-variable "alb_listener_arn" {
+variable "load_balancer_name" {
 
 }
 
@@ -10,7 +10,7 @@ variable "name" {
 
 }
 
-variable "subnet_id" {
+variable "subnet_name" {
 
 }
 

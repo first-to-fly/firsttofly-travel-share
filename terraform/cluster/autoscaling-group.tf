@@ -6,7 +6,7 @@ resource "aws_autoscaling_group" "autoscaling_group" {
   min_size         = 0
   desired_capacity = 1
 
-  vpc_zone_identifier = ["${var.subnet_id}"]
+  vpc_zone_identifier = ["${data.aws_subnet.subnet.id}"]
 
   launch_configuration      = "${aws_launch_configuration.launch_configuration.id}"
   health_check_type         = "EC2"

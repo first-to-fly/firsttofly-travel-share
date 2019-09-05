@@ -1,6 +1,19 @@
 data "aws_subnet" "subnet" {
-  id = "${var.subnet_id}"
+  filter {
+    name   = "tag:Name"
+    values = ["${var.subnet_name}"]
+  }
 }
+
+data "aws_alb_listener" "listener" {
+  load_balancer_arn = "${data.aws_alb.alb.arn}"
+  port              = "80"
+}
+
+data "aws_alb" "alb" {
+  name = "${var.load_balancer_name}"
+}
+
 
 resource "aws_alb_target_group" "alb_target_group" {
   count                = "${lookup(var.load_balancer, "container_port", "") != "" ? 1 : 0}"

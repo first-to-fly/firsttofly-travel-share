@@ -1,7 +1,3 @@
-data "aws_subnet" "subnet" {
-  id = "${var.subnet_id}"
-}
-
 resource "aws_security_group" "security_group" {
   name        = "ecs-${var.name}"
   vpc_id      = "${data.aws_subnet.subnet.vpc_id}"

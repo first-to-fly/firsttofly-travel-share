@@ -1,5 +1,17 @@
 data "aws_subnet" "subnet" {
-  id = "${var.subnet_id}"
+  filter {
+    name   = "tag:Name"
+    values = ["${var.subnet_name}"]
+  }
+}
+
+data "aws_alb_listener" "listener" {
+  load_balancer_arn = "${data.aws_alb.alb.arn}"
+  port              = "80"
+}
+
+data "aws_alb" "alb" {
+  name = "${var.load_balancer_name}"
 }
 
 resource "aws_alb_target_group" "alb_target_group" {
@@ -22,7 +34,7 @@ resource "aws_alb_target_group" "alb_target_group" {
 }
 
 resource "aws_alb_listener_rule" "listener_rule" {
-  listener_arn = "${var.alb_listener_arn}"
+  listener_arn = "${data.aws_alb_listener.listener.arn}"
 
   action {
     type             = "forward"
