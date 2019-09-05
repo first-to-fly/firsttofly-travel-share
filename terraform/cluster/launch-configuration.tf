@@ -1,29 +1,13 @@
-data "aws_ami" "latest_ecs" {
-  most_recent = true
-  owners      = ["amazon"]
-
-  filter {
-    name   = "name"
-    values = ["amzn2-ami-ecs-hvm-2.0*x86_64-ebs"]
-  }
-
-  filter {
-    name   = "virtualization-type"
-    values = ["hvm"]
-  }
+data "aws_iam_instance_profile" "iam_instance_profile" {
+  name = "ecsInstanceRole"
 }
-
-# data "aws_iam_instance_profile" "iam_instance_profile" {
-#   name = "ecsInstanceRole"
-# }
 
 resource "aws_launch_configuration" "launch_configuration" {
   name_prefix = "ecs-${var.name}-"
 
-  image_id      = "${data.aws_ami.latest_ecs.image_id}"
-  instance_type = "t3.micro"
-  # iam_instance_profile = "${data.aws_iam_instance_profile.iam_instance_profile.arn}"
-  iam_instance_profile = "arn:aws:iam::348297759900:instance-profile/ecsInstanceRole"
+  image_id             = "${var.image_id}"
+  instance_type        = "t3.micro"
+  iam_instance_profile = "${data.aws_iam_instance_profile.iam_instance_profile.arn}"
 
   associate_public_ip_address = true
 
