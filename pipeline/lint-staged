@@ -98,12 +98,38 @@ function main() {
   fi
 
   if ((${#TSC_FILES[@]} > 0)); then
+
+    # Prepare config file
+    local TSC_CONFIG="./tsconfig.staged.json"
+    echo '
+      {
+        "extends": "./tsconfig.json",
+        "include": [
+    ' >"${TSC_CONFIG}"
+    local FIRST="true"
+    for TSC_FILE in "${TSC_FILES[@]}"; do
+      if [[ "${FIRST}" == "true" ]]; then
+        FIRST="false"
+      else
+        echo "," >>"${TSC_CONFIG}"
+      fi
+      echo "\"${TSC_FILE}\"" >>"${TSC_CONFIG}"
+    done
+    echo '
+        ]
+      }
+    ' >>"${TSC_CONFIG}"
+
     set +e
     (
       set -x
-      "${NPX}" tsc --noEmit "${TSC_FILES[@]}"
+      "${NPX}" tsc --project "${TSC_CONFIG}" --noEmit
     )
     local EXIT_CODE=$?
+
+    # Remove config
+    rm -rf "${TSC_CONFIG}"
+
     if ((EXIT_CODE != 0)); then
       (
         set -x
