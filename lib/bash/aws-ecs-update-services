@@ -82,10 +82,10 @@ function main() {
     for AWS_ECS_SERVICE in $(jq --raw-output '.[]' <<<"${AWS_ECS_SERVICES_GROUP}"); do
 
       local CLUSTER
-      CLUSTER="$(sed 's|/.*||' <<<"${AWS_ECS_SERVICE}")"
+      CLUSTER="${AWS_ECS_SERVICE//\/*/}"
 
       local SERVICE
-      SERVICE="$(sed 's|.*/||' <<<"${AWS_ECS_SERVICE}")"
+      SERVICE="${AWS_ECS_SERVICE//*\//}"
 
       echo
       echo "Updating [${CLUSTER}/${SERVICE}]..."
