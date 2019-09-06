@@ -120,6 +120,18 @@
     "MD026": false
   },
 
+  // Terraform
+  "terraform.indexing": {
+    "enabled": false, // Conflicts with terraform.languageServer
+    "liveIndexing": false,
+    "delay": 500,
+    "exclude": [".terraform/**/*", "**/.terraform/**/*"]
+  },
+  "terraform.languageServer": {
+    "enabled": true, // Required for 0.12
+    "args": []
+  },
+
   // Run on Save
   "runOnSave.commands": [
     {

@@ -35,6 +35,9 @@
     "foxundermoon.shell-format",
     "remisa.shellman",
 
+    // Terraform
+    "mauve.terraform",
+
     // Node
     "christian-kohler.npm-intellisense",
     "eg2.vscode-npm-script",
