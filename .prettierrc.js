@@ -18,7 +18,7 @@ module.exports = {
   quoteProps: "as-needed",
 
   // 'foo' -> less string processing
-  jsxSingleQuote: true,
+  jsxSingleQuote: false,
 
   // -> better Git line diff
   trailingComma: "all",
