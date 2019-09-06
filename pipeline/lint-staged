@@ -13,7 +13,8 @@ function main() {
     set -x
     git stash push \
       --keep-index \
-      --include-untracked
+      --include-untracked \
+      --message "boilerplate-lint-staged"
   )
 
   SHELL_FILES=()
