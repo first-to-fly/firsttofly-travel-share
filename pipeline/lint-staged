@@ -9,6 +9,10 @@ function main() {
 
   echo -e "${OK_COLOR}==> Linting staged changes..."
 
+  if ! git merge HEAD >/dev/null; then
+    return
+  fi
+
   (
     set -x
     git stash push \
