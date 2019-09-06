@@ -71,7 +71,7 @@ function main() {
     if ((EXIT_CODE != 0)); then
       (
         set -x
-        git stash pop
+        git stash pop || true
       )
       exit ${EXIT_CODE}
     fi
