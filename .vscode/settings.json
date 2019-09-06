@@ -11,6 +11,9 @@
   "editor.insertSpaces": true,
   "editor.tabSize": 2,
 
+  // Editor - Rulers
+  "editor.rulers": [120],
+
   // Git
   "git.autofetch": true,
   "git.confirmSync": false,
