@@ -1,6 +1,6 @@
 import sample from "@nabstudio/sample";
 
-import sampleTS from "@/sampleTS";
+import sampleTS from "sampleTS";
 
 import sampleJS from "./sampleJS";
 

@@ -292,16 +292,16 @@ module.exports = {
 
     // ==> eslint-plugin-import
     "import/resolver": {
-      alias: {
-        map: [
-          ["@nabstudio", "./src/@nabstudio"],
-          ["@", "./src"],
-        ],
+      node: {
         extensions: [
           ".js",
           ".jsx",
           ".ts",
           ".tsx",
+        ],
+        moduleDirectory: [
+          "src",
+          "node_modules",
         ],
       },
     },
@@ -309,6 +309,7 @@ module.exports = {
     // ==> eslint-plugin-react
     react: {
       // Detect React version only if it is installed
+      // @ts-ignore - "packageJSON.dependencies" does not have "react"
       version: packageJSON.dependencies.react ? "detect" : "latest",
     },
   },
