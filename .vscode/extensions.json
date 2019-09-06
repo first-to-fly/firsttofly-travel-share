@@ -35,6 +35,9 @@
     "foxundermoon.shell-format",
     "remisa.shellman",
 
+    // Terraform
+    "mauve.terraform",
+
     // JSON
     "eriklynd.json-tools"
   ],
