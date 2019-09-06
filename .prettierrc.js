@@ -11,13 +11,13 @@ module.exports = {
   // foo(); -> prevent errors
   semi: true,
 
-  // 'foo' -> less string processing for most languages
+  // "foo" -> consistent with JS
   singleQuote: false,
 
   // { foo: ... } -> better property autocompletion
   quoteProps: "as-needed",
 
-  // 'foo' -> less string processing
+  // "foo" -> consistent with JS
   jsxSingleQuote: false,
 
   // -> better Git line diff
