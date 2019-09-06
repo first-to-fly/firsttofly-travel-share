@@ -6,7 +6,7 @@ module.exports = {
   plugins: ["stylelint-scss"],
   ignoreFiles: ["**/*.js"],
   rules: {
-    "string-quotes": "single",
+    "string-quotes": "double",
     "property-no-unknown": [
       true,
       { ignoreProperties: ["composes"] },
