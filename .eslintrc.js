@@ -112,6 +112,13 @@ module.exports = {
     // Allows "console" in code. These should be removed automatically in production.
     "no-console": "off",
 
+    "no-plusplus": [
+      "error",
+      {
+        allowForLoopAfterthoughts: true,
+      },
+    ],
+
     // Allows "_foo" - classes' private vars
     "no-underscore-dangle": "off",
 
