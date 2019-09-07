@@ -112,6 +112,8 @@ module.exports = {
     // Allows "console" in code. These should be removed automatically in production.
     "no-console": "off",
 
+    "no-continue": "off",
+
     "no-plusplus": [
       "error",
       {
