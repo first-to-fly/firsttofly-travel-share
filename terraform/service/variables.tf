@@ -15,12 +15,8 @@ variable "cluster_arn" {
 
 }
 
-variable "image" {
-
-}
-
-variable "envkey" {
-
+variable "container_definitions" {
+  default = []
 }
 
 variable "service_registries" {
