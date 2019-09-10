@@ -9,6 +9,19 @@ function main() {
 
   echo -e "${OK_COLOR}==> Running app..."
 
+  if [[ -z "${ENVKEY:-}" && -f "./.env" ]]; then
+    while IFS='' read -r LINE; do
+      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
+        export "${LINE?}"
+      fi
+    done <"./.env"
+  fi
+
+  if [[ -n "${ENVKEY}" ]]; then
+    dependency "envkey-source"
+    eval "$(envkey-source "${ENVKEY}")"
+  fi
+
 }
 
 main "$@"

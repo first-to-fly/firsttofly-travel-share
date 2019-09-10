@@ -11,8 +11,11 @@ function main() {
   echo -e "${OK_COLOR}==> Pulling Docker image for current commit from AWS ECR..."
 
   if [[ -z "${DEPLOY_ENVKEY:-}" && -f "./.env" ]]; then
-    # shellcheck disable=SC1091
-    source "./.env"
+    while IFS='' read -r LINE; do
+      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
+        export "${LINE?}"
+      fi
+    done <"./.env"
   fi
 
   if [[ -z "${DEPLOY_ENVKEY:-}" ]]; then
