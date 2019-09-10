@@ -70,7 +70,8 @@ pipeline {
 
           JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
 
-            if (DEPLOY_ENVKEY_CREDENTIAL ==~ /jenkins-.*/) {
+            if (!DEPLOY_ENVKEY_CREDENTIAL) {
+              echo "No DEPLOY_ENVKEY credential found."
               return
             }
 
@@ -99,7 +100,8 @@ pipeline {
 
           JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
 
-            if (DEPLOY_ENVKEY_CREDENTIAL ==~ /jenkins-.*/) {
+            if (!DEPLOY_ENVKEY_CREDENTIAL) {
+              echo "No DEPLOY_ENVKEY credential found."
               return
             }
 

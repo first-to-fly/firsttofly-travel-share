@@ -9,7 +9,10 @@ RUN \
   --virtual "shared-dependencies" \
   "bash" \
   "ca-certificates" \
+  "curl" \
   "jq"
+
+RUN curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
 
 ENTRYPOINT [ \
   "./pipeline/debug" \

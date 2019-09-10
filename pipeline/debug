@@ -22,6 +22,11 @@ function main() {
     done <"./.env"
   fi
 
+  if [[ -n "${ENVKEY:-}" ]]; then
+    dependency "envkey-source"
+    eval "$(envkey-source "${ENVKEY}")"
+  fi
+
   NPM="$(command -v npm)"
 
   (
