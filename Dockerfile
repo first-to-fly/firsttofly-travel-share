@@ -12,6 +12,8 @@ RUN \
   "bash" \
   "jq"
 
+RUN curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
+
 # Core
 COPY "./lib/bash/core.sh" "./lib/bash/core.sh"
 
@@ -34,6 +36,8 @@ RUN \
   --virtual "shared-dependencies" \
   "bash" \
   "jq"
+
+RUN curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
 
 # Core
 COPY "./lib/bash/core.sh" "./lib/bash/core.sh"

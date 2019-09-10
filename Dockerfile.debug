@@ -7,7 +7,10 @@ WORKDIR /app
 RUN \
   apk add \
   --virtual "shared-dependencies" \
-  "bash"
+  "bash" \
+  "jq"
+
+RUN curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
 
 ENTRYPOINT [ \
   "./pipeline/debug" \
