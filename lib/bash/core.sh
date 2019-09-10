@@ -345,7 +345,10 @@ function dependency() {
 dependency "jq"
 
 function projectKey() {
-  jq --raw-output '.name' "./package.json"
+  jq --raw-output '.name' "./package.json" |
+    sed \
+      -e 's|/|-|g' \
+      -e 's|@||g'
 }
 
 if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
