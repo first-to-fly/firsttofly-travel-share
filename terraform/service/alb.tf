@@ -11,7 +11,7 @@ data "aws_alb_listener" "listener" {
 }
 
 data "aws_alb" "alb" {
-  name = "${var.load_balancer_name}"
+  name = "${lookup(var.load_balancer, "name")}"
 }
 
 
@@ -37,7 +37,7 @@ resource "aws_alb_target_group" "alb_target_group" {
 
 resource "aws_alb_listener_rule" "listener_rule" {
   count        = "${lookup(var.load_balancer, "container_port", "") != "" ? 1 : 0}"
-  listener_arn = "${var.load_balancer.alb_listener_arn}"
+  listener_arn = "${data.aws_alb_listener.listener.arn}"
 
   action {
     type             = "forward"
