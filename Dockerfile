@@ -10,6 +10,7 @@ RUN \
   apk add \
   --virtual "shared-dependencies" \
   "bash" \
+  "curl" \
   "jq"
 
 RUN curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
@@ -35,6 +36,7 @@ RUN \
   apk add \
   --virtual "shared-dependencies" \
   "bash" \
+  "curl" \
   "jq"
 
 RUN curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
