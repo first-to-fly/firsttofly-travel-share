@@ -4,7 +4,6 @@ export BOILERPLATE_LOG_TIME=true
 
 source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
-# shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
 function main() {
