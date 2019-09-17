@@ -57,10 +57,6 @@ if [[ -n "${BOILERPLATE_NO_COLOR:-}" ]]; then
   export BG_LIGHT_CYAN_COLOR=""
   export BG_WHITE_COLOR=""
 
-  export OK_COLOR=""
-  export ERROR_COLOR=""
-  export WARN_COLOR=""
-
 else
 
   export NO_COLOR="\033[0m"
@@ -107,11 +103,11 @@ else
   export BG_LIGHT_CYAN_COLOR="\033[106m"
   export BG_WHITE_COLOR="\033[107m"
 
-  export OK_COLOR="${GREEN_COLOR}"
-  export ERROR_COLOR="${RED_COLOR}"
-  export WARN_COLOR="${YELLOW_COLOR}"
-
 fi
+
+export OK_COLOR="${GREEN_COLOR}"
+export ERROR_COLOR="${RED_COLOR}"
+export WARN_COLOR="${LIGHT_RED_COLOR}"
 
 # Output
 function logFormat() {
