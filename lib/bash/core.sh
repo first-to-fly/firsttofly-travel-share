@@ -201,6 +201,19 @@ function dependency() {
         curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
       )
       ;;
+    fnm)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "Schniz/tap/fnm"
+        )
+      else
+        (
+          set -x
+          curl -fsSL "https://github.com/Schniz/fnm/raw/master/.ci/install.sh" | bash
+        )
+      fi
+      ;;
     jq)
       if command -v "brew" >/dev/null; then
         (
@@ -216,6 +229,21 @@ function dependency() {
       else
         echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
         return 1
+      fi
+      ;;
+    node)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "node"
+        )
+        echo
+      else
+        dependency "fnm"
+        (
+          set -x
+          fnm install
+        )
       fi
       ;;
     shellcheck)
