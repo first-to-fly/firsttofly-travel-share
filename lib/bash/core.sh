@@ -137,7 +137,7 @@ function logFormat() {
         continue
       fi
 
-      echo -e "${ERROR_COLOR}STDERR${NO_COLOR} ${LINE} ${NO_COLOR}"
+      echo -e "${WARN_COLOR}STDERR${NO_COLOR} ${LINE} ${NO_COLOR}"
       continue
 
     fi
