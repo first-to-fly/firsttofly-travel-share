@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 dependency "shellcheck"
@@ -61,7 +60,9 @@ function main() {
     set +e
     (
       set -x
-      shellcheck "${SHELL_FILES[@]}"
+      shellcheck \
+        --exclude="SC1090,SC1091" \
+        "${SHELL_FILES[@]}"
     )
     local EXIT_CODE=$?
     if ((EXIT_CODE != 0)); then

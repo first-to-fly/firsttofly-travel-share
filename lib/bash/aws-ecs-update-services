@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/core.sh"
 
 dependency "aws"
@@ -45,8 +44,7 @@ function main() {
 
   local CLUSTERS
   CLUSTERS="$(
-    # shellcheck disable=SC2153
-    jq --raw-output '.[][]' <<<"${AWS_ECS_SERVICES}" |
+    jq --raw-output '.[][]' <<<"${AWS_ECS_SERVICES:-[]}" |
       sed 's|/.*||g' |
       uniq
   )"
@@ -80,7 +78,7 @@ function main() {
   echo "REMOTE_IMAGE = ${REMOTE_IMAGE}"
 
   local AWS_ECS_SERVICES_GROUP
-  for AWS_ECS_SERVICES_GROUP in $(jq --compact-output '.[]' <<<"${AWS_ECS_SERVICES}"); do
+  for AWS_ECS_SERVICES_GROUP in $(jq --compact-output '.[]' <<<"${AWS_ECS_SERVICES:-[]}"); do
 
     local WAIT_PIDS=""
 
