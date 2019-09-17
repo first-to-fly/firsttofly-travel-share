@@ -1,16 +1,13 @@
 #!/usr/bin/env bash
 
-# shellcheck disable=SC1090
 source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 dependency "aws"
 dependency "envkey-source"
 
-# shellcheck disable=SC2034
 NAME="$(git config --get remote.origin.url | sed "s|.*/\([^.]*\)\.git|\1|g")"
 
-# shellcheck disable=SC2034
-PLAN_FILE="./terraform.tfplan"
+export PLAN_FILE="./terraform.tfplan"
 
 function main() {
 
@@ -69,8 +66,13 @@ EOF
   local IMAGE_ID
   if [[ -z "$(jq -r ".image_id" "${BASH_SOURCE[0]%/*}/terraform.config.json")" ]]; then
     IMAGE_ID="$(aws ssm get-parameters --names /aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id --region us-east-1 | jq -r ".Parameters[0].Value")"
-    # shellcheck disable=SC2094
-    cat <<<"$(jq -r ".image_id = \"${IMAGE_ID}\"" "${BASH_SOURCE[0]%/*}/terraform.config.json")" >"${BASH_SOURCE[0]%/*}/terraform.config.json"
+    local CONFIG_FILE="${BASH_SOURCE[0]%/*}/terraform.config.json"
+    local TEMP_FILE
+    TEMP_FILE="$(mktemp)"
+    cat \
+      <<<"$(jq -r ".image_id = \"${IMAGE_ID}\"" "${CONFIG_FILE}")" \
+      >"${TEMP_FILE}" &&
+      mv "${TEMP_FILE}" "${CONFIG_FILE}"
   else
     IMAGE_ID="$(jq -r ".image_id" "${BASH_SOURCE[0]%/*}/terraform.config.json")"
   fi

@@ -61,6 +61,13 @@
     "suppressWelcomeNotice": true
   },
 
+  // Shell
+  "shellcheck.exclude": [
+    //
+    "SC1090",
+    "SC1091"
+  ],
+
   // CSS
   "[css]": {
     "editor.defaultFormatter": "esbenp.prettier-vscode"
