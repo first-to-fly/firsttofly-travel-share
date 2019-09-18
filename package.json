@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "description": "Some description.",
-  "main": "./src",
+  "main": "./build",
   "scripts": {
     "postinstall": "patch-package && npm uninstall --no-save patch-package",
     "dev": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:9229 --require ts-node/register --require tsconfig-paths/register ./src",
