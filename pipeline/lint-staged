@@ -28,7 +28,8 @@ function main() {
   local FILE_PATHS
   FILE_PATHS="$(
     git status --porcelain |
-      sed -E "s|^ *[A-Z]+ +||"
+      sed -E "s|^ *[A-Z]+ +||" |
+      sed -E "s|^.+-> +||"
   )"
 
   while IFS='' read -r FILE_PATH; do
@@ -111,6 +112,7 @@ function main() {
       {
         "extends": "./tsconfig.json",
         "include": [
+          "src/**/*.d.ts",
     ' >"${TSC_CONFIG}"
     local FIRST="true"
     for TSC_FILE in "${TSC_FILES[@]}"; do

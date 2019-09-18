@@ -4,60 +4,15 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
-function kill-server() {
-  # shellcheck disable=SC2009
-  ps -ef |
-    grep "node" |
-    grep "react-scripts" |
-    awk '{print $2}' |
-    xargs kill
-}
-
 function main() {
 
-  echo
-  echo "Killing the server from last run..."
-  kill-server || true
-
-  PROJECT_DIR="${PWD}"
-
-  cd "./example" || return 1
-
-  NPM="$(command -v npm)"
-
-  (
-    set -x
-    "${NPM}" install
-  )
-
-  sed -i.bak "s|process\\.env\\.TRANSLATOR_API|\"${TRANSLATOR_API:-}\"|" "./src/App.js"
-
-  (
-    set -x
-    "${NPM}" start
-  ) &
-
-  cd "${PROJECT_DIR}" || return 1
-
+  local NPX
   NPX="$(command -v npx)"
-
-  (
-    set -x
-    "${NPX}" wait-on "http://localhost:3000"
-  )
 
   (
     set -x
     "${NPX}" cypress run
   )
-
-  echo
-  echo "Killing the server..."
-  kill-server
-
-  sleep 1s
-
-  mv "./example/src/App.js.bak" "./example/src/App.js"
 
 }
 
