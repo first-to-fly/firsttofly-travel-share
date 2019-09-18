@@ -5,7 +5,7 @@
   "description": "Some description.",
   "main": "./build",
   "scripts": {
-    "postinstall": "patch-package && npm uninstall --no-save patch-package",
+    "postinstall": "patch-package && npm uninstall --no-save patch-package && ([ ! -f ./pipeline/build ] || ! command -v tsc || ./pipeline/build)",
     "dev": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:9229 --require ts-node/register --require tsconfig-paths/register ./src",
     "build": "tsc",
     "start": "NODE_ENV=production node ./build",
@@ -14,7 +14,8 @@
     "lint:css": "stylelint --allow-empty-input --ignore-pattern \"src/@nabstudio/**\" \"./src/**/*.{css,less,scss,sss}\"",
     "lint": "npm run lint:js && npm run lint:ts && npm run lint:css",
     "test:mocha": "mocha -r ts-node/register \"./test/**/*\"",
-    "test": "npm run test:mocha",
+    "test:cypress": "./pipeline/test-cypress",
+    "test": "npm run test:mocha && npm run test:cypress",
     "coverage": "nyc npm run test"
   },
   "repository": {},
@@ -32,6 +33,7 @@
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-prettier": "^5.0.0",
     "eslint-plugin-css-modules": "^2.11.0",
+    "eslint-plugin-cypress": "^2.2.1",
     "eslint-plugin-import": "^2.17.3",
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-mocha": "^5.3.0",
