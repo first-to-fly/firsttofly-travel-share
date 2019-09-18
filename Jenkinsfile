@@ -54,7 +54,27 @@ pipeline {
 
       sh "./pipeline/install"
       sh "./pipeline/lint"
-      sh "./pipeline/test"
+
+      JENKINS_CONFIG.testEnvkey.each { BRANCH_PATTERN, TEST_ENVKEY_CREDENTIALS ->
+
+        if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
+
+          echo "Matched '${BRANCH_PATTERN}'"
+
+          JENKINS_CONFIG.testEnvkey[BRANCH_PATTERN].each { TEST_ENVKEY_CREDENTIAL ->
+
+            if (!TEST_ENVKEY_CREDENTIAL) {
+              echo "No TEST_ENVKEY credential found."
+              return
+            }
+
+            withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
+              sh "./pipeline/test"
+            }
+
+          }
+        }
+      }
 
     }}}}
 
