@@ -13,3 +13,7 @@ terraform/*.tfplan
 
 # nyc
 .nyc_output/
+
+# Cypress
+cypress/screenshots/
+cypress/videos/
