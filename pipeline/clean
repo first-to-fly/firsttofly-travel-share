@@ -11,6 +11,7 @@ function main() {
     rm -rf "./build"
     rm -rf "./node_modules"
     rm -rf "./.nyc_output"
+    rm -rf "./example/node_modules"
   )
 
 }
