@@ -26,15 +26,19 @@ function main() {
     return
   fi
 
-  if [[ -d "./node_modules" ]]; then
-    PATH="${PWD}/node_modules/.bin:${PATH}"
+  if [[ ! -d "./node_modules/node-sass" ]]; then
+    NPM="$(command -v npm)"
+    (
+      set -x
+      "${NPM}" install --no-save "node-sass"
+    )
   fi
 
-  TSM="$(command -v tsm)"
+  NPX="$(command -v npx)"
 
   (
     set -x
-    "${TSM}" "${FILE}"
+    "${NPX}" tsm "${FILE}"
   )
 
   HEADER_FILE="${FILE}.d.ts"
@@ -48,11 +52,11 @@ function main() {
     (
       set -x
 
-      prettier \
+      "${NPX}" prettier \
         --write \
         "${HEADER_FILE}"
 
-      eslint \
+      "${NPX}" eslint \
         --fix \
         --no-ignore \
         "${HEADER_FILE}"
