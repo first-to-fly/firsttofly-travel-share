@@ -55,6 +55,8 @@ pipeline {
       sh "./pipeline/install"
       sh "./pipeline/lint"
 
+      boolean TESTED = false
+
       JENKINS_CONFIG.testEnvkey.each { BRANCH_PATTERN, TEST_ENVKEY_CREDENTIALS ->
 
         if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
@@ -70,10 +72,15 @@ pipeline {
 
             withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
               sh "./pipeline/test"
+              TESTED = true
             }
 
           }
         }
+      }
+
+      if (!TESTED) {
+        sh "./pipeline/test"
       }
 
     }}}}
