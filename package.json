@@ -5,7 +5,7 @@
   "description": "Some description.",
   "main": "./build",
   "scripts": {
-    "postinstall": "patch-package && npm uninstall --no-save patch-package && ([ ! -f ./pipeline/build ] || ! command -v tsc || ./pipeline/build)",
+    "postinstall": "patch-package && npm uninstall --no-save patch-package && ([ ! -f ./pipeline/build ] || ! command -v tsc || ./pipeline/build) && echo",
     "dev": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:9229 --require ts-node/register --require tsconfig-paths/register ./src",
     "build": "tsc",
     "start": "NODE_ENV=production node ./build",
@@ -22,6 +22,7 @@
   "license": "Apache",
   "dependencies": {
     "@types/node": "^12.7.5",
+    "deepcopy": "^2.0.0",
     "patch-package": "^6.1.2"
   },
   "devDependencies": {
@@ -56,7 +57,6 @@
     "stylelint-scss": "^3.8.0",
     "ts-node": "^8.3.0",
     "tsconfig-paths": "^3.8.0",
-    "typed-scss-modules": "^0.0.10",
     "typescript": "^3.5.2"
   }
 }
