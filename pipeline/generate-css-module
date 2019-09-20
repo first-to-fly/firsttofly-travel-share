@@ -26,19 +26,27 @@ function main() {
     return
   fi
 
-  if [[ ! -d "./node_modules/node-sass" ]]; then
-    NPM="$(command -v npm)"
+  NPM="$(command -v npm)"
+
+  if ! "${NPM}" --global list --depth=0 | grep " node-sass@" >/dev/null; then
     (
       set -x
-      "${NPM}" install --no-save "node-sass"
+      "${NPM}" install --global "node-sass"
     )
   fi
 
-  NPX="$(command -v npx)"
+  if ! "${NPM}" --global list --depth=0 | grep " typed-scss-modules@" >/dev/null; then
+    (
+      set -x
+      "${NPM}" install --global "typed-scss-modules"
+    )
+  fi
+
+  NPM_BIN="$("${NPM}" --global bin)"
 
   (
     set -x
-    "${NPX}" tsm "${FILE}"
+    "${NPM_BIN}/tsm" "${FILE}"
   )
 
   HEADER_FILE="${FILE}.d.ts"
@@ -48,6 +56,8 @@ function main() {
     CONTENT="$(cat "${HEADER_FILE}")"
     echo "/* eslint-disable import/prefer-default-export */" >"${HEADER_FILE}"
     echo "${CONTENT}" >>"${HEADER_FILE}"
+
+    NPX="$(command -v npx)"
 
     (
       set -x
