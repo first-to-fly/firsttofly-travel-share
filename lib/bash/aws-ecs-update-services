@@ -318,14 +318,8 @@ function main() {
     # Wait for all PIDs
     if [[ -n "${WAIT_PIDS:-}" ]]; then
       for WAIT_PID in ${WAIT_PIDS}; do
-        # (
-        #   set -x
-        #   wait "${WAIT_PID}" Wait often returns error "pid * is not a child of this shell"
-        # )
         echo "Waiting for process ${WAIT_PID}..."
-        while [ -e "/proc/${WAIT_PID}" ]; do
-          sleep 1s
-        done
+        wait "${WAIT_PID}"
       done
     fi
 
