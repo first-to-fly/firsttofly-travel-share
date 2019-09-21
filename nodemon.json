@@ -3,7 +3,7 @@
   "watch": [
     "src"
   ],
-  "ext": "js,jsx,ts,tsx,json",
+  "ext": "js,jsx,ts,tsx,json,html,css,scss,less,sss",
   "env": {
     "TS_NODE_PROJECT": "./tsconfig.json",
     "TS_NODE_TRANSPILE_ONLY": true
