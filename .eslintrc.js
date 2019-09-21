@@ -241,6 +241,8 @@ module.exports = {
 
     "react/jsx-props-no-spreading": "off",
 
+    "react/static-property-placement": "off",
+
     // ==> @typescript-eslint
 
     "@typescript-eslint/ban-ts-ignore": "off",
