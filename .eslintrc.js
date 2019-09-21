@@ -239,7 +239,11 @@ module.exports = {
     // This is temporarily disabled as this will break our current components
     "react/jsx-one-expression-per-line": "off",
 
+    "react/jsx-props-no-spreading": "off",
+
     // ==> @typescript-eslint
+
+    "@typescript-eslint/ban-ts-ignore": "off",
 
     "@typescript-eslint/explicit-function-return-type": "off",
 
