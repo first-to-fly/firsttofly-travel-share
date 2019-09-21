@@ -6,7 +6,7 @@
   "main": "./build",
   "scripts": {
     "postinstall": "patch-package && npm uninstall --no-save patch-package && echo",
-    "dev": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:9229 --require ts-node/register --require tsconfig-paths/register ./src",
+    "dev": "nodemon ./src/index.js",
     "build": "tsc",
     "start": "NODE_ENV=production NODE_PATH=./build node ./build",
     "lint:js": "eslint --ignore-pattern \"src/@nabstudio/**\" \"./src/**/*.{js,jsx,ts,tsx}\"",
@@ -45,6 +45,7 @@
     "mocha": "^6.1.4",
     "mock-require": "^3.0.3",
     "nock": "^10.0.6",
+    "nodemon": "^1.19.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "prettier-eslint": "^9.0.0",
