@@ -60,7 +60,7 @@ module.exports = {
 
     // ==> @typescript-eslint/parser
     project: "./tsconfig.json",
-    tsconfigRootDir: ".",
+    tsconfigRootDir: __dirname,
   },
 
   plugins: [
@@ -240,6 +240,8 @@ module.exports = {
     "react/jsx-one-expression-per-line": "off",
 
     "react/jsx-props-no-spreading": "off",
+
+    "react/static-property-placement": "off",
 
     // ==> @typescript-eslint
 
