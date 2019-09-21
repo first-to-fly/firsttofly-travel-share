@@ -1,10 +1,9 @@
-import sampleCSS from "./sampleSCSS.scss";
+import deepCopy from "deepcopy";
+
 import sample from "./sampleTS";
 
 
-console.log(sample);
-console.log(sampleCSS);
-console.log(sampleCSS.myClass);
+console.log(deepCopy(sample));
 
 const someArray = [
   "foo",

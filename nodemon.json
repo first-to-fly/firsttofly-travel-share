@@ -1,0 +1,15 @@
+{
+  "verbose": true,
+  "watch": [
+    "src"
+  ],
+  "ext": "js,jsx,ts,tsx,json,html,css,scss,less,sss",
+  "env": {
+    "TS_NODE_PROJECT": "./tsconfig.json",
+    "TS_NODE_TRANSPILE_ONLY": true
+  },
+  "execMap": {
+    "js": "node --inspect=localhost:9229 --require ts-node/register --require tsconfig-paths/register",
+    "ts": "node --inspect=localhost:9229 --require ts-node/register --require tsconfig-paths/register"
+  }
+}

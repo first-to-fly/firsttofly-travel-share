@@ -4,11 +4,14 @@
   "private": true,
   "description": "Some description.",
   "main": "./build",
+  "files": [
+    "./build/**/*"
+  ],
   "scripts": {
     "postinstall": "patch-package && npm uninstall --no-save patch-package && ([ ! -f ./pipeline/build ] || ! command -v tsc || ./pipeline/build) && echo",
-    "dev": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:9229 --require ts-node/register --require tsconfig-paths/register ./src",
-    "build": "tsc",
-    "start": "NODE_ENV=production node ./build",
+    "dev": "nodemon ./src/index.js",
+    "build": "tsc && tsc --allowJs false --checkJs false --declaration --declarationMap --outDir ./build-declaration && cp -R ./build-declaration/ ./build/ && rm -rf ./build-declaration",
+    "start": "NODE_ENV=production NODE_PATH=./build node ./build",
     "lint:js": "eslint --ignore-pattern \"src/@nabstudio/**\" \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:ts": "tsc --project ./tsconfig.lint.json --noEmit",
     "lint:css": "stylelint --allow-empty-input --ignore-pattern \"src/@nabstudio/**\" \"./src/**/*.{css,less,scss,sss}\"",
@@ -45,6 +48,7 @@
     "mocha": "^6.1.4",
     "mock-require": "^3.0.3",
     "nock": "^10.0.6",
+    "nodemon": "^1.19.2",
     "nyc": "^14.1.1",
     "prettier": "^1.18.2",
     "prettier-eslint": "^9.0.0",
