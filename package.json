@@ -4,10 +4,13 @@
   "private": true,
   "description": "Some description.",
   "main": "./build",
+  "files": [
+    "./build/**/*"
+  ],
   "scripts": {
     "postinstall": "patch-package && npm uninstall --no-save patch-package && echo",
     "dev": "nodemon ./src/index.js",
-    "build": "tsc",
+    "build": "tsc && tsc --allowJs false --checkJs false --declaration --declarationMap --outDir ./build-declaration && cp -R ./build-declaration/ ./build/ && rm -rf ./build-declaration",
     "start": "NODE_ENV=production NODE_PATH=./build node ./build",
     "lint:js": "eslint --ignore-pattern \"src/@nabstudio/**\" \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:ts": "tsc --project ./tsconfig.lint.json --noEmit",
