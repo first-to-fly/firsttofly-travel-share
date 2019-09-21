@@ -60,7 +60,7 @@ module.exports = {
 
     // ==> @typescript-eslint/parser
     project: "./tsconfig.json",
-    tsconfigRootDir: ".",
+    tsconfigRootDir: __dirname,
   },
 
   plugins: [
