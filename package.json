@@ -8,7 +8,7 @@
     "./build/**/*"
   ],
   "scripts": {
-    "postinstall": "patch-package && npm uninstall --no-save patch-package && echo && npm audit fix && echo",
+    "postinstall": "patch-package && npm uninstall --no-save patch-package && echo",
     "dev": "nodemon ./src/index.js",
     "build": "tsc && tsc --allowJs false --checkJs false --declaration --declarationMap --outDir ./build-declaration && cp -R ./build-declaration/ ./build/ && rm -rf ./build-declaration",
     "start": "NODE_ENV=production NODE_PATH=./build node ./build",
