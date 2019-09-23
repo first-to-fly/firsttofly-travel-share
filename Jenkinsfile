@@ -52,6 +52,7 @@ pipeline {
 
     stage('Integration') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
+      sh "./pipeline/clean"
       sh "./pipeline/install"
       sh "./pipeline/lint"
 
