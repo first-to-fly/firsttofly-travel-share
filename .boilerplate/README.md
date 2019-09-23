@@ -5,11 +5,10 @@
 ### New Project
 
 1. Prepare an empty git repository and clone it to your computer
-2. Clone [`boilerplates`](https://bitbucket.org/nabstudio/boilerplates) to a folder on your computer (Ex. `~/Gits/boilerplates`)
-3. Run the following command:
+2. Run the following command:
 
     ```bash
-    ~/Gits/boilerplates/pipeline/boilerplate-init
+    TEMP_DIR="$(mktemp -d)" && git clone https://bitbucket.org/nabstudio/boilerplates "${TEMP_DIR}" && "${TEMP_DIR}/pipeline/boilerplate-init" && rm -rf "${TEMP_DIR}"
     ```
 
     You will be ask for the project key and project name.
