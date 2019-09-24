@@ -1,8 +1,9 @@
 {
   "verbose": true,
   "watch": [
-    "src"
+    "src/*"
   ],
+  "ignore": [],
   "ext": "js,jsx,ts,tsx,json,html,css,scss,less,sss",
   "env": {
     "TS_NODE_PROJECT": "./tsconfig.json",
