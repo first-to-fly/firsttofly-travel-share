@@ -6,25 +6,80 @@ function main() {
 
   cd "${BASH_SOURCE[0]%/*}" || exit
 
+  if [[ -f "${STATE_FILE}" ]]; then
+    rm -rf "${STATE_FILE}"
+  fi
+
+  cat <<'EOF' >"${VARIABLES_FILE}"
+aws_access_key = "__AWS_ACCESS_KEY_ID__"
+aws_secret_key = "__AWS_SECRET_ACCESS_KEY__"
+subnet_name = "__SUBNET_NAME__"
+load_balancer_name = "__LOAD_BALANCER_NAME__"
+namespace_id = "__NAMESPACE_ID__"
+service_envkey = "__SERVICE_ENVKEY__"
+image_tag = "__IMAGE_TAG__"
+image_id = "__IMAGE_ID__"
+repository_name = "__REPOSITORY_NAME__"
+EOF
+
+  if [[ -n "${AWS_NAMESPACE:-}" ]]; then
+    NAMESPACE_ID="$(
+      aws servicediscovery list-namespaces |
+        jq -r ".Namespaces[] | select(.Name == \"${AWS_NAMESPACE}\") | .Id"
+    )"
+    sed -i "" -e "s|__NAMESPACE_ID__|${NAMESPACE_ID}|g" "${VARIABLES_FILE}"
+  fi
+
+  if [[ -n "${AWS_SUBNET:-}" ]]; then
+    sed -i "" -e "s|__SUBNET_NAME__|${AWS_SUBNET}|g" "${VARIABLES_FILE}"
+  fi
+
+  if [[ -n "${AWS_LOAD_BALANCER:-}" ]]; then
+    sed -i "" -e "s|__LOAD_BALANCER_NAME__|${AWS_LOAD_BALANCER}|g" "${VARIABLES_FILE}"
+  fi
+
+  if [[ -n "${SERVICE_ENVKEY:-}" ]]; then
+    sed -i "" -e "s|__SERVICE_ENVKEY__|${SERVICE_ENVKEY}|g" "${VARIABLES_FILE}"
+  fi
+
+  local IMAGE_ID
+  IMAGE_ID="$(jq -r ".image_id" "${CONFIG_FILE}")"
+
+  if [[ -z "${IMAGE_ID}" ]]; then
+    IMAGE_ID="$(
+      aws ssm get-parameters \
+        --names /aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id \
+        --region us-east-1 |
+        jq -r ".Parameters[0].Value"
+    )"
+    update_json_file ".image_id = \"${IMAGE_ID}\"" "${CONFIG_FILE}"
+  fi
+
+  sed -i "" -e "s|__IMAGE_ID__|${IMAGE_ID}|g" "${VARIABLES_FILE}"
+
+  sed -i "" -e "s|__AWS_ACCESS_KEY_ID__|${AWS_ACCESS_KEY_ID}|g" "${VARIABLES_FILE}"
+  sed -i "" -e "s|__AWS_SECRET_ACCESS_KEY__|${AWS_SECRET_ACCESS_KEY}|g" "${VARIABLES_FILE}"
+  sed -i "" -e "s|__REPOSITORY_NAME__|${AWS_ECS_REPO_URI##*/}|g" "${VARIABLES_FILE}"
+
   terraform init
 
   terraform plan \
-    -var-file="./variables.tfvars" \
+    -var-file="${VARIABLES_FILE}" \
     -out="${PLAN_FILE}" \
     -state="${STATE_FILE}"
 
-  # if ! (terraform show "${PLAN_FILE}" | grep "This plan does nothing."); then
+  ./import || true
 
-  #   terraform show "${PLAN_FILE}"
-  #   # terraform apply "${PLAN_FILE}"
+  local IMAGE_TAG
+  IMAGE_TAG="$(
+    jq -r ".image_tag" "${CONFIG_FILE}"
+  )"
+  sed -i "" -e "s|__IMAGE_TAG__|${IMAGE_TAG}|g" "${VARIABLES_FILE}"
 
-  # fi
-
-  # git add "${STATE_FILE}"
-  # git commit -m ""
-  # git push
-
-  # terraform apply -var-file="./variables.tfvars" -state="${STATE_FILE}" -auto-approve
+  terraform plan \
+    -var-file="${VARIABLES_FILE}" \
+    -out="${PLAN_FILE}" \
+    -state="${STATE_FILE}"
 
 }
 
