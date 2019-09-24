@@ -112,6 +112,7 @@ function main() {
       {
         "extends": "./tsconfig.json",
         "include": [
+          "node_modules/**/*.d.ts",
           "src/**/*.d.ts",
     ' >"${TSC_CONFIG}"
     local FIRST="true"

@@ -3,9 +3,9 @@
   "version": "0.0.1",
   "private": true,
   "description": "Some description.",
-  "main": "./build",
+  "main": "build",
   "files": [
-    "./build/**/*"
+    "build/*"
   ],
   "scripts": {
     "postinstall": "(patch-package || true) && npm uninstall --no-save patch-package && ([ ! -f ./pipeline/build ] || ! command -v tsc || ./pipeline/build) && echo",
