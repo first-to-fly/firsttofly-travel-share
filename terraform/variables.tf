@@ -6,10 +6,6 @@ variable "aws_secret_key" {
 
 }
 
-variable "name" {
-
-}
-
 variable "subnet_name" {
 
 }
@@ -31,5 +27,9 @@ variable "service_envkey" {
 }
 
 variable "image_id" {
+
+}
+
+variable "repository_name" {
 
 }
