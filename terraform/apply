@@ -74,6 +74,9 @@ EOF
   IMAGE_TAG="$(
     jq -r ".image_tag" "${CONFIG_FILE}"
   )"
+  if [[ -z "${IMAGE_TAG}" ]]; then
+    IMAGE_TAG="$(git rev-parse --short HEAD)"
+  fi
   sed -i "" -e "s|__IMAGE_TAG__|${IMAGE_TAG}|g" "${VARIABLES_FILE}"
 
   terraform plan \

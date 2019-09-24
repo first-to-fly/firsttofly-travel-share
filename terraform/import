@@ -117,10 +117,10 @@ function main() {
             jq -r ".taskDefinition.containerDefinitions[0].image"
         )"
 
-        if [[ -z "$(jq -r ".image_tag" <<<"${CONFIG_FILE}")" ]]; then
-          if grep "${AWS_ECS_REPO_URI}" <<<"${TASK_DEFINITION_IMAGE}" >/dev/null; then
-            local IMAGE_TAG
-            IMAGE_TAG="$(sed "s|.*:||g" <<<"${TASK_DEFINITION_IMAGE}")"
+        if grep "${AWS_ECS_REPO_URI}" <<<"${TASK_DEFINITION_IMAGE}" >/dev/null; then
+          local IMAGE_TAG
+          IMAGE_TAG="$(sed "s|.*:||g" <<<"${TASK_DEFINITION_IMAGE}")"
+          if [[ "$(jq -r ".image_tag" <<<"${CONFIG_FILE}")" != "${IMAGE_TAG}" ]]; then
             update_json_file ".image_tag = \"${IMAGE_TAG}\"" "${CONFIG_FILE}"
           fi
         fi
