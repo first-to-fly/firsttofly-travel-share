@@ -58,9 +58,10 @@ module.exports = {
     ecmaVersion: 2018,
     sourceType: "module",
 
-    // ==> @typescript-eslint/parser
-    project: "./tsconfig.json",
-    tsconfigRootDir: __dirname,
+    // // ==> @typescript-eslint/parser
+    // We no longer need to set this!
+    // project: "./tsconfig.json",
+    // tsconfigRootDir: __dirname,
   },
 
   plugins: [
