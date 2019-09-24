@@ -5,9 +5,25 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 dependency "aws"
 dependency "envkey-source"
 
-NAME="$(git config --get remote.origin.url | sed "s|.*/\([^.]*\)\.git|\1|g")"
+export PROJECT_NAME
+PROJECT_NAME="$(git config --get remote.origin.url | sed "s|.*/\([^.]*\)\.git|\1|g")"
 
 export PLAN_FILE="./terraform.tfplan"
+export CONFIG_FILE="./terraform.config.json"
+export VARIABLES_FILE="./variables.tfvars"
+
+function update_json_file() {
+
+  FILTER="${1:-}"
+  FILEPATH="${2:-}"
+
+  local TEMP_FILE
+  TEMP_FILE="$(mktemp)"
+  cat \
+    <<<"$(jq -r "${FILTER}" "${FILEPATH}")" \
+    >"${TEMP_FILE}" &&
+    mv "${TEMP_FILE}" "${FILEPATH}"
+}
 
 function main() {
 
@@ -31,57 +47,10 @@ function main() {
     export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION}"
   fi
 
-  cat <<'EOF' >"${BASH_SOURCE[0]%/*}/variables.tfvars"
-aws_access_key = "__AWS_ACCESS_KEY_ID__"
-aws_secret_key = "__AWS_SECRET_ACCESS_KEY__"
-name = "__NAME__"
-subnet_name = "__SUBNET_NAME__"
-load_balancer_name = "__LOAD_BALANCER_NAME__"
-namespace_id = "__NAMESPACE_ID__"
-service_envkey = "__SERVICE_ENVKEY__"
-image_tag = "__IMAGE_TAG__"
-image_id = "__IMAGE_ID__"
-EOF
-
-  if [[ -n "${AWS_NAMESPACE:-}" ]]; then
-    NAMESPACE_ID="$(
-      aws servicediscovery list-namespaces |
-        jq -r ".Namespaces[] | select(.Name == \"${AWS_NAMESPACE}\") | .Id"
-    )"
-    sed -i "" -e "s|__NAMESPACE_ID__|${NAMESPACE_ID}|g" "${BASH_SOURCE[0]%/*}/variables.tfvars"
+  if [[ -z "${STATE_FILE:-}" ]]; then
+    echo "ERROR: Missing STATE_FILE." >&2
+    exit 1
   fi
-
-  if [[ -n "${AWS_SUBNET:-}" ]]; then
-    sed -i "" -e "s|__SUBNET_NAME__|${AWS_SUBNET}|g" "${BASH_SOURCE[0]%/*}/variables.tfvars"
-  fi
-
-  if [[ -n "${AWS_LOAD_BALANCER:-}" ]]; then
-    sed -i "" -e "s|__LOAD_BALANCER_NAME__|${AWS_LOAD_BALANCER}|g" "${BASH_SOURCE[0]%/*}/variables.tfvars"
-  fi
-
-  if [[ -n "${SERVICE_ENVKEY:-}" ]]; then
-    sed -i "" -e "s|__SERVICE_ENVKEY__|${SERVICE_ENVKEY}|g" "${BASH_SOURCE[0]%/*}/variables.tfvars"
-  fi
-
-  local IMAGE_ID
-  if [[ -z "$(jq -r ".image_id" "${BASH_SOURCE[0]%/*}/terraform.config.json")" ]]; then
-    IMAGE_ID="$(aws ssm get-parameters --names /aws/service/ecs/optimized-ami/amazon-linux-2/recommended/image_id --region us-east-1 | jq -r ".Parameters[0].Value")"
-    local CONFIG_FILE="${BASH_SOURCE[0]%/*}/terraform.config.json"
-    local TEMP_FILE
-    TEMP_FILE="$(mktemp)"
-    cat \
-      <<<"$(jq -r ".image_id = \"${IMAGE_ID}\"" "${CONFIG_FILE}")" \
-      >"${TEMP_FILE}" &&
-      mv "${TEMP_FILE}" "${CONFIG_FILE}"
-  else
-    IMAGE_ID="$(jq -r ".image_id" "${BASH_SOURCE[0]%/*}/terraform.config.json")"
-  fi
-
-  sed -i "" -e "s|__AWS_ACCESS_KEY_ID__|${AWS_ACCESS_KEY_ID}|g" "${BASH_SOURCE[0]%/*}/variables.tfvars"
-  sed -i "" -e "s|__AWS_SECRET_ACCESS_KEY__|${AWS_SECRET_ACCESS_KEY}|g" "${BASH_SOURCE[0]%/*}/variables.tfvars"
-  sed -i "" -e "s|__NAME__|${NAME}|g" "${BASH_SOURCE[0]%/*}/variables.tfvars"
-  sed -i "" -e "s|__IMAGE_TAG__|$(git rev-parse --short HEAD)|g" "${BASH_SOURCE[0]%/*}/variables.tfvars"
-  sed -i "" -e "s|__IMAGE_ID__|${IMAGE_ID}|g" "${BASH_SOURCE[0]%/*}/variables.tfvars"
 }
 
 main "$@"
