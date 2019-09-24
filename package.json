@@ -8,9 +8,9 @@
     "./build/**/*"
   ],
   "scripts": {
-    "postinstall": "patch-package && npm uninstall --no-save patch-package && echo",
+    "postinstall": "(patch-package || true) && npm uninstall --no-save patch-package && echo",
     "dev": "nodemon ./src/index.js",
-    "build": "tsc && tsc --allowJs false --checkJs false --declaration --outDir ./build-declaration && ([ ! -d ./build-declaration ] || (find ./build-declaration/ -type f ! -name '*.d.ts' -delete && cp -R ./build-declaration/ ./build/ && rm -rf ./build-declaration))",
+    "build": "tsc --allowJs false --checkJs false --declaration && tsc",
     "start": "NODE_ENV=production NODE_PATH=./build node ./build",
     "lint:js": "eslint --ignore-pattern \"src/@nabstudio/**\" \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:ts": "tsc --project ./tsconfig.lint.json --noEmit",
