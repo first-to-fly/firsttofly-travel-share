@@ -38,6 +38,10 @@ function main() {
       continue
     fi
 
+    if [[ "${FILE_PATH}" == "build/"* ]]; then
+      continue
+    fi
+
     local FILE="${FILE_PATH##*/}"
 
     local EXTENSION="${FILE##*.}"
