@@ -12,13 +12,24 @@ function main() {
     return
   fi
 
-  (
-    set -x
+  echo "Stashing changes now..."
+
+  local STASHING_OUTPUT
+  STASHING_OUTPUT="$(
     git stash push \
       --keep-index \
       --include-untracked \
       --message "boilerplate-lint-staged"
-  )
+  )"
+
+  echo
+  echo "${STASHING_OUTPUT}"
+  echo
+
+  local STASH_EXISTS
+  if [[ "${STASHING_OUTPUT}" != "No local changes to save" ]]; then
+    STASH_EXISTS=true
+  fi
 
   SHELL_FILES=()
 
@@ -75,10 +86,12 @@ function main() {
     set -e
   fi
 
-  (
-    set -x
-    git stash pop
-  )
+  if [[ -n "${STASH_EXISTS:-}" ]]; then
+    (
+      set -x
+      git stash pop
+    )
+  fi
 
 }
 
