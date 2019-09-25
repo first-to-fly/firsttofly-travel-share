@@ -8,6 +8,7 @@ node_modules/
 # Terraform
 terraform/.terraform
 terraform/variables.tfvars
+terraform/*.tfstate
 terraform/*.tfstate.backup
 terraform/*.tfplan
 
