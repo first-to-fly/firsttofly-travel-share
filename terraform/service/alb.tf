@@ -6,12 +6,14 @@ data "aws_subnet" "subnet" {
 }
 
 data "aws_alb_listener" "listener" {
-  load_balancer_arn = "${data.aws_alb.alb.arn}"
+  count             = "${lookup(var.load_balancer, "name", "") != "" ? 1 : 0}"
+  load_balancer_arn = "${data.aws_alb.alb.*.arn[count.index]}"
   port              = "80"
 }
 
 data "aws_alb" "alb" {
-  name = "${lookup(var.load_balancer, "name")}"
+  count = "${lookup(var.load_balancer, "name", "") != "" ? 1 : 0}"
+  name  = "${lookup(var.load_balancer, "name")}"
 }
 
 
@@ -37,7 +39,7 @@ resource "aws_alb_target_group" "alb_target_group" {
 
 resource "aws_alb_listener_rule" "listener_rule" {
   count        = "${lookup(var.load_balancer, "container_port", "") != "" ? 1 : 0}"
-  listener_arn = "${data.aws_alb_listener.listener.arn}"
+  listener_arn = "${data.aws_alb_listener.listener.*.arn[count.index]}"
 
   action {
     type             = "forward"

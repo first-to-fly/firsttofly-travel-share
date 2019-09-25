@@ -21,7 +21,7 @@ resource "aws_ecs_service" "service" {
   dynamic "load_balancer" {
     for_each = "${lookup(var.load_balancer, "container_port", "") != "" ? list(var.load_balancer.container_port) : local.empty_list}"
     content {
-      container_name   = "${var.prefix}"
+      container_name   = "${var.prefix != "" ? var.prefix : var.name}"
       container_port   = "${load_balancer.value}"
       target_group_arn = "${aws_alb_target_group.alb_target_group.*.arn[0]}"
     }
