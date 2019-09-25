@@ -18,10 +18,16 @@ function main() {
 
   if [[ -z "${BRANCH:-}" || "${BRANCH:-}" == "null" ]]; then
 
-    echo "Which of these boilerplate branches do you want to upgrade to?"
+    echo "Available boilerplates:"
     git ls-remote "${REMOTE_URL}" | awk '{print $2}' | grep '^refs/' | sed 's|^refs/heads/|- |'
 
-    read -r -p "> " BRANCH
+    echo "Which do you want to use? (master) "
+    read -r BRANCH
+    if [[ -z "${BRANCH:-}" ]]; then
+      BRANCH="master"
+    fi
+
+    echo "Using ${GREEN_COLOR}${BRANCH}${NO_COLOR}..."
 
     if [[ -f "${CONFIG_FILE}" ]]; then
       local NEW_CONFIG
