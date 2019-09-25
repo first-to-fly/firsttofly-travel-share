@@ -66,23 +66,26 @@ EOF
   terraform plan \
     -var-file="${VARIABLES_FILE}" \
     -out="${PLAN_FILE}" \
-    -state="${STATE_FILE}"
+    -state="${STATE_FILE}" \
+    >/dev/null
 
   ./import || true
 
-  local IMAGE_TAG
-  IMAGE_TAG="$(
-    jq -r ".image_tag" "${CONFIG_FILE}"
-  )"
-  if [[ -z "${IMAGE_TAG}" ]]; then
-    IMAGE_TAG="$(git rev-parse --short HEAD)"
+  if grep "__IMAGE_TAG__" "${VARIABLES_FILE}"; then
+    sed -i "" -e "s|__IMAGE_TAG__|$(git rev-parse --short HEAD)|g" "${VARIABLES_FILE}"
   fi
-  sed -i "" -e "s|__IMAGE_TAG__|${IMAGE_TAG}|g" "${VARIABLES_FILE}"
 
   terraform plan \
     -var-file="${VARIABLES_FILE}" \
     -out="${PLAN_FILE}" \
     -state="${STATE_FILE}"
+
+  # if ! terraform show "./terraform.tfplan" | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' | grep "-"; then
+  #   terraform apply \
+  #     -var-file="${VARIABLES_FILE}" \
+  #     -state="${STATE_FILE}" \
+  #     -auto-approve
+  # fi
 
 }
 
