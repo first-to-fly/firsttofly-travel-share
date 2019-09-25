@@ -27,7 +27,7 @@ function main() {
       BRANCH="master"
     fi
 
-    echo "Using ${COLOR_GREEN}${BRANCH}${NO_COLOR}..."
+    echo "Using ${GREEN_COLOR}${BRANCH}${NO_COLOR}..."
 
     if [[ -f "${CONFIG_FILE}" ]]; then
       local NEW_CONFIG
