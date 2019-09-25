@@ -29,14 +29,14 @@ function main() {
 
   "${BASH_SOURCE[0]%/*}/boilerplate-upgrade"
 
-  echo "Project name (ex. \"My Project\"): "
+  echo "Project name: (My Project) "
   (
     local PROJECT_NAME
     read -r PROJECT_NAME
     replace "My Project" "${PROJECT_NAME}"
   )
 
-  echo "Project key (ex. \"myproject\"): "
+  echo "Project key: (myproject) "
   (
     local PROJECT_KEY
     read -r PROJECT_KEY
