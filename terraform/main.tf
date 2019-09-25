@@ -9,7 +9,8 @@ resource "aws_ecr_repository" "ecr_repo" {
 }
 
 # CLUSTERS
-/*module "CLUSTER_NAME" {
+/*
+module "CLUSTER_NAME" {
   source = "./cluster"
 
   name        = ""
@@ -21,7 +22,7 @@ resource "aws_ecr_repository" "ecr_repo" {
       from_port   = 0
       to_port     = 0
       protocol    = "tcp"
-      cidr_blocks = [""]
+      cidr_blocks = ["0.0.0.0/0"]
       description = ""
     }
   ]
@@ -35,10 +36,12 @@ resource "aws_ecr_repository" "ecr_repo" {
       description = ""
     }
   ]
-}*/
+}
+*/
 
 # SERVICES
-/*module "SERVICE_NAME" {
+/*
+module "SERVICE_NAME" {
   source = "./service"
 
   prefix      = ""
@@ -46,30 +49,40 @@ resource "aws_ecr_repository" "ecr_repo" {
   subnet_name = "${var.subnet_name}"
   cluster_arn = "${module.__CLUSTER__.cluster_arn}"
 
+  ordered_placement_strategy = true
+
   service_registries = {
     container_port = 0
     namespace_id   = "${var.namespace_id}"
   }
 
+  load_balancer = {
+    name              = "${var.load_balancer_name}"
+    container_port    = 0
+    health_check_path = "/"
+    host_header       = ""
+  }
+
   container_definitions = [
     {
-      port_mappings = [
-        {
-          hostPort      = 50051
-          protocol      = "tcp"
-          containerPort = 50051
-        }
-      ]
-      cpu                = 128
+      image = "${aws_ecr_repository.ecr_repo.repository_url}:${var.image_tag}"
       memory             = 256
       memory_reservation = 128
+      cpu                = 128
+      port_mappings = [
+        {
+          hostPort      = 0
+          protocol      = "tcp"
+          containerPort = 0
+        }
+      ]
       environment = [
         {
           name  = ""
           value = ""
         }
       ]
-      image = "${aws_ecr_repository.ecr_repo.repository_url}:${var.image_tag}"
     }
   ]
-}*/
+}
+*/

@@ -119,8 +119,8 @@ function main() {
         if grep "${AWS_ECS_REPO_URI}" <<<"${TASK_DEFINITION_IMAGE}" >/dev/null; then
           local IMAGE_TAG
           IMAGE_TAG="$(sed "s|.*:||g" <<<"${TASK_DEFINITION_IMAGE}")"
-          if [[ "$(jq -r ".image_tag" <<<"${CONFIG_FILE}")" != "${IMAGE_TAG}" ]]; then
-            update_json_file ".image_tag = \"${IMAGE_TAG}\"" "${CONFIG_FILE}"
+          if grep "__IMAGE_TAG__" "${VARIABLES_FILE}"; then
+            sed -i "" -e "s|__IMAGE_TAG__|${IMAGE_TAG}|g" "${VARIABLES_FILE}"
           fi
         fi
 
