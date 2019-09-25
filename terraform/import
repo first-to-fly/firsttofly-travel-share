@@ -7,7 +7,7 @@ function import() {
   local RESOURCE="${1:-}"
   local ID="${2:-}"
 
-  terraform import -var-file="${VARIABLES_FILE}" -state="${STATE_FILE}" "${RESOURCE}" "${ID}"
+  terraform import -var-file="${VARIABLES_FILE}" -state="${STATE_FILE}" "${RESOURCE}" "${ID}" || true
 }
 
 function get_resources() {
@@ -82,9 +82,8 @@ function main() {
           import "${RESOURCE}" "${SECURITY_GROUP_ID}"
           update_json_file "del(.resources[] | select(.type | test(\"aws_security_group_rule\")))" "${STATE_FILE}"
           ;;
-        *)
-          break
-          ;;
+        *) ;;
+
         esac
 
       done <<<"${RESOURCES[@]}"
@@ -194,9 +193,8 @@ function main() {
           aws_service_discovery_service)
             import "${RESOURCE}" "${SERVICE_ID}"
             ;;
-          *)
-            break
-            ;;
+          *) ;;
+
           esac
 
         done <<<"${RESOURCES[@]}"
