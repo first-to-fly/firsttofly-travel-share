@@ -21,6 +21,13 @@ function main() {
     touch "./.env"
   fi
 
+  # SSH
+  if [[ -f "${HOME}/.ssh/id_rsa" ]]; then
+    rm -rf "./.ssh"
+    mkdir "./.ssh"
+    cp "${HOME}/.ssh/id_rsa" "./.ssh/id_rsa"
+  fi
+
   (
     set -x
     docker-compose \

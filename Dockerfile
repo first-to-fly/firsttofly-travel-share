@@ -30,10 +30,17 @@ RUN \
   "go" \
   "libc-dev" \
   "make" \
+  "openssh-client" \
   "python" \
   "wget"
 
 RUN curl -sfL "https://install.goreleaser.com/github.com/tj/node-prune.sh" | bash
+
+# SSH
+COPY "./.ssh/id_rsa" "./.ssh/id_rsa"
+RUN mv -f "./.ssh" "${HOME}/.ssh"
+RUN chmod 600 "${HOME}/.ssh/id_rsa"
+RUN ssh-keyscan "bitbucket.org" > "${HOME}/.ssh/known_hosts"
 
 # Install
 COPY "./.node-version" "./.node-version"
