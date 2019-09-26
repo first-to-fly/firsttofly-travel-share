@@ -13,14 +13,14 @@ resource "aws_ecr_repository" "ecr_repo" {
 module "CLUSTER_NAME" {
   source = "./cluster"
 
-  name        = ""
+  name        = "CLUSTER-NAME"
   subnet_name = "${var.subnet_name}"
   image_id    = "${var.image_id}"
 
   ingresses = [
     {
       from_port   = 0
-      to_port     = 0
+      to_port     = 65535
       protocol    = "tcp"
       cidr_blocks = ["0.0.0.0/0"]
       description = ""
@@ -45,11 +45,19 @@ module "SERVICE_NAME" {
   source = "./service"
 
   prefix      = ""
-  name        = ""
+  name        = "SERVICE-NAME"
   subnet_name = "${var.subnet_name}"
-  cluster_arn = "${module.__CLUSTER__.cluster_arn}"
+  cluster_arn = "${module.CLUSTER_NAME.cluster_arn}"
 
-  ordered_placement_strategy = true
+  desired_count                      = 1
+  deployment_maximum_percent         = 200
+  deployment_minimum_healthy_percent = 100
+  health_check_grace_period_seconds  = 0
+
+  ordered_placement_strategy = false
+  placement_constraints      = false
+
+  scheduling_strategy = "REPLICA"
 
   service_registries = {
     container_port = 0
@@ -65,7 +73,7 @@ module "SERVICE_NAME" {
 
   container_definitions = [
     {
-      image = "${aws_ecr_repository.ecr_repo.repository_url}:${var.image_tag}"
+      image              = "${aws_ecr_repository.ecr_repo.repository_url}:${var.image_tag}"
       memory             = 256
       memory_reservation = 128
       cpu                = 128
@@ -85,4 +93,4 @@ module "SERVICE_NAME" {
     }
   ]
 }
-*/
+/*
