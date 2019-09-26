@@ -71,6 +71,8 @@ module "SERVICE_NAME" {
     host_header       = ""
   }
 
+  requires_compatibilities = [] # "EC2", "FARGATE"
+
   container_definitions = [
     {
       image              = "${aws_ecr_repository.ecr_repo.repository_url}:${var.image_tag}"
