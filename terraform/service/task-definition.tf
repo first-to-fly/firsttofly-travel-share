@@ -12,7 +12,7 @@ resource "aws_cloudwatch_log_group" "cloudwatch_log_group" {
 
 resource "aws_ecs_task_definition" "task_definition" {
   family                   = "${local.family}"
-  requires_compatibilities = []
+  requires_compatibilities = "${var.requires_compatibilities}"
   execution_role_arn       = "${data.aws_iam_role.task_execution_role.arn}"
 
   container_definitions = "${data.template_file.wrapper.rendered}"
