@@ -54,3 +54,7 @@ variable "placement_constraints" {
 variable "scheduling_strategy" {
 
 }
+
+variable "requires_compatibilities" {
+
+}
