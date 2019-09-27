@@ -1,7 +1,15 @@
+locals {
+  security_group_name = "ecs-${var.name}"
+}
+
 resource "aws_security_group" "security_group" {
-  name        = "ecs-${var.name}"
+  name        = "${local.security_group_name}"
   vpc_id      = "${data.aws_subnet.subnet.vpc_id}"
   description = "ECS Allowed Ports"
+
+  tags = {
+    Name = "${local.security_group_name}"
+  }
 
   dynamic "ingress" {
     for_each = "${var.ingresses}"
