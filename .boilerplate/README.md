@@ -7,13 +7,14 @@
 1. Prepare an empty git repository and clone it to your computer
 2. Run the following command:
 
-    ```bash
-    TEMP_DIR="$(mktemp -d)" && git clone https://bitbucket.org/nabstudio/boilerplates "${TEMP_DIR}" && "${TEMP_DIR}/pipeline/boilerplate-init" && rm -rf "${TEMP_DIR}"
-    ```
+```bash
+TEMP_DIR="$(mktemp -d)" && git clone https://bitbucket.org/nabstudio/boilerplates "${TEMP_DIR}" && "${TEMP_DIR}/pipeline/boilerplate-init" && rm -rf "${TEMP_DIR}"
+```
 
-    You will be ask for the project key and project name.
-    - **Project key**: used for deployment purposes (Ex. ECS cluster name, module name, ...).
-    - **Project name**: used for displaying only (Ex. Title of the [`README.md`](../README.md), ...).
+You will be ask for the project key and project name.
+
+- **Project key**: used for deployment purposes (Ex. ECS cluster name, module name, ...).
+- **Project name**: used for displaying only (Ex. Title of the [`README.md`](../README.md), ...).
 
 ### Upgrade Project
 
