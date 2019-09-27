@@ -40,20 +40,6 @@ function main() {
   if [[ -n "${CLUSTERS}" ]]; then
     while read -r CLUSTER; do
 
-      local LAUNCH_CONFIGURATION_NAME
-      LAUNCH_CONFIGURATION_NAME="$(
-        aws autoscaling describe-auto-scaling-groups \
-          --auto-scaling-group-names "ecs-${CLUSTER}" |
-          jq -r ".AutoScalingGroups[0].LaunchConfigurationName"
-      )"
-
-      local SECURITY_GROUP_ID
-      SECURITY_GROUP_ID="$(
-        aws autoscaling describe-launch-configurations \
-          --launch-configuration-names "${LAUNCH_CONFIGURATION_NAME}" |
-          jq -r ".LaunchConfigurations[0].SecurityGroups[0]"
-      )"
-
       local RESOURCES
       RESOURCES="$(get_resources "${CLUSTER//-/_}")"
 
@@ -71,15 +57,34 @@ function main() {
           import "${RESOURCE}" "${CLUSTER}"
           ;;
         aws_launch_configuration)
+
+          local LAUNCH_CONFIGURATION_NAME
+          LAUNCH_CONFIGURATION_NAME="$(
+            aws autoscaling describe-auto-scaling-groups \
+              --auto-scaling-group-names "ecs-${CLUSTER}" |
+              jq -r ".AutoScalingGroups[0].LaunchConfigurationName"
+          )"
+
           import "${RESOURCE}" "${LAUNCH_CONFIGURATION_NAME}"
+
           local INDEX
           INDEX="$(
             jq -r ".resources | to_entries[] | select(.value.type == \"aws_launch_configuration\") | .key" "${STATE_FILE}"
           )"
+
           update_json_file ".resources[${INDEX}].instances[0].attributes.name_prefix = \"ecs-${CLUSTER}-\"" "${STATE_FILE}"
           ;;
         aws_security_group)
+
+          local SECURITY_GROUP_ID
+          SECURITY_GROUP_ID="$(
+            aws ec2 describe-security-groups \
+              --filters "Name=tag:Name,Values=ecs-${CLUSTER}" |
+              jq -r ".SecurityGroups[0].GroupId"
+          )"
+
           import "${RESOURCE}" "${SECURITY_GROUP_ID}"
+
           update_json_file "del(.resources[] | select(.type | test(\"aws_security_group_rule\")))" "${STATE_FILE}"
           ;;
         *) ;;
@@ -96,110 +101,112 @@ function main() {
           sed "s|.*/||g"
       )"
 
-      while read -r SERVICE; do
-        set -x
-        local SERVICE_DESCRIPTION
-        SERVICE_DESCRIPTION="$(
-          aws ecs describe-services \
-            --cluster "${CLUSTER}" \
-            --service "${SERVICE}" |
-            jq -r ".services[0]"
-        )"
+      if [[ -n "${SERVICES}" ]]; then
+        while read -r SERVICE; do
 
-        local TASK_DEFINITION_ARN
-        TASK_DEFINITION_ARN="$(jq -r ".taskDefinition" <<<"${SERVICE_DESCRIPTION}")"
+          local SERVICE_DESCRIPTION
+          SERVICE_DESCRIPTION="$(
+            aws ecs describe-services \
+              --cluster "${CLUSTER}" \
+              --service "${SERVICE}" |
+              jq -r ".services[0]"
+          )"
 
-        local TASK_DEFINITION_IMAGE
-        TASK_DEFINITION_IMAGE="$(
-          aws ecs describe-task-definition \
-            --task-definition "${TASK_DEFINITION_ARN}" |
-            jq -r ".taskDefinition.containerDefinitions[0].image"
-        )"
+          local TASK_DEFINITION_ARN
+          TASK_DEFINITION_ARN="$(jq -r ".taskDefinition" <<<"${SERVICE_DESCRIPTION}")"
 
-        if grep "${AWS_ECS_REPO_URI}" <<<"${TASK_DEFINITION_IMAGE}" >/dev/null; then
-          local IMAGE_TAG
-          IMAGE_TAG="$(sed "s|.*:||g" <<<"${TASK_DEFINITION_IMAGE}")"
-          if grep "__IMAGE_TAG__" "${VARIABLES_FILE}"; then
-            sed -i "" -e "s|__IMAGE_TAG__|${IMAGE_TAG}|g" "${VARIABLES_FILE}"
+          local TASK_DEFINITION_IMAGE
+          TASK_DEFINITION_IMAGE="$(
+            aws ecs describe-task-definition \
+              --task-definition "${TASK_DEFINITION_ARN}" |
+              jq -r ".taskDefinition.containerDefinitions[0].image"
+          )"
+
+          if grep "${AWS_ECS_REPO_URI}" <<<"${TASK_DEFINITION_IMAGE}" >/dev/null; then
+            local IMAGE_TAG
+            IMAGE_TAG="$(sed "s|.*:||g" <<<"${TASK_DEFINITION_IMAGE}")"
+            if grep "__IMAGE_TAG__" "${VARIABLES_FILE}"; then
+              sed -i "" -e "s|__IMAGE_TAG__|${IMAGE_TAG}|g" "${VARIABLES_FILE}"
+            fi
           fi
-        fi
 
-        local LISTENER_RULE_ARN
-        local TARGET_GROUP_ARN
-        if [[ "$(jq -r ".loadBalancers | length" <<<"${SERVICE_DESCRIPTION}")" -gt 0 ]]; then
+          local LISTENER_RULE_ARN
+          local TARGET_GROUP_ARN
+          if [[ "$(jq -r ".loadBalancers | length" <<<"${SERVICE_DESCRIPTION}")" -gt 0 ]]; then
 
-          local LOAD_BALANCER_ARN
-          LOAD_BALANCER_ARN="$(
-            aws elbv2 describe-load-balancers \
-              --names "${AWS_LOAD_BALANCER}" |
-              jq -r ".LoadBalancers[0].LoadBalancerArn"
-          )"
+            local LOAD_BALANCER_ARN
+            LOAD_BALANCER_ARN="$(
+              aws elbv2 describe-load-balancers \
+                --names "${AWS_LOAD_BALANCER}" |
+                jq -r ".LoadBalancers[0].LoadBalancerArn"
+            )"
 
-          local LISTENER_ARN
-          LISTENER_ARN="$(
-            aws elbv2 describe-listeners \
-              --load-balancer-arn "${LOAD_BALANCER_ARN}" |
-              jq -r ".Listeners[0].ListenerArn"
-          )"
+            local LISTENER_ARN
+            LISTENER_ARN="$(
+              aws elbv2 describe-listeners \
+                --load-balancer-arn "${LOAD_BALANCER_ARN}" |
+                jq -r ".Listeners[0].ListenerArn"
+            )"
 
-          TARGET_GROUP_ARN="$(jq -r ".loadBalancers[0].targetGroupArn" <<<"${SERVICE_DESCRIPTION}")"
+            TARGET_GROUP_ARN="$(jq -r ".loadBalancers[0].targetGroupArn" <<<"${SERVICE_DESCRIPTION}")"
 
-          LISTENER_RULE_ARN="$(
-            aws elbv2 describe-rules \
-              --listener-arn "${LISTENER_ARN}" |
-              jq -r " \
+            LISTENER_RULE_ARN="$(
+              aws elbv2 describe-rules \
+                --listener-arn "${LISTENER_ARN}" |
+                jq -r " \
                   .Rules[] |
                   select(.Actions[0].TargetGroupArn != null) |
                   select(.Actions[0].TargetGroupArn | test(\"${TARGET_GROUP_ARN}\")) |
                   .RuleArn
                 "
-          )"
+            )"
 
-        fi
+          fi
 
-        local SERVICE_ID
-        if [[ "$(jq -r ".serviceRegistries | length" <<<"${SERVICE_DESCRIPTION}")" -gt 0 ]]; then
-          SERVICE_ID="$(
-            jq -r ".serviceRegistries[0].registryArn" <<<"${SERVICE_DESCRIPTION}" |
-              sed "s|.*/||g"
-          )"
-        fi
+          local SERVICE_ID
+          if [[ "$(jq -r ".serviceRegistries | length" <<<"${SERVICE_DESCRIPTION}")" -gt 0 ]]; then
+            SERVICE_ID="$(
+              jq -r ".serviceRegistries[0].registryArn" <<<"${SERVICE_DESCRIPTION}" |
+                sed "s|.*/||g"
+            )"
+          fi
 
-        local RESOURCES
-        RESOURCES="$(get_resources "${SERVICE//-/_}")"
+          local RESOURCES
+          RESOURCES="$(get_resources "${SERVICE//-/_}")"
 
-        local RESOURCE
-        while read -r RESOURCE; do
+          local RESOURCE
+          while read -r RESOURCE; do
 
-          local TYPE
-          TYPE="$(cut -d'.' -f2 <<<"$(rev <<<"${RESOURCE}")" | rev)"
+            local TYPE
+            TYPE="$(cut -d'.' -f2 <<<"$(rev <<<"${RESOURCE}")" | rev)"
 
-          case ${TYPE} in
-          aws_alb_listener_rule)
-            import "${RESOURCE}" "${LISTENER_RULE_ARN}"
-            ;;
-          aws_alb_target_group)
-            import "${RESOURCE}" "${TARGET_GROUP_ARN}"
-            ;;
-          aws_cloudwatch_log_group)
-            import "${RESOURCE}" "/ecs/$(sed -E "s|.*/(.*):.*|\1|g" <<<"${TASK_DEFINITION_ARN}")"
-            ;;
-          aws_ecs_service)
-            import "${RESOURCE}" "${CLUSTER}/${SERVICE}"
-            ;;
-          aws_ecs_task_definition)
-            import "${RESOURCE}" "${TASK_DEFINITION_ARN}"
-            ;;
-          aws_service_discovery_service)
-            import "${RESOURCE}" "${SERVICE_ID}"
-            ;;
-          *) ;;
+            case ${TYPE} in
+            aws_alb_listener_rule)
+              import "${RESOURCE}" "${LISTENER_RULE_ARN}"
+              ;;
+            aws_alb_target_group)
+              import "${RESOURCE}" "${TARGET_GROUP_ARN}"
+              ;;
+            aws_cloudwatch_log_group)
+              import "${RESOURCE}" "/ecs/$(sed -E "s|.*/(.*):.*|\1|g" <<<"${TASK_DEFINITION_ARN}")"
+              ;;
+            aws_ecs_service)
+              import "${RESOURCE}" "${CLUSTER}/${SERVICE}"
+              ;;
+            aws_ecs_task_definition)
+              import "${RESOURCE}" "${TASK_DEFINITION_ARN}"
+              ;;
+            aws_service_discovery_service)
+              import "${RESOURCE}" "${SERVICE_ID}"
+              ;;
+            *) ;;
 
-          esac
+            esac
 
-        done <<<"${RESOURCES[@]}"
+          done <<<"${RESOURCES[@]}"
 
-      done <<<"${SERVICES[@]}"
+        done <<<"${SERVICES[@]}"
+      fi
 
     done <<<"${CLUSTERS[@]}"
   fi
