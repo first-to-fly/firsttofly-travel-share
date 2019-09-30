@@ -19,7 +19,7 @@ resource "aws_ecs_service" "service" {
   health_check_grace_period_seconds  = "${var.health_check_grace_period_seconds}"
 
   dynamic "load_balancer" {
-    for_each = "${lookup(var.load_balancer, "container_port", "") != "" ? list(var.load_balancer.container_port) : local.empty_list}"
+    for_each = "${lookup(var.load_balancer, "name", "") != "" ? list(var.load_balancer.container_port) : local.empty_list}"
     content {
       container_name   = "${var.prefix != "" ? var.prefix : var.name}"
       container_port   = "${load_balancer.value}"
@@ -28,7 +28,7 @@ resource "aws_ecs_service" "service" {
   }
 
   dynamic "service_registries" {
-    for_each = "${lookup(var.service_registries, "container_port", "") != "" ? list(var.service_registries.container_port) : local.empty_list}"
+    for_each = "${lookup(var.service_registries, "name", "") != "" ? list(var.service_registries.container_port) : local.empty_list}"
     content {
       container_name = "${var.prefix}"
       container_port = "${service_registries.value}"
