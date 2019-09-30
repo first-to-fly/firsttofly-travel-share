@@ -79,7 +79,7 @@ function main() {
           local SECURITY_GROUP_ID
           SECURITY_GROUP_ID="$(
             aws ec2 describe-security-groups \
-              --filters "Name=tag:Name,Values=ecs-${CLUSTER}" |
+              --filters "Name=group-name,Values=ecs-${CLUSTER}" |
               jq -r ".SecurityGroups[0].GroupId"
           )"
 
@@ -123,8 +123,7 @@ function main() {
           )"
 
           if grep "${AWS_ECS_REPO_URI}" <<<"${TASK_DEFINITION_IMAGE}" >/dev/null; then
-            local IMAGE_TAG
-            IMAGE_TAG="$(sed "s|.*:||g" <<<"${TASK_DEFINITION_IMAGE}")"
+            local IMAGE_TAG="${TASK_DEFINITION_IMAGE##*:}"
             if grep "__IMAGE_TAG__" "${VARIABLES_FILE}"; then
               sed -i "" -e "s|__IMAGE_TAG__|${IMAGE_TAG}|g" "${VARIABLES_FILE}"
             fi
