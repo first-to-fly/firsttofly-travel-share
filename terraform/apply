@@ -83,12 +83,12 @@ EOF
     -out="${PLAN_FILE}" \
     -state="${STATE_FILE}"
 
-  # if ! terraform show "./terraform.tfplan" | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' | grep "-"; then
-  #   terraform apply \
-  #     -var-file="${VARIABLES_FILE}" \
-  #     -state="${STATE_FILE}" \
-  #     -auto-approve
-  # fi
+  if ! terraform show "./terraform.tfplan" | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' | grep "-"; then
+    terraform apply \
+      -var-file="${VARIABLES_FILE}" \
+      -state="${STATE_FILE}" \
+      -auto-approve
+  fi
 
 }
 
