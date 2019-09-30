@@ -22,12 +22,11 @@ image_id = "__IMAGE_ID__"
 repository_name = "__REPOSITORY_NAME__"
 EOF
 
-  if [[ -n "${AWS_NAMESPACE:-}" ]]; then
-    NAMESPACE_ID="$(
-      aws servicediscovery list-namespaces |
-        jq -r ".Namespaces[] | select(.Name == \"${AWS_NAMESPACE}\") | .Id"
-    )"
-    sed -i "" -e "s|__NAMESPACE_ID__|${NAMESPACE_ID}|g" "${VARIABLES_FILE}"
+  sed -i "" -e "s|__AWS_ACCESS_KEY_ID__|${AWS_ACCESS_KEY_ID}|g" "${VARIABLES_FILE}"
+  sed -i "" -e "s|__AWS_SECRET_ACCESS_KEY__|${AWS_SECRET_ACCESS_KEY}|g" "${VARIABLES_FILE}"
+
+  if [[ -n "${AWS_ECS_REPO_URI:-}" ]]; then
+    sed -i "" -e "s|__REPOSITORY_NAME__|${AWS_ECS_REPO_URI##*/}|g" "${VARIABLES_FILE}"
   fi
 
   if [[ -n "${AWS_SUBNET:-}" ]]; then
@@ -36,6 +35,24 @@ EOF
 
   if [[ -n "${AWS_LOAD_BALANCER:-}" ]]; then
     sed -i "" -e "s|__LOAD_BALANCER_NAME__|${AWS_LOAD_BALANCER}|g" "${VARIABLES_FILE}"
+  fi
+
+  terraform init
+
+  terraform plan \
+    -var-file="${VARIABLES_FILE}" \
+    -out="${PLAN_FILE}" \
+    -state="${STATE_FILE}" \
+    >/dev/null
+
+  ./import || true
+
+  if [[ -n "${AWS_NAMESPACE:-}" ]]; then
+    NAMESPACE_ID="$(
+      aws servicediscovery list-namespaces |
+        jq -r ".Namespaces[] | select(.Name == \"${AWS_NAMESPACE}\") | .Id"
+    )"
+    sed -i "" -e "s|__NAMESPACE_ID__|${NAMESPACE_ID}|g" "${VARIABLES_FILE}"
   fi
 
   if [[ -n "${SERVICE_ENVKEY:-}" ]]; then
@@ -57,20 +74,6 @@ EOF
 
   sed -i "" -e "s|__IMAGE_ID__|${IMAGE_ID}|g" "${VARIABLES_FILE}"
 
-  sed -i "" -e "s|__AWS_ACCESS_KEY_ID__|${AWS_ACCESS_KEY_ID}|g" "${VARIABLES_FILE}"
-  sed -i "" -e "s|__AWS_SECRET_ACCESS_KEY__|${AWS_SECRET_ACCESS_KEY}|g" "${VARIABLES_FILE}"
-  sed -i "" -e "s|__REPOSITORY_NAME__|${AWS_ECS_REPO_URI##*/}|g" "${VARIABLES_FILE}"
-
-  terraform init
-
-  terraform plan \
-    -var-file="${VARIABLES_FILE}" \
-    -out="${PLAN_FILE}" \
-    -state="${STATE_FILE}" \
-    >/dev/null
-
-  ./import || true
-
   if grep "__IMAGE_TAG__" "${VARIABLES_FILE}"; then
     sed -i "" -e "s|__IMAGE_TAG__|$(git rev-parse --short HEAD)|g" "${VARIABLES_FILE}"
   fi
@@ -80,12 +83,12 @@ EOF
     -out="${PLAN_FILE}" \
     -state="${STATE_FILE}"
 
-  # if ! terraform show "./terraform.tfplan" | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' | grep "-"; then
-  #   terraform apply \
-  #     -var-file="${VARIABLES_FILE}" \
-  #     -state="${STATE_FILE}" \
-  #     -auto-approve
-  # fi
+  if ! terraform show "./terraform.tfplan" | sed $'s,\x1b\\[[0-9;]*[a-zA-Z],,g' | grep "-"; then
+    terraform apply \
+      -var-file="${VARIABLES_FILE}" \
+      -state="${STATE_FILE}" \
+      -auto-approve
+  fi
 
 }
 
