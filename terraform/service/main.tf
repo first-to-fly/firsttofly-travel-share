@@ -30,7 +30,7 @@ resource "aws_ecs_service" "service" {
   dynamic "service_registries" {
     for_each = "${lookup(var.service_registries, "name", "") != "" ? list(var.service_registries.container_port) : local.empty_list}"
     content {
-      container_name = "${var.prefix}"
+      container_name = "${var.prefix != "" ? var.prefix : var.name}"
       container_port = "${service_registries.value}"
       port           = 0
       registry_arn   = "${aws_service_discovery_service.service_discovery.*.arn[0]}"
