@@ -49,30 +49,6 @@ module "SERVICE_NAME" {
   subnet_name = "${var.subnet_name}"
   cluster_arn = "${module.CLUSTER_NAME.cluster_arn}"
 
-  desired_count                      = 1
-  deployment_maximum_percent         = 200
-  deployment_minimum_healthy_percent = 100
-  health_check_grace_period_seconds  = 0
-
-  ordered_placement_strategy = false
-  placement_constraints      = false
-
-  scheduling_strategy = "REPLICA"
-
-  service_registries = {
-    container_port = 0
-    namespace_id   = "${var.namespace_id}"
-  }
-
-  load_balancer = {
-    name              = "${var.load_balancer_name}"
-    container_port    = 0
-    health_check_path = "/"
-    host_header       = ""
-  }
-
-  requires_compatibilities = [] # "EC2", "FARGATE"
-
   container_definitions = [
     {
       image              = "${aws_ecr_repository.ecr_repo.repository_url}:${var.image_tag}"

@@ -1,8 +1,8 @@
 
 locals {
-  empty_list                 = []
-  ordered_placement_strategy = ["attribute:ecs.availability-zone", "instanceId"]
-  placement_constraints      = ["distinctInstance"]
+  empty_list         = []
+  one_task_per_host  = ["distinctInstance"]
+  az_balanced_spread = ["attribute:ecs.availability-zone", "instanceId"]
 }
 
 resource "aws_ecs_service" "service" {
@@ -38,7 +38,7 @@ resource "aws_ecs_service" "service" {
   }
 
   dynamic "ordered_placement_strategy" {
-    for_each = "${var.ordered_placement_strategy ? local.ordered_placement_strategy : local.empty_list}"
+    for_each = "${var.task_placement == "AZBalancedSpread" ? local.az_balanced_spread : local.empty_list}"
     content {
       type  = "spread"
       field = "${ordered_placement_strategy.value}"
@@ -46,9 +46,9 @@ resource "aws_ecs_service" "service" {
   }
 
   dynamic "placement_constraints" {
-    for_each = "${var.placement_constraints ? local.placement_constraints : local.empty_list}"
+    for_each = "${var.task_placement == "OneTaskPerHost" ? local.one_task_per_host : local.empty_list}"
     content {
-      type = "distinctInstance"
+      type = "${placement_constraints.value}"
     }
   }
 }
