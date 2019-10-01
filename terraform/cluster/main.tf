@@ -8,4 +8,8 @@ data "aws_subnet" "subnet" {
 
 resource "aws_ecs_cluster" "ecs_cluster" {
   name = "${var.name}"
+  setting {
+    name  = "containerInsights"
+    value = "enabled"
+  }
 }
