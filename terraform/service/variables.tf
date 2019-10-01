@@ -58,14 +58,6 @@ variable "desired_count" {
   default = 1
 }
 
-variable "ordered_placement_strategy" {
-  default = false
-}
-
-variable "placement_constraints" {
-  default = false
-}
-
 variable "scheduling_strategy" {
   description = "The valid values are REPLICA and DAEMON"
   default     = "REPLICA"
@@ -74,4 +66,9 @@ variable "scheduling_strategy" {
 variable "requires_compatibilities" {
   description = "The valid values are EC2 and FARGATE"
   default     = []
+}
+
+variable "task_placement" {
+  description = "The valid values are AZBalancedSpread and OneTaskPerHost"
+  default     = "AZBalancedSpread"
 }
