@@ -30,7 +30,22 @@ function main() {
     "${NPM}" install
   )
 
-  # sed -i.bak "s|process\\.env\\.SOME_ENV_VAR|\"${SOME_ENV_VAR:-}\"|" "./src/App.js"
+  # Import envkey for test
+  cp "./src/App.js" "./src/App.js.bak"
+
+  printenv |
+    grep -E '[A-Z_]+=' |
+    grep --invert-match -E '[A-Z_]+_COLOR=' |
+    while IFS="" read -r PAIR; do
+      local KEY="${PAIR%%=*}"
+      local VALUE="${PAIR#*=}"
+      (
+        # set -x
+        sed -i.temp "s|process\\.env\\.${KEY}|\"${VALUE}\"|" "./src/App.js"
+      )
+    done
+
+  rm "./src/App.js.temp"
 
   (
     set -x
