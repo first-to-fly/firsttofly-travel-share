@@ -22,6 +22,9 @@ function main() {
       --message "boilerplate-lint-staged"
   )"
 
+  # Remove unwanted untracked files (from staged deleted files)
+  git clean -f -d
+
   echo
   echo "${STASHING_OUTPUT}"
   echo
@@ -36,7 +39,9 @@ function main() {
   local FILE_PATHS
   FILE_PATHS="$(
     git status --porcelain |
-      sed -E "s|^ *[A-Z]+ +||"
+      (grep -E '^M|^A|^R' || true) |
+      sed -E "s|^ *[A-Z]+ +||" |
+      sed -E "s|^.+-> +||"
   )"
 
   while IFS='' read -r FILE_PATH; do
