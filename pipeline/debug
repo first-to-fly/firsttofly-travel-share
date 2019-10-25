@@ -6,6 +6,8 @@ function main() {
 
   echo -e "${OK_COLOR}==> Debugging app..."
 
+  loadEnvKey
+
 }
 
 main "$@"

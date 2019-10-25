@@ -178,6 +178,12 @@ function dependency() {
     echo "Dependency \"${DEPENDENCY_NAME}\" not found."
 
     case "${DEPENDENCY_NAME}" in
+    envkey-source)
+      (
+        set -x
+        curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
+      )
+      ;;
     jq)
       if command -v "brew" >/dev/null; then
         (
@@ -227,3 +233,21 @@ function projectKey() {
 if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
   git config "core.hooksPath" ".githooks"
 fi
+
+function loadEnvKey() {
+
+  dependency "envkey-source"
+
+  if [[ -z "${ENVKEY:-}" && -f "./.env" ]]; then
+    while IFS='' read -r LINE; do
+      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
+        export "${LINE?}"
+      fi
+    done <"./.env"
+  fi
+
+  if [[ -n "${ENVKEY:-}" ]]; then
+    dependency "envkey-source"
+    eval "$(envkey-source "${ENVKEY}")"
+  fi
+}
