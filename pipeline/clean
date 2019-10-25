@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+function main() {
+
+  echo -e "${OK_COLOR}==> Cleaning...${NO_COLOR}"
+
+  (
+    set -x
+
+    git remote remove "zboilerplate" || true
+
+    rm -rf "./build"
+  )
+
+}
+
+main "$@"

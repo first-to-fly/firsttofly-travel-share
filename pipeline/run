@@ -1,0 +1,13 @@
+#!/usr/bin/env bash
+
+export BOILERPLATE_LOG_TIME=true
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+function main() {
+
+  echo -e "${OK_COLOR}==> Running app..."
+
+}
+
+main "$@"
