@@ -77,49 +77,49 @@ function main() {
 
   echo -e "${OK_COLOR}==> Pushing published changes from current branch to others..."
 
-  GIT_REMOTE_URL="$(git config --get remote.origin.url)"
-  if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
-    echo "This script can only run in the boilerplate project." >&2
-    return 1
-  fi
+  # GIT_REMOTE_URL="$(git config --get remote.origin.url)"
+  # if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
+  #   echo "This script can only run in the boilerplate project." >&2
+  #   return 1
+  # fi
 
-  GIT_STATUS="$(git status --short --porcelain)"
-  if [[ -n "${GIT_STATUS}" ]]; then
-    echo "There are uncommitted changes. Please commit them before continue." >&2
-    echo >&2
-    echo "${GIT_STATUS}" >&2
-    return 1
-  fi
+  # GIT_STATUS="$(git status --short --porcelain)"
+  # if [[ -n "${GIT_STATUS}" ]]; then
+  #   echo "There are uncommitted changes. Please commit them before continue." >&2
+  #   echo >&2
+  #   echo "${GIT_STATUS}" >&2
+  #   return 1
+  # fi
 
-  GIT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
-  GIT_UNPUSHED_COMMITS="$(git log "origin/${GIT_BRANCH}..HEAD")"
-  if [[ -n "${GIT_UNPUSHED_COMMITS}" ]]; then
-    echo "There are unpushed commits. Please push them before continue." >&2
-    echo >&2
-    echo "${GIT_UNPUSHED_COMMITS}" >&2
-    return 1
-  fi
+  # GIT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
+  # GIT_UNPUSHED_COMMITS="$(git log "origin/${GIT_BRANCH}..HEAD")"
+  # if [[ -n "${GIT_UNPUSHED_COMMITS}" ]]; then
+  #   echo "There are unpushed commits. Please push them before continue." >&2
+  #   echo >&2
+  #   echo "${GIT_UNPUSHED_COMMITS}" >&2
+  #   return 1
+  # fi
 
-  (
-    set -x
-    git fetch \
-      --tags \
-      --prune \
-      "origin"
-  )
+  # (
+  #   set -x
+  #   git fetch \
+  #     --tags \
+  #     --prune \
+  #     "origin"
+  # )
 
-  pushBranch "${GIT_BRANCH}"
+  # pushBranch "${GIT_BRANCH}"
 
-  # Clean up
-  (
-    find /var/folders -type d -name ".boilerplate" 2>/dev/null ||
-      true
-  ) | while IFS='' read -r BOILERPLATE_FOLDER; do
-    (
-      set -x
-      rm -rf "${BOILERPLATE_FOLDER%/*}"
-    )
-  done
+  # # Clean up
+  # (
+  #   find /var/folders -type d -name ".boilerplate" 2>/dev/null ||
+  #     true
+  # ) | while IFS='' read -r BOILERPLATE_FOLDER; do
+  #   (
+  #     set -x
+  #     rm -rf "${BOILERPLATE_FOLDER%/*}"
+  #   )
+  # done
 
 }
 
