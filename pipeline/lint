@@ -1,0 +1,21 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+dependency "shellcheck"
+
+function main() {
+
+  echo -e "${OK_COLOR}==> Linting code..."
+
+  (
+    set -x
+    shellcheck \
+      --exclude="SC1090,SC1091" \
+      "./lib/bash/"* \
+      "./pipeline/"*
+  )
+
+}
+
+main "$@"
