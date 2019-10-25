@@ -21,6 +21,9 @@
     "bierner.markdown-preview-github-styles",
     "yzhang.markdown-all-in-one",
 
+    // Jenkins
+    "secanis.jenkinsfile-support",
+
     // Shell
     "timonwong.shellcheck",
     "foxundermoon.shell-format",
