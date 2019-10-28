@@ -1,0 +1,71 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+function main() {
+
+  echo -e "${OK_COLOR}==> Upgrading boilerplate..."
+
+  local REMOTE_URL="https://bitbucket.org/nabstudio/boilerplates.git"
+
+  if [[ -d "./.git" ]]; then
+    # Current folder is Git root
+
+    # "z" to keep remote at the bottom
+    # to prevent auto-push
+    local REMOTE_NAME="zboilerplate"
+
+    if ! git remote -v | grep "${REMOTE_NAME}" >/dev/null; then
+      (
+        set -x
+        git remote add \
+          "${REMOTE_NAME}" \
+          "${REMOTE_URL}"
+      )
+    fi
+
+    (
+      set -x
+      git fetch \
+        --tags \
+        --prune \
+        "${REMOTE_NAME}"
+    )
+
+    (
+      jq \
+        --raw-output \
+        ".dependencies[]" \
+        "./.boilerplate/config.json" ||
+        true
+    ) |
+      while IFS="" read -r BRANCH; do
+        (
+          set -x
+          git merge \
+            --allow-unrelated-histories \
+            "${REMOTE_NAME}/${BRANCH}"
+        )
+      done
+
+    (
+      set -x
+
+      git submodule update \
+        --init \
+        --recursive
+
+      git remote remove \
+        "${REMOTE_NAME}"
+    )
+
+  else
+
+    echo "Current folder is not a Git repo." >&2
+    return 1
+
+  fi
+
+}
+
+main "$@"

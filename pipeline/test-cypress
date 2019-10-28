@@ -1,0 +1,19 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
+
+function main() {
+
+  local NPX
+  NPX="$(command -v npx)"
+
+  (
+    set -x
+    "${NPX}" cypress run
+  )
+
+}
+
+main "$@"

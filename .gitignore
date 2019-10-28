@@ -1,0 +1,17 @@
+# Common
+.env
+.env.*
+build/
+
+# NodeJS (due to large number of files)
+node_modules/
+
+# nyc
+.nyc_output/
+
+# Cypress
+cypress/screenshots/
+cypress/videos/
+
+# SSH
+.ssh/

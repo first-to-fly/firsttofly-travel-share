@@ -1,0 +1,34 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+dependency "shellcheck"
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
+
+function main() {
+
+  if [[ ! -d "./node_modules" ]]; then
+    "${BASH_SOURCE[0]%/*}/install"
+  fi
+
+  echo -e "${OK_COLOR}==> Linting code..."
+
+  (
+    set -x
+    shellcheck \
+      --exclude="SC1090,SC1091" \
+      "./lib/bash/"* \
+      "./pipeline/"*
+  )
+
+  NPM="$(command -v npm)"
+
+  (
+    set -x
+    "${NPM}" run lint
+  )
+
+}
+
+main "$@"

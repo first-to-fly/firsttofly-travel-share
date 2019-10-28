@@ -1,0 +1,29 @@
+#!/usr/bin/env bash
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
+
+function main() {
+
+  if [[ ! -d "./node_modules" ]]; then
+    "${BASH_SOURCE[0]%/*}/install"
+  fi
+
+  echo -e "${OK_COLOR}==> Building app..."
+
+  (
+    set -x
+    rm -rf "./build"
+  )
+
+  NPM="$(command -v npm)"
+
+  (
+    set -x
+    "${NPM}" run build
+  )
+
+}
+
+main "$@"
