@@ -35,7 +35,7 @@ function main() {
     (
       jq \
         --raw-output \
-        ".upgradeFrom[]" \
+        ".dependencies[]" \
         "./.boilerplate/config.json" ||
         true
     ) |

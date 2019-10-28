@@ -29,7 +29,7 @@ Upgrade an existing project to use new boilerplates' commits.
 ### Add New Feature
 
 1. Branch out from `master`
-2. Update the `upgradeFrom` property in [`.boilerplate/config.json`](./config.json) with needed features' branches
+2. Update the `dependencies` property in [`.boilerplate/config.json`](./config.json) with needed features' branches
 3. Merge those features in by upgrading the boilerplate:
 
     ```bash
