@@ -1,5 +1,6 @@
 {
   "dependencies": [
-    "feature/core"
+    "envkey",
+    "core"
   ]
 }
