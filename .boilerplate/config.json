@@ -1,6 +1,8 @@
 {
   "dependencies": [
     "node",
+    "jenkins",
+    "envkey",
     "core"
   ]
 }
