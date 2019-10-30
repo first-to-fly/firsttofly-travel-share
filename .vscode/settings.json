@@ -1,4 +1,7 @@
 {
+  // Debug
+  "debug.node.autoAttach": "on",
+
   // Explorer
   "explorer.confirmDragAndDrop": false,
 

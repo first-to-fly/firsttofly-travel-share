@@ -12,6 +12,18 @@ function main() {
 
   echo -e "${OK_COLOR}==> Debugging app..."
 
+  NODE_DEBUG_PORT="${NODE_DEBUG_PORT:-9229}"
+  (lsof -t -i ":${NODE_DEBUG_PORT}" || true) |
+    xargs kill
+
+  # Kill old processes
+  # shellcheck disable=SC2009
+  ps |
+    grep --invert-match "grep" |
+    (grep "nodemon" || true) |
+    awk '{print $1}' |
+    xargs kill
+
   loadEnvKey
 
   NPM="$(command -v npm)"

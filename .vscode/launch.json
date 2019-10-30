@@ -9,7 +9,11 @@
       "request": "launch",
       "name": "Debug",
       "runtimeExecutable": "${workspaceFolder}/pipeline/debug",
-      "console": "internalConsole",
+      "env": {
+        "NODE_DEBUG_PORT": "9229"
+      },
+      "console": "integratedTerminal", // "internalConsole" cannot auto-attach!
+      "autoAttachChildProcesses": true,
       "port": 9229
     }
   ]
