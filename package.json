@@ -9,7 +9,7 @@
   ],
   "scripts": {
     "postinstall": "(patch-package || true) && npm uninstall --no-save patch-package && echo",
-    "dev": "nodemon --inspect-brk=localhost:${NODE_DEBUG_PORT:-9229} --require ts-node/register --require tsconfig-paths/register ./src/index.js",
+    "dev": "nodemon --inspect=localhost:${NODE_DEBUG_PORT:-9229} --require ts-node/register --require tsconfig-paths/register ./src/index.js",
     "build": "tsc --allowJs false --checkJs false --declaration && tsc",
     "start": "NODE_ENV=production NODE_PATH=./build node ./build",
     "lint:js": "eslint --ignore-pattern \"src/@nabstudio/**\" \"./src/**/*.{js,jsx,ts,tsx}\"",
