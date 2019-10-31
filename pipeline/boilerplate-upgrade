@@ -32,11 +32,21 @@ function main() {
         "${REMOTE_NAME}"
     )
 
+    local CONFIG_FILE="./.boilerplate/config.json"
+    if [[ ! -f "${CONFIG_FILE}" ]]; then
+      (
+        set -x
+        git merge \
+          --allow-unrelated-histories \
+          "${REMOTE_NAME}/master"
+      )
+    fi
+
     (
       jq \
         --raw-output \
         ".dependencies[]" \
-        "./.boilerplate/config.json" ||
+        "${CONFIG_FILE}" ||
         true
     ) |
       while IFS="" read -r BRANCH; do
