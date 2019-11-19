@@ -7,19 +7,25 @@ function textFound() {
   local TEXT="${1:-}"
 
   local FIND_RESULTS
-  FIND_RESULTS="$(find . -name "*MyAwesomeProject*")"
+  FIND_RESULTS="$(
+    find . -name "*MyAwesomeProject*" |
+      grep --invert-match "pipeline/boilerplate"
+  )"
 
   if [[ -n "${FIND_RESULTS}" ]]; then
     echo "\"${TEXT}\" found in file/folder names."
-    exit 0
+    return 0
   fi
 
-  if grep -E --recursive "${TEXT}" .; then
+  if (
+    grep -E --recursive "${TEXT}" . |
+      grep --invert-match "pipeline/boilerplate"
+  ); then
     echo "\"${TEXT}\" found in file contents."
-    exit 0
+    return 0
   fi
 
-  exit 1
+  return 1
 }
 
 function replace() {
