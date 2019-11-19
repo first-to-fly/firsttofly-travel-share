@@ -267,6 +267,7 @@ fi
 
 function loadEnvKey() {
 
+  # Check for dependency early
   dependency "envkey-source"
 
   if [[ -z "${ENVKEY:-}" && -f "./.env" ]]; then
@@ -278,7 +279,6 @@ function loadEnvKey() {
   fi
 
   if [[ -n "${ENVKEY:-}" ]]; then
-    dependency "envkey-source"
     eval "$(envkey-source "${ENVKEY}")"
   fi
 }

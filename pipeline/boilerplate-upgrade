@@ -2,6 +2,75 @@
 
 source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
+function textFound() {
+
+  local TEXT="${1:-}"
+
+  local FIND_RESULTS
+  FIND_RESULTS="$(
+    find . -name "*MyAwesomeProject*" |
+      (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-' || true)
+  )"
+
+  if [[ -n "${FIND_RESULTS}" ]]; then
+    echo "\"${TEXT}\" found in file/folder names."
+    return 0
+  fi
+
+  if (
+    grep -E --recursive "${TEXT}" . |
+      grep '^\./' |
+      grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-'
+  ); then
+    echo "\"${TEXT}\" found in file contents."
+    return 0
+  fi
+
+  return 1
+}
+
+function replace() {
+
+  local OLD_TEXT="${1:-}"
+  local NEW_TEXT="${2:-}"
+
+  if [[ -z "${NEW_TEXT:-}" ]]; then
+    return 0
+  fi
+
+  while true; do
+
+    local OLD_ITEM
+    OLD_ITEM="$(
+      find . -name "*${OLD_TEXT}*" |
+        head -n 1
+    )"
+    if [[ -z "${OLD_ITEM}" ]]; then
+      break
+    fi
+
+    local NEW_ITEM
+    NEW_ITEM="$(echo "${OLD_ITEM}" | sed -E "s|${OLD_TEXT}|${NEW_TEXT}|g")"
+
+    (
+      set -x
+      mv -n "${OLD_ITEM}" "${NEW_ITEM}"
+    )
+
+  done
+
+  (grep -E --recursive "${OLD_TEXT}" . || true) |
+    (grep '^\./' || true) |
+    (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-' || true) |
+    awk '{print $1}' |
+    sed 's|:.*$||' |
+    uniq |
+    while IFS='' read -r FILE; do
+      sed -i.bak "s|${OLD_TEXT}|${NEW_TEXT}|g" "${FILE}"
+      rm "${FILE}.bak"
+    done
+}
+
 function main() {
 
   echo -e "${OK_COLOR}==> Upgrading boilerplate..."
@@ -68,6 +137,30 @@ function main() {
       git remote remove \
         "${REMOTE_NAME}"
     )
+
+    if textFound "MyAwesomeProject"; then
+      echo "Project name: (My Project) "
+      (
+        local PROJECT_NAME
+        read -r PROJECT_NAME
+        if [[ -z "${PROJECT_NAME}" ]]; then
+          PROJECT_NAME="My Project"
+        fi
+        replace "MyAwesomeProject" "${PROJECT_NAME}"
+      )
+    fi
+
+    if textFound "myawesomeproject"; then
+      echo "Project key: (my-project) "
+      (
+        local PROJECT_KEY
+        read -r PROJECT_KEY
+        if [[ -z "${PROJECT_KEY}" ]]; then
+          PROJECT_KEY="my-project"
+        fi
+        replace "myawesomeproject" "${PROJECT_KEY}"
+      )
+    fi
 
   else
 

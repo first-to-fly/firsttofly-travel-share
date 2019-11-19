@@ -32,9 +32,9 @@ function replace() {
 
   done
 
-  grep -E --recursive "${OLD_TEXT}" . |
-    grep '^\./' |
-    grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-init' |
+  (grep -E --recursive "${OLD_TEXT}" . || true) |
+    (grep '^\./' || true) |
+    (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-' || true) |
     awk '{print $1}' |
     sed 's|:.*$||' |
     uniq |
