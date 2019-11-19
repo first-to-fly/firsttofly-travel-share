@@ -8,7 +8,7 @@ function textFound() {
 
   local FIND_RESULTS
   FIND_RESULTS="$(
-    find . -name "*MyAwesomeProject*" |
+    find . -name "*${TEXT}*" |
       (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-' || true)
   )"
 
