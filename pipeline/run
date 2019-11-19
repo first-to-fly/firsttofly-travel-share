@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 export BOILERPLATE_LOG_TIME=true
+export BOILERPLATE_NO_COLOR=true
 
 source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
