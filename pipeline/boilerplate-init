@@ -34,7 +34,7 @@ function replace() {
 
   (grep -E --recursive "${OLD_TEXT}" . || true) |
     (grep '^\./' || true) |
-    (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-init' || true) |
+    (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-' || true) |
     awk '{print $1}' |
     sed 's|:.*$||' |
     uniq |
