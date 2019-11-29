@@ -60,12 +60,18 @@ function main() {
   for REMOTE_BRANCH in "${REMOTE_BRANCHES[@]}"; do
     (
       set -x
+
       git clone \
         --branch "${REMOTE_BRANCH}" \
         --reference "${PWD}" \
         -- \
         "${GIT_REMOTE_URL}" \
         "${TEMP_DIR}/${REMOTE_BRANCH}"
+
+      git submodule update \
+        --init \
+        --recursive
+
     ) &
     CLONE_PIDS+=("$!")
   done
