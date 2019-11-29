@@ -63,7 +63,10 @@
 
   // Shell
   "shellcheck.useWorkspaceRootAsCwd": true,
-  "shellcheck.customArgs": ["-x"],
+  "shellcheck.customArgs": [
+    //
+    "--external-sources"
+  ],
 
   // JSON
   "[json]": {
