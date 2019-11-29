@@ -180,6 +180,7 @@ function main() {
 
       (
         set -x
+        cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
         git push
       )
 
