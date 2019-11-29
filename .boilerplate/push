@@ -1,88 +1,19 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
-
-function pushBranch() {
-
-  local BRANCH="${1:-}"
-
-  local BRANCH_FILTER="^${BRANCH}-[a-z0-9]\\+$"
-  if [[ "${BRANCH}" == "master" ]]; then
-    BRANCH_FILTER='^[a-z0-9]\+$'
-  fi
-
-  local TO_BRANCH
-
-  git branch --list --remote |
-    grep "origin" |
-    sed 's|^.*origin/||' |
-    grep --invert-match "^${BRANCH}\$" |
-    (grep "${BRANCH_FILTER}" || true) |
-    while IFS='' read -r TO_BRANCH; do
-
-      echo
-      echo -e "${YELLOW_COLOR}==> Pushing ${BRANCH} => ${TO_BRANCH}..."
-
-      local TEMP_DIR
-      TEMP_DIR="$(mktemp -d)"
-
-      local PROJECT_DIR="${PWD}"
-
-      (
-        set -x
-        git clone \
-          --reference "${PROJECT_DIR}" \
-          --branch "${TO_BRANCH}" \
-          "${GIT_REMOTE_URL}" \
-          "${TEMP_DIR}"
-      )
-
-      cd "${TEMP_DIR}" || return
-
-      set +e
-
-      local GIT_MERGE_OUTPUT
-      GIT_MERGE_OUTPUT="$(
-        set -x
-        git merge "origin/${BRANCH}"
-      )"
-
-      set -e
-
-      if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
-        echo "${GIT_MERGE_OUTPUT}" >&2
-        echo "Please resolve the conflict, push, and try again..." >&2
-        code "${TEMP_DIR}"
-        return 1
-      fi
-
-      (
-        set -x
-        git push
-      )
-
-      (
-        set -x
-        rm -rf "${TEMP_DIR}"
-      )
-
-      cd "${PROJECT_DIR}" || return 1
-
-      pushBranch "${TO_BRANCH}"
-
-    done
-}
+source "./lib/bash/core.sh"
 
 function main() {
 
   echo -e "${OK_COLOR}==> Pushing published changes from current branch to others..."
 
-  # GIT_REMOTE_URL="$(git config --get remote.origin.url)"
-  # if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
-  #   echo "This script can only run in the boilerplate project." >&2
-  #   return 1
-  # fi
+  local GIT_REMOTE_URL
+  GIT_REMOTE_URL="$(git config --get remote.origin.url)"
+  if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
+    echo "This script can only run in the boilerplate project." >&2
+    return 1
+  fi
 
+  # local GIT_STATUS
   # GIT_STATUS="$(git status --short --porcelain)"
   # if [[ -n "${GIT_STATUS}" ]]; then
   #   echo "There are uncommitted changes. Please commit them before continue." >&2
@@ -91,35 +22,191 @@ function main() {
   #   return 1
   # fi
 
-  # GIT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
-  # GIT_UNPUSHED_COMMITS="$(git log "origin/${GIT_BRANCH}..HEAD")"
-  # if [[ -n "${GIT_UNPUSHED_COMMITS}" ]]; then
-  #   echo "There are unpushed commits. Please push them before continue." >&2
-  #   echo >&2
-  #   echo "${GIT_UNPUSHED_COMMITS}" >&2
-  #   return 1
-  # fi
+  local GIT_BRANCH
+  GIT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
 
-  # (
-  #   set -x
-  #   git fetch \
-  #     --tags \
-  #     --prune \
-  #     "origin"
-  # )
+  local GIT_UNPUSHED_COMMITS
+  GIT_UNPUSHED_COMMITS="$(git log "origin/${GIT_BRANCH}..HEAD")"
+  if [[ -n "${GIT_UNPUSHED_COMMITS}" ]]; then
+    echo "There are unpushed commits. Please push them before continue." >&2
+    echo >&2
+    echo "${GIT_UNPUSHED_COMMITS}" >&2
+    return 1
+  fi
 
-  # pushBranch "${GIT_BRANCH}"
+  (
+    set -x
+    git fetch \
+      --tags \
+      --prune \
+      "origin"
+  )
 
-  # # Clean up
-  # (
-  #   find /var/folders -type d -name ".boilerplate" 2>/dev/null ||
-  #     true
-  # ) | while IFS='' read -r BOILERPLATE_FOLDER; do
-  #   (
-  #     set -x
-  #     rm -rf "${BOILERPLATE_FOLDER%/*}"
-  #   )
-  # done
+  # Clone all branches
+  local TEMP_DIR
+  TEMP_DIR="$(mktemp -d)"
+
+  declare -a REMOTE_BRANCHES=()
+  while IFS="" read -r REMOTE_BRANCH; do
+    REMOTE_BRANCHES+=("${REMOTE_BRANCH}")
+  done < <(
+    git branch --list --remote |
+      grep "origin" |
+      sed 's|^.*origin/||'
+  )
+
+  declare -a CLONE_PIDS=()
+
+  for REMOTE_BRANCH in "${REMOTE_BRANCHES[@]}"; do
+    (
+      set -x
+      git clone \
+        --branch "${REMOTE_BRANCH}" \
+        --reference "${PWD}" \
+        -- \
+        "${GIT_REMOTE_URL}" \
+        "${TEMP_DIR}/${REMOTE_BRANCH}"
+    ) &
+    CLONE_PIDS+=("$!")
+  done
+
+  for CLONE_PID in "${CLONE_PIDS[@]}"; do
+    wait "${CLONE_PID}"
+  done
+
+  echo "Done cloning."
+
+  # Sort branches based on dependencies
+  echo "${REMOTE_BRANCHES[@]}"
+
+  local INDEX=0
+  while ((INDEX < ${#REMOTE_BRANCHES[@]} - 1)); do
+    # echo "INDEX = '${INDEX}'"
+
+    local CURRENT_BRANCH="${REMOTE_BRANCHES[INDEX]}"
+    # echo "CURRENT_BRANCH = '${CURRENT_BRANCH}'"
+
+    local DEPENDENCIES=" "
+    while IFS="" read -r LINE; do
+      DEPENDENCIES+="${LINE} "
+    done < <(
+      jq \
+        --raw-output \
+        ".dependencies[]" \
+        <"${TEMP_DIR}/${CURRENT_BRANCH}/.boilerplate/config.json"
+    )
+    # echo "DEPENDENCIES = '${DEPENDENCIES}'"
+
+    local MAX_DEPENDENCY_INDEX="${INDEX}"
+    for ((i = INDEX + 1; i < ${#REMOTE_BRANCHES[@]}; i++)); do
+      local DEPENDENCY_BRANCH="${REMOTE_BRANCHES[i]}"
+      if [[ "${DEPENDENCIES}" == *" ${DEPENDENCY_BRANCH} "* ]]; then
+        if ((MAX_DEPENDENCY_INDEX < i)); then
+          MAX_DEPENDENCY_INDEX="${i}"
+        fi
+      fi
+    done
+
+    # echo "MAX_DEPENDENCY_INDEX = '${MAX_DEPENDENCY_INDEX}'"
+
+    if ((INDEX != MAX_DEPENDENCY_INDEX)); then
+
+      # Insert at MAX_DEPENDENCY_INDEX
+      REMOTE_BRANCHES=(
+        "${REMOTE_BRANCHES[@]:0:MAX_DEPENDENCY_INDEX+1}"
+        "${CURRENT_BRANCH}"
+        "${REMOTE_BRANCHES[@]:MAX_DEPENDENCY_INDEX+1}"
+      )
+
+      # Remove at INDEX
+      REMOTE_BRANCHES=(
+        "${REMOTE_BRANCHES[@]:0:INDEX}"
+        "${REMOTE_BRANCHES[@]:INDEX+1}"
+      )
+
+      echo "${REMOTE_BRANCHES[@]}"
+
+    else
+
+      # Continue
+      ((INDEX++))
+
+    fi
+
+  done
+
+  # Start merging
+  local MODIFIED_BRANCHES=" ${GIT_BRANCH} "
+
+  for CURRENT_BRANCH in "${REMOTE_BRANCHES[@]}"; do
+    echo "CURRENT_BRANCH = '${CURRENT_BRANCH}'"
+
+    local UPGRADE_REQUIRED="false"
+    while IFS="" read -r DEPENDENCY; do
+      if [[ "${MODIFIED_BRANCHES}" == *" ${DEPENDENCY} "* ]]; then
+        UPGRADE_REQUIRED="true"
+        break
+      fi
+    done < <(
+      jq \
+        --raw-output \
+        ".dependencies[]" \
+        <"${TEMP_DIR}/${CURRENT_BRANCH}/.boilerplate/config.json"
+    )
+
+    if [[ "${UPGRADE_REQUIRED}" == "true" ]]; then
+
+      while true; do
+
+        set +e
+        (
+          set -x
+          cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
+          "./pipeline/boilerplate-upgrade"
+        )
+        local EXIT_CODE="$?"
+        set -e
+
+        if [[ "${EXIT_CODE}" != 0 ]]; then
+          code "${TEMP_DIR}/${CURRENT_BRANCH}"
+          echo "Please resolve merge conflicts, then press <Return> to continue..."
+          echo
+          read -r
+        else
+          break
+        fi
+
+      done
+
+      (
+        set -x
+        cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
+        git push
+      )
+
+      MODIFIED_BRANCHES+="${CURRENT_BRANCH} "
+    fi
+
+  done
+
+  # Clean up
+  (
+    set -x
+    rm -rf "${TEMP_DIR}"
+  )
+
+  (
+    find "/var/folders" \
+      -type "d" \
+      -name ".boilerplate" \
+      2>/dev/null ||
+      true
+  ) | while IFS='' read -r BOILERPLATE_FOLDER; do
+    (
+      set -x
+      rm -rf "${BOILERPLATE_FOLDER%/*}"
+    )
+  done
 
 }
 
