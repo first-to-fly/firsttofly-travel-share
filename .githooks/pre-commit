@@ -6,7 +6,7 @@ source "./lib/bash/core.sh"
 
 function main() {
 
-  "${BASH_SOURCE[0]%/*}/../pipeline/lint-staged"
+  "./pipeline/lint-staged"
 
 }
 
