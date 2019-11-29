@@ -170,7 +170,7 @@ function main() {
         (
           set -x
           cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
-          "./pipeline/boilerplate-upgrade"
+          source "./pipeline/boilerplate-upgrade"
         )
         local EXIT_CODE="$?"
         set -e
