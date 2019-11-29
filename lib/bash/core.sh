@@ -5,13 +5,28 @@ set -o errexit  # Exit when a command fails
 set -o pipefail # Catch mysqldump fails
 set -o nounset  # Exit when using undeclared variables
 
+# Import
+if [[ "${BOILERPLATE_CORE_IMPORTED:-}" == "true" ]]; then
+  return
+fi
+BOILERPLATE_CORE_IMPORTED="true"
+
+# Path
+if [[ "${PATH}" != *"/usr/local/bin"* ]]; then
+  export PATH="/usr/local/bin:${PATH}"
+fi
+
+if [[ "${PATH}" != *"${PWD}/bin"* && -d "${PWD}/bin" ]]; then
+  export PATH="${PWD}/bin:${PATH}"
+fi
+
 # Colors
 if [[ "${BOILERPLATE_NO_COLOR:-}" != "true" ]]; then
   export FORCE_COLOR=1
   export TERM="xterm-256color"
 fi
 
-if [[ -n "${BOILERPLATE_NO_COLOR:-}" ]]; then
+if [[ "${BOILERPLATE_NO_COLOR:-}" == "true" ]]; then
 
   export NO_COLOR=""
   export BOLD_COLOR=""
@@ -113,6 +128,7 @@ export WARN_COLOR="${LIGHT_RED_COLOR}"
 function logFormat() {
 
   local LOCAL_BOILERPLATE_LOG_TIME="${BOILERPLATE_LOG_TIME:-}"
+  local LOCAL_BOILERPLATE_NO_EMPTY_LINE="${BOILERPLATE_NO_EMPTY_LINE:-}"
 
   SCRIPT_PATH=""
   for BASH_SOURCE_ITEM in "${BASH_SOURCE[@]}"; do
@@ -123,6 +139,10 @@ function logFormat() {
 
   local LINE
   while IFS='' read -r LINE; do
+
+    if [[ "${LOCAL_BOILERPLATE_NO_EMPTY_LINE}" == "true" && "${LINE}" == "" ]]; then
+      continue
+    fi
 
     if [[ -n "${1:-}" && "${1:-}" == "--error" ]]; then
 
@@ -140,7 +160,7 @@ function logFormat() {
 
     local PREFIX=""
 
-    if [[ -n "${LOCAL_BOILERPLATE_LOG_TIME}" ]]; then
+    if [[ "${LOCAL_BOILERPLATE_LOG_TIME}" == "true" ]]; then
       local TIME
       TIME="$(
         date +"%Y-%m-%d %H:%M:%S %Z"
@@ -169,10 +189,6 @@ function dependency() {
 
   local DEPENDENCY_NAME="${1:-}"
 
-  if [[ "${PATH}" != *"/usr/local/bin"* ]]; then
-    export PATH="/usr/local/bin:${PATH}"
-  fi
-
   if ! command -v "${DEPENDENCY_NAME}" >/dev/null; then
 
     echo "Dependency \"${DEPENDENCY_NAME}\" not found."
@@ -185,11 +201,6 @@ function dependency() {
           brew install "jq"
         )
         echo
-      elif command -v "apt-get" >/dev/null; then
-        (
-          set -x
-          sudo apt-get install "jq"
-        )
       else
         echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
         return 1
@@ -220,10 +231,12 @@ function dependency() {
 
 dependency "jq"
 
+# Project
 function projectKey() {
   echo "myawesomeproject"
 }
 
+# Git Hooks
 if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
   git config "core.hooksPath" ".githooks"
 fi
