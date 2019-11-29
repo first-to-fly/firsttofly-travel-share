@@ -68,6 +68,8 @@ function main() {
         "${GIT_REMOTE_URL}" \
         "${TEMP_DIR}/${REMOTE_BRANCH}"
 
+      cd "${TEMP_DIR}/${REMOTE_BRANCH}" || return 100
+
       git submodule update \
         --init \
         --recursive
