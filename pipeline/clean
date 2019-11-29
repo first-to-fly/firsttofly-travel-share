@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+source "./lib/bash/core.sh"
 
 function main() {
 
@@ -9,7 +9,7 @@ function main() {
   (
     set -x
 
-    git remote remove "zboilerplate" || true
+    git remote remove "zboilerplate" 2>/dev/null || true
 
     rm -rf "./build"
   )
