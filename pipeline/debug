@@ -1,10 +1,15 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+source "./lib/bash/core.sh"
 
 function main() {
 
   echo -e "${OK_COLOR}==> Debugging app..."
+
+  (
+    set -x
+    cron echo "Hello World"
+  )
 
 }
 
