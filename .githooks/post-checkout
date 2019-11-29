@@ -2,13 +2,13 @@
 
 export BOILERPLATE_NO_COLOR="true"
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+source "./lib/bash/core.sh"
 
 function main() {
 
   # Git LFS
   command -v git-lfs >/dev/null 2>&1 || {
-    print >&2 "\nThis repository is configured for Git LFS but 'git-lfs' was not found on your path. If you no longer wish to use Git LFS, remove this hook by deleting .git/hooks/post-commit.\n"
+    echo >&2 "This repository is configured for Git LFS but 'git-lfs' was not found on your path. If you no longer wish to use Git LFS, remove this hook by deleting .git/hooks/post-checkout."
     exit 2
   }
   git lfs post-checkout "$@"

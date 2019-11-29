@@ -1,0 +1,26 @@
+#!/usr/bin/env bash
+
+source "./lib/bash/core.sh"
+
+function main() {
+
+  # See https://api.slack.com/docs/message-attachments for formatting.
+  local DATA="${1}"
+  shift
+
+  local SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL}"
+
+  (
+    set -x
+    curl \
+      --silent \
+      --show-error \
+      --request "POST" \
+      --header "Content-type: application/json" \
+      --data "${DATA}" \
+      "${SLACK_WEBHOOK_URL}"
+  )
+
+}
+
+main "$@"
