@@ -178,6 +178,11 @@ function main() {
 
       done
 
+      (
+        set -x
+        git push
+      )
+
       MODIFIED_BRANCHES+="${CURRENT_BRANCH} "
     fi
 
