@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+source "./lib/bash/core.sh"
 
 function textFound() {
 
@@ -138,28 +138,34 @@ function main() {
         "${REMOTE_NAME}"
     )
 
-    if textFound "MyAwesomeProject"; then
-      echo "Project name: (My Project) "
-      (
-        local PROJECT_NAME
-        read -r PROJECT_NAME
-        if [[ -z "${PROJECT_NAME}" ]]; then
-          PROJECT_NAME="My Project"
-        fi
-        replace "MyAwesomeProject" "${PROJECT_NAME}"
-      )
-    fi
+    local GIT_REMOTE_URL
+    GIT_REMOTE_URL="$(git config --get remote.origin.url)"
+    if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
 
-    if textFound "myawesomeproject"; then
-      echo "Project key: (my-project) "
-      (
-        local PROJECT_KEY
-        read -r PROJECT_KEY
-        if [[ -z "${PROJECT_KEY}" ]]; then
-          PROJECT_KEY="my-project"
-        fi
-        replace "myawesomeproject" "${PROJECT_KEY}"
-      )
+      if textFound "MyAwesomeProject"; then
+        echo "Project name: (My Project) "
+        (
+          local PROJECT_NAME
+          read -r PROJECT_NAME
+          if [[ -z "${PROJECT_NAME}" ]]; then
+            PROJECT_NAME="My Project"
+          fi
+          replace "MyAwesomeProject" "${PROJECT_NAME}"
+        )
+      fi
+
+      if textFound "myawesomeproject"; then
+        echo "Project key: (my-project) "
+        (
+          local PROJECT_KEY
+          read -r PROJECT_KEY
+          if [[ -z "${PROJECT_KEY}" ]]; then
+            PROJECT_KEY="my-project"
+          fi
+          replace "myawesomeproject" "${PROJECT_KEY}"
+        )
+      fi
+
     fi
 
   else

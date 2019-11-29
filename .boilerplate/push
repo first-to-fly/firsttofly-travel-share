@@ -2,77 +2,6 @@
 
 source "./lib/bash/core.sh"
 
-function pushBranch() {
-
-  local BRANCH="${1:-}"
-
-  local BRANCH_FILTER="^${BRANCH}-[a-z0-9]\\+$"
-  if [[ "${BRANCH}" == "master" ]]; then
-    BRANCH_FILTER='^[a-z0-9]\+$'
-  fi
-
-  local TO_BRANCH
-
-  git branch --list --remote |
-    grep "origin" |
-    sed 's|^.*origin/||' |
-    grep --invert-match "^${BRANCH}\$" |
-    (grep "${BRANCH_FILTER}" || true) |
-    while IFS='' read -r TO_BRANCH; do
-
-      echo
-      echo -e "${YELLOW_COLOR}==> Pushing ${BRANCH} => ${TO_BRANCH}..."
-
-      local TEMP_DIR
-      TEMP_DIR="$(mktemp -d)"
-
-      local PROJECT_DIR="${PWD}"
-
-      (
-        set -x
-        git clone \
-          --reference "${PROJECT_DIR}" \
-          --branch "${TO_BRANCH}" \
-          "${GIT_REMOTE_URL}" \
-          "${TEMP_DIR}"
-      )
-
-      cd "${TEMP_DIR}" || return
-
-      set +e
-
-      local GIT_MERGE_OUTPUT
-      GIT_MERGE_OUTPUT="$(
-        set -x
-        git merge "origin/${BRANCH}"
-      )"
-
-      set -e
-
-      if [[ "${GIT_MERGE_OUTPUT}" == *"CONFLICT"* ]]; then
-        echo "${GIT_MERGE_OUTPUT}" >&2
-        echo "Please resolve the conflict, push, and try again..." >&2
-        code "${TEMP_DIR}"
-        return 1
-      fi
-
-      (
-        set -x
-        git push
-      )
-
-      (
-        set -x
-        rm -rf "${TEMP_DIR}"
-      )
-
-      cd "${PROJECT_DIR}" || return 1
-
-      pushBranch "${TO_BRANCH}"
-
-    done
-}
-
 function main() {
 
   echo -e "${OK_COLOR}==> Pushing published changes from current branch to others..."
@@ -96,14 +25,14 @@ function main() {
   local GIT_BRANCH
   GIT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
 
-  # local GIT_UNPUSHED_COMMITS
-  # GIT_UNPUSHED_COMMITS="$(git log "origin/${GIT_BRANCH}..HEAD")"
-  # if [[ -n "${GIT_UNPUSHED_COMMITS}" ]]; then
-  #   echo "There are unpushed commits. Please push them before continue." >&2
-  #   echo >&2
-  #   echo "${GIT_UNPUSHED_COMMITS}" >&2
-  #   return 1
-  # fi
+  local GIT_UNPUSHED_COMMITS
+  GIT_UNPUSHED_COMMITS="$(git log "origin/${GIT_BRANCH}..HEAD")"
+  if [[ -n "${GIT_UNPUSHED_COMMITS}" ]]; then
+    echo "There are unpushed commits. Please push them before continue." >&2
+    echo >&2
+    echo "${GIT_UNPUSHED_COMMITS}" >&2
+    return 1
+  fi
 
   (
     set -x
@@ -227,21 +156,27 @@ function main() {
 
     if [[ "${UPGRADE_REQUIRED}" == "true" ]]; then
 
-      set +e
-      (
-        set -x
-        cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
-        "./pipeline/boilerplate-upgrade"
-      )
-      local EXIT_CODE="$?"
-      set -e
+      while true; do
 
-      if [[ "${EXIT_CODE}" != 0 ]]; then
-        code "${TEMP_DIR}/${CURRENT_BRANCH}"
-        echo "Please resolve merge conflicts, then press <Return> to continue..."
-        echo
-        read -r
-      fi
+        set +e
+        (
+          set -x
+          cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
+          "./pipeline/boilerplate-upgrade"
+        )
+        local EXIT_CODE="$?"
+        set -e
+
+        if [[ "${EXIT_CODE}" != 0 ]]; then
+          code "${TEMP_DIR}/${CURRENT_BRANCH}"
+          echo "Please resolve merge conflicts, then press <Return> to continue..."
+          echo
+          read -r
+        else
+          break
+        fi
+
+      done
 
       MODIFIED_BRANCHES+="${CURRENT_BRANCH} "
     fi
