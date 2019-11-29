@@ -4,8 +4,7 @@ export BOILERPLATE_NO_COLOR="true"
 export BOILERPLATE_NO_EMPTY_LINE="true"
 
 source "./lib/bash/core.sh"
-
-source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
+source "./lib/bash/node.sh"
 
 function main() {
 

@@ -1,13 +1,12 @@
 #!/usr/bin/env bash
 
 source "./lib/bash/core.sh"
-
-source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
+source "./lib/bash/node.sh"
 
 function main() {
 
   if [[ ! -d "./node_modules" ]]; then
-    "${BASH_SOURCE[0]%/*}/install"
+    "./pipeline/install"
   fi
 
   echo -e "${OK_COLOR}==> Testing app..."

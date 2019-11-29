@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
 source "./lib/bash/core.sh"
+source "./lib/bash/node.sh"
 
 dependency "shellcheck"
 
