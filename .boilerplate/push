@@ -178,6 +178,12 @@ function main() {
 
       done
 
+      (
+        set -x
+        cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
+        git push
+      )
+
       MODIFIED_BRANCHES+="${CURRENT_BRANCH} "
     fi
 
