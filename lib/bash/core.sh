@@ -16,8 +16,8 @@ if [[ "${PATH}" != *"/usr/local/bin"* ]]; then
   export PATH="/usr/local/bin:${PATH}"
 fi
 
-if [[ "${PATH}" != *"${PWD}/bin"* && -d "${PWD}/bin" ]]; then
-  export PATH="${PWD}/bin:${PATH}"
+if [[ "${PATH}" != *"${PWD}/.bin"* && -d "${PWD}/.bin" ]]; then
+  export PATH="${PWD}/.bin:${PATH}"
 fi
 
 # Colors
