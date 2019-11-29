@@ -65,11 +65,8 @@
   },
 
   // Shell
-  "shellcheck.exclude": [
-    //
-    "SC1090",
-    "SC1091"
-  ],
+  "shellcheck.useWorkspaceRootAsCwd": true,
+  "shellcheck.customArgs": ["-x"],
 
   // CSS
   "[css]": {
