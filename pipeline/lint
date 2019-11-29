@@ -17,7 +17,7 @@ function main() {
     set -x
     shellcheck \
       --external-sources \
-      "./bin/"* \
+      "./.bin/"* \
       "./lib/bash/"* \
       "./pipeline/"*
   )
