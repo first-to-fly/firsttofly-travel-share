@@ -6,7 +6,7 @@ function main() {
 
   echo -e "${OK_COLOR}==> Initializing boilerplate..."
 
-  source "./pipeline/boilerplate-upgrade"
+  "./pipeline/boilerplate-upgrade"
 
   (
     set -x
