@@ -1,0 +1,101 @@
+#!/usr/bin/env bash
+
+source "./lib/bash/core.sh"
+
+dependency "aws"
+
+function main() {
+
+  local COMMAND="${1}"
+  shift
+
+  export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-"us-east-1"}"
+  local SQS_INPUT_QUEUE_URL="${SQS_INPUT_QUEUE_URL}"
+
+  while true; do
+
+    echo -e "${OK_COLOR}==> Receiving messages..."
+
+    local MESSAGES
+
+    MESSAGES="$(
+      set -x
+      aws sqs receive-message \
+        --queue-url "${SQS_INPUT_QUEUE_URL}" \
+        --max-number-of-messages 1 \
+        --message-attribute-names "All"
+    )"
+
+    if [[ -z "${MESSAGES}" ]]; then
+      echo "No message received."
+      break
+    fi
+
+    local MESSAGE
+    MESSAGE="$(echo "${MESSAGES}" | jq -r ".Messages[0]")"
+    # echo "MESSAGE ='${MESSAGE}'"
+
+    local RECEIPT_HANDLE
+    RECEIPT_HANDLE="$(echo "${MESSAGE}" | jq -r ".ReceiptHandle")"
+    if [[ "${RECEIPT_HANDLE}" == "null" ]]; then echo "Missing RECEIPT_HANDLE" >&2 && return 1; fi
+    # echo "RECEIPT_HANDLE ='${RECEIPT_HANDLE}'"
+
+    local VISIBILITY_TIMEOUT_SECONDS
+    VISIBILITY_TIMEOUT_SECONDS="$(
+      aws sqs get-queue-attributes \
+        --queue-url "${SQS_INPUT_QUEUE_URL}" \
+        --attribute-names "VisibilityTimeout" |
+        jq -r ".Attributes.VisibilityTimeout"
+    )"
+    # echo "VISIBILITY_TIMEOUT_SECONDS ='${VISIBILITY_TIMEOUT_SECONDS}'"
+
+    time "${COMMAND}" "${MESSAGE}" "$@" &
+    local COMMAND_PID="$!"
+
+    local DURATION_SECONDS=$((0))
+    while true; do
+      if kill -0 "${COMMAND_PID}" 2>/dev/null; then
+        # Running
+        if ((DURATION_SECONDS >= VISIBILITY_TIMEOUT_SECONDS - 5)); then
+          VISIBILITY_TIMEOUT_SECONDS=$((VISIBILITY_TIMEOUT_SECONDS + 30))
+          (
+            set -x
+            aws sqs change-message-visibility \
+              --queue-url "${SQS_INPUT_QUEUE_URL}" \
+              --receipt-handle "${RECEIPT_HANDLE}" \
+              --visibility-timeout "${VISIBILITY_TIMEOUT_SECONDS}" ||
+              true
+          )
+        fi
+      else
+        # Stop
+        break
+      fi
+      sleep 1s
+      DURATION_SECONDS=$((DURATION_SECONDS + 1))
+    done
+
+    set +e
+    wait "${COMMAND_PID}"
+    local EXIT_CODE="$?"
+    set -e
+
+    if [[ "${EXIT_CODE}" != 0 ]]; then
+      echo
+      echo "EXIT_CODE = ${EXIT_CODE}"
+      echo
+      continue
+    fi
+
+    (
+      set -x
+      aws sqs delete-message \
+        --queue-url "${SQS_INPUT_QUEUE_URL}" \
+        --receipt-handle "${RECEIPT_HANDLE}"
+    )
+
+  done
+
+}
+
+main "$@"
