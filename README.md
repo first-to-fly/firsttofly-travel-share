@@ -1,8 +1,8 @@
-# My Project
+# MyAwesomeProject
 
 (Short description for this project)
 
-- [My Project](#my-project)
+- [MyAwesomeProject](#my-project)
   - [Installation](#installation)
   - [Usage](#usage)
   - [Development](#development)
