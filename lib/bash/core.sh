@@ -292,6 +292,9 @@ fi
 
 function loadEnvKey() {
 
+  echo
+  echo "Loading EnvKey..."
+
   # Check for dependency early
   dependency "envkey-source"
 
