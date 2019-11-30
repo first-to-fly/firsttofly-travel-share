@@ -5,13 +5,6 @@
 # NodeJS (due to large number of files)
 node_modules/
 
-# Terraform
-terraform/.terraform
-terraform/variables.tfvars
-terraform/*.tfstate
-terraform/*.tfstate.backup
-terraform/*.tfplan
-
 # nyc
 .nyc_output/
 

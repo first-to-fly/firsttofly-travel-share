@@ -113,7 +113,7 @@ pipeline {
       }
 
       if (!DELIVERED) {
-        sh "./pipeline/docker-build"
+        sh "./pipeline/build"
       }
 
     }}}}

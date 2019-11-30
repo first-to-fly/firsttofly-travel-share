@@ -19,9 +19,6 @@
     // .env
     "mikestead.dotenv",
 
-    // Docker
-    "ms-azuretools.vscode-docker",
-
     // Markdown
     "DavidAnson.vscode-markdownlint",
     "bierner.markdown-preview-github-styles",
@@ -34,9 +31,6 @@
     "timonwong.shellcheck",
     "foxundermoon.shell-format",
     "remisa.shellman",
-
-    // Terraform
-    "mauve.terraform",
 
     // Node
     "christian-kohler.npm-intellisense",

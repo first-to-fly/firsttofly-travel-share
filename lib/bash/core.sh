@@ -185,11 +185,6 @@ function dependency() {
           brew install "awscli"
         )
         echo
-      elif command -v "pip3" >/dev/null; then
-        (
-          set -x
-          pip3 install --upgrade --user "awscli"
-        )
       else
         echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
         return 1
@@ -251,15 +246,6 @@ function dependency() {
         (
           set -x
           brew install "shellcheck"
-        )
-        echo
-      fi
-      ;;
-    terraform)
-      if command -v "brew" >/dev/null; then
-        (
-          set -x
-          brew install "terraform"
         )
         echo
       fi

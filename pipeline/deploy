@@ -6,9 +6,6 @@ function main() {
 
   echo -e "${OK_COLOR}==> Deploying app..."
 
-  # "${BASH_SOURCE[0]%/*}/../terraform/apply"
-  "${BASH_SOURCE[0]%/*}/../lib/bash/aws-ecs-update-services"
-
 }
 
 main "$@"

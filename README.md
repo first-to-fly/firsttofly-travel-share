@@ -10,7 +10,6 @@
     - [Install](#install)
     - [Debug](#debug)
     - [Run](#run)
-    - [With Docker](#with-docker)
     - [Clean](#clean)
   - [Demo](#demo)
   - [Boilerplate](#boilerplate)
@@ -52,19 +51,6 @@ git submodule update --init --recursive
 ```bash
 ./pipeline/build
 ./pipeline/run
-```
-
-### With Docker
-
-```bash
-# Debug
-# This uses docker-compose.debug.yml
-./pipeline/docker-debug
-
-# Run
-# This uses docker-compose.yml
-./pipeline/docker-build
-./pipeline/docker-run
 ```
 
 ### Clean
