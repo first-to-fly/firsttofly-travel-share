@@ -2,9 +2,16 @@
 
 export BOILERPLATE_NO_COLOR="true"
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+source "./lib/bash/core.sh"
 
 function main() {
+
+  # Git LFS
+  command -v git-lfs >/dev/null 2>&1 || {
+    echo >&2 "This repository is configured for Git LFS but 'git-lfs' was not found on your path. If you no longer wish to use Git LFS, remove this hook by deleting .git/hooks/post-checkout."
+    exit 2
+  }
+  git lfs post-checkout "$@"
 
   local CURRENT_BRANCH
   CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
@@ -17,9 +24,9 @@ function main() {
 
   local COMMIT_TEMPLATE_FILE="${PWD}/.git/commit_msg_template.txt"
   if [[ -n "${JIRA_ISSUE_ID}" && "${JIRA_ISSUE_ID}" != "${CURRENT_BRANCH}" ]]; then
-    echo "${JIRA_ISSUE_ID} - Message" >"${COMMIT_TEMPLATE_FILE}"
+    echo -n "${JIRA_ISSUE_ID} " >"${COMMIT_TEMPLATE_FILE}"
   else
-    echo "JIRA-123 - Message" >"${COMMIT_TEMPLATE_FILE}"
+    echo -n "JIRA-123 " >"${COMMIT_TEMPLATE_FILE}"
   fi
 
   (

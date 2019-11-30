@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+source "./lib/bash/core.sh"
+source "./lib/bash/node.sh"
 
 dependency "shellcheck"
 
@@ -89,7 +90,7 @@ function main() {
     (
       set -x
       shellcheck \
-        --exclude="SC1090,SC1091" \
+        --external-sources \
         "${SHELL_FILES[@]}"
     )
     local EXIT_CODE=$?
@@ -98,7 +99,7 @@ function main() {
         set -x
         git stash pop || true
       )
-      exit ${EXIT_CODE}
+      return ${EXIT_CODE}
     fi
     set -e
   fi

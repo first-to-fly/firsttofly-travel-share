@@ -15,6 +15,8 @@ const packageJSON = require("./package.json");
 
 module.exports = {
 
+  root: true,
+
   env: {
     browser: true,
     es6: true,

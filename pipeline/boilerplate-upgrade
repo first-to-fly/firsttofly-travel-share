@@ -1,6 +1,75 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+source "./lib/bash/core.sh"
+
+function textFound() {
+
+  local TEXT="${1:-}"
+
+  local FIND_RESULTS
+  FIND_RESULTS="$(
+    find . -name "*${TEXT}*" |
+      (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-' || true)
+  )"
+
+  if [[ -n "${FIND_RESULTS}" ]]; then
+    echo "\"${TEXT}\" found in file/folder names."
+    return 0
+  fi
+
+  if (
+    grep -E --recursive "${TEXT}" . |
+      grep '^\./' |
+      grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-'
+  ); then
+    echo "\"${TEXT}\" found in file contents."
+    return 0
+  fi
+
+  return 1
+}
+
+function replace() {
+
+  local OLD_TEXT="${1:-}"
+  local NEW_TEXT="${2:-}"
+
+  if [[ -z "${NEW_TEXT:-}" ]]; then
+    return 0
+  fi
+
+  while true; do
+
+    local OLD_ITEM
+    OLD_ITEM="$(
+      find . -name "*${OLD_TEXT}*" |
+        head -n 1
+    )"
+    if [[ -z "${OLD_ITEM}" ]]; then
+      break
+    fi
+
+    local NEW_ITEM
+    NEW_ITEM="$(echo "${OLD_ITEM}" | sed -E "s|${OLD_TEXT}|${NEW_TEXT}|g")"
+
+    (
+      set -x
+      mv -n "${OLD_ITEM}" "${NEW_ITEM}"
+    )
+
+  done
+
+  (grep -E --recursive "${OLD_TEXT}" . || true) |
+    (grep '^\./' || true) |
+    (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-' || true) |
+    awk '{print $1}' |
+    sed 's|:.*$||' |
+    uniq |
+    while IFS='' read -r FILE; do
+      sed -i.bak "s|${OLD_TEXT}|${NEW_TEXT}|g" "${FILE}"
+      rm "${FILE}.bak"
+    done
+}
 
 function main() {
 
@@ -8,35 +77,6 @@ function main() {
 
   local REMOTE_URL="https://bitbucket.org/nabstudio/boilerplates.git"
 
-  # Get Branch
-  local BRANCH
-
-  local CONFIG_FILE="./.boilerplate/config.json"
-  if [[ -f "${CONFIG_FILE}" ]]; then
-    BRANCH="$(jq --raw-output ".branch" "${CONFIG_FILE}")"
-  fi
-
-  if [[ -z "${BRANCH:-}" || "${BRANCH:-}" == "null" ]]; then
-
-    echo "Available boilerplates:"
-    git ls-remote "${REMOTE_URL}" | awk '{print $2}' | grep '^refs/' | sed 's|^refs/heads/|- |'
-
-    echo "Which do you want to use? (master) "
-    read -r BRANCH
-    if [[ -z "${BRANCH:-}" ]]; then
-      BRANCH="master"
-    fi
-
-    echo "Using ${GREEN_COLOR}${BRANCH}${NO_COLOR}..."
-
-    if [[ -f "${CONFIG_FILE}" ]]; then
-      local NEW_CONFIG
-      NEW_CONFIG="$(jq --raw-output ".branch = \"${BRANCH}\"" "${CONFIG_FILE}")"
-      echo "${NEW_CONFIG}" >"${CONFIG_FILE}"
-    fi
-  fi
-
-  #
   if [[ -d "./.git" ]]; then
     # Current folder is Git root
 
@@ -61,58 +101,77 @@ function main() {
         "${REMOTE_NAME}"
     )
 
+    local CONFIG_FILE="./.boilerplate/config.json"
+    if [[ ! -f "${CONFIG_FILE}" ]]; then
+      (
+        set -x
+        git merge \
+          --allow-unrelated-histories \
+          "${REMOTE_NAME}/master"
+      )
+    fi
+
     (
-      set -x
-      git merge \
-        --allow-unrelated-histories \
-        "${REMOTE_NAME}/${BRANCH}"
-    )
+      jq \
+        --raw-output \
+        ".dependencies[]" \
+        "${CONFIG_FILE}" ||
+        true
+    ) |
+      while IFS="" read -r BRANCH; do
+        (
+          set -x
+          git merge \
+            --allow-unrelated-histories \
+            "${REMOTE_NAME}/${BRANCH}"
+        )
+      done
 
     (
       set -x
+
       git submodule update \
         --init \
         --recursive
-    )
 
-    (
-      set -x
       git remote remove \
         "${REMOTE_NAME}"
     )
 
+    local GIT_REMOTE_URL
+    GIT_REMOTE_URL="$(git config --get remote.origin.url)"
+    if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
+
+      if textFound "MyAwesomeProject"; then
+        echo "Project name: (My Project) "
+        (
+          local PROJECT_NAME
+          read -r PROJECT_NAME
+          if [[ -z "${PROJECT_NAME}" ]]; then
+            PROJECT_NAME="My Project"
+          fi
+          replace "MyAwesomeProject" "${PROJECT_NAME}"
+        )
+      fi
+
+      if textFound "myawesomeproject"; then
+        echo "Project key: (my-project) "
+        (
+          local PROJECT_KEY
+          read -r PROJECT_KEY
+          if [[ -z "${PROJECT_KEY}" ]]; then
+            PROJECT_KEY="my-project"
+          fi
+          replace "myawesomeproject" "${PROJECT_KEY}"
+        )
+      fi
+
+    fi
+
   else
-    # Current folder is not Git root -> Git subtree
 
-    local GIT_ROOT
-    GIT_ROOT="$(git rev-parse --show-toplevel)"
-
-    local SUBTREE_PREFIX="${PWD/#"${GIT_ROOT}"\//}"
-
-    (
-      set -x
-
-      cd "${GIT_ROOT}" || return 1
-
-      git subtree pull \
-        --squash \
-        --prefix "${SUBTREE_PREFIX}" \
-        "${REMOTE_URL}" \
-        "${BRANCH}" || (
-
-        rm -rf "${SUBTREE_PREFIX}" &&
-          git subtree add \
-            --prefix "${SUBTREE_PREFIX}" \
-            "${REMOTE_URL}" \
-            "${BRANCH}" &&
-          git subtree pull \
-            --squash \
-            --prefix "${SUBTREE_PREFIX}" \
-            "${REMOTE_URL}" \
-            "${BRANCH}"
-      )
-
-    )
+    echo "Current folder is not a Git repo." >&2
+    return 1
 
   fi
 

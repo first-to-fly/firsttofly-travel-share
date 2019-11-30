@@ -21,5 +21,9 @@ module.exports = {
     "plugin:mocha/recommended",
   ],
 
-  rules: { ...config.rules },
+  rules: {
+    ...config.rules,
+
+    "mocha/no-mocha-arrows": "off",
+  },
 };

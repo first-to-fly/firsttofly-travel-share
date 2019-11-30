@@ -1,29 +1,17 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
-
-source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
+source "./lib/bash/core.sh"
+source "./lib/bash/node.sh"
 
 function main() {
 
   if [[ ! -d "./node_modules" ]]; then
-    "${BASH_SOURCE[0]%/*}/install"
+    "./pipeline/install"
   fi
 
   echo -e "${OK_COLOR}==> Testing app..."
 
-  if [[ -z "${ENVKEY:-}" && -f "./.env" ]]; then
-    while IFS='' read -r LINE; do
-      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
-        export "${LINE?}"
-      fi
-    done <"./.env"
-  fi
-
-  if [[ -n "${ENVKEY:-}" ]]; then
-    dependency "envkey-source"
-    eval "$(envkey-source "${ENVKEY}")"
-  fi
+  loadEnvKey
 
   NPM="$(command -v npm)"
 

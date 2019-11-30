@@ -2,15 +2,15 @@
 
 (Short description for this project)
 
-- [MyAwesomeProject](#my-project)
+- [MyAwesomeProject](#myawesomeproject)
   - [Installation](#installation)
   - [Usage](#usage)
   - [Development](#development)
     - [Clone](#clone)
+    - [Clean](#clean)
     - [Install](#install)
     - [Debug](#debug)
     - [Run](#run)
-    - [Clean](#clean)
   - [Demo](#demo)
   - [Boilerplate](#boilerplate)
 
@@ -34,6 +34,12 @@ git submodule update --init --recursive
 
 > Note: This command is automatically run after every `git checkout`.
 
+### Clean
+
+```bash
+./pipeline/clean
+```
+
 ### Install
 
 ```bash
@@ -53,14 +59,8 @@ git submodule update --init --recursive
 ./pipeline/run
 ```
 
-### Clean
-
-```bash
-./pipeline/clean
-```
-
 ## Demo
 
 ## Boilerplate
 
-See boilerplate's [README.md](./.boilerplate/README.md).
+See [.boilerplate/README.md](./.boilerplate/README.md).

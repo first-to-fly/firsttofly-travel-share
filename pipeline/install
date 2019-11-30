@@ -1,8 +1,7 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
-
-source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
+source "./lib/bash/core.sh"
+source "./lib/bash/node.sh"
 
 function main() {
 
@@ -12,9 +11,7 @@ function main() {
 
   (
     set -x
-    # "--unsafe-perm" is required, else postinstall won't run during Docker build
     "${NPM}" install \
-      --unsafe-perm \
       "$@"
   )
 

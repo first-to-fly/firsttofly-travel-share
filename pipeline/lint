@@ -1,15 +1,14 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+source "./lib/bash/core.sh"
+source "./lib/bash/node.sh"
 
 dependency "shellcheck"
-
-source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
 function main() {
 
   if [[ ! -d "./node_modules" ]]; then
-    "${BASH_SOURCE[0]%/*}/install"
+    "./pipeline/install"
   fi
 
   echo -e "${OK_COLOR}==> Linting code..."
@@ -17,7 +16,8 @@ function main() {
   (
     set -x
     shellcheck \
-      --exclude="SC1090,SC1091" \
+      --external-sources \
+      "./.bin/"* \
       "./lib/bash/"* \
       "./pipeline/"*
   )

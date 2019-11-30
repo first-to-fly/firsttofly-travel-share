@@ -1,46 +1,17 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
-
-function replace() {
-
-  local OLD_TEXT="${1:-}"
-  local NEW_TEXT="${2:-}"
-
-  if [[ -z "${NEW_TEXT:-}" ]]; then
-    return 0
-  fi
-
-  grep -E --recursive "${OLD_TEXT}" . |
-    grep '^\./' |
-    grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-init' |
-    awk '{print $1}' |
-    sed 's|:.*$||' |
-    uniq |
-    while IFS='' read -r FILE; do
-      sed -i.bak "s|${OLD_TEXT}|${NEW_TEXT}|g" "${FILE}"
-      rm "${FILE}.bak"
-    done
-}
+source "./lib/bash/core.sh"
 
 function main() {
 
   echo -e "${OK_COLOR}==> Initializing boilerplate..."
 
-  "${BASH_SOURCE[0]%/*}/boilerplate-upgrade"
+  "./pipeline/boilerplate-upgrade"
 
-  echo "Project name: (My Project) "
   (
-    local PROJECT_NAME
-    read -r PROJECT_NAME
-    replace "MyAwesomeProject" "${PROJECT_NAME}"
-  )
-
-  echo "Project key: (my-project) "
-  (
-    local PROJECT_KEY
-    read -r PROJECT_KEY
-    replace "myawesomeproject" "${PROJECT_KEY}"
+    set -x
+    git add --all
+    git commit --message "Setup project"
   )
 
 }

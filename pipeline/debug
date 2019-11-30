@@ -1,35 +1,35 @@
 #!/usr/bin/env bash
 
-source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
-
-source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
+source "./lib/bash/core.sh"
+source "./lib/bash/node.sh"
 
 function main() {
 
   if [[ ! -d "./node_modules" ]]; then
-    "${BASH_SOURCE[0]%/*}/install"
+    "./pipeline/install"
   fi
 
   echo -e "${OK_COLOR}==> Debugging app..."
 
-  if [[ -z "${ENVKEY:-}" && -f "./.env" ]]; then
-    while IFS='' read -r LINE; do
-      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
-        export "${LINE?}"
-      fi
-    done <"./.env"
-  fi
+  NODE_DEBUG_PORT="${NODE_DEBUG_PORT:-9229}"
+  (lsof -t -i ":${NODE_DEBUG_PORT}" || true) |
+    xargs kill
 
-  if [[ -n "${ENVKEY:-}" ]]; then
-    dependency "envkey-source"
-    eval "$(envkey-source "${ENVKEY}")"
-  fi
+  # Kill old processes
+  # shellcheck disable=SC2009
+  ps |
+    grep --invert-match "grep" |
+    (grep "nodemon" || true) |
+    awk '{print $1}' |
+    xargs kill
+
+  loadEnvKey
 
   NPM="$(command -v npm)"
 
   (
     set -x
-    "${NPM}" run dev "$@"
+    "${NPM}" run dev -- "$@"
   )
 
 }

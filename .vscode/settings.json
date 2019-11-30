@@ -1,4 +1,7 @@
 {
+  // Debug
+  "debug.node.autoAttach": "on",
+
   // Explorer
   "explorer.confirmDragAndDrop": false,
 
@@ -62,10 +65,10 @@
   },
 
   // Shell
-  "shellcheck.exclude": [
+  "shellcheck.useWorkspaceRootAsCwd": true,
+  "shellcheck.customArgs": [
     //
-    "SC1090",
-    "SC1091"
+    "--external-sources"
   ],
 
   // CSS

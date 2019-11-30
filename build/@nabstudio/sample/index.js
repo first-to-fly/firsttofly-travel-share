@@ -1,4 +1,2 @@
-"use strict";
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.default = "sample";
+export default "sample";
 //# sourceMappingURL=index.js.map
