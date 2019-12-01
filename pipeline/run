@@ -26,7 +26,8 @@ function main() {
     set -x
     time \
       BOILERPLATE_LOG_TIME="true" \
-      wrap "${NPM}" start -- "$@" |
+      wrap \
+      "${NPM}" start -- "$@" |
       tee "${LOG_FILE}"
   )
   local EXIT_CODE="$?"
