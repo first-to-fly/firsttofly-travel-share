@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 
-export BOILERPLATE_LOG_TIME="true"
 export BOILERPLATE_NO_COLOR="true"
 export BOILERPLATE_NO_EMPTY_LINE="true"
 
@@ -26,7 +25,7 @@ function main() {
   (
     set -x
     time \
-      BOILERPLATE_LOG_TIME="false" \
+      BOILERPLATE_LOG_TIME="true" \
       "${NPM}" start -- "$@" |
       tee "${LOG_FILE}"
   )
