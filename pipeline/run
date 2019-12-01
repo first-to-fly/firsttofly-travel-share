@@ -1,5 +1,6 @@
 #!/usr/bin/env bash
 
+export BOILERPLATE_LOG_TIME="true"
 export BOILERPLATE_NO_COLOR="true"
 export BOILERPLATE_NO_EMPTY_LINE="true"
 
@@ -18,7 +19,8 @@ function main() {
   set +e
   (
     set -x
-    BOILERPLATE_LOG_TIME="true" \
+    time \
+      BOILERPLATE_LOG_TIME="false" \
       cron echo "Hello World" |
       tee "${LOG_FILE}"
   )
