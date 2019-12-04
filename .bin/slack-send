@@ -8,10 +8,17 @@ function main() {
   local DATA="${1}"
   shift
 
-  local SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL}"
+  local SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL:-}"
+
+  if [[ -z "${SLACK_WEBHOOK_URL}" ]]; then
+    echo "SLACK_WEBHOOK_URL not set." >&2
+    return
+  fi
+
+  echo "Sending error to Slack..."
 
   (
-    set -x
+    # set -x
     curl \
       --silent \
       --show-error \
