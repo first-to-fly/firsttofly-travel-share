@@ -13,14 +13,14 @@ function main() {
     return 1
   fi
 
-  local GIT_STATUS
-  GIT_STATUS="$(git status --short --porcelain)"
-  if [[ -n "${GIT_STATUS}" ]]; then
-    echo "There are uncommitted changes. Please commit them before continue." >&2
-    echo >&2
-    echo "${GIT_STATUS}" >&2
-    return 1
-  fi
+  # local GIT_STATUS
+  # GIT_STATUS="$(git status --short --porcelain)"
+  # if [[ -n "${GIT_STATUS}" ]]; then
+  #   echo "There are uncommitted changes. Please commit them before continue." >&2
+  #   echo >&2
+  #   echo "${GIT_STATUS}" >&2
+  #   return 1
+  # fi
 
   local GIT_BRANCH
   GIT_BRANCH="$(git branch -vv | grep "\*" | awk '{print $2}')"
