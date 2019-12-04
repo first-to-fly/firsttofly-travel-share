@@ -68,6 +68,12 @@ function main() {
         "${GIT_REMOTE_URL}" \
         "${TEMP_DIR}/${REMOTE_BRANCH}"
 
+      cd "${TEMP_DIR}/${REMOTE_BRANCH}" | return 100
+
+      git submodule update \
+        --init \
+        --recursive
+
     ) &
     CLONE_PIDS+=("$!")
   done
@@ -172,11 +178,7 @@ function main() {
         if [[ "${EXIT_CODE}" != 0 ]]; then
           (
             set -x
-            cd "${TEMP_DIR}/${CURRENT_BRANCH}"
-            git submodule update \
-              --init \
-              --recursive
-            code .
+            code "${TEMP_DIR}/${CURRENT_BRANCH}"
           )
           echo "Please resolve merge conflicts, then press <Return> to continue..."
           echo
