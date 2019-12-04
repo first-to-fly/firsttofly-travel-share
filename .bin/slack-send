@@ -15,7 +15,7 @@ function main() {
     return
   fi
 
-  echo "Sending error to Slack..."
+  echo "Sending message to Slack..."
 
   (
     # set -x
