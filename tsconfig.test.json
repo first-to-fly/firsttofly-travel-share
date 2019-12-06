@@ -4,12 +4,13 @@
     "module": "commonjs",
     "types": [
       //
-      "mocha",
-      "node"
+      "mocha", // Required for "describe", "it"
+      "node" // Required for "assert"
     ]
   },
   "include": [
     //
+    "src",
     "test"
   ]
 }
