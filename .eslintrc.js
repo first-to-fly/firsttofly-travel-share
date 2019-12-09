@@ -212,6 +212,17 @@ module.exports = {
 
     // ==> eslint-plugin-import
 
+    "import/extensions": [
+      "error",
+      "always",
+      {
+        js: "never",
+        jsx: "never",
+        ts: "never",
+        tsx: "never",
+      },
+    ],
+
     // Always add 2 lines after every import block
     "import/newline-after-import": [
       "error",
