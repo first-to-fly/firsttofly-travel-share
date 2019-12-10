@@ -11,7 +11,7 @@ function main() {
 
     git remote remove "zboilerplate" 2>/dev/null || true
 
-    rm -rf "./build"
+    # rm -rf "./build" Built products, do not clean!
     rm -rf "./node_modules"
     rm -rf "./.nyc_output"
     rm -rf "./example/node_modules"
