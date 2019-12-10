@@ -9,7 +9,7 @@ function textFound() {
   local FIND_RESULTS
   FIND_RESULTS="$(
     find . -name "*${TEXT}*" |
-      (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-' || true)
+      (grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-\|^\./submodules/' || true)
   )"
 
   if [[ -n "${FIND_RESULTS}" ]]; then
@@ -20,7 +20,7 @@ function textFound() {
   if (
     grep -E --recursive "${TEXT}" . |
       grep '^\./' |
-      grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-'
+      grep --invert-match '^\./\.git/\|^\./pipeline/boilerplate-\|^\./submodules/'
   ); then
     echo "\"${TEXT}\" found in file contents."
     return 0
