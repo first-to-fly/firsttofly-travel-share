@@ -12,12 +12,17 @@ fi
 BOILERPLATE_CORE_IMPORTED="true"
 
 # Path
-if [[ "${PATH}" != *"/usr/local/bin"* ]]; then
+# Path
+if [[ "${PATH}" != *"/usr/sbin"* && -d "/usr/sbin" ]]; then
+  export PATH="/usr/sbin:${PATH}"
+fi
+
+if [[ "${PATH}" != *"/usr/local/bin"* && -d "/usr/local/bin" ]]; then
   export PATH="/usr/local/bin:${PATH}"
 fi
 
-if [[ "${PATH}" != *"${PWD}/bin"* && -d "${PWD}/bin" ]]; then
-  export PATH="${PWD}/bin:${PATH}"
+if [[ "${PATH}" != *"${PWD}/.bin"* && -d "${PWD}/.bin" ]]; then
+  export PATH="${PWD}/.bin:${PATH}"
 fi
 
 # Colors
