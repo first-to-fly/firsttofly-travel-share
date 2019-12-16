@@ -57,13 +57,15 @@ function main() {
 
   declare -a CLONE_PIDS=()
 
+  local REFERENCE="${PWD}"
+
   for REMOTE_BRANCH in "${REMOTE_BRANCHES[@]}"; do
     (
       set -x
 
       git clone \
         --branch "${REMOTE_BRANCH}" \
-        --reference "${PWD}" \
+        --reference "${REFERENCE}" \
         -- \
         "${GIT_REMOTE_URL}" \
         "${TEMP_DIR}/${REMOTE_BRANCH}"
@@ -71,6 +73,7 @@ function main() {
       cd "${TEMP_DIR}/${REMOTE_BRANCH}" || return 100
 
       git submodule update \
+        --reference "${REFERENCE}" \
         --init \
         --recursive
 
