@@ -201,6 +201,12 @@ function main() {
       )
 
       MODIFIED_BRANCHES+="${CURRENT_BRANCH} "
+
+    else
+
+      echo
+      echo "Nothing to update."
+
     fi
 
   done
