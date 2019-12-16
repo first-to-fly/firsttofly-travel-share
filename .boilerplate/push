@@ -150,7 +150,9 @@ function main() {
   local MODIFIED_BRANCHES=" ${GIT_BRANCH} "
 
   for CURRENT_BRANCH in "${REMOTE_BRANCHES[@]}"; do
-    echo "CURRENT_BRANCH = '${CURRENT_BRANCH}'"
+
+    echo
+    echo "${YELLOW_COLOR}==> Pushing updates to branch '${CURRENT_BRANCH}'..."
 
     local UPGRADE_REQUIRED="false"
     while IFS="" read -r DEPENDENCY; do
