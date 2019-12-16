@@ -62,12 +62,21 @@ function main() {
   for REMOTE_BRANCH in "${REMOTE_BRANCHES[@]}"; do
     (
       set -x
+
       git clone \
         --branch "${REMOTE_BRANCH}" \
         --reference "${REFERENCE}" \
         -- \
         "${GIT_REMOTE_URL}" \
         "${TEMP_DIR}/${REMOTE_BRANCH}"
+
+      # Upgrade here for better performance, as all post-merging will update submodules
+      cd "${TEMP_DIR}/${REMOTE_BRANCH}" || return 100
+
+      git submodule update \
+        --reference "${REFERENCE}" \
+        --init \
+        --recursive
     ) &
     CLONE_PIDS+=("$!")
   done
@@ -174,11 +183,6 @@ function main() {
         if [[ "${EXIT_CODE}" != 0 ]]; then
           (
             set -x
-            cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
-            git submodule update \
-              --reference "${REFERENCE}" \
-              --init \
-              --recursive
             code "${TEMP_DIR}/${CURRENT_BRANCH}"
           )
           echo "Please resolve merge conflicts, then press <Return> to continue..."
