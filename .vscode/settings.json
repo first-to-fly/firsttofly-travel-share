@@ -74,5 +74,12 @@
   },
 
   // Run on Save
-  "runOnSave.commands": []
+  "runOnSave.commands": [
+    //
+  ],
+
+  // Editor - Code
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
 }
