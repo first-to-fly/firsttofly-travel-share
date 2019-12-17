@@ -88,7 +88,12 @@
   },
 
   // Run on Save
-  "runOnSave.commands": []
+  "runOnSave.commands": [
+    //
+  ],
 
-  // Prettier
+  // Editor - Code
+  "editor.codeActionsOnSave": {
+    "source.fixAll": true
+  }
 }
