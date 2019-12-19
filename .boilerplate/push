@@ -75,7 +75,6 @@ function main() {
 
       git submodule update \
         --init \
-        --recommend-shallow \
         --recursive
     ) &
     CLONE_PIDS+=("$!")
