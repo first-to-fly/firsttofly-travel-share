@@ -32,7 +32,7 @@ function main() {
     fi
 
     local MESSAGE
-    MESSAGE="$(echo "${MESSAGES}" | jq -r ".Messages[0]")"
+    MESSAGE="$(echo "${MESSAGES}" | jq --raw-output --compact-output ".Messages[0]")"
     # echo "MESSAGE ='${MESSAGE}'"
 
     local RECEIPT_HANDLE
@@ -49,7 +49,11 @@ function main() {
     )"
     # echo "VISIBILITY_TIMEOUT_SECONDS ='${VISIBILITY_TIMEOUT_SECONDS}'"
 
-    time "${COMMAND}" "${MESSAGE}" "$@" &
+    (
+      set -x
+      time \
+        "${COMMAND}" "$@" "${MESSAGE}"
+    ) &
     local COMMAND_PID="$!"
 
     local DURATION_SECONDS=$((0))
