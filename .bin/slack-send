@@ -2,6 +2,8 @@
 
 source "./lib/bash/core.sh"
 
+dependency "curl"
+
 function main() {
 
   # See https://api.slack.com/docs/message-attachments for formatting.
