@@ -74,10 +74,7 @@ function main() {
       cd "${TEMP_DIR}/${REMOTE_BRANCH}" || return 100
 
       git submodule update \
-        --reference "${REFERENCE}" \
         --init \
-        --recommend-shallow \
-        --depth=1 \
         --recursive
     ) &
     CLONE_PIDS+=("$!")
