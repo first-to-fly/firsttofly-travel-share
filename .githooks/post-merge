@@ -16,7 +16,9 @@ function main() {
   # Update submodules
   (
     set -x
-    git submodule update --init --recursive ||
+    git submodule update \
+      --init \
+      --recursive ||
       true
   )
 
