@@ -2,6 +2,8 @@
 
 source "./lib/bash/core.sh"
 
+dependency "bc"
+
 function main() {
 
   local COMMAND="${1}"
