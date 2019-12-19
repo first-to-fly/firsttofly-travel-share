@@ -132,6 +132,8 @@ function main() {
 
       git submodule update \
         --init \
+        --recommend-shallow \
+        --depth=1 \
         --recursive
 
       git remote remove \
