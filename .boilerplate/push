@@ -57,23 +57,26 @@ function main() {
 
   declare -a CLONE_PIDS=()
 
+  local REFERENCE="${PWD}"
+
   for REMOTE_BRANCH in "${REMOTE_BRANCHES[@]}"; do
     (
       set -x
 
       git clone \
         --branch "${REMOTE_BRANCH}" \
-        --reference "${PWD}" \
+        --reference "${REFERENCE}" \
         -- \
         "${GIT_REMOTE_URL}" \
         "${TEMP_DIR}/${REMOTE_BRANCH}"
 
+      # Upgrade here for better performance, as all post-merging will update submodules
       cd "${TEMP_DIR}/${REMOTE_BRANCH}" || return 100
 
       git submodule update \
+        --reference "${REFERENCE}" \
         --init \
         --recursive
-
     ) &
     CLONE_PIDS+=("$!")
   done
@@ -147,7 +150,9 @@ function main() {
   local MODIFIED_BRANCHES=" ${GIT_BRANCH} "
 
   for CURRENT_BRANCH in "${REMOTE_BRANCHES[@]}"; do
-    echo "CURRENT_BRANCH = '${CURRENT_BRANCH}'"
+
+    echo
+    echo "${YELLOW_COLOR}==> Pushing updates to branch '${CURRENT_BRANCH}'..."
 
     local UPGRADE_REQUIRED="false"
     while IFS="" read -r DEPENDENCY; do
@@ -196,6 +201,12 @@ function main() {
       )
 
       MODIFIED_BRANCHES+="${CURRENT_BRANCH} "
+
+    else
+
+      echo
+      echo "Nothing to update."
+
     fi
 
   done

@@ -12,7 +12,12 @@ fi
 BOILERPLATE_CORE_IMPORTED="true"
 
 # Path
-if [[ "${PATH}" != *"/usr/local/bin"* ]]; then
+# Path
+if [[ "${PATH}" != *"/usr/sbin"* && -d "/usr/sbin" ]]; then
+  export PATH="/usr/sbin:${PATH}"
+fi
+
+if [[ "${PATH}" != *"/usr/local/bin"* && -d "/usr/local/bin" ]]; then
   export PATH="/usr/local/bin:${PATH}"
 fi
 
