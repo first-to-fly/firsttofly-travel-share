@@ -87,7 +87,9 @@ function main() {
       set -x
       shellcheck \
         --external-sources \
-        "${SHELL_FILES[@]}"
+        "${SHELL_FILES[@]}" ||
+        shellcheck \
+          "${SHELL_FILES[@]}"
     )
     local EXIT_CODE=$?
     if ((EXIT_CODE != 0)); then

@@ -211,6 +211,18 @@ function dependency() {
         return 1
       fi
       ;;
+    bc)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "bc"
+        )
+        echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
+      fi
+      ;;
     envkey-source)
       (
         set -x
