@@ -209,7 +209,7 @@ function dependency() {
       elif command -v "yum" >/dev/null; then
         (
           set -x
-          yum install -y "awscli"
+          sudo yum install -y "awscli"
         )
         echo
       else
