@@ -206,22 +206,16 @@ function dependency() {
           brew install "awscli"
         )
         echo
-      elif command -v "yum" >/dev/null; then
-        (
-          set -x
-          sudo yum install -y "awscli"
-        )
-        echo
       else
         echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
         return 1
       fi
       ;;
     bc)
-      if command -v "yum" >/dev/null; then
+      if command -v "brew" >/dev/null; then
         (
           set -x
-          sudo yum install -y "bc"
+          brew install "bc"
         )
         echo
       else
@@ -236,12 +230,6 @@ function dependency() {
           brew install "jq"
         )
         echo
-      elif command -v "yum" >/dev/null; then
-        (
-          set -x
-          sudo yum install -y "jq"
-        )
-        echo
       else
         echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
         return 1
@@ -252,13 +240,6 @@ function dependency() {
         (
           set -x
           brew install "shellcheck"
-        )
-        echo
-      elif command -v "yum" >/dev/null; then
-        (
-          set -x
-          sudo rpm -ivh "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
-          sudo yum install -y "ShellCheck"
         )
         echo
       fi
