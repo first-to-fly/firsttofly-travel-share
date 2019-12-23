@@ -14,7 +14,11 @@ function main() {
       --external-sources \
       "./.bin/"* \
       "./lib/bash/"* \
-      "./pipeline/"*
+      "./pipeline/"* ||
+      shellcheck \
+        "./.bin/"* \
+        "./lib/bash/"* \
+        "./pipeline/"*
   )
 
 }
