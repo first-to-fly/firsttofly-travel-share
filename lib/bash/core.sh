@@ -217,6 +217,18 @@ function dependency() {
         return 1
       fi
       ;;
+    bc)
+      if command -v "yum" >/dev/null; then
+        (
+          set -x
+          sudo yum install -y "bc"
+        )
+        echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
+      fi
+      ;;
     jq)
       if command -v "brew" >/dev/null; then
         (
