@@ -20,7 +20,9 @@ function main() {
   set +e
   (
     set -x
-    BOILERPLATE_LOG_TIME="true" \
+    time \
+      BOILERPLATE_LOG_TIME="true" \
+      wrap \
       cron echo "Hello World" |
       tee "${LOG_FILE}"
   )
@@ -45,8 +47,7 @@ function main() {
               {
                 "fallback": "[\($projectKey)] crashed with exit code \($exitCode)",
                 "color": "danger",
-                "title": "\($projectKey)",
-                "text": "*\($projectKey)* crashed with exit code \($exitCode).\n==========\n*Console Log*\n...\n\($consoleLog)\n==========",
+                "text": "*`\($projectKey)`* crashed with exit code *\($exitCode)*.\n\n*Console Log*\n```\($consoleLog)```",
               }
             ]
           } | .main'
@@ -54,7 +55,7 @@ function main() {
     # echo "DATA = '${DATA}'"
 
     (
-      set -x
+      # set -x
       slack-send "${DATA}"
     )
 

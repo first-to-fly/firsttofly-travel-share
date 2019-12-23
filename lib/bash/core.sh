@@ -12,7 +12,12 @@ fi
 BOILERPLATE_CORE_IMPORTED="true"
 
 # Path
-if [[ "${PATH}" != *"/usr/local/bin"* ]]; then
+# Path
+if [[ "${PATH}" != *"/usr/sbin"* && -d "/usr/sbin" ]]; then
+  export PATH="/usr/sbin:${PATH}"
+fi
+
+if [[ "${PATH}" != *"/usr/local/bin"* && -d "/usr/local/bin" ]]; then
   export PATH="/usr/local/bin:${PATH}"
 fi
 
@@ -199,6 +204,18 @@ function dependency() {
         (
           set -x
           brew install "awscli"
+        )
+        echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
+      fi
+      ;;
+    bc)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "bc"
         )
         echo
       else

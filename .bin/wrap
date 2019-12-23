@@ -1,0 +1,15 @@
+#!/usr/bin/env bash
+
+source "./lib/bash/core.sh"
+
+function main() {
+
+  local COMMAND="${1}"
+  shift
+
+  BOILERPLATE_LOG_TIME="false" \
+    "${COMMAND}" "$@"
+
+}
+
+main "$@"
