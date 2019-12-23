@@ -218,17 +218,10 @@ function dependency() {
       )
       ;;
     fnm)
-      if command -v "brew" >/dev/null; then
-        (
-          set -x
-          brew install "Schniz/tap/fnm"
-        )
-      else
-        (
-          set -x
-          curl -fsSL "https://github.com/Schniz/fnm/raw/master/.ci/install.sh" | bash
-        )
-      fi
+      (
+        set -x
+        curl -fsSL "https://github.com/Schniz/fnm/raw/master/.ci/install.sh" | bash
+      )
       ;;
     jq)
       if command -v "brew" >/dev/null; then
