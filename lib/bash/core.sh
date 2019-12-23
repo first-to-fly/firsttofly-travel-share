@@ -206,6 +206,12 @@ function dependency() {
           brew install "awscli"
         )
         echo
+      elif command -v "yum" >/dev/null; then
+        (
+          set -x
+          yum install -y "awscli"
+        )
+        echo
       else
         echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
         return 1
