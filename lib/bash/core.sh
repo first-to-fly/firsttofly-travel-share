@@ -218,6 +218,12 @@ function dependency() {
           brew install "jq"
         )
         echo
+      elif command -v "yum" >/dev/null; then
+        (
+          set -x
+          yum install -y "jq"
+        )
+        echo
       else
         echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
         return 1
@@ -228,6 +234,13 @@ function dependency() {
         (
           set -x
           brew install "shellcheck"
+        )
+        echo
+      elif command -v "yum" >/dev/null; then
+        (
+          set -x
+          sudo rpm -ivh "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
+          yum install -y "ShellCheck"
         )
         echo
       fi
