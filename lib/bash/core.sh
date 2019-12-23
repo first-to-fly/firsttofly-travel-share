@@ -209,7 +209,7 @@ function dependency() {
       elif command -v "yum" >/dev/null; then
         (
           set -x
-          yum install -y "jq"
+          sudo yum install -y "jq"
         )
         echo
       else
@@ -228,7 +228,7 @@ function dependency() {
         (
           set -x
           sudo rpm -ivh "https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm"
-          yum install -y "ShellCheck"
+          sudo yum install -y "ShellCheck"
         )
         echo
       fi
