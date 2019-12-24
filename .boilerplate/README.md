@@ -8,7 +8,7 @@
 2. Run the following command in the newly cloned folder:
 
 ```bash
-TEMP_DIR="$(mktemp -d)" && git clone 'https://bitbucket.org/nabstudio/boilerplates' "${TEMP_DIR}" && "${TEMP_DIR}/pipeline/boilerplate-init" && rm -rf "${TEMP_DIR}"
+TEMP_DIR="$(mktemp -d)" && git clone --depth=1 'https://bitbucket.org/nabstudio/boilerplates' "${TEMP_DIR}" && "${TEMP_DIR}/pipeline/boilerplate-init" && rm -rf "${TEMP_DIR}"
 ```
 
 You will be ask for the project key and project name.
@@ -32,13 +32,13 @@ Upgrade an existing project to use new boilerplates' commits.
 2. Update the `dependencies` property in [`.boilerplate/config.json`](./config.json) with needed features' branches
 3. Merge those features in by upgrading the boilerplate:
 
-    ```bash
-    ./pipeline/boilerplate-upgrade
-    ```
+   ```bash
+   ./pipeline/boilerplate-upgrade
+   ```
 
 ### Push Feature
 
-After `git push` changes, run the following command to push those changes to *dependant features*:
+After `git push` changes, run the following command to push those changes to _dependant features_:
 
 ```bash
 ./.boilerplate/push
