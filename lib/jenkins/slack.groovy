@@ -82,6 +82,7 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
   slackSend \
     channel: args.channel,
     message: '',
+    notifyCommitters: true,
     attachments: attachments
 }
 
