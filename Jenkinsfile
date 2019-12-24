@@ -39,11 +39,11 @@ pipeline {
         }
       }}
 
-      env.GIT_AUTHOR_NAME = sh label: 'Find Git Author Name',
+      env.GIT_COMMITTER_NAME = sh label: 'Find Git Committer Name',
         returnStdout: true,
         script: 'git --no-pager log -1 --format="%aN"'
 
-      env.GIT_AUTHOR_EMAIL = sh label: 'Find Git Author Email',
+      env.GIT_COMMITTER_EMAIL = sh label: 'Find Git Committer Email',
         returnStdout: true,
         script: 'git --no-pager log -1 --format="%aE"'
 
