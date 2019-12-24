@@ -2,7 +2,7 @@
 
 
 String currentRunDescription() {
-  return "<${JOB_URL}|${JOB_NAME.replace("%2F", "/")}> [<${BUILD_URL}|#${BUILD_NUMBER}>] by <${JENKINS_URL}/user/${BUILD_USER_ID}|${BUILD_USER}>"
+  return "<${JOB_URL}|${JOB_NAME.replace("%2F", "/")}> [<${BUILD_URL}|#${BUILD_NUMBER}>] by <${JENKINS_URL}user/${BUILD_USER_ID}|${BUILD_USER}>"
 }
 
 
@@ -13,11 +13,11 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
     text = "${text} [<${value}|${key}>]"
   }
 
-  def fallback = "${args.message.replace('#BUILD', currentRunDescription())} Committed by ${GIT_COMMITTER_NAME}"
+  def fallback = "${args.message.replace('#BUILD', currentRunDescription())} Committer: ${GIT_COMMITTER_NAME}"
 
   def fields = [:]
 
-  fields["Committer"] = "${GIT_COMMITTER_NAME} <${GIT_COMMITTER_EMAIL}>"
+  fields["Committer"] = "${GIT_COMMITTER_NAME} \<${GIT_COMMITTER_EMAIL}\>"
 
   if (!args.excludeParams) {
     params.each { String key, String value ->
