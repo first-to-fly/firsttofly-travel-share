@@ -17,7 +17,7 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
 
   def fields = [:]
 
-  fields["Committer"] = "${GIT_COMMITTER_NAME} \<${GIT_COMMITTER_EMAIL}\>"
+  fields["Committer"] = "${GIT_COMMITTER_NAME} (${GIT_COMMITTER_EMAIL})"
 
   if (!args.excludeParams) {
     params.each { String key, String value ->
