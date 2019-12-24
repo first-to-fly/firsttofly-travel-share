@@ -41,11 +41,11 @@ pipeline {
 
       env.GIT_COMMITTER_NAME = sh label: 'Find Git Committer Name',
         returnStdout: true,
-        script: 'git --no-pager log -1 --format="%aN"'
+        script: 'git --no-pager log -1 --format="%an"'
 
       env.GIT_COMMITTER_EMAIL = sh label: 'Find Git Committer Email',
         returnStdout: true,
-        script: 'git --no-pager log -1 --format="%aE"'
+        script: 'git --no-pager log -1 --format="%ae"'
 
       def JENKINS_CONFIG_JSON_STRING = readFile(file:"${WORKSPACE}/jenkins.config.json")
       JENKINS_CONFIG = new JsonSlurperClassic().parseText(JENKINS_CONFIG_JSON_STRING)
