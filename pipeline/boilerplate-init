@@ -1,12 +1,13 @@
 #!/usr/bin/env bash
 
-source "./lib/bash/core.sh"
+# shellcheck source=./lib/bash/core.sh
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 function main() {
 
   echo -e "${OK_COLOR}==> Initializing boilerplate..."
 
-  "./pipeline/boilerplate-upgrade"
+  "${BASH_SOURCE[0]%/*}/boilerplate-upgrade"
 
   (
     set -x
