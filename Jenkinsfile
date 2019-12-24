@@ -39,9 +39,13 @@ pipeline {
         }
       }}
 
-      env.GIT_AUTHOR = sh label: 'Find Git Author',
+      env.GIT_AUTHOR_NAME = sh label: 'Find Git Author Name',
         returnStdout: true,
-        script: 'git --no-pager show --format="<mailto:%aE|%aN>" | head -n 1'
+        script: 'git --no-pager show --format="%aN" | head -n 1'
+
+      env.GIT_AUTHOR_EMAIL = sh label: 'Find Git Author Email',
+        returnStdout: true,
+        script: 'git --no-pager show --format="%aE" | head -n 1'
 
       def JENKINS_CONFIG_JSON_STRING = readFile(file:"${WORKSPACE}/jenkins.config.json")
       JENKINS_CONFIG = new JsonSlurperClassic().parseText(JENKINS_CONFIG_JSON_STRING)
