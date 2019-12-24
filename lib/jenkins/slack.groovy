@@ -8,7 +8,7 @@ String currentRunDescription() {
 
 void send(Map args) { // String channel, String message, String<good|normal|warning|danger> color, Map fields, Map actions, boolean excludeParams
 
-  def text = "${args.message.replace('#BUILD', currentRunDescription())}\n[<${BUILD_URL}/console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]"
+  def text = "${args.message.replace('#BUILD', currentRunDescription())}\n[<${BUILD_URL}/console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]\n\n*Committer: ${GIT_COMMITTER_NAME} <${GIT_COMMITTER_EMAIL}>"
   args.actions.each { String key, String value ->
     text = "${text} [<${value}|${key}>]"
   }
@@ -16,8 +16,6 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
   def fallback = "${args.message.replace('#BUILD', currentRunDescription())} Committer: ${GIT_COMMITTER_NAME}"
 
   def fields = [:]
-
-  fields["Committer"] = "${GIT_COMMITTER_NAME} <${GIT_COMMITTER_EMAIL}>"
 
   if (!args.excludeParams) {
     params.each { String key, String value ->
@@ -36,7 +34,7 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
 
   fields.each { String key, String value ->
     if (value.length() > 0) {
-      if (value.length() <= 25) {
+      if (value.length() <= 30) {
         shortFields[key] = value
       } else {
         longFields[key] = value
