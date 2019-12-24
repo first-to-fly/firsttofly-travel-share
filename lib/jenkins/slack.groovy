@@ -8,7 +8,7 @@ String currentRunDescription() {
 
 void send(Map args) { // String channel, String message, String<good|normal|warning|danger> color, Map fields, Map actions, boolean excludeParams
 
-  def text = "${args.message.replace('#BUILD', currentRunDescription())} [<${BUILD_URL}/console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]"
+  def text = "${args.message.replace('#BUILD', currentRunDescription())}\n[<${BUILD_URL}/console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]\n\n*Author:* ${GIT_AUTHOR}"
   args.actions.each { String key, String value ->
     text = "${text} [<${value}|${key}>]"
   }
@@ -17,7 +17,7 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
 
   def fields = [:]
 
-  fields['Git Author'] = "${GIT_AUTHOR}"
+  // fields['Git Author'] = "${GIT_AUTHOR}"
 
   if (!args.excludeParams) {
     params.each { String key, String value ->
