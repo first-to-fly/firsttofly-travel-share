@@ -2,22 +2,20 @@
 
 
 String currentRunDescription() {
-  return "<${JOB_URL}|${JOB_NAME.replace("%2F", "/")}> [<${BUILD_URL}|#${BUILD_NUMBER}>] by <${JENKINS_URL}/user/${BUILD_USER_ID}|${BUILD_USER}>"
+  return "<${JOB_URL}|${JOB_NAME.replace("%2F", "/")}> [<${BUILD_URL}|#${BUILD_NUMBER}>] by <${JENKINS_URL}user/${BUILD_USER_ID}|${BUILD_USER}>"
 }
 
 
 void send(Map args) { // String channel, String message, String<good|normal|warning|danger> color, Map fields, Map actions, boolean excludeParams
 
-  def text = "${args.message.replace('#BUILD', currentRunDescription())} [<${BUILD_URL}/console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]"
+  def text = "${args.message.replace('#BUILD', currentRunDescription())} [<${BUILD_URL}console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]\nCommit by *${GIT_COMMITTER_NAME}* - ${GIT_COMMITTER_EMAIL}"
   args.actions.each { String key, String value ->
     text = "${text} [<${value}|${key}>]"
   }
 
-  def fallback = args.message.replace('#BUILD', currentRunDescription())
+  def fallback = "${args.message.replace('#BUILD', currentRunDescription())} Commit by ${GIT_COMMITTER_NAME}"
 
   def fields = [:]
-
-  fields['Git Author'] = "${GIT_AUTHOR}"
 
   if (!args.excludeParams) {
     params.each { String key, String value ->
@@ -82,6 +80,7 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
   slackSend \
     channel: args.channel,
     message: '',
+    notifyCommitters: true,
     attachments: attachments
 }
 
