@@ -17,7 +17,7 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
 
   def fields = [:]
 
-  fields["Committer"] = "${GIT_COMMITTER_NAME} (${GIT_COMMITTER_EMAIL})"
+  fields["Committer"] = "${GIT_COMMITTER_NAME} <${GIT_COMMITTER_EMAIL}>"
 
   if (!args.excludeParams) {
     params.each { String key, String value ->
@@ -36,7 +36,7 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
 
   fields.each { String key, String value ->
     if (value.length() > 0) {
-      if (value.length() <= 30) {
+      if (value.length() <= 25) {
         shortFields[key] = value
       } else {
         longFields[key] = value
