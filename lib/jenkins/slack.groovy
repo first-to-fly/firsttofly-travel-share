@@ -8,12 +8,12 @@ String currentRunDescription() {
 
 void send(Map args) { // String channel, String message, String<good|normal|warning|danger> color, Map fields, Map actions, boolean excludeParams
 
-  def text = "${args.message.replace('#BUILD', currentRunDescription())}\n[<${BUILD_URL}/console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]\n\n*Git Author*\n${GIT_COMMITTER_NAME} ${GIT_COMMITTER_EMAIL}"
+  def text = "${args.message.replace('#BUILD', currentRunDescription())}\n[<${BUILD_URL}/console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]\nCommit by *${GIT_COMMITTER_NAME}* ${GIT_COMMITTER_EMAIL}"
   args.actions.each { String key, String value ->
     text = "${text} [<${value}|${key}>]"
   }
 
-  def fallback = "${args.message.replace('#BUILD', currentRunDescription())} Committer: ${GIT_COMMITTER_NAME}"
+  def fallback = "${args.message.replace('#BUILD', currentRunDescription())} Commit by ${GIT_COMMITTER_NAME}"
 
   def fields = [:]
 
