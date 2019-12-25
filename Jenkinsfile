@@ -155,19 +155,11 @@ pipeline {
   post {
 
     failure { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-
-      load("./lib/jenkins/slack.groovy").sendFailure(
-        channel: JENKINS_CONFIG.slack.channel
-      )
-
+      sh "./.bin/slack-send-build-failure"
     }}}
 
     success { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-
-      load("./lib/jenkins/slack.groovy").sendSuccess(
-        channel: JENKINS_CONFIG.slack.channel
-      )
-
+      sh "./.bin/slack-send-build-success"
     }}}
   }
 }
