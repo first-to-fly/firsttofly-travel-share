@@ -108,6 +108,7 @@ function main() {
         set -x
         git merge \
           --allow-unrelated-histories \
+          --squash \
           "${REMOTE_NAME}/master"
       )
     fi
@@ -124,6 +125,7 @@ function main() {
           set -x
           git merge \
             --allow-unrelated-histories \
+            --squash \
             "${REMOTE_NAME}/${BRANCH}"
         )
       done
