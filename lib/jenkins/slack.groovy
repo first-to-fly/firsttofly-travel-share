@@ -2,7 +2,7 @@
 
 
 String longRunDescription() {
-  return "<${JOB_URL}|${JOB_NAME.replace("%2F", "/")}> [<${BUILD_URL}|#${BUILD_NUMBER}>] by <${JENKINS_URL}user/${BUILD_USER_ID}|${BUILD_USER}>"
+  return "*<${JOB_URL}|${JOB_NAME.replace("%2F", "/")}> [<${BUILD_URL}|#${BUILD_NUMBER}>]* by *<${JENKINS_URL}user/${BUILD_USER_ID}|${BUILD_USER}>*"
 }
 
 
