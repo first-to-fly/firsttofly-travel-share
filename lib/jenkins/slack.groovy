@@ -1,21 +1,28 @@
 #!/usr/bin/env groovy
 
 
-String currentRunDescription() {
+String longRunDescription() {
   return "<${JOB_URL}|${JOB_NAME.replace("%2F", "/")}> [<${BUILD_URL}|#${BUILD_NUMBER}>] by <${JENKINS_URL}user/${BUILD_USER_ID}|${BUILD_USER}>"
+}
+
+
+String shortRunDescription() {
+  return "${JOB_NAME.replace("%2F", "/")} #${BUILD_NUMBER} by ${GIT_COMMITTER_NAME}"
 }
 
 
 void send(Map args) { // String channel, String message, String<good|normal|warning|danger> color, Map fields, Map actions, boolean excludeParams
 
-  def text = "${args.message.replace('#BUILD', currentRunDescription())} [<${BUILD_URL}console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]\nCommit by *${GIT_COMMITTER_NAME}* - ${GIT_COMMITTER_EMAIL}"
+  def text = "${args.message.replace('#BUILD', longRunDescription())} [<${BUILD_URL}console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]"
   args.actions.each { String key, String value ->
     text = "${text} [<${value}|${key}>]"
   }
 
-  def fallback = "${args.message.replace('#BUILD', currentRunDescription())} Commit by ${GIT_COMMITTER_NAME}"
+  def fallback = "${args.message.replace('#BUILD', shortRunDescription())}"
 
   def fields = [:]
+
+  fields["Git Author"] = "${GIT_COMMITTER_NAME} <<mailto:${GIT_COMMITTER_EMAIL}|${GIT_COMMITTER_EMAIL}>>"
 
   if (!args.excludeParams) {
     params.each { String key, String value ->
