@@ -1,5 +1,7 @@
 #!/usr/bin/env groovy
 
+import groovy.json.*
+
 
 String longRunDescription() {
   return "*<${JOB_URL}|${JOB_NAME.replace("%2F", "/")}> [<${BUILD_URL}|#${BUILD_NUMBER}>]* by *<${JENKINS_URL}user/${BUILD_USER_ID}|${BUILD_USER}>*"
@@ -13,10 +15,20 @@ String shortRunDescription() {
 
 void send(Map args) { // String channel, String message, String<good|normal|warning|danger> color, Map fields, Map actions, boolean excludeParams
 
-  def userLookupResponse = httpRequest "https://slack.com/api/users.lookupByEmail?token=xoxp-3933001345-17113632210-637835079588-965300471f9a8effc660ea4e9c43a72f&email=${GIT_COMMITTER_EMAIL}"
-  def slackUserID = userLookupResponse.user.id
+  // Get User ID
+  def slackUserID = ""
+  def get = new URL("https://slack.com/api/users.lookupByEmail?token=xoxp-3933001345-17113632210-637835079588-965300471f9a8effc660ea4e9c43a72f&email=${GIT_COMMITTER_EMAIL}").openConnection();
+  def getRC = get.getResponseCode();
+  if (getRC.equals(200)) {
+    def response = new JsonSlurperClassic().parseText(get.getInputStream().getText())
+    slackUserID = response.user.id
+  }
 
-  def text = "${args.message.replace('#BUILD', longRunDescription())} [<${BUILD_URL}console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>] @${slackUserID}"
+
+  def userLookupResponse = httpRequest ""
+   = userLookupResponse.user.id
+
+  def text = "${args.message.replace('#BUILD', longRunDescription())} [<${BUILD_URL}console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]${slackUserID ? "\n@${slackUserID}" : ""}"
   args.actions.each { String key, String value ->
     text = "${text} [<${value}|${key}>]"
   }
