@@ -68,7 +68,7 @@ function main() {
             {
               "color": "danger",
               "fallback": "\($JOB_NAME) #\($BUILD_NUMBER) by \($GIT_COMMITTER_NAME) failed.",
-              "text": "*<\($JOB_URL)|\($JOB_NAME)> <\($BUILD_URL)|#\($BUILD_NUMBER)>* by *<\($JENKINS_URL)user/\($BUILD_USER_ID)|\($BUILD_USER)>* failed.\n[<\($BUILD_URL)console|Console>|<\($RUN_DISPLAY_URL)|BlueOcean>]\n\n*Git Author*\n\($MENTION)\n\($GIT_COMMITTER_EMAIL)",
+              "text": "*<\($JOB_URL)|\($JOB_NAME)> <\($BUILD_URL)|#\($BUILD_NUMBER)>* by *<\($JENKINS_URL)user/\($BUILD_USER_ID)|\($BUILD_USER)>* failed.\n[<\($BUILD_URL)console|Console>|<\($RUN_DISPLAY_URL)|BlueOcean>]\n\n*Git Author*\n\($MENTION) \($GIT_COMMITTER_EMAIL)",
             }
           ]
         } | .main'
