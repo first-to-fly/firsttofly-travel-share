@@ -34,6 +34,7 @@
     ]
   },
   "slack": {
+    "webhook": "https://hooks.slack.com/services/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",
     "channel": "alerts-jenkins"
   }
 }

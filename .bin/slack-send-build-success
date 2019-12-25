@@ -1,0 +1,54 @@
+#!/usr/bin/env bash
+
+source "./lib/bash/core.sh"
+
+function main() {
+
+  local SLACK_WEBHOOK_URL
+  SLACK_WEBHOOK_URL="$(
+    jq \
+      --raw-output \
+      ".slack.webhook" \
+      "./jenkins.config.json"
+  )"
+  # echo "SLACK_WEBHOOK_URL = '${SLACK_WEBHOOK_URL}'"
+
+  local JENKINS_URL="${JENKINS_URL:-https://jenkins.nabstudio.com/}"
+  local JOB_NAME="${JOB_NAME:-nabstudio%2Funknown}"
+
+  local DATA
+  DATA="$(
+    echo '{}' |
+      jq \
+        --arg JENKINS_URL "${JENKINS_URL}" \
+        --arg JOB_NAME "${JOB_NAME/\%2F//}" \
+        --arg JOB_URL "${JOB_URL:-${JENKINS_URL}}" \
+        --arg BUILD_NUMBER "${BUILD_NUMBER:-0}" \
+        --arg BUILD_URL "${BUILD_URL:-${JENKINS_URL}}" \
+        --arg BUILD_USER_ID "${BUILD_USER_ID:-jenkins}" \
+        --arg BUILD_USER "${BUILD_USER:-Jenkins}" \
+        --arg GIT_COMMITTER_NAME "${GIT_COMMITTER_NAME:-Unknown}" \
+        --arg GIT_COMMITTER_EMAIL "${GIT_COMMITTER_EMAIL:-unknown@unknown.com}" \
+        '.main = {
+          "attachments": [
+            {
+              "color": "good",
+              "fallback": "\($JOB_NAME) #\($BUILD_NUMBER) by \($GIT_COMMITTER_NAME) succeeded.",
+              "text": "*<\($JOB_URL)|\($JOB_NAME)> [<\($BUILD_URL)|#\($BUILD_NUMBER)>]* by *<\($JENKINS_URL)user/\($BUILD_USER_ID)|\($BUILD_USER)>* succeeded.",
+            }
+          ]
+        } | .main'
+  )"
+  echo "DATA = '${DATA}'"
+
+  (
+    # set -x
+    export SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL}"
+    # slack-send "${DATA}"
+  )
+
+  # echo
+
+}
+
+main "$@"
