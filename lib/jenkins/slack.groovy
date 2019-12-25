@@ -20,7 +20,7 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
   def connection = new URL("https://slack.com/api/users.lookupByEmail?token=xoxp-3933001345-17113632210-637835079588-965300471f9a8effc660ea4e9c43a72f&email=${GIT_COMMITTER_EMAIL}").openConnection();
   def responseCode = connection.getResponseCode();
   if (responseCode.equals(200)) {
-    def responseText = get.getInputStream().getText()
+    def responseText = connection.getInputStream().getText()
     def response = new JsonSlurperClassic().parseText(responseText)
     slackUserID = response.user.id
   }
