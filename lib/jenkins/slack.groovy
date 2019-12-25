@@ -24,10 +24,6 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
     slackUserID = response.user.id
   }
 
-
-  def userLookupResponse = httpRequest ""
-   = userLookupResponse.user.id
-
   def text = "${args.message.replace('#BUILD', longRunDescription())} [<${BUILD_URL}console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]${slackUserID ? "\n@${slackUserID}" : ""}"
   args.actions.each { String key, String value ->
     text = "${text} [<${value}|${key}>]"
