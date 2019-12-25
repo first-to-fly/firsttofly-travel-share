@@ -13,7 +13,10 @@ String shortRunDescription() {
 
 void send(Map args) { // String channel, String message, String<good|normal|warning|danger> color, Map fields, Map actions, boolean excludeParams
 
-  def text = "${args.message.replace('#BUILD', longRunDescription())} [<${BUILD_URL}console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]"
+  def userLookupResponse = httpRequest "https://slack.com/api/users.lookupByEmail?token=xoxp-3933001345-17113632210-637835079588-965300471f9a8effc660ea4e9c43a72f&email=${GIT_COMMITTER_EMAIL}"
+  def slackUserID = userLookupResponse.user.id
+
+  def text = "${args.message.replace('#BUILD', longRunDescription())} [<${BUILD_URL}console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>] @${slackUserID}"
   args.actions.each { String key, String value ->
     text = "${text} [<${value}|${key}>]"
   }
