@@ -17,12 +17,14 @@ void send(Map args) { // String channel, String message, String<good|normal|warn
 
   // Get User ID
   def slackUserID = ""
-  def get = new URL("https://slack.com/api/users.lookupByEmail?token=xoxp-3933001345-17113632210-637835079588-965300471f9a8effc660ea4e9c43a72f&email=${GIT_COMMITTER_EMAIL}").openConnection();
-  def getRC = get.getResponseCode();
-  if (getRC.equals(200)) {
-    def response = new JsonSlurperClassic().parseText(get.getInputStream().getText())
+  def connection = new URL("https://slack.com/api/users.lookupByEmail?token=xoxp-3933001345-17113632210-637835079588-965300471f9a8effc660ea4e9c43a72f&email=${GIT_COMMITTER_EMAIL}").openConnection();
+  def responseCode = connection.getResponseCode();
+  if (responseCode.equals(200)) {
+    def responseText = get.getInputStream().getText()
+    def response = new JsonSlurperClassic().parseText(responseText)
     slackUserID = response.user.id
   }
+  connection = null
 
   def text = "${args.message.replace('#BUILD', longRunDescription())} [<${BUILD_URL}console|Console>|<${RUN_DISPLAY_URL}|BlueOcean>]${slackUserID ? "\n@${slackUserID}" : ""}"
   args.actions.each { String key, String value ->
