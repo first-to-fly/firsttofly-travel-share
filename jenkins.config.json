@@ -35,6 +35,6 @@
   },
   "slack": {
     "webhook": "https://hooks.slack.com/services/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",
-    "channel": "alerts-jenkins"
+    "token": "xoxp-3933001345-17113632210-637835079588-965300471f9a8effc660ea4e9c43a72f"
   }
 }
