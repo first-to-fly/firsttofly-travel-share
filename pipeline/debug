@@ -6,7 +6,7 @@ source "./lib/bash/node.sh"
 function main() {
 
   local SCRIPT="dev"
-  if [[ -n "${1:-}" ]] && jq --exit-status ".scripts.${1:-}" "./package.json" >/dev/null 2>/dev/null; then
+  if [[ -n "${1:-}" ]] && jq --exit-status ".scripts.\"${1:-}\"" "./package.json" >/dev/null 2>/dev/null; then
     SCRIPT="${1}"
     shift
   fi
