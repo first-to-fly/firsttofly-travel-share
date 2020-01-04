@@ -7,6 +7,25 @@ source "./lib/bash/core.sh"
 
 function main() {
 
+  local COMMAND="${1:-}"
+
+  if [[ -n "${COMMAND}" && "${COMMAND}" != "-"* ]]; then
+    if ! command -v "${COMMAND}" >/dev/null; then
+      echo "Command '${COMMAND}' not found." >&2
+      exit 1
+    fi
+    shift
+  else
+    if [[ "${COMMAND}" == "--" ]]; then
+      shift
+    fi
+    COMMAND=""
+  fi
+
+  if [[ -z "${COMMAND}" ]]; then
+    COMMAND=(echo "Hello World")
+  fi
+
   echo -e "${OK_COLOR}==> Running app..."
 
   local PROJECT_KEY
@@ -19,9 +38,8 @@ function main() {
   (
     set -x
     time \
-      BOILERPLATE_LOG_TIME="true" \
-      wrap \
-      cron echo "Hello World" |
+      BOILERPLATE_LOG_TIME="true" wrap \
+      "${COMMAND[@]}" "$@" |
       tee "${LOG_FILE}"
   )
   local EXIT_CODE="$?"
