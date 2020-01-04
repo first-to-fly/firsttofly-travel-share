@@ -36,6 +36,18 @@ function main() {
         --raw-output \
         ".user.id"
   )"
+
+  if [[ "${SLACK_USER_ID}" == "null" && "${GIT_COMMITTER_EMAIL}" == *"notabasement.com" ]]; then
+    SLACK_USER_ID="$(
+      curl \
+        --silent \
+        "https://slack.com/api/users.lookupByEmail?token=${SLACK_TOKEN}&email=${GIT_COMMITTER_EMAIL/notabasement.com/nabstudio.com}" |
+        jq \
+          --raw-output \
+          ".user.id"
+    )"
+  fi
+
   if [[ "${SLACK_USER_ID}" == "null" ]]; then
     SLACK_USER_ID=""
   fi
