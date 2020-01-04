@@ -8,10 +8,18 @@ source "./lib/bash/node.sh"
 
 function main() {
 
-  local SCRIPT="start"
-  if [[ -n "${1:-}" ]] && jq --exit-status ".scripts.\"${1:-}\"" "./package.json" >/dev/null 2>/dev/null; then
-    SCRIPT="${1}"
+  local COMMAND="${1:-}"
+
+  if [[ -n "${COMMAND}" && "${COMMAND}" != "-"* ]] &&
+    jq --exit-status ".scripts.\"${COMMAND}\"" "./package.json" >/dev/null \
+    ; then
     shift
+  else
+    COMMAND=""
+  fi
+
+  if [[ -z "${COMMAND}" ]]; then
+    COMMAND="start"
   fi
 
   echo -e "${OK_COLOR}==> Running app..."
@@ -31,9 +39,8 @@ function main() {
   (
     set -x
     time \
-      BOILERPLATE_LOG_TIME="true" \
-      wrap \
-      "${NPM}" run "${SCRIPT}" "$@" |
+      BOILERPLATE_LOG_TIME="true" wrap \
+      "${NPM}" run "${COMMAND[@]}" "$@" |
       tee "${LOG_FILE}"
   )
   local EXIT_CODE="$?"
