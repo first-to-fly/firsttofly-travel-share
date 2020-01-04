@@ -9,7 +9,9 @@ function main() {
 
   local COMMAND="${1:-}"
 
-  if [[ -n "${COMMAND}" && "${COMMAND}" != "-"* ]] && command -v "${COMMAND}" >/dev/null; then
+  if [[ -n "${COMMAND}" && "${COMMAND}" != "-"* ]] &&
+    command -v "${COMMAND}" >/dev/null \
+    ; then
     shift
   else
     COMMAND=""
