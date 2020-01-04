@@ -4,11 +4,23 @@ source "./lib/bash/core.sh"
 
 function main() {
 
+  local COMMAND="${1:-}"
+
+  if [[ -n "${COMMAND}" && "${COMMAND}" != "-"* ]] && command -v "${COMMAND}" >/dev/null; then
+    shift
+  else
+    COMMAND=""
+  fi
+
+  if [[ -z "${COMMAND}" ]]; then
+    COMMAND=(echo "Hello World")
+  fi
+
   echo -e "${OK_COLOR}==> Debugging app..."
 
   (
     set -x
-    cron echo "Hello World"
+    "${COMMAND[@]}" "$@"
   )
 
 }
