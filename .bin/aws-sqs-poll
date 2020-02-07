@@ -6,7 +6,11 @@ dependency "aws"
 
 function main() {
 
-  local COMMAND="${1}"
+  local COMMAND="${1:-}"
+  if [[ -z "${COMMAND}" ]]; then
+    echo "Missing COMMAND" >&2
+    return 1
+  fi
   shift
 
   export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-"us-east-1"}"
