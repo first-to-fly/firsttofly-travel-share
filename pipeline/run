@@ -57,7 +57,7 @@ function main() {
           --compact-output \
           --arg projectKey "${PROJECT_KEY}" \
           --arg exitCode "${EXIT_CODE}" \
-          --arg consoleLog "$(tail -100 <"${LOG_FILE}")" \
+          --arg consoleLog "$(tail -50 <"${LOG_FILE}")" \
           '.main = {
             "attachments": [
               {
