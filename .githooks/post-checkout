@@ -19,7 +19,7 @@ function main() {
   local JIRA_ISSUE_ID
   JIRA_ISSUE_ID="$(
     echo "${CURRENT_BRANCH}" |
-      sed -E "s|^.*/([A-Z]+-[0-9]+)-.*$|\1|"
+      sed -E "s|^.*/([A-Z0-9]+-[0-9]+)-.*$|\1|"
   )"
 
   local COMMIT_TEMPLATE_FILE="${PWD}/.git/commit_msg_template.txt"

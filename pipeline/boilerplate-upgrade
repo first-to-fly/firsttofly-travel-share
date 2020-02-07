@@ -104,12 +104,35 @@ function main() {
 
     local CONFIG_FILE="./.boilerplate/config.json"
     if [[ ! -f "${CONFIG_FILE}" ]]; then
+
       (
         set -x
         git merge \
           --allow-unrelated-histories \
           "${REMOTE_NAME}/master"
       )
+
+      echo "Please choose a branch to merge:"
+
+      git ls-remote "${REMOTE_URL}" |
+        grep "refs/" |
+        sed "s|^.*/|- |"
+
+      local SELECTED_BRANCH
+      read -r SELECTED_BRANCH
+
+      jq \
+        --arg "SELECTED_BRANCH" "${SELECTED_BRANCH}" \
+        '.dependencies=[$SELECTED_BRANCH]' \
+        "${CONFIG_FILE}" \
+        >"${CONFIG_FILE}.temp" &&
+        mv "${CONFIG_FILE}.temp" "${CONFIG_FILE}"
+
+      (
+        git add --all
+        git commit --message "Add dependency '${SELECTED_BRANCH}'"
+      )
+
     fi
 
     (
