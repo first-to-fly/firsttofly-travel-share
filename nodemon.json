@@ -6,12 +6,8 @@
   "ignore": [
   ],
   "ext": "js,jsx,ts,tsx,json,html,css,scss,less,sss",
-  "env": {
-    "TS_NODE_PROJECT": "./tsconfig.json",
-    "TS_NODE_TRANSPILE_ONLY": true
-  },
   "execMap": {
-    "js": "node",
-    "ts": "node"
+    "js": "npm run ts-node",
+    "ts": "npm run ts-node"
   }
 }

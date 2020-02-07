@@ -9,8 +9,8 @@
   ],
   "scripts": {
     "postinstall": "(patch-package || true) && echo",
-    "ts-node": "TS_NODE_PROJECT=./tsconfig.test.json TS_NODE_TRANSPILE_ONLY=true node --require ts-node/register --require tsconfig-paths/register",
-    "dev": "nodemon --inspect=localhost:${NODE_DEBUG_PORT:-9229} --require ts-node/register --require tsconfig-paths/register ./src/index.js",
+    "ts-node": "TS_NODE_PROJECT=./tsconfig.test.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:${NODE_DEBUG_PORT:-9229} --require ts-node/register --require tsconfig-paths/register",
+    "dev": "nodemon ./src/index.js",
     "build": "tsc --allowJs false --checkJs false --declaration && tsc",
     "start": "NODE_ENV=production NODE_PATH=./build node ./build",
     "lint:js": "eslint --ignore-pattern \"src/@nabstudio/**\" \"./src/**/*.{js,jsx,ts,tsx}\"",
