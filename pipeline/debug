@@ -30,15 +30,21 @@ function main() {
 
   echo -e "${OK_COLOR}==> Debugging app..."
 
-  NODE_DEBUG_PORT="${NODE_DEBUG_PORT:-9229}"
-  (lsof -t -i ":${NODE_DEBUG_PORT}" || true) |
-    xargs kill
+  export NODE_DEBUG_PORT="${NODE_DEBUG_PORT:-9229}"
+  echo "Cleaning up port ${NODE_DEBUG_PORT} for debugging..."
+  ( 
+    # set -x
+    (lsof -t -i ":${NODE_DEBUG_PORT}" || true) |
+      xargs kill
+  )
 
   # Kill old processes
+  echo "Cleaning up old nodemon processes..."
   # shellcheck disable=SC2009
   ps |
     grep --invert-match "grep" |
     (grep "nodemon" || true) |
+    (grep "${PWD}" || true) |
     awk '{print $1}' |
     xargs kill
 
