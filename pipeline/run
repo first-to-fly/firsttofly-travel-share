@@ -61,9 +61,9 @@ function main() {
           '.main = {
             "attachments": [
               {
-                "fallback": "[\($projectKey)] crashed with exit code \($exitCode)",
+                "fallback": "<!channel> [\($projectKey)] crashed with exit code \($exitCode)",
                 "color": "danger",
-                "text": "*`\($projectKey)`* crashed with exit code *\($exitCode)*.\n\n*Console Log*\n```\($consoleLog)```",
+                "text": "<!channel> *`\($projectKey)`* crashed with exit code *\($exitCode)*.\n\n*Console Log*\n```\($consoleLog)```",
               }
             ]
           } | .main'
