@@ -63,13 +63,13 @@ function main() {
           --compact-output \
           --arg projectKey "${PROJECT_KEY}" \
           --arg exitCode "${EXIT_CODE}" \
-          --arg consoleLog "$(tail -100 <"${LOG_FILE}")" \
+          --arg consoleLog "$(tail -50 <"${LOG_FILE}")" \
           '.main = {
             "attachments": [
               {
-                "fallback": "[\($projectKey)] crashed with exit code \($exitCode)",
+                "fallback": "<!channel> [\($projectKey)] crashed with exit code \($exitCode)",
                 "color": "danger",
-                "text": "*`\($projectKey)`* crashed with exit code *\($exitCode)*.\n\n*Console Log*\n```\($consoleLog)```",
+                "text": "<!channel> *`\($projectKey)`* crashed with exit code *\($exitCode)*.\n\n*Console Log*\n```\($consoleLog)```",
               }
             ]
           } | .main'
