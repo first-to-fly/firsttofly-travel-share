@@ -54,7 +54,10 @@ function main() {
   echo
   echo "EXIT_CODE = ${EXIT_CODE}"
 
-  if [[ "${EXIT_CODE}" != 0 ]]; then
+  # Codes:
+  # - 0: success
+  # - 130: killed in local by user (Ctrl+C)
+  if [[ "${EXIT_CODE}" != 0 && "${EXIT_CODE}" != 130 ]]; then
 
     local DATA
     DATA="$(
