@@ -9,73 +9,69 @@ function main() {
   local COMMAND="${1}"
   shift
 
-  local CRON_START_DELAY_MS="${CRON_START_DELAY_MS:-1000}"
-  local CRON_END_DELAY_MS="${CRON_END_DELAY_MS:-1000}"
-  local CRON_TIMEOUT_MS="${CRON_TIMEOUT_MS:-1800000}" # 30 minutes
-
-  local CRON_START_DELAY_SECONDS
-  CRON_START_DELAY_SECONDS="$(echo "scale=2; ${CRON_START_DELAY_MS}/1000" | bc -l)"
-
-  echo
-  echo -e "${OK_COLOR}==> Delaying start for ${CRON_START_DELAY_SECONDS} seconds..."
-  sleep "${CRON_START_DELAY_SECONDS}"
-
-  echo
-  echo -e "${OK_COLOR}==> Starting job..."
-
-  BOILERPLATE_LOG_TIME="false" \
-    "${COMMAND}" "$@" &
-  local COMMAND_PID="$!"
-
-  local DURATION_MS=$((0))
+  local CRON_END_DELAY_MS="${CRON_END_DELAY_MS:-1000}" # Default: 1 second
+  local CRON_TIMEOUT_MS="${CRON_TIMEOUT_MS:-1800000}"  # Default: 30 minutes
 
   while true; do
 
-    if kill -0 "${COMMAND_PID}" 2>/dev/null; then
+    echo
+    echo -e "${OK_COLOR}==> Starting job..."
 
-      if ((DURATION_MS >= CRON_TIMEOUT_MS)); then
-        echo
-        echo -e "${YELLOW_COLOR}Stopping due to timeout..."
-        (
-          set -x
-          kill "${COMMAND_PID}"
-        )
+    BOILERPLATE_LOG_TIME="false" \
+      "${COMMAND}" "$@" &
+    local COMMAND_PID="$!"
+
+    local DURATION_MS=$((0))
+
+    while true; do
+
+      if kill -0 "${COMMAND_PID}" 2>/dev/null; then
+
+        if ((DURATION_MS >= CRON_TIMEOUT_MS)); then
+          echo
+          echo -e "${YELLOW_COLOR}Stopping due to timeout..."
+          (
+            set -x
+            kill "${COMMAND_PID}"
+          )
+          break
+        fi
+
+      else
+
         break
+
       fi
 
-    else
+      sleep 1s
+      DURATION_MS=$((DURATION_MS + 1000))
 
-      break
+    done
 
+    echo
+    echo -e "${YELLOW_COLOR}Stopped."
+
+    set +e
+    wait "${COMMAND_PID}"
+    local EXIT_CODE="$?"
+    set -e
+
+    if [[ "${EXIT_CODE}" != 0 ]]; then
+      echo
+      echo "EXIT_CODE = ${EXIT_CODE}"
+      echo
+      return "${EXIT_CODE}"
     fi
 
-    sleep 1s
-    DURATION_MS=$((DURATION_MS + 1000))
+    local CRON_END_DELAY_SECONDS
+    CRON_END_DELAY_SECONDS="$(echo "scale=2; ${CRON_END_DELAY_MS}/1000" | bc -l)"
+
+    echo
+    echo -e "${OK_COLOR}==> Delaying end for ${CRON_END_DELAY_SECONDS} seconds..."
+    sleep "${CRON_END_DELAY_SECONDS}"
+    echo
 
   done
-
-  echo
-  echo -e "${YELLOW_COLOR}Stopped."
-
-  set +e
-  wait "${COMMAND_PID}"
-  local EXIT_CODE="$?"
-  set -e
-
-  if [[ "${EXIT_CODE}" != 0 ]]; then
-    echo
-    echo "EXIT_CODE = ${EXIT_CODE}"
-    echo
-    return "${EXIT_CODE}"
-  fi
-
-  local CRON_END_DELAY_SECONDS
-  CRON_END_DELAY_SECONDS="$(echo "scale=2; ${CRON_END_DELAY_MS}/1000" | bc -l)"
-
-  echo
-  echo -e "${OK_COLOR}==> Delaying end for ${CRON_END_DELAY_SECONDS} seconds..."
-  sleep "${CRON_END_DELAY_SECONDS}"
-  echo
 
 }
 
