@@ -49,10 +49,6 @@ function main() {
 
     echo "${MESSAGES}" | jq --raw-output ".Messages[0]" >"${MESSAGE_FILE}"
 
-    local MESSAGE
-    MESSAGE="$(echo "${MESSAGES}" | jq --raw-output --compact-output ".Messages[0]")"
-    # echo "MESSAGE ='${MESSAGE}'"
-
     local MESSAGE_ID
     MESSAGE_ID="$(jq --raw-output ".MessageId" "${MESSAGE_FILE}")"
 
@@ -106,7 +102,7 @@ function main() {
     (
       set -x
       time \
-        "${COMMAND}" "$@" "${MESSAGE}" 2>&1 |
+        "${COMMAND}" "$@" "${MESSAGE_FILE}" 2>&1 |
         tee "${LOG_FILE}"
     ) &
     local COMMAND_PID="$!"
