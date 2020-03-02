@@ -62,20 +62,13 @@ function main() {
   for REMOTE_BRANCH in "${REMOTE_BRANCHES[@]}"; do
     (
       set -x
-
       git clone \
         --branch "${REMOTE_BRANCH}" \
-        --reference "${REFERENCE}" \
+        --recurse-submodules \
         -- \
         "${GIT_REMOTE_URL}" \
-        "${TEMP_DIR}/${REMOTE_BRANCH}"
-
-      # Upgrade here for better performance, as all post-merging will update submodules
-      cd "${TEMP_DIR}/${REMOTE_BRANCH}" || return 100
-
-      git submodule update \
-        --init \
-        --recursive
+        "${TEMP_DIR}/${REMOTE_BRANCH}" ||
+        true
     ) &
     CLONE_PIDS+=("$!")
   done
