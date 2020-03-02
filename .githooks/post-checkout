@@ -4,6 +4,8 @@ export BOILERPLATE_NO_COLOR="true"
 
 source "./lib/bash/core.sh"
 
+dependency "git-lfs"
+
 function main() {
 
   # Git LFS
