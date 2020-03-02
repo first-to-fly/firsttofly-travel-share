@@ -34,11 +34,17 @@ function main() {
   local LOG_FILE
   LOG_FILE="$(mktemp)"
 
+  export BOILERPLATE_LOG_TIME="true"
+
+  # "time": Show running time of the process
+  # "wrap": Show timestamp at the beginning of the command
+  # "tee": outputs to both file and console
+
   set +e
   (
     set -x
     time \
-      BOILERPLATE_LOG_TIME="true" wrap \
+      wrap \
       "${COMMAND[@]}" "$@" |
       tee "${LOG_FILE}"
   )
@@ -53,6 +59,12 @@ function main() {
   # - 130: killed in local by user (Ctrl+C)
   if [[ "${EXIT_CODE}" != 0 && "${EXIT_CODE}" != 130 ]]; then
 
+    local ERROR_MESSAGE
+    ERROR_MESSAGE="$(
+      grep -E "STDERR" "${LOG_FILE}" ||
+        echo "[Not found]"
+    )"
+
     local DATA
     DATA="$(
       echo '{}' |
@@ -60,13 +72,14 @@ function main() {
           --compact-output \
           --arg projectKey "${PROJECT_KEY}" \
           --arg exitCode "${EXIT_CODE}" \
-          --arg consoleLog "$(tail -50 <"${LOG_FILE}")" \
+          --arg errorMessage "${ERROR_MESSAGE}" \
+          --arg consoleLog "$(tail -80 <"${LOG_FILE}")" \
           '.main = {
             "attachments": [
               {
                 "fallback": "<!channel> [\($projectKey)] crashed with exit code \($exitCode)",
                 "color": "danger",
-                "text": "<!channel> *`\($projectKey)`* crashed with exit code *\($exitCode)*.\n\n*Console Log*\n```\($consoleLog)```",
+                "text": "<!channel> *`\($projectKey)`* crashed with exit code *\($exitCode)*.\n\n*Error Message*\n```\($errorMessage)```\n\n*Console Log*\n```\($consoleLog)```",
               }
             ]
           } | .main'
