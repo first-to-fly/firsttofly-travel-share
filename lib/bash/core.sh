@@ -229,6 +229,30 @@ function dependency() {
         curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
       )
       ;;
+    git)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "git"
+        )
+        echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
+      fi
+      ;;
+    git-lfs)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "git-lfs"
+        )
+        echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
+      fi
+      ;;
     jq)
       if command -v "brew" >/dev/null; then
         (
@@ -248,6 +272,9 @@ function dependency() {
           brew install "shellcheck"
         )
         echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
       fi
       ;;
     *)
@@ -264,6 +291,7 @@ function dependency() {
   fi
 }
 
+# Basic dependencies
 dependency "jq"
 
 # Project
@@ -295,4 +323,21 @@ function loadEnvKey() {
   if [[ -n "${ENVKEY:-}" ]]; then
     eval "$(envkey-source "${ENVKEY}")"
   fi
+}
+
+# AWS
+function checkAWSCredentials() {
+
+  if [[ -z "${AWS_ACCESS_KEY_ID:-}" ]]; then
+    echo "Missing AWS_ACCESS_KEY_ID." >&2
+    return 1
+  fi
+
+  if [[ -z "${AWS_SECRET_ACCESS_KEY:-}" ]]; then
+    echo "Missing AWS_SECRET_ACCESS_KEY." >&2
+    return 1
+  fi
+
+  export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-"us-east-1"}"
+
 }
