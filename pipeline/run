@@ -37,6 +37,7 @@ function main() {
   local LOG_FILE
   LOG_FILE="$(mktemp)"
 
+  export NODE_ENV="production"
   export BOILERPLATE_LOG_TIME="true"
 
   local NPM
@@ -67,7 +68,7 @@ function main() {
 
     local ERROR_MESSAGE
     ERROR_MESSAGE="$(
-      grep -E "STDERR" "${LOG_FILE}" ||
+      grep -E "STDERR .*Error: " "${LOG_FILE}" ||
         echo "[Not found]"
     )"
 
@@ -77,15 +78,16 @@ function main() {
         jq \
           --compact-output \
           --arg projectKey "${PROJECT_KEY}" \
+          --arg "command" "${COMMAND}" \
           --arg exitCode "${EXIT_CODE}" \
           --arg errorMessage "${ERROR_MESSAGE}" \
           --arg consoleLog "$(tail -80 <"${LOG_FILE}")" \
           '.main = {
             "attachments": [
               {
-                "fallback": "<!channel> [\($projectKey)] crashed with exit code \($exitCode)",
+                "fallback": "<!channel> [\($projectKey)][\($command)] crashed with exit code \($exitCode)",
                 "color": "danger",
-                "text": "<!channel> *`\($projectKey)`* crashed with exit code *\($exitCode)*.\n\n*Error Message*\n```\($errorMessage)```\n\n*Console Log*\n```\($consoleLog)```",
+                "text": "<!channel> *`\($projectKey)`* *`\($command)`* crashed with exit code *\($exitCode)*.\n\n*Error Message*\n```\($errorMessage)```\n\n*Console Log*\n```\($consoleLog)```",
               }
             ]
           } | .main'
