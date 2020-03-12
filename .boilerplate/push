@@ -1,6 +1,7 @@
 #!/usr/bin/env bash
 
-source "./lib/bash/core.sh"
+# shellcheck source=./lib/bash/core.sh
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 function main() {
 
@@ -162,6 +163,7 @@ function main() {
     if [[ "${UPGRADE_REQUIRED}" == "true" ]]; then
 
       while true; do
+
         set +e
         (
           set -x
@@ -170,9 +172,17 @@ function main() {
         )
         local EXIT_CODE="$?"
         set -e
-        if [[ "${EXIT_CODE}" == 0 ]]; then
+
+        if [[ "${EXIT_CODE}" != 0 ]]; then
+          (
+            set -x
+            code "${TEMP_DIR}/${CURRENT_BRANCH}"
+          )
+          read -r
+        else
           break
         fi
+
       done
 
       (
