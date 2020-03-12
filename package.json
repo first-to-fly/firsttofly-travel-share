@@ -17,7 +17,7 @@
     "dev": "npm run dev:nodemon",
     "build:tsc": "tsc --allowJs true --checkJs false --declaration && tsc",
     "build": "npm run build:tsc",
-    "start:node": "NODE_ENV=production NODE_PATH=./build node ./build",
+    "start:node": "NODE_PATH=./build node ./build",
     "start": "npm run start:node",
     "lint:eslint": "eslint --ignore-pattern \"src/@nabstudio/**\" \"./src/**/*.{js,jsx,ts,tsx}\"",
     "lint:tsc": "tsc --project ./tsconfig.lint.json --noEmit",
