@@ -4,8 +4,11 @@ function checkNodeVersion() {
 
   dependency "node"
 
-  local EXPECTED_NODE_VERSION
-  EXPECTED_NODE_VERSION="$(head -n 1 ./.node-version)"
+  local EXPECTED_NODE_VERSION="${EXPECTED_NODE_VERSION:-}"
+  if [[ -z "${EXPECTED_NODE_VERSION}" ]]; then
+    EXPECTED_NODE_VERSION="$(head -n 1 ./.node-version)"
+    export EXPECTED_NODE_VERSION="${EXPECTED_NODE_VERSION}"
+  fi
 
   local CURRENT_NODE_VERSION
   CURRENT_NODE_VERSION="$(node -v)"
