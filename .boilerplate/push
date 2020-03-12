@@ -161,11 +161,19 @@ function main() {
 
     if [[ "${UPGRADE_REQUIRED}" == "true" ]]; then
 
-      (
-        set -x
-        cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
-        "${REFERENCE}/pipeline/boilerplate-upgrade"
-      )
+      while true; do
+        set +e
+        (
+          set -x
+          cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
+          "${REFERENCE}/pipeline/boilerplate-upgrade"
+        )
+        local EXIT_CODE="$?"
+        set -e
+        if [[ "${EXIT_CODE}" == 0 ]]; then
+          break
+        fi
+      done
 
       (
         set -x
