@@ -3,13 +3,16 @@
 // - Use "import()" if needed for types
 // - Use "declare namespace" (add) instead of "declare module" (overwrite)
 
-
 declare namespace NodeJS {
-
   interface Process {
     browser: boolean;
   }
+}
 
+
+declare module "*.less" {
+  const content: {[className: string]: string};
+  export default content;
 }
 
 

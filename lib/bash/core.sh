@@ -282,7 +282,8 @@ function dependency() {
         dependency "fnm"
         (
           set -x
-          fnm install
+          fnm install "latest"
+          fnm use "latest"
         )
       fi
       ;;
