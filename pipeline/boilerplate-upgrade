@@ -143,12 +143,35 @@ function main() {
         true
     ) |
       while IFS="" read -r BRANCH; do
-        (
-          set -x
-          git merge \
-            --allow-unrelated-histories \
-            "${REMOTE_NAME}/${BRANCH}"
-        )
+
+        while true; do
+
+          set +e
+          (
+            set -x
+            git merge \
+              --allow-unrelated-histories \
+              "${REMOTE_NAME}/${BRANCH}"
+          )
+          local EXIT_CODE="$?"
+          set -e
+
+          if [[ "${EXIT_CODE}" != 0 ]]; then
+            (
+              set -x
+              code "${PWD}"
+            )
+            echo "Please resolve merge conflicts, then press <Return> to continue..."
+            echo "NOTE: The field \"dependencies\" in \".boilerplate/config.json\" is expected to be conflicted."
+            echo "Please resolve using your local version instead of the incoming ones."
+            echo
+            read -r
+          else
+            break
+          fi
+
+        done
+
       done
 
     (

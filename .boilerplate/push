@@ -161,30 +161,11 @@ function main() {
 
     if [[ "${UPGRADE_REQUIRED}" == "true" ]]; then
 
-      while true; do
-
-        set +e
-        (
-          set -x
-          cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
-          "${REFERENCE}/pipeline/boilerplate-upgrade"
-        )
-        local EXIT_CODE="$?"
-        set -e
-
-        if [[ "${EXIT_CODE}" != 0 ]]; then
-          (
-            set -x
-            code "${TEMP_DIR}/${CURRENT_BRANCH}"
-          )
-          echo "Please resolve merge conflicts, then press <Return> to continue..."
-          echo
-          read -r
-        else
-          break
-        fi
-
-      done
+      (
+        set -x
+        cd "${TEMP_DIR}/${CURRENT_BRANCH}" || return 100
+        "${REFERENCE}/pipeline/boilerplate-upgrade"
+      )
 
       (
         set -x
