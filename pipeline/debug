@@ -33,7 +33,7 @@ function main() {
 
   echo -e "${OK_COLOR}==> Debugging app..."
 
-  loadEnvKey
+  loadEnvKey --
 
   export NODE_DEBUG_PORT="${NODE_DEBUG_PORT:-9229}"
   echo "Cleaning up port ${NODE_DEBUG_PORT} for debugging..."
