@@ -53,6 +53,8 @@ function main() {
     awk '{print $1}' |
     xargs kill
 
+  export NODE_ENV="development"
+
   NPM="$(command -v npm)"
 
   (
