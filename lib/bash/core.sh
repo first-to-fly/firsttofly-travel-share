@@ -329,15 +329,26 @@ if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
   git config "core.hooksPath" ".githooks"
 fi
 
+# EnvKey
 function loadEnvKey() {
+
+  local OPTIONAL="false"
+
+  while [[ -n "${1:-}" ]]; do
+    case "${1}" in
+    -o | --optional)
+      OPTIONAL="true"
+      ;;
+    *) ;;
+    esac
+    shift
+  done
 
   echo
   echo "Loading EnvKey..."
 
-  # Check for dependency early
-  dependency "envkey-source"
-
   if [[ -z "${ENVKEY:-}" && -f "./.env" ]]; then
+    echo "Importing .env file..."
     while IFS='' read -r LINE; do
       if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
         export "${LINE?}"
@@ -345,9 +356,57 @@ function loadEnvKey() {
     done <"./.env"
   fi
 
-  if [[ -n "${ENVKEY:-}" ]]; then
-    eval "$(envkey-source "${ENVKEY}")"
+  if [[ "${OPTIONAL}" != "true" && -z "${ENVKEY:-}" ]]; then
+    echo "Missing ENVKEY." >&2
+    return 1
   fi
+
+  dependency "envkey-source"
+
+  echo "Runing envkey-source..."
+  # set -x
+  eval "$(envkey-source "${ENVKEY}")"
+
+  echo "Done loading EnvKey."
+}
+
+function loadDeployEnvKey() {
+
+  local OPTIONAL="false"
+
+  while [[ -n "${1:-}" ]]; do
+    case "${1}" in
+    -o | --optional)
+      OPTIONAL="true"
+      ;;
+    *) ;;
+    esac
+    shift
+  done
+
+  echo
+  echo "Loadinging Deploy EnvKey..."
+
+  if [[ -z "${DEPLOY_ENVKEY:-}" && -f "./.env" ]]; then
+    while IFS='' read -r LINE; do
+      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
+        export "${LINE?}"
+      fi
+    done <"./.env"
+  fi
+
+  if [[ "${OPTIONAL}" != "true" && -z "${DEPLOY_ENVKEY:-}" ]]; then
+    echo "Missing DEPLOY_ENVKEY." >&2
+    return 1
+  fi
+
+  dependency "envkey-source"
+
+  echo "Runing envkey-source..."
+  # set -x
+  eval "$(envkey-source "${DEPLOY_ENVKEY}")"
+
+  echo "Done loading Deploy EnvKey."
 }
 
 # AWS
