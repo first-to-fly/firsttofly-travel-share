@@ -16,6 +16,8 @@ function main() {
 
   loadEnvKey
 
+  export NODE_ENV="test"
+
   NPM="$(command -v npm)"
 
   (
