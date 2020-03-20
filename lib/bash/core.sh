@@ -360,7 +360,7 @@ function loadDeployEnvKey() {
   done
 
   echo
-  echo "Loadinging Deploy EnvKey..."
+  echo "Loading Deploy EnvKey..."
 
   if [[ -z "${DEPLOY_ENVKEY:-}" && -f "./.env" ]]; then
     while IFS='' read -r LINE; do
