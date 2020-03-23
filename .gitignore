@@ -1,7 +1,7 @@
 # Common
 .env
 .env.*
-# build/
+# build/ Can't build in post-install with --production: missing devDependencies
 
 # NodeJS (due to large number of files)
 node_modules/
