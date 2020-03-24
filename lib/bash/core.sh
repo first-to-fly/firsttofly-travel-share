@@ -12,7 +12,6 @@ fi
 BOILERPLATE_CORE_IMPORTED="true"
 
 # Path
-# Path
 if [[ "${PATH}" != *"/usr/sbin"* && -d "/usr/sbin" ]]; then
   export PATH="/usr/sbin:${PATH}"
 fi
