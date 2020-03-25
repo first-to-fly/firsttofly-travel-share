@@ -93,6 +93,9 @@
   ],
 
   // Editor - Code
+  "editor.tokenColorCustomizations": {
+    "semanticHighlighting": true
+  },
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   }
