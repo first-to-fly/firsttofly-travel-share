@@ -14,8 +14,11 @@ function main() {
 
   (
     set -x
+
     "${NPM}" install \
       "$@"
+
+    "${NPM}" audit fix
   )
 
 }
