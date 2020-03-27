@@ -34,10 +34,15 @@ function checkNodeVersion() {
       fnm use "${EXPECTED_NODE_VERSION}"
     )
 
-    command -v node
-    node -v
+    local NODE
+    NODE="$(command -v node)"
 
-    CURRENT_NODE_VERSION="$(node -v)"
+    CURRENT_NODE_VERSION="$(
+      set -x
+      "${NODE}" --version
+    )"
+
+    echo "${CURRENT_NODE_VERSION}"
 
   fi
 
