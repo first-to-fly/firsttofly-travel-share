@@ -8,18 +8,34 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
 function main() {
 
+  local PRODUCTION=""
+  if [[ "$*" == *"--production"* ]]; then
+    PRODUCTION="true"
+  fi
+
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
   NPM="$(command -v npm)"
 
   (
     set -x
+    "${NPM}" --version
+    "${NPM}" install --global "npm@latest"
+    "${NPM}" --version
+  )
 
+  (
+    set -x
     "${NPM}" install \
       "$@"
-
-    "${NPM}" audit fix
   )
+
+  if [[ -z "${PRODUCTION}" ]]; then
+    (
+      set -x
+      "${NPM}" audit fix --force
+    )
+  fi
 
 }
 
