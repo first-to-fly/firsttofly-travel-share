@@ -1,12 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
-    "module": "commonjs",
-    "types": [
-      //
-      "mocha", // Required for "describe", "it"
-      "node" // Required for "assert"
-    ]
+    "module": "commonjs"
   },
   "include": [
     //
