@@ -152,12 +152,12 @@ function logFormat() {
 
       if [[ "${LINE}" == [+]*" "* ]]; then
         echo
-        echo -e "${BOLD_COLOR} ${LINE} ${NO_COLOR}"
+        echo -e "${BOLD_COLOR}${LINE}${NO_COLOR}"
         echo
         continue
       fi
 
-      echo -e "${WARN_COLOR}STDERR${NO_COLOR} ${LINE} ${NO_COLOR}"
+      echo -e "${WARN_COLOR}STDERR${NO_COLOR} ${LINE}${NO_COLOR}"
       continue
 
     fi
@@ -169,12 +169,12 @@ function logFormat() {
       TIME="$(
         date +"%Y-%m-%d %H:%M:%S %Z"
       )"
-      PREFIX="${PREFIX}${DARK_GRAY_COLOR}${TIME} "
+      PREFIX="${PREFIX}${DARK_GRAY_COLOR}${TIME}"
     fi
 
-    PREFIX="${PREFIX}${SCRIPT_PATH} "
+    PREFIX="${PREFIX}${SCRIPT_PATH}"
 
-    echo -e "${PREFIX}${NO_COLOR} ${LINE} ${NO_COLOR}"
+    echo -e "${PREFIX}${NO_COLOR} ${LINE}${NO_COLOR}"
 
   done
 }
