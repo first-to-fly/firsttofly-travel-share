@@ -33,7 +33,7 @@ function main() {
   if [[ -z "${PRODUCTION}" ]]; then
     (
       set -x
-      "${NPM}" audit fix --force
+      "${NPM}" audit fix --force || true
     )
   fi
 
