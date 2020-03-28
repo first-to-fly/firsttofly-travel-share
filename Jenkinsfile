@@ -108,6 +108,8 @@ pipeline {
 
     stage('Delivery') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
+      def PARALLELS = [:]
+
       boolean DELIVERED = false
 
       JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
@@ -123,22 +125,30 @@ pipeline {
               return
             }
 
-            withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
-              sh "./pipeline/deliver"
-              DELIVERED = true
-            }
+            PARALLELS["Deliver ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+              withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
+                sh "./pipeline/deliver"
+                DELIVERED = true
+              }
+            }}}
 
           }
         }
       }
 
       if (!DELIVERED) {
-        sh "./pipeline/build"
+        PARALLELS["Deliver"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+          sh "./pipeline/build"
+        }}}
       }
+
+      parallel PARALLELS
 
     }}}}
 
     stage('Deployment') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+
+      def PARALLELS = [:]
 
       JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
 
@@ -153,13 +163,17 @@ pipeline {
               return
             }
 
-            withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
-              sh "./pipeline/deploy"
-            }
+            PARALLELS["Deploy ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+              withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
+                sh "./pipeline/deploy"
+              }
+            }}}
 
           }
         }
       }
+
+      parallel PARALLELS
 
     }}}}
   }
