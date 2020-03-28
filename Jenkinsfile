@@ -97,7 +97,7 @@ pipeline {
       }
 
       if (!TESTED) {
-        PARALLELS("Test") = { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+        PARALLELS["Test"] = { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
           sh "./pipeline/test"
         }}}}
       }
