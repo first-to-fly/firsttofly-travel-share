@@ -25,7 +25,7 @@
     "lint:stylelint": "stylelint --allow-empty-input --ignore-pattern \"submodules/**\" --ignore-pattern \"src/@nabstudio/**\" \"./**/*.{css,less,scss,sss}\"",
     "lint": "concurrently --kill-others-on-fail --names \"eslint,tsc,stylelint\" \"npm run lint:eslint\" \"npm run lint:tsc\" \"npm run lint:stylelint\"",
     "test:mocha": "TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register --require tsconfig-paths/register \"./test/**/*\"",
-    "test:cypress": "./pipeline/test-cypress",
+    "test:cypress": "npx cypress run",
     "test": "concurrently --kill-others-on-fail --names \"mocha,cypress\" \"npm run test:mocha\" \"npm run test:cypress\""
   },
   "repository": {},
