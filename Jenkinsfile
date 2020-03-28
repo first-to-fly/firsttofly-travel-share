@@ -84,13 +84,13 @@ pipeline {
                 return
               }
 
+              TESTED = true
+
               stage("Test ${BRANCH_PATTERN}") { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
                 withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
                   sh "./pipeline/test"
                 }
               }}}}
-
-              TESTED = true
 
             }
           }
