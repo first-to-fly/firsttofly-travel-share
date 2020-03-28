@@ -14,7 +14,6 @@ function main() {
 
     # rm -rf "./build" Built products, do not clean!
     rm -rf "./node_modules"
-    rm -rf "./.nyc_output"
     rm -rf "./example/node_modules"
   )
 

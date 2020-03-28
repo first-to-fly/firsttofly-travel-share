@@ -9,9 +9,6 @@ node_modules/
 # Lint
 tsconfig.staged.json
 
-# nyc
-.nyc_output/
-
 # Cypress
 cypress/screenshots/
 cypress/videos/
