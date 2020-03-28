@@ -22,7 +22,7 @@ function main() {
 
   (
     set -x
-    "${NPM}" run coverage
+    "${NPM}" run test
   )
 
 }
