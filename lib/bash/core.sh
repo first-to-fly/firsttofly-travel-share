@@ -307,16 +307,9 @@ fi
 function loadEnvKey() {
 
   local OPTIONAL="false"
-
-  while [[ -n "${1:-}" ]]; do
-    case "${1}" in
-    -o | --optional)
-      OPTIONAL="true"
-      ;;
-    *) ;;
-    esac
-    shift
-  done
+  if [[ "$*" == *"--optional"* || "$*" == *"-o"* ]]; then
+    OPTIONAL="true"
+  fi
 
   echo
   echo "Loading EnvKey..."
@@ -335,6 +328,11 @@ function loadEnvKey() {
     return 1
   fi
 
+  if [[ "${OPTIONAL}" == "true" && -z "${ENVKEY:-}" ]]; then
+    echo "ENVKEY not found. Skipped loading."
+    return
+  fi
+
   dependency "envkey-source"
 
   echo "Runing envkey-source..."
@@ -347,16 +345,9 @@ function loadEnvKey() {
 function loadDeployEnvKey() {
 
   local OPTIONAL="false"
-
-  while [[ -n "${1:-}" ]]; do
-    case "${1}" in
-    -o | --optional)
-      OPTIONAL="true"
-      ;;
-    *) ;;
-    esac
-    shift
-  done
+  if [[ "$*" == *"--optional"* || "$*" == *"-o"* ]]; then
+    OPTIONAL="true"
+  fi
 
   echo
   echo "Loading Deploy EnvKey..."
@@ -372,6 +363,11 @@ function loadDeployEnvKey() {
   if [[ "${OPTIONAL}" != "true" && -z "${DEPLOY_ENVKEY:-}" ]]; then
     echo "Missing DEPLOY_ENVKEY." >&2
     return 1
+  fi
+
+  if [[ "${OPTIONAL}" == "true" && -z "${DEPLOY_ENVKEY:-}" ]]; then
+    echo "DEPLOY_ENVKEY not found. Skipped loading."
+    return
   fi
 
   dependency "envkey-source"
