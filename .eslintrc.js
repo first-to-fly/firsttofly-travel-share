@@ -206,6 +206,9 @@ module.exports = {
       },
     ],
 
+    // Unnecessary, we always use 10
+    radix: "off",
+
     // Conflicts with "import/order"
     // => Use "eslint-plugin-simple-import-sort"
     "sort-imports": "off",
