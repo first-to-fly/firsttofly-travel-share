@@ -65,9 +65,9 @@ pipeline {
 
       def PARALLELS = [:]
 
-      PARALLELS["Lint"] = { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+      PARALLELS["Lint"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
         sh "./pipeline/lint"
-      }}}}
+      }}}
 
       boolean TESTED = false
 
@@ -86,20 +86,20 @@ pipeline {
 
             TESTED = true
 
-            PARALLELS["Test ${BRANCH_PATTERN}"] = { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+            PARALLELS["Test ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
               withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
                 sh "./pipeline/test"
               }
-            }}}}
+            }}}
 
           }
         }
       }
 
       if (!TESTED) {
-        PARALLELS["Test"] = { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+        PARALLELS["Test"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
           sh "./pipeline/test"
-        }}}}
+        }}}
       }
 
       parallel PARALLELS
