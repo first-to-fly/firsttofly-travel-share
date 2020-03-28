@@ -63,46 +63,46 @@ pipeline {
       sh "./pipeline/clean"
       sh "./pipeline/install"
 
-      parallel {
+      def PARALLELS = [:]
 
-        stage("Lint") { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-          sh "./pipeline/lint"
-        }}}}
+      PARALLELS["Lint"] = { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+        sh "./pipeline/lint"
+      }}}}
 
-        boolean TESTED = false
+      boolean TESTED = false
 
-        JENKINS_CONFIG.testEnvkey.each { BRANCH_PATTERN, TEST_ENVKEY_CREDENTIALS ->
+      JENKINS_CONFIG.testEnvkey.each { BRANCH_PATTERN, TEST_ENVKEY_CREDENTIALS ->
 
-          if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
+        if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
 
-            echo "Matched '${BRANCH_PATTERN}'"
+          echo "Matched '${BRANCH_PATTERN}'"
 
-            JENKINS_CONFIG.testEnvkey[BRANCH_PATTERN].each { TEST_ENVKEY_CREDENTIAL ->
+          JENKINS_CONFIG.testEnvkey[BRANCH_PATTERN].each { TEST_ENVKEY_CREDENTIAL ->
 
-              if (!TEST_ENVKEY_CREDENTIAL) {
-                echo "No TEST_ENVKEY credential found."
-                return
-              }
-
-              TESTED = true
-
-              stage("Test ${BRANCH_PATTERN}") { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-                withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
-                  sh "./pipeline/test"
-                }
-              }}}}
-
+            if (!TEST_ENVKEY_CREDENTIAL) {
+              echo "No TEST_ENVKEY credential found."
+              return
             }
+
+            TESTED = true
+
+            PARALLELS["Test ${BRANCH_PATTERN}"] = { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+              withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
+                sh "./pipeline/test"
+              }
+            }}}}
+
           }
         }
-
-        if (!TESTED) {
-          stage("Test ${BRANCH_PATTERN}") { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-            sh "./pipeline/test"
-          }}}}
-        }
-
       }
+
+      if (!TESTED) {
+        PARALLELS("Test") = { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+          sh "./pipeline/test"
+        }}}}
+      }
+
+      parallel PARALLELS
 
     }}}}
 
