@@ -79,6 +79,8 @@ module.exports = {
     "react",
 
     "simple-import-sort",
+
+    "unused-imports",
   ],
 
   rules: {
@@ -321,6 +323,12 @@ module.exports = {
 
     // ==> simple-import-sort
     "simple-import-sort/sort": "warn",
+
+    // ==> unused-imports
+    "unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-vars": "warn",
+    "unused-imports/no-unused-imports-ts": "warn",
+    "unused-imports/no-unused-vars-ts": "warn",
   },
 
   settings: {
