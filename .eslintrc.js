@@ -79,6 +79,8 @@ module.exports = {
     "react",
 
     "simple-import-sort",
+
+    "unused-imports",
   ],
 
   rules: {
@@ -321,6 +323,17 @@ module.exports = {
 
     // ==> simple-import-sort
     "simple-import-sort/sort": "warn",
+
+
+    // ==> unused-imports
+
+    // Turned on: auto-fix
+    "unused-imports/no-unused-imports": "warn",
+    "unused-imports/no-unused-imports-ts": "warn",
+
+    // Turned off: no auto-fix and duplicate @typescript-eslint/no-unused-vars
+    "unused-imports/no-unused-vars": "off",
+    "unused-imports/no-unused-vars-ts": "off",
   },
 
   settings: {
