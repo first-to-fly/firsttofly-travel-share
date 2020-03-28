@@ -62,34 +62,46 @@ pipeline {
 
       sh "./pipeline/clean"
       sh "./pipeline/install"
-      sh "./pipeline/lint"
 
-      boolean TESTED = false
+      parallel {
 
-      JENKINS_CONFIG.testEnvkey.each { BRANCH_PATTERN, TEST_ENVKEY_CREDENTIALS ->
+        stage("Lint") { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+          sh "./pipeline/lint"
+        }}}}
 
-        if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
+        boolean TESTED = false
 
-          echo "Matched '${BRANCH_PATTERN}'"
+        JENKINS_CONFIG.testEnvkey.each { BRANCH_PATTERN, TEST_ENVKEY_CREDENTIALS ->
 
-          JENKINS_CONFIG.testEnvkey[BRANCH_PATTERN].each { TEST_ENVKEY_CREDENTIAL ->
+          if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
 
-            if (!TEST_ENVKEY_CREDENTIAL) {
-              echo "No TEST_ENVKEY credential found."
-              return
-            }
+            echo "Matched '${BRANCH_PATTERN}'"
 
-            withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
-              sh "./pipeline/test"
+            JENKINS_CONFIG.testEnvkey[BRANCH_PATTERN].each { TEST_ENVKEY_CREDENTIAL ->
+
+              if (!TEST_ENVKEY_CREDENTIAL) {
+                echo "No TEST_ENVKEY credential found."
+                return
+              }
+
+              stage("Test ${BRANCH_PATTERN}") { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+                withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
+                  sh "./pipeline/test"
+                }
+              }}}}
+
               TESTED = true
-            }
 
+            }
           }
         }
-      }
 
-      if (!TESTED) {
-        sh "./pipeline/test"
+        if (!TESTED) {
+          stage("Test ${BRANCH_PATTERN}") { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+            sh "./pipeline/test"
+          }}}}
+        }
+
       }
 
     }}}}
