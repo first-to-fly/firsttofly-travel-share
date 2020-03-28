@@ -97,7 +97,7 @@ pipeline {
       }
 
       if (!TESTED) {
-        PARALLELS["Test"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+        PARALLELS["Test without EnvKey"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
           sh "./pipeline/test"
         }}}
       }
@@ -137,7 +137,7 @@ pipeline {
       }
 
       if (!DELIVERED) {
-        PARALLELS["Deliver"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+        PARALLELS["Deliver without EnvKey"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
           sh "./pipeline/build"
         }}}
       }
