@@ -294,7 +294,8 @@ function projectKey() {
 
 # Git Hooks
 if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
-  git config "core.hooksPath" ".githooks"
+  git config "core.hooksPath" ".githooks" ||
+    true # Ignore errors locking .git/config
 fi
 
 # AWS
