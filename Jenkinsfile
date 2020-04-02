@@ -102,70 +102,82 @@ pipeline {
         }}}
       }
 
-      PARALLELS["Delivery & Deploy"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+      PARALLELS["Delivery & Deploy"] = {
 
-        def DELIVERY_PARALLELS = [:]
+        node {
 
-        boolean DELIVERED = false
+          stage('Delivery') { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
-        JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
+            def CD_PARALLELS = [:]
 
-          if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
+            boolean DELIVERED = false
 
-            echo "Matched '${BRANCH_PATTERN}'"
+            JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
 
-            JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
+              if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
 
-              if (!DEPLOY_ENVKEY_CREDENTIAL) {
-                echo "No DEPLOY_ENVKEY credential found."
-                return
-              }
+                echo "Matched '${BRANCH_PATTERN}'"
 
-              DELIVERY_PARALLELS["Deliver ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-                withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
-                  sh "./pipeline/deliver"
-                  DELIVERED = true
+                JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
+
+                  if (!DEPLOY_ENVKEY_CREDENTIAL) {
+                    echo "No DEPLOY_ENVKEY credential found."
+                    return
+                  }
+
+                  CD_PARALLELS["Deliver ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+                    withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
+                      sh "./pipeline/deliver"
+                      DELIVERED = true
+                    }
+                  }}}
+
                 }
-              }}}
-
+              }
             }
-          }
-        }
 
-        if (!DELIVERED) {
-          DELIVERY_PARALLELS["Deliver without EnvKey"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-            sh "./pipeline/build"
+            if (!DELIVERED) {
+              CD_PARALLELS["Deliver without EnvKey"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+                sh "./pipeline/build"
+              }}}
+            }
+
+            parallel CD_PARALLELS
+
           }}}
-        }
 
-        parallel DELIVERY_PARALLELS
+          stage('Deployment') { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
-        def DEPLOY_PARALLELS = [:]
+            def CD_PARALLELS = [:]
 
-        JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
+            JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
 
-          if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
+              if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
 
-            echo "Matched '${BRANCH_PATTERN}'"
+                echo "Matched '${BRANCH_PATTERN}'"
 
-            JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
+                JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
 
-              if (!DEPLOY_ENVKEY_CREDENTIAL) {
-                echo "No DEPLOY_ENVKEY credential found."
-                return
-              }
+                  if (!DEPLOY_ENVKEY_CREDENTIAL) {
+                    echo "No DEPLOY_ENVKEY credential found."
+                    return
+                  }
 
-              DEPLOY_PARALLELS["Deploy ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-                withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
-                  sh "./pipeline/deploy"
+                  CD_PARALLELS["Deploy ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+                    withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
+                      sh "./pipeline/deploy"
+                    }
+                  }}}
+
                 }
-              }}}
-
+              }
             }
-          }
-        }
 
-        parallel DEPLOY_PARALLELS
+            parallel CD_PARALLELS
+
+          }}}
+
+        }
 
       }
 
