@@ -8,7 +8,7 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
 function main() {
 
-  local PRODUCTION=""
+  local PRODUCTION="false"
   if [[ "$*" == *"--production"* ]]; then
     PRODUCTION="true"
   fi
@@ -19,21 +19,14 @@ function main() {
 
   (
     set -x
-    "${NPM}" --version
-    "${NPM}" install --global "npm@latest"
-    "${NPM}" --version
-  )
-
-  (
-    set -x
     "${NPM}" install \
       "$@"
   )
 
-  if [[ -z "${PRODUCTION}" ]]; then
+  if [[ "${PRODUCTION}" != "true" ]]; then
     (
       set -x
-      "${NPM}" audit fix --force || true
+      "${NPM}" audit fix || true
     )
   fi
 

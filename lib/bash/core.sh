@@ -142,7 +142,7 @@ function logFormat() {
   done
 
   local LINE
-  while IFS='' read -r LINE; do
+  while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
 
     if [[ "${LOCAL_BOILERPLATE_NO_EMPTY_LINE}" == "true" && "${LINE}" == "" ]]; then
       continue
@@ -342,7 +342,7 @@ function loadEnvKey() {
 
   if [[ -z "${ENVKEY:-}" && -f "./.env" ]]; then
     echo "Importing .env file..."
-    while IFS='' read -r LINE; do
+    while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
       if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
         export "${LINE?}"
       fi
@@ -379,7 +379,7 @@ function loadDeployEnvKey() {
   echo "Loading Deploy EnvKey..."
 
   if [[ -z "${DEPLOY_ENVKEY:-}" && -f "./.env" ]]; then
-    while IFS='' read -r LINE; do
+    while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
       if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
         export "${LINE?}"
       fi
