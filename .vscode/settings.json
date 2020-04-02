@@ -128,13 +128,6 @@
   // Run on Save
   "runOnSave.commands": [
     //
-    // {
-    //   "match": "\\.(css|less|scss|sss)$",
-    //   "command": "cd \"${workspaceFolder}\" && ./pipeline/generate-css-module \"${file}\"",
-    //   "runIn": "backend",
-    //   "runningStatusMessage": "Generating TS header for ${fileBasename}...",
-    //   "finishStatusMessage": "TS header generated."
-    // }
   ],
 
   // Editor - Code
