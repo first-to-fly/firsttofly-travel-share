@@ -48,7 +48,7 @@ function main() {
   TEMP_DIR="$(mktemp -d)"
 
   declare -a REMOTE_BRANCHES=()
-  while IFS="" read -r REMOTE_BRANCH; do
+  while IFS="" read -r REMOTE_BRANCH || [[ -n "${REMOTE_BRANCH}" ]]; do
     REMOTE_BRANCHES+=("${REMOTE_BRANCH}")
   done < <(
     git branch --list --remote |
@@ -91,7 +91,7 @@ function main() {
     # echo "CURRENT_BRANCH = '${CURRENT_BRANCH}'"
 
     local DEPENDENCIES=" "
-    while IFS="" read -r LINE; do
+    while IFS="" read -r LINE || [[ -n "${LINE}" ]]; do
       DEPENDENCIES+="${LINE} "
     done < <(
       jq \
@@ -148,7 +148,7 @@ function main() {
     echo "${YELLOW_COLOR}==> Pushing updates to branch '${CURRENT_BRANCH}'..."
 
     local UPGRADE_REQUIRED="false"
-    while IFS="" read -r DEPENDENCY; do
+    while IFS="" read -r DEPENDENCY || [[ -n "${DEPENDENCY}" ]]; do
       if [[ "${MODIFIED_BRANCHES}" == *" ${DEPENDENCY} "* ]]; then
         UPGRADE_REQUIRED="true"
         break
@@ -214,7 +214,7 @@ function main() {
       -name ".boilerplate" \
       2>/dev/null ||
       true
-  ) | while IFS='' read -r BOILERPLATE_FOLDER; do
+  ) | while IFS='' read -r BOILERPLATE_FOLDER || [[ -n "${BOILERPLATE_FOLDER}" ]]; do
     (
       set -x
       rm -rf "${BOILERPLATE_FOLDER%/*}"
