@@ -104,7 +104,7 @@ pipeline {
 
       PARALLELS["Delivery & Deploy"] = {
 
-        stage('Delivery') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+        stage('Delivery') { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
           def CD_PARALLELS = [:]
 
@@ -142,9 +142,9 @@ pipeline {
 
           parallel CD_PARALLELS
 
-        }}}}
+        }}}
 
-        stage('Deployment') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+        stage('Deployment') { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
           def CD_PARALLELS = [:]
 
@@ -173,7 +173,7 @@ pipeline {
 
           parallel CD_PARALLELS
 
-        }}}}
+        }}}
 
       }
 
