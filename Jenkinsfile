@@ -106,7 +106,7 @@ pipeline {
 
         stage('Delivery') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
-          def CD_PARALLELS = [:]
+          def PARALLELS = [:]
 
           boolean DELIVERED = false
 
@@ -123,7 +123,7 @@ pipeline {
                   return
                 }
 
-                CD_PARALLELS["Deliver ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+                PARALLELS["Deliver ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
                   withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
                     sh "./pipeline/deliver"
                     DELIVERED = true
@@ -135,18 +135,18 @@ pipeline {
           }
 
           if (!DELIVERED) {
-            CD_PARALLELS["Deliver without EnvKey"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+            PARALLELS["Deliver without EnvKey"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
               sh "./pipeline/build"
             }}}
           }
 
-          parallel CD_PARALLELS
+          parallel PARALLELS
 
         }}}}
 
         stage('Deployment') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
-          def CD_PARALLELS = [:]
+          def PARALLELS = [:]
 
           JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
 
@@ -161,7 +161,7 @@ pipeline {
                   return
                 }
 
-                CD_PARALLELS["Deploy ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+                PARALLELS["Deploy ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
                   withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
                     sh "./pipeline/deploy"
                   }
@@ -171,7 +171,7 @@ pipeline {
             }
           }
 
-          parallel CD_PARALLELS
+          parallel PARALLELS
 
         }}}}
 
