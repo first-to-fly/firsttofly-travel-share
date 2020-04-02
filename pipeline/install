@@ -8,7 +8,7 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
 function main() {
 
-  local PRODUCTION=""
+  local PRODUCTION="false"
   if [[ "$*" == *"--production"* ]]; then
     PRODUCTION="true"
   fi
@@ -23,7 +23,7 @@ function main() {
       "$@"
   )
 
-  if [[ -z "${PRODUCTION}" ]]; then
+  if [[ "${PRODUCTION}" != "true" ]]; then
     (
       set -x
       "${NPM}" audit fix || true
