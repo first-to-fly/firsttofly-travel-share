@@ -102,7 +102,7 @@ pipeline {
         }}}
       }
 
-      PARALLELS["Delivery & Deploy"] = { stages {
+      PARALLELS["Delivery & Deploy"] = {
 
         stage('Delivery') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
 
@@ -175,7 +175,7 @@ pipeline {
 
         }}}}
 
-      }}
+      }
 
       parallel PARALLELS
 
