@@ -167,7 +167,7 @@ pipeline {
 
         parallel DEPLOY_PARALLELS
 
-      }}}
+      }}
 
       parallel PARALLELS
 
