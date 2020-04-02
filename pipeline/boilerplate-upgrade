@@ -66,7 +66,7 @@ function replace() {
     awk '{print $1}' |
     sed 's|:.*$||' |
     uniq |
-    while IFS='' read -r FILE; do
+    while IFS='' read -r FILE || [[ -n "${FILE}" ]]; do
       sed -i.bak "s|${OLD_TEXT}|${NEW_TEXT}|g" "${FILE}"
       rm "${FILE}.bak"
     done
@@ -142,7 +142,7 @@ function main() {
         "${CONFIG_FILE}" ||
         true
     ) |
-      while IFS="" read -r BRANCH; do
+      while IFS="" read -r BRANCH || [[ -n "${BRANCH}" ]]; do
 
         while true; do
 

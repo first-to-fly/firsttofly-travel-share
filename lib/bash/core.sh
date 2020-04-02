@@ -142,7 +142,7 @@ function logFormat() {
   done
 
   local LINE
-  while IFS='' read -r LINE; do
+  while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
 
     if [[ "${LOCAL_BOILERPLATE_NO_EMPTY_LINE}" == "true" && "${LINE}" == "" ]]; then
       continue
