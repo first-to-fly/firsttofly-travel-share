@@ -45,6 +45,8 @@ module.exports = {
 
     "plugin:css-modules/recommended",
 
+    "plugin:react-hooks/recommended",
+
     // 'prettier/@typescript-eslint',
     // 'prettier/react',
   ],
@@ -77,6 +79,8 @@ module.exports = {
     //   "Definition for rule 'prettier/prettier' was not found."
 
     "react",
+
+    "react-hooks",
 
     "simple-import-sort",
 
