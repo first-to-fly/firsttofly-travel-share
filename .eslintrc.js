@@ -262,6 +262,14 @@ module.exports = {
     // "<></>" is not pretty
     "react/jsx-fragments": "off",
 
+    // Prevents rendering errors due to missing keys
+    "react/jsx-key": [
+      "error",
+      {
+        checkFragmentShorthand: true,
+      },
+    ],
+
     // This is temporarily disabled as this will break our current components
     "react/jsx-one-expression-per-line": "off",
 
