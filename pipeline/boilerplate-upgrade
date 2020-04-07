@@ -203,8 +203,8 @@ function main() {
     )
 
     local GIT_REMOTE_URL
-    GIT_REMOTE_URL="$(git config --get remote.origin.url)"
-    if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
+    GIT_REMOTE_URL="$(git config --get remote.origin.url || true)"
+    if [[ -z "${GIT_REMOTE_URL}" && "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
 
       if textFound "MyAwesomeProject"; then
         echo "Project name: (My Project) "
