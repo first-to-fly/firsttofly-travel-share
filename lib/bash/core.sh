@@ -296,7 +296,7 @@ function projectKey() {
 if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
 
   git --no-optional-locks config "core.hooksPath" ".githooks" ||
-    true &# Ignore errors locking .git/config
+    true # Ignore errors locking .git/config
 
   git --no-optional-locks fetch --tags --prune "origin" &
 
