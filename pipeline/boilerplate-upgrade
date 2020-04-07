@@ -157,6 +157,23 @@ function main() {
           set -e
 
           if [[ "${EXIT_CODE}" != 0 ]]; then
+
+            local CONFIG_FILE=".boilerplate/config.json"
+            if (git status --porcelain | grep "${CONFIG_FILE}"); then
+              (
+                set -x
+                git checkout --ours "${CONFIG_FILE}"
+                git add "${CONFIG_FILE}"
+              )
+              if ! (git status --porcelain | grep "${CONFIG_FILE}"); then
+                (
+                  set -x
+                  git commit --no-edit
+                )
+                continue
+              fi
+            fi
+
             (
               set -x
               code "${PWD}"
