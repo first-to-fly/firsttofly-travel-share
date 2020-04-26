@@ -34,7 +34,7 @@
     ]
   },
   "slack": {
-    "webhook": "https://hooks.slack.com/services/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",
-    "token": "xoxp-3933001345-17113632210-637835079588-965300471f9a8effc660ea4e9c43a72f"
+    "webhook": "https://hooks.slack.com/services/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",
+    "token": "xoxp-3933001345-17113632210-1069509709495-7f9c762a8902f04961dd8874c9a6a10c"
   }
 }

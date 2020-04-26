@@ -10,23 +10,27 @@ function main() {
   local GIT_COMMITTER_NAME="${GIT_COMMITTER_NAME:-Unknown}"
   local GIT_COMMITTER_EMAIL="${GIT_COMMITTER_EMAIL:-unknown@unknown.com}"
 
-  local SLACK_WEBHOOK_URL
-  SLACK_WEBHOOK_URL="$(
-    jq \
-      --raw-output \
-      ".slack.webhook" \
-      "./jenkins.config.json"
-  )"
-  # echo "SLACK_WEBHOOK_URL = '${SLACK_WEBHOOK_URL}'"
+  local SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL:-}"
+  if [[ -z "${SLACK_WEBHOOK_URL}" ]]; then
+    SLACK_WEBHOOK_URL="$(
+      jq \
+        --raw-output \
+        ".slack.webhook" \
+        "./jenkins.config.json"
+    )"
+    # echo "SLACK_WEBHOOK_URL = '${SLACK_WEBHOOK_URL}'"
+  fi
 
-  local SLACK_TOKEN
-  SLACK_TOKEN="$(
-    jq \
-      --raw-output \
-      ".slack.token" \
-      "./jenkins.config.json"
-  )"
-  # echo "SLACK_TOKEN = '${SLACK_TOKEN}'"
+  local SLACK_TOKEN="${SLACK_TOKEN:-}"
+  if [[ -z "${SLACK_TOKEN}" ]]; then
+    SLACK_TOKEN="$(
+      jq \
+        --raw-output \
+        ".slack.token" \
+        "./jenkins.config.json"
+    )"
+    # echo "SLACK_TOKEN = '${SLACK_TOKEN}'"
+  fi
 
   local SLACK_USER_ID
   SLACK_USER_ID="$(
