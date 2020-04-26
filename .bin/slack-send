@@ -11,7 +11,8 @@ function main() {
   local DATA="${1}"
   shift
 
-  local SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL:-https://hooks.slack.com/services/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}"
+  # Default: App "Boilerplates", incoming webhook for #alerts-boilerplates-errors-dev
+  local SLACK_WEBHOOK_URL="${SLACK_WEBHOOK_URL:-https://hooks.slack.com/services/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}"
 
   echo "Sending message to Slack..."
 
