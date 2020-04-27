@@ -125,10 +125,11 @@ pipeline {
               return
             }
 
+            DELIVERED = true
+
             PARALLELS["Deliver ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
               withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
                 sh "./pipeline/deliver"
-                DELIVERED = true
               }
             }}}
 
