@@ -139,7 +139,7 @@ pipeline {
 
       if (!DELIVERED) {
         PARALLELS["Deliver without EnvKey"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-          sh "./pipeline/build"
+          sh "./pipeline/deliver"
         }}}
       }
 
