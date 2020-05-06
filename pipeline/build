@@ -14,6 +14,8 @@ function main() {
 
   echo -e "${OK_COLOR}==> Building app..."
 
+  loadEnvKey --optional
+
   (
     set -x
     rm -rf "./build"
