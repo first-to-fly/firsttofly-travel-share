@@ -407,6 +407,15 @@ function loadDeployEnvKey() {
   eval "$(envkey-source "${DEPLOY_ENVKEY}")"
 
   echo "Done loading Deploy EnvKey."
+
+  if [[ -n "${SERVICE_ENVKEY:-}" ]]; then
+    if [[ -z "${ENVKEY:-}" ]]; then
+      export ENVKEY="${SERVICE_ENVKEY}"
+      echo "SERVICE_ENVKEY exported as ENVKEY."
+    else
+      echo "SERVICE_ENVKEY ignored as ENVKEY exists."
+    fi
+  fi
 }
 
 # AWS
