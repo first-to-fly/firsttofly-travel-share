@@ -206,8 +206,12 @@ function dependency() {
         )
         echo
       else
-        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
-        return 1
+        (
+          set -x
+          curl \
+            --output "./.bin/jq" \
+            "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+        )
       fi
       ;;
     shellcheck)
