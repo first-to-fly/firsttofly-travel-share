@@ -186,7 +186,10 @@ function registerLogger() {
   exec 2> >(logFormat --error)
 }
 
-registerLogger
+LOCAL_BOILERPLATE_LOGGER="${BOILERPLATE_LOGGER:-true}"
+if [[ "${LOCAL_BOILERPLATE_LOGGER}" == "true" ]]; then
+  registerLogger
+fi
 
 # Dependencies
 function dependency() {
@@ -254,8 +257,12 @@ function dependency() {
         )
         echo
       else
-        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
-        return 1
+        (
+          set -x
+          curl \
+            --output "./.bin/jq" \
+            "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+        )
       fi
       ;;
     shellcheck)
@@ -298,9 +305,44 @@ if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
   git --no-optional-locks config "core.hooksPath" ".githooks" ||
     true # Ignore errors locking .git/config
 
-  git --no-optional-locks fetch --tags --prune "origin" &
+  git --no-optional-locks fetch --tags --prune "origin" 2>/dev/null &
 
 fi
+
+# DotEnv
+DOT_ENV_LOADED="false"
+
+function loadDotEnv() {
+
+  if [[ "${DOT_ENV_LOADED}" != "true" && -f "./.env" ]]; then
+
+    echo
+    echo "Loading .env..."
+
+    while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
+
+      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
+
+        local KEY
+        KEY="$(sed -E "s|=.*$||" <<<"${LINE}")"
+        # echo "KEY = '${KEY}'"
+
+        if [[ -z "$(eval "echo \${${KEY}:-}")" ]]; then
+          export "${LINE?}"
+          echo "Loaded '${KEY}' from .env"
+        fi
+
+      fi
+
+    done <"./.env"
+
+    DOT_ENV_LOADED="true"
+
+    echo "Done loading .env."
+
+  fi
+
+}
 
 # AWS
 function checkAWSCredentials() {
