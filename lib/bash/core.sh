@@ -188,7 +188,7 @@ function registerLogger() {
 
 LOCAL_BOILERPLATE_LOGGER="${BOILERPLATE_LOGGER:-true}"
 if [[ "${LOCAL_BOILERPLATE_LOGGER}" == "true" ]]; then
-registerLogger
+  registerLogger
 fi
 
 # Dependencies
@@ -249,6 +249,10 @@ function projectKey() {
 
 # Git Hooks
 if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
-  git config "core.hooksPath" ".githooks" ||
+
+  git --no-optional-locks config "core.hooksPath" ".githooks" ||
     true # Ignore errors locking .git/config
+
+  git --no-optional-locks fetch --tags --prune "origin" 2>/dev/null &
+
 fi
