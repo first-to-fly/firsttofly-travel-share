@@ -7,6 +7,16 @@ function main() {
 
   echo -e "${OK_COLOR}==> Setting up project..."
 
+  # EnvKey
+  echo
+  echo "Setting up runtime EnvKeys..."
+
+  read -p "EnvKey for branch 'develop': " -r ENVKEY_DEVELOP
+  printf "\n# Develop\n# ENVKEY=%s\n" "${ENVKEY_DEVELOP}" >>"./.env"
+
+  read -p "EnvKey for branch 'master': " -r ENVKEY_MASTER
+  printf "\n# Master\n# ENVKEY=%s\n" "${ENVKEY_MASTER}" >>"./.env"
+
 }
 
 main "$@"
