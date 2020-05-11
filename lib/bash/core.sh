@@ -186,7 +186,10 @@ function registerLogger() {
   exec 2> >(logFormat --error)
 }
 
+LOCAL_BOILERPLATE_LOGGER="${BOILERPLATE_LOGGER:-true}"
+if [[ "${LOCAL_BOILERPLATE_LOGGER}" == "true" ]]; then
 registerLogger
+fi
 
 # Dependencies
 function dependency() {
