@@ -316,17 +316,10 @@ function loadEnvKey() {
     OPTIONAL="true"
   fi
 
+  loadDotEnv
+
   echo
   echo "Loading EnvKey..."
-
-  if [[ -z "${ENVKEY:-}" && -f "./.env" ]]; then
-    echo "Importing .env file..."
-    while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
-      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
-        export "${LINE?}"
-      fi
-    done <"./.env"
-  fi
 
   if [[ "${OPTIONAL}" != "true" && -z "${ENVKEY:-}" ]]; then
     echo "Missing ENVKEY." >&2
@@ -354,16 +347,10 @@ function loadDeployEnvKey() {
     OPTIONAL="true"
   fi
 
+  loadDotEnv
+
   echo
   echo "Loading Deploy EnvKey..."
-
-  if [[ -z "${DEPLOY_ENVKEY:-}" && -f "./.env" ]]; then
-    while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
-      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
-        export "${LINE?}"
-      fi
-    done <"./.env"
-  fi
 
   if [[ "${OPTIONAL}" != "true" && -z "${DEPLOY_ENVKEY:-}" ]]; then
     echo "Missing DEPLOY_ENVKEY." >&2
