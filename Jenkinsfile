@@ -182,11 +182,21 @@ pipeline {
   post {
 
     failure { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-      sh "./.bin/slack-send-build-failure"
+      withCredentials([
+        string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
+        string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
+      ]) {
+        sh "./.bin/slack-send-build-failure"
+      }
     }}}
 
     success { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
-      sh "./.bin/slack-send-build-success"
+      withCredentials([
+        string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
+        string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
+      ]) {
+        sh "./.bin/slack-send-build-success"
+      }
     }}}
   }
 }
