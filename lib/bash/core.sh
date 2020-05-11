@@ -302,6 +302,41 @@ if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
 
 fi
 
+# DotEnv
+DOT_ENV_LOADED="false"
+
+function loadDotEnv() {
+
+  if [[ "${DOT_ENV_LOADED}" != "true" && -f "./.env" ]]; then
+
+    echo
+    echo "Loading .env..."
+
+    while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
+
+      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
+
+        local KEY
+        KEY="$(sed -E "s|=.*$||" <<<"${LINE}")"
+        # echo "KEY = '${KEY}'"
+
+        if [[ -z "$(eval "echo \${${KEY}:-}")" ]]; then
+          export "${LINE?}"
+          echo "Loaded '${KEY}' from .env"
+        fi
+
+      fi
+
+    done <"./.env"
+
+    DOT_ENV_LOADED="true"
+
+    echo "Done loading .env."
+
+  fi
+
+}
+
 # AWS
 function checkAWSCredentials() {
 
