@@ -7,6 +7,8 @@ function main() {
 
   echo -e "${OK_COLOR}==> Delivering app..."
 
+  loadDeployEnvKey --optional
+
   "${BASH_SOURCE[0]%/*}/build"
 
 }

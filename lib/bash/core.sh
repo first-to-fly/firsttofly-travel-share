@@ -225,6 +225,12 @@ function dependency() {
         return 1
       fi
       ;;
+    envkey-source)
+      (
+        set -x
+        curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash
+      )
+      ;;
     git)
       if command -v "brew" >/dev/null; then
         (
@@ -342,6 +348,78 @@ function loadDotEnv() {
 
   fi
 
+}
+
+# EnvKey
+function loadEnvKey() {
+
+  local OPTIONAL="false"
+  if [[ "$*" == *"--optional"* || "$*" == *"-o"* ]]; then
+    OPTIONAL="true"
+  fi
+
+  loadDotEnv
+
+  echo
+  echo "Loading EnvKey..."
+
+  if [[ "${OPTIONAL}" != "true" && -z "${ENVKEY:-}" ]]; then
+    echo "Missing ENVKEY." >&2
+    return 1
+  fi
+
+  if [[ "${OPTIONAL}" == "true" && -z "${ENVKEY:-}" ]]; then
+    echo "ENVKEY not found. Skipped loading."
+    return
+  fi
+
+  dependency "envkey-source"
+
+  echo "Runing envkey-source..."
+  # set -x
+  eval "$(envkey-source "${ENVKEY}")"
+
+  echo "Done loading EnvKey."
+}
+
+function loadDeployEnvKey() {
+
+  local OPTIONAL="false"
+  if [[ "$*" == *"--optional"* || "$*" == *"-o"* ]]; then
+    OPTIONAL="true"
+  fi
+
+  loadDotEnv
+
+  echo
+  echo "Loading Deploy EnvKey..."
+
+  if [[ "${OPTIONAL}" != "true" && -z "${DEPLOY_ENVKEY:-}" ]]; then
+    echo "Missing DEPLOY_ENVKEY." >&2
+    return 1
+  fi
+
+  if [[ "${OPTIONAL}" == "true" && -z "${DEPLOY_ENVKEY:-}" ]]; then
+    echo "DEPLOY_ENVKEY not found. Skipped loading."
+    return
+  fi
+
+  dependency "envkey-source"
+
+  echo "Runing envkey-source..."
+  # set -x
+  eval "$(envkey-source "${DEPLOY_ENVKEY}")"
+
+  echo "Done loading Deploy EnvKey."
+
+  if [[ -n "${SERVICE_ENVKEY:-}" ]]; then
+    if [[ -z "${ENVKEY:-}" ]]; then
+      export ENVKEY="${SERVICE_ENVKEY}"
+      echo "SERVICE_ENVKEY exported as ENVKEY."
+    else
+      echo "SERVICE_ENVKEY ignored as ENVKEY exists."
+    fi
+  fi
 }
 
 # AWS

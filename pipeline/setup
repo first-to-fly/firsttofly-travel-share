@@ -22,6 +22,16 @@ function main() {
   GIT_FOLDER_NAME="${GIT_FOLDER_NAME%.*}"
   echo "GIT_FOLDER_NAME = '${GIT_FOLDER_NAME}'"
 
+  # EnvKey
+  echo
+  echo "Setting up runtime EnvKeys..."
+
+  read -p "EnvKey for branch 'develop': " -r ENVKEY_DEVELOP
+  printf "\n# Develop\n# ENVKEY=%s\n" "${ENVKEY_DEVELOP}" >>"./.env"
+
+  read -p "EnvKey for branch 'master': " -r ENVKEY_MASTER
+  printf "\n# Master\n# ENVKEY=%s\n" "${ENVKEY_MASTER}" >>"./.env"
+
 }
 
 main "$@"

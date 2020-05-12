@@ -29,6 +29,8 @@ function main() {
 
   echo -e "${OK_COLOR}==> Running app..."
 
+  loadEnvKey --
+
   local PROJECT_KEY
   PROJECT_KEY="$(projectKey)"
 
