@@ -10,6 +10,8 @@ function main() {
   echo
   echo -e "${OK_COLOR}==> Setting up project...${CLEAR_COLOR}"
 
+  loadDotEnv
+
   # Git
   echo
   echo "Setting up Git..."
