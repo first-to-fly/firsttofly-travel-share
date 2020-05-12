@@ -1,6 +1,5 @@
 {
   "dependencies": [
-    "envkey",
-    "jenkins"
+    "jenkins-envkey"
   ]
 }
