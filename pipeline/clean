@@ -5,7 +5,7 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 function main() {
 
-  echo -e "${OK_COLOR}==> Cleaning...${NO_COLOR}"
+  echo -e "${OK_COLOR}==> Cleaning..."
 
   (
     set -x
