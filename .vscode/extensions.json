@@ -26,6 +26,9 @@
     "foxundermoon.shell-format",
     "remisa.shellman",
 
+    // JIRA & BitBucket
+    "atlassian.atlascode",
+
     // JSON
     "eriklynd.json-tools"
   ],
