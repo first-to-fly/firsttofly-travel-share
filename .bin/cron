@@ -13,8 +13,8 @@ function main() {
   local CRON_END_DELAY_MS="${CRON_END_DELAY_MS:-300000}" # Default: 5 minute
   local CRON_TIMEOUT_MS="${CRON_TIMEOUT_MS:-1800000}"    # Default: 30 minutes
 
-  local CRON_TASK_NOT_FOUND_EXIT_CODE=123
-  export CRON_TASK_NOT_FOUND_EXIT_CODE="${CRON_TASK_NOT_FOUND_EXIT_CODE}"
+  local CRON_END_DELAY_SECONDS
+  CRON_END_DELAY_SECONDS="$(echo "scale=2; ${CRON_END_DELAY_MS}/1000" | bc -l)"
 
   while true; do
 
@@ -60,24 +60,17 @@ function main() {
     local EXIT_CODE="$?"
     set -e
 
-    if [[ "${EXIT_CODE}" != 0 && "${EXIT_CODE}" != "${CRON_TASK_NOT_FOUND_EXIT_CODE}" ]]; then
+    if [[ "${EXIT_CODE}" != 0 ]]; then
       echo
       echo "EXIT_CODE = ${EXIT_CODE}"
       echo
       return "${EXIT_CODE}"
     fi
 
-    if [[ "${EXIT_CODE}" == "${CRON_TASK_NOT_FOUND_EXIT_CODE}" ]]; then
-
-      local CRON_END_DELAY_SECONDS
-      CRON_END_DELAY_SECONDS="$(echo "scale=2; ${CRON_END_DELAY_MS}/1000" | bc -l)"
-
-      echo
-      echo -e "${OK_COLOR}==> Delaying end for ${CRON_END_DELAY_SECONDS} seconds..."
-      sleep "${CRON_END_DELAY_SECONDS}"
-      echo
-
-    fi
+    echo
+    echo -e "${OK_COLOR}==> Delaying end for ${CRON_END_DELAY_SECONDS} seconds..."
+    sleep "${CRON_END_DELAY_SECONDS}"
+    echo
 
   done
 
