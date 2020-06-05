@@ -112,11 +112,11 @@ function main() {
           "${REMOTE_NAME}/master"
       )
 
-      echo "Please choose a branch to merge:"
-
       git ls-remote "${REMOTE_URL}" |
         grep "refs/" |
         sed "s|^.*/|- |"
+
+      echo "Please choose a branch from above to merge:"
 
       local SELECTED_BRANCH
       read -r SELECTED_BRANCH
