@@ -375,9 +375,24 @@ function loadEnvKey() {
 
   dependency "envkey-source"
 
+  local ENVKEY_BEFORE="./envkey.before"
+  printenv | sort >"${ENVKEY_BEFORE}"
+
   echo "Runing envkey-source..."
   # set -x
   eval "$(envkey-source "${ENVKEY}")"
+
+  local ENVKEY_AFTER="./envkey.after"
+  printenv | sort >"${ENVKEY_AFTER}"
+
+  echo "Found:"
+  diff "${ENVKEY_BEFORE}" "${ENVKEY_AFTER}" |
+    grep "=" |
+    sed 's|=.*$||' ||
+    true
+
+  rm "${ENVKEY_BEFORE}"
+  rm "${ENVKEY_AFTER}"
 
   echo "Done loading EnvKey."
 }
@@ -406,9 +421,24 @@ function loadDeployEnvKey() {
 
   dependency "envkey-source"
 
+  local ENVKEY_BEFORE="./envkey.before"
+  printenv | sort >"${ENVKEY_BEFORE}"
+
   echo "Runing envkey-source..."
   # set -x
   eval "$(envkey-source "${DEPLOY_ENVKEY}")"
+
+  local ENVKEY_AFTER="./envkey.after"
+  printenv | sort >"${ENVKEY_AFTER}"
+
+  echo "Found:"
+  diff "${ENVKEY_BEFORE}" "${ENVKEY_AFTER}" |
+    grep "=" |
+    sed 's|=.*$||' ||
+    true
+
+  rm "${ENVKEY_BEFORE}"
+  rm "${ENVKEY_AFTER}"
 
   echo "Done loading Deploy EnvKey."
 
