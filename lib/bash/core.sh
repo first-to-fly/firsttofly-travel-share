@@ -400,14 +400,17 @@ function loadEnvKey() {
 
   dependency "envkey-source"
 
-  local ENVKEY_BEFORE="./envkey.before"
+  local TEMP_FOLDER
+  TEMP_FOLDER="$(mktemp -d)"
+
+  local ENVKEY_BEFORE="${TEMP_FOLDER}/envkey.before"
   printenv | sort >"${ENVKEY_BEFORE}"
 
   echo "Runing envkey-source..."
   # set -x
   eval "$(envkey-source "${ENVKEY}")"
 
-  local ENVKEY_AFTER="./envkey.after"
+  local ENVKEY_AFTER="${TEMP_FOLDER}/envkey.after"
   printenv | sort >"${ENVKEY_AFTER}"
 
   echo "Found:"
@@ -416,8 +419,7 @@ function loadEnvKey() {
     sed 's|=.*$||' ||
     true
 
-  rm "${ENVKEY_BEFORE}"
-  rm "${ENVKEY_AFTER}"
+  rm -rf "${TEMP_FOLDER}"
 
   echo "Done loading EnvKey."
 }
@@ -446,14 +448,17 @@ function loadDeployEnvKey() {
 
   dependency "envkey-source"
 
-  local ENVKEY_BEFORE="./envkey.before"
+  local TEMP_FOLDER
+  TEMP_FOLDER="$(mktemp -d)"
+
+  local ENVKEY_BEFORE="${TEMP_FOLDER}/envkey.before"
   printenv | sort >"${ENVKEY_BEFORE}"
 
   echo "Runing envkey-source..."
   # set -x
   eval "$(envkey-source "${DEPLOY_ENVKEY}")"
 
-  local ENVKEY_AFTER="./envkey.after"
+  local ENVKEY_AFTER="${TEMP_FOLDER}/envkey.after"
   printenv | sort >"${ENVKEY_AFTER}"
 
   echo "Found:"
@@ -462,8 +467,7 @@ function loadDeployEnvKey() {
     sed 's|=.*$||' ||
     true
 
-  rm "${ENVKEY_BEFORE}"
-  rm "${ENVKEY_AFTER}"
+  rm -rf "${TEMP_FOLDER}"
 
   echo "Done loading Deploy EnvKey."
 
