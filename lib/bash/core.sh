@@ -299,6 +299,20 @@ function projectKey() {
   echo "myawesomeproject"
 }
 
+function updateProjectVersion() {
+
+  local CURRENT_BRANCH
+  CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+  if [[ "${CURRENT_BRANCH}" != "release/"* && "${CURRENT_BRANCH}" != "hotfix/"* ]]; then
+    return
+  fi
+
+  local VERSION="${CURRENT_BRANCH}"
+  VERSION="${VERSION#release/}"
+  VERSION="${VERSION#hotfix/}"
+}
+
 # Git Hooks
 if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
 
