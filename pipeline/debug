@@ -47,15 +47,15 @@ function main() {
     "./.vscode/launch.json"
   rm -rf "./.vscode/launch.json.bak"
 
-  # # Kill old processes
-  # echo "Cleaning up old nodemon processes..."
-  # # shellcheck disable=SC2009
-  # ps |
-  #   grep --invert-match "grep" |
-  #   (grep "nodemon" || true) |
-  #   (grep "${PWD}" || true) |
-  #   awk '{print $1}' |
-  #   xargs kill
+  # Kill old processes
+  echo "Cleaning up old nodemon processes..."
+  # shellcheck disable=SC2009
+  ps |
+    grep --invert-match "grep" |
+    (grep "nodemon" || true) |
+    (grep "${PWD}/" || true) |
+    awk '{print $1}' |
+    xargs kill
 
   export NODE_ENV="development"
 
