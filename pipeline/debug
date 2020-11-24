@@ -35,23 +35,27 @@ function main() {
 
   loadEnvKey --
 
-  export NODE_DEBUG_PORT="${NODE_DEBUG_PORT:-9229}"
-  echo "Cleaning up port ${NODE_DEBUG_PORT} for debugging..."
-  ( 
-    # set -x
-    (lsof -t -i ":${NODE_DEBUG_PORT}" || true) |
-      xargs kill
-  )
+  echo "Finding debug port..."
+  local NODE_DEBUG_PORT=$((9229))
+  while (lsof -t -i ":${NODE_DEBUG_PORT}"); do
+    NODE_DEBUG_PORT=$((NODE_DEBUG_PORT + 1))
+  done
+  echo "Found ${NODE_DEBUG_PORT}."
+  export NODE_DEBUG_PORT="${NODE_DEBUG_PORT}"
+  sed -i.bak -E \
+    "s|\"port\": [0-9]+|\"port\": ${NODE_DEBUG_PORT}|g" \
+    "./.vscode/launch.json"
+  rm -rf "./.vscode/launch.json.bak"
 
-  # Kill old processes
-  echo "Cleaning up old nodemon processes..."
-  # shellcheck disable=SC2009
-  ps |
-    grep --invert-match "grep" |
-    (grep "nodemon" || true) |
-    (grep "${PWD}" || true) |
-    awk '{print $1}' |
-    xargs kill
+  # # Kill old processes
+  # echo "Cleaning up old nodemon processes..."
+  # # shellcheck disable=SC2009
+  # ps |
+  #   grep --invert-match "grep" |
+  #   (grep "nodemon" || true) |
+  #   (grep "${PWD}" || true) |
+  #   awk '{print $1}' |
+  #   xargs kill
 
   export NODE_ENV="development"
 
