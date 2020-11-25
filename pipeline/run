@@ -56,7 +56,7 @@ function main() {
     time \
       wrap \
       "${NPM}" run "${COMMAND[@]}" "$@" |
-      tee "${LOG_FILE}"
+      tee -a -i "${LOG_FILE}"
   )
   local EXIT_CODE="$?"
   set -e
