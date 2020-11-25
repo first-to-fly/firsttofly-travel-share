@@ -47,7 +47,7 @@ function main() {
     time \
       wrap \
       "${COMMAND[@]}" "$@" |
-      tee "${LOG_FILE}"
+      tee -a -i "${LOG_FILE}"
   )
   local EXIT_CODE="$?"
   set -e
