@@ -287,7 +287,16 @@ module.exports = {
 
     // ==> @typescript-eslint
 
-    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/ban-ts-comment": [
+      "warn",
+      {
+        "ts-expect-error": "allow-with-description",
+        "ts-ignore": "allow-with-description",
+        "ts-nocheck": "allow-with-description",
+        "ts-check": "allow-with-description",
+        minimumDescriptionLength: 3,
+      },
+    ],
 
     "@typescript-eslint/explicit-function-return-type": "off",
 
@@ -342,7 +351,8 @@ module.exports = {
     // WHY DON'T? See "extends" and "plugins".
 
     // ==> simple-import-sort
-    "simple-import-sort/sort": "warn",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
 
 
     // ==> unused-imports
