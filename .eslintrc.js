@@ -306,6 +306,8 @@ module.exports = {
       { accessibility: "no-public" },
     ],
 
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+
     // Overrides 'indent', follow AirBnB's
     "@typescript-eslint/indent": [
       "error",
@@ -345,6 +347,9 @@ module.exports = {
         ignoreComments: false,
       },
     ],
+
+    "no-use-before-define": "off", // Why? https://stackoverflow.com/a/64024916
+    "@typescript-eslint/no-use-before-define": "error",
 
     // ==> prettier
     // 'prettier/prettier': 'warn',
