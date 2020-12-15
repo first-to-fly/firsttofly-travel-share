@@ -287,7 +287,16 @@ module.exports = {
 
     // ==> @typescript-eslint
 
-    "@typescript-eslint/ban-ts-ignore": "off",
+    "@typescript-eslint/ban-ts-comment": [
+      "warn",
+      {
+        "ts-expect-error": "allow-with-description",
+        "ts-ignore": "allow-with-description",
+        "ts-nocheck": "allow-with-description",
+        "ts-check": "allow-with-description",
+        minimumDescriptionLength: 3,
+      },
+    ],
 
     "@typescript-eslint/explicit-function-return-type": "off",
 
@@ -296,6 +305,8 @@ module.exports = {
       "error",
       { accessibility: "no-public" },
     ],
+
+    "@typescript-eslint/explicit-module-boundary-types": "off",
 
     // Overrides 'indent', follow AirBnB's
     "@typescript-eslint/indent": [
@@ -337,12 +348,19 @@ module.exports = {
       },
     ],
 
+    "no-shadow": "off",
+    "@typescript-eslint/no-shadow": "error",
+
+    "no-use-before-define": "off", // Why? https://stackoverflow.com/a/64024916
+    "@typescript-eslint/no-use-before-define": "error",
+
     // ==> prettier
     // 'prettier/prettier': 'warn',
     // WHY DON'T? See "extends" and "plugins".
 
     // ==> simple-import-sort
-    "simple-import-sort/sort": "warn",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn",
 
 
     // ==> unused-imports
