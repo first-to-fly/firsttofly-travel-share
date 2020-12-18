@@ -1,6 +1,6 @@
 {
   // Debug
-  "debug.node.autoAttach": "on",
+  "debug.javascript.autoAttachFilter": "disabled",
 
   // Explorer
   "explorer.confirmDragAndDrop": false,
