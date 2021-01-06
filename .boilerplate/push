@@ -9,7 +9,7 @@ function main() {
 
   local GIT_REMOTE_URL
   GIT_REMOTE_URL="$(git config --get remote.origin.url)"
-  if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
+  if [[ "${GIT_REMOTE_URL}" != *"bitbucket.org"*"nabstudio/boilerplates.git" ]]; then
     echo "This script can only run in the boilerplate project." >&2
     return 1
   fi
