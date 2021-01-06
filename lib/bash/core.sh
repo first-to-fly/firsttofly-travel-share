@@ -405,7 +405,7 @@ function loadEnvKey() {
 
   echo "Found:"
   diff "${ENVKEY_BEFORE}" "${ENVKEY_AFTER}" |
-    grep "=" |
+    grep -E "[A-Z_]+=" |
     sed 's|=.*$||' ||
     true
 
@@ -453,7 +453,7 @@ function loadDeployEnvKey() {
 
   echo "Found:"
   diff "${ENVKEY_BEFORE}" "${ENVKEY_AFTER}" |
-    grep "=" |
+    grep -E "[A-Z_]+=" |
     sed 's|=.*$||' ||
     true
 
