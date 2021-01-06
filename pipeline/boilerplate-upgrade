@@ -76,7 +76,7 @@ function main() {
 
   echo -e "${OK_COLOR}==> Upgrading boilerplate..."
 
-  local REMOTE_URL="https://bitbucket.org/nabstudio/boilerplates.git"
+  local REMOTE_URL="git@bitbucket.org:nabstudio/boilerplates.git"
 
   if [[ -d "./.git" ]]; then
     # Current folder is Git root
@@ -204,7 +204,7 @@ function main() {
 
     local GIT_REMOTE_URL
     GIT_REMOTE_URL="$(git config --get remote.origin.url || true)"
-    if [[ -z "${GIT_REMOTE_URL}" || "${GIT_REMOTE_URL}" != *"bitbucket.org/nabstudio/boilerplates.git" ]]; then
+    if [[ -z "${GIT_REMOTE_URL}" || "${GIT_REMOTE_URL}" != *"bitbucket.org"*"nabstudio/boilerplates.git" ]]; then
 
       if textFound "MyAwesomeProject"; then
         echo "Project name: (My Project) "
