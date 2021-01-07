@@ -14,7 +14,10 @@ function main() {
     echo >&2 "This repository is configured for Git LFS but 'git-lfs' was not found on your path. If you no longer wish to use Git LFS, remove this hook by deleting .git/hooks/post-merge."
     exit 2
   }
-  git lfs post-merge "$@"
+  (
+    set -x
+    git lfs post-merge "$@" || true
+  )
 
   # Update submodules
   (
@@ -26,17 +29,20 @@ function main() {
   )
 
   # Remove untracked submodules
+  git ls-files "${PWD}" --exclude-standard --others |
+    while IFS='' read -r UNTRACKED; do
+      if [[ -f "${UNTRACKED}/.git" ]]; then
+        (
+          set -x
+          rm -rf "${UNTRACKED}"
+        )
+      fi
+    done
+
+  # Fetch remote changes in background
   (
     set -x
-    git ls-files "${PWD}" --exclude-standard --others |
-      while IFS='' read -r UNTRACKED; do
-        if [[ -f "${UNTRACKED}/.git" ]]; then
-          (
-            set -x
-            rm -rf "${UNTRACKED}"
-          )
-        fi
-      done
+    nohup git fetch --tags --prune "origin" </dev/null &
   )
 
 }

@@ -318,6 +318,11 @@ function updateProjectVersion() {
   local VERSION="${CURRENT_BRANCH}"
   VERSION="${VERSION#release/}"
   VERSION="${VERSION#hotfix/}"
+
+  echo
+  echo "Detected project version:"
+  echo "VERSION='${VERSION}'"
+  echo
 }
 
 # Git Hooks
