@@ -228,8 +228,17 @@ function dependency() {
     envkey-source)
       (
         set -x
-        (curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | bash) ||
-          (curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" | sed "s|sudo ||g" | bash)
+        (
+          curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" |
+            bash &&
+            command -v "envkey-source"
+        ) ||
+          (
+            curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" |
+              sed "s|sudo ||g" |
+              bash &&
+              command -v "envkey-source"
+          )
       )
       ;;
     git)
