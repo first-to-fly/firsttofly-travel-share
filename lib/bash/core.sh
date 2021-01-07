@@ -344,6 +344,11 @@ function updateProjectVersion() {
   VERSION="${VERSION#release/}"
   VERSION="${VERSION#hotfix/}"
 
+  echo
+  echo "Detected project version:"
+  echo "VERSION='${VERSION}'"
+  echo
+
   if [[ "${VERSION}" != *"."*"."* ]]; then
     VERSION="${VERSION}.0"
   fi
