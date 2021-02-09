@@ -33,7 +33,7 @@ function main() {
 
   echo -e "${OK_COLOR}==> Debugging app..."
 
-  loadEnvKey --
+  loadEnvKey --optional
 
   echo "Finding debug port..."
   local NODE_DEBUG_PORT=$((9229))
