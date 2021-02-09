@@ -12,7 +12,7 @@
   "editor.tabSize": 2,
 
   // Editor - Rulers
-  "editor.rulers": [],
+  "editor.rulers": [1000],
 
   // Git
   "git.autofetch": true,
