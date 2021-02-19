@@ -15,7 +15,7 @@
   "editor.tabSize": 2,
 
   // Editor - Rulers
-  "editor.rulers": [120],
+  "editor.rulers": [1000],
 
   // Git
   "git.autofetch": true,
@@ -49,19 +49,13 @@
 
   // GitLens
   "gitlens.views.repositories.files.layout": "auto",
-  "gitlens.views.fileHistory.enabled": true,
-  "gitlens.views.lineHistory.enabled": true,
   "gitlens.advanced.messages": {
     "suppressCommitHasNoPreviousCommitWarning": false,
     "suppressCommitNotFoundWarning": false,
     "suppressFileNotUnderSourceControlWarning": false,
     "suppressGitVersionWarning": false,
     "suppressLineUncommittedWarning": false,
-    "suppressNoRepositoryWarning": false,
-    "suppressResultsExplorerNotice": false,
-    "suppressShowKeyBindingsNotice": true,
-    "suppressUpdateNotice": true,
-    "suppressWelcomeNotice": true
+    "suppressNoRepositoryWarning": false
   },
 
   // Shell
@@ -132,7 +126,6 @@
   ],
 
   // Editor - Code
-  "editor.semanticTokenColorCustomizations.enabled": true,
   "editor.codeActionsOnSave": {
     "source.fixAll": true
   }
