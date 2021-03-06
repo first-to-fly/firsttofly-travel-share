@@ -35,17 +35,17 @@
   },
   "devDependencies": {
     "@types/mocha": "^8.2.1",
-    "@types/node": "^14.14.30",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
-    "eslint": "^7.20.0",
+    "@types/node": "^14.14.31",
+    "@typescript-eslint/eslint-plugin": "^4.16.1",
+    "@typescript-eslint/parser": "^4.16.1",
+    "eslint": "^7.21.0",
     "eslint-config-airbnb": "^18.2.1",
-    "eslint-config-prettier": "^7.2.0",
+    "eslint-config-prettier": "^8.1.0",
     "eslint-plugin-css-modules": "^2.11.0",
     "eslint-plugin-cypress": "^2.11.2",
     "eslint-plugin-import": "^2.22.1",
     "eslint-plugin-jsx-a11y": "^6.4.1",
-    "eslint-plugin-mocha": "^8.0.0",
+    "eslint-plugin-mocha": "^8.1.0",
     "eslint-plugin-prettier": "^3.3.1",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0",
@@ -56,12 +56,12 @@
     "prettier-eslint": "^12.0.0",
     "prettier-eslint-cli": "^5.0.0",
     "prettier-stylelint": "^0.4.2",
-    "stylelint": "^13.10.0",
+    "stylelint": "^13.11.0",
     "stylelint-config-recommended-scss": "^4.2.0",
     "stylelint-config-standard": "^20.0.0",
     "stylelint-scss": "^3.19.0",
     "ts-node": "^9.1.1",
     "tsconfig-paths": "^3.9.0",
-    "typescript": "^4.1.5"
+    "typescript": "^4.2.3"
   }
 }
