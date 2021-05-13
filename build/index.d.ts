@@ -1,4 +1,4 @@
-import sample from "./@nabstudio/sample";
+import sample from "@nabstudio/sample";
+import sampleTS from "sampleTS";
 import sampleJS from "./sampleJS";
-import sampleTS from "./sampleTS";
-export { sample, sampleJS, sampleTS };
+export { sample, sampleJS, sampleTS, };
