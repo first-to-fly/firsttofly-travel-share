@@ -43,7 +43,7 @@
     "oouo-diogo-perdigao.docthis",
 
     // Stylelint
-    "daosro.stylelint",
+    "stylelint.vscode-stylelint",
 
     // JSON
     "eriklynd.json-tools"
