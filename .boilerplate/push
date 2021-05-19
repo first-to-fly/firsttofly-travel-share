@@ -70,13 +70,13 @@ function main() {
         "${GIT_REMOTE_URL}" \
         "${TEMP_DIR}/${REMOTE_BRANCH}" ||
         true
-    ) &
+    )
     CLONE_PIDS+=("$!")
   done
 
-  for CLONE_PID in "${CLONE_PIDS[@]}"; do
-    wait "${CLONE_PID}"
-  done
+  # for CLONE_PID in "${CLONE_PIDS[@]}"; do
+  #   wait "${CLONE_PID}"
+  # done
 
   echo "Done cloning."
 
