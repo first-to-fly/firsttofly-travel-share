@@ -25,7 +25,7 @@ pipeline {
 
   stages {
 
-    stage('Setup') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    stage('Setup') { steps { script {
 
       wrap([$class: 'BuildUser']) { script {
         try {
@@ -53,67 +53,67 @@ pipeline {
 
       sh "printenv | sort"
 
-    }}}}
+    }}}
 
-    stage('Integration') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    stage('Integration') { steps { script {
 
       sh "./pipeline/clean"
       sh "./pipeline/install"
 
       def PARALLELS = [:]
 
-      PARALLELS["Lint"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+      PARALLELS["Lint"] = { script {
         sh "./pipeline/lint"
-      }}}
+      }}
 
-      PARALLELS["Test"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+      PARALLELS["Test"] = { script {
         withCredentials([
         ]) {
           sh "./pipeline/test"
         }
-      }}}
+      }}
 
       parallel PARALLELS
 
-    }}}}
+    }}}
 
-    stage('Delivery') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    stage('Delivery') { steps { script {
 
       withCredentials([
       ]) {
         sh "./pipeline/deliver"
       }
 
-    }}}}
+    }}}
 
-    stage('Deployment') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    stage('Deployment') { steps { script {
 
       withCredentials([
       ]) {
         sh "./pipeline/deploy"
       }
 
-    }}}}
+    }}}
   }
 
   post {
 
-    failure { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    failure { script {
       withCredentials([
         string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
         string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
       ]) {
         sh "./.bin/slack-send-build-failure"
       }
-    }}}
+    }}
 
-    success { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    success { script {
       withCredentials([
         string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
         string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
       ]) {
         sh "./.bin/slack-send-build-success"
       }
-    }}}
+    }}
   }
 }
