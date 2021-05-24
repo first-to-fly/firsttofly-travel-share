@@ -79,19 +79,31 @@ pipeline {
 
     stage('Delivery') { steps { script {
 
-      withCredentials([
-      ]) {
-        sh "./pipeline/deliver"
-      }
+      def PARALLELS = [:]
+
+      PARALLELS['Deliver'] = { script {
+        withCredentials([
+        ]) {
+          sh "./pipeline/deliver"
+        }
+      }}
+
+      parallel PARALLELS
 
     }}}
 
     stage('Deployment') { steps { script {
 
-      withCredentials([
-      ]) {
-        sh "./pipeline/deploy"
-      }
+      def PARALLELS = [:]
+
+      PARALLELS['Deploy'] = { script {
+        withCredentials([
+        ]) {
+          sh "./pipeline/deploy"
+        }
+      }}
+
+      parallel PARALLELS
 
     }}}
   }
