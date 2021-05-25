@@ -25,7 +25,7 @@ pipeline {
 
   stages {
 
-    stage('Setup') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    stage('Setup') { steps { script {
 
       wrap([$class: 'BuildUser']) { script {
         try {
@@ -56,18 +56,18 @@ pipeline {
 
       sh "printenv | sort"
 
-    }}}}
+    }}}
 
-    stage('Integration') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    stage('Integration') { steps { script {
 
       sh "./pipeline/clean"
       sh "./pipeline/install"
 
       def PARALLELS = [:]
 
-      PARALLELS["Lint"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+      PARALLELS["Lint"] = { script {
         sh "./pipeline/lint"
-      }}}
+      }}
 
       boolean TESTED = false
 
@@ -86,27 +86,27 @@ pipeline {
 
             TESTED = true
 
-            PARALLELS["Test ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+            PARALLELS["Test ${BRANCH_PATTERN}"] = { script {
               withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
                 sh "./pipeline/test"
               }
-            }}}
+            }}
 
           }
         }
       }
 
       if (!TESTED) {
-        PARALLELS["Test without EnvKey"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+        PARALLELS["Test without EnvKey"] = { script {
           sh "./pipeline/test"
-        }}}
+        }}
       }
 
       parallel PARALLELS
 
-    }}}}
+    }}}
 
-    stage('Delivery') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    stage('Delivery') { steps { script {
 
       def PARALLELS = [:]
 
@@ -127,20 +127,20 @@ pipeline {
 
             DELIVERED = true
 
-            PARALLELS["Deliver ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+            PARALLELS["Deliver ${BRANCH_PATTERN}"] = { script {
               withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
                 sh "./pipeline/deliver"
               }
-            }}}
+            }}
 
           }
         }
       }
 
       if (!DELIVERED) {
-        PARALLELS["Deliver without EnvKey"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+        PARALLELS["Deliver without EnvKey"] = { script {
           sh "./pipeline/deliver"
-        }}}
+        }}
       }
 
       // Don't parallel, else will overflow Docker!
@@ -149,9 +149,9 @@ pipeline {
         SCRIPT()
       }
 
-    }}}}
+    }}}
 
-    stage('Deployment') { steps { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    stage('Deployment') { steps { script {
 
       def PARALLELS = [:]
 
@@ -168,11 +168,11 @@ pipeline {
               return
             }
 
-            PARALLELS["Deploy ${BRANCH_PATTERN}"] = { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+            PARALLELS["Deploy ${BRANCH_PATTERN}"] = { script {
               withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
                 sh "./pipeline/deploy"
               }
-            }}}
+            }}
 
           }
         }
@@ -180,27 +180,27 @@ pipeline {
 
       parallel PARALLELS
 
-    }}}}
+    }}}
   }
 
   post {
 
-    failure { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    failure { script {
       withCredentials([
         string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
         string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
       ]) {
         sh "./.bin/slack-send-build-failure"
       }
-    }}}
+    }}
 
-    success { wrap([$class: 'AnsiColorBuildWrapper', 'colorMapName': 'xterm']) { script {
+    success { script {
       withCredentials([
         string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
         string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
       ]) {
         sh "./.bin/slack-send-build-success"
       }
-    }}}
+    }}
   }
 }
