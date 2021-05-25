@@ -53,6 +53,7 @@ function main() {
   done < <(
     git branch --list --remote |
       grep "origin" |
+      grep --invert-match "archived/" |
       sed 's|^.*origin/||'
   )
 
