@@ -41,6 +41,7 @@ function main() {
   SHELL_FILES=()
   ESLINT_FILES=()
   TSC_FILES=()
+  MADGE_FILES=()
   STYLELINT_FILES=()
 
   local FILE_PATHS
@@ -82,6 +83,7 @@ function main() {
     elif [[ "${EXTENSION}" == "js" || "${EXTENSION}" == "jsx" || "${EXTENSION}" == "ts" || "${EXTENSION}" == "tsx" ]]; then
       ESLINT_FILES+=("${FILE_PATH}")
       TSC_FILES+=("${FILE_PATH}")
+      MADGE_FILES+=("${FILE_PATH}")
     elif [[ "${EXTENSION}" == "css" || "${EXTENSION}" == "less" || "${EXTENSION}" == "scss" || "${EXTENSION}" == "sss" ]]; then
       STYLELINT_FILES+=("${FILE_PATH}")
     fi
@@ -164,6 +166,23 @@ function main() {
     # Remove config
     rm -rf "${TSC_CONFIG}"
 
+    if ((EXIT_CODE != 0)); then
+      (
+        set -x
+        git stash pop || true
+      )
+      exit ${EXIT_CODE}
+    fi
+    set -e
+  fi
+
+  if ((${#MADGE_FILES[@]} > 0)); then
+    set +e
+    (
+      set -x
+      "${NPX}" madge "${MADGE_FILES[@]}"
+    )
+    local EXIT_CODE=$?
     if ((EXIT_CODE != 0)); then
       (
         set -x
