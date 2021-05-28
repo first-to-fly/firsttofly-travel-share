@@ -4,7 +4,9 @@ module.exports = {
     "stylelint-config-recommended-scss",
   ],
   plugins: ["stylelint-scss"],
-  ignoreFiles: ["**/*.js"],
+  ignoreFiles: [
+    "**/*.js",
+  ],
   rules: {
     "string-quotes": "double",
     "property-no-unknown": [
