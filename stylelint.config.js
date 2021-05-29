@@ -23,5 +23,6 @@ module.exports = {
       { ignorePseudoClasses: ["global"] },
     ],
     "no-descending-specificity": null,
+    "no-invalid-position-at-import-rule": null,
   },
 };

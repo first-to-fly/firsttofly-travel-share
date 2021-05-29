@@ -8,6 +8,27 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
 function main() {
 
+  local COMMAND="${1:-}"
+
+  if [[ -n "${COMMAND}" && "${COMMAND}" != "-"* ]]; then
+    if jq --exit-status ".scripts.\"build:${COMMAND}\"" "./package.json" >/dev/null; then
+      COMMAND="build:${COMMAND}"
+    elif ! jq --exit-status ".scripts.\"${COMMAND}\"" "./package.json" >/dev/null; then
+      echo "Script '${COMMAND}' not found." >&2
+      return 1
+    fi
+    shift
+  else
+    if [[ "${COMMAND}" == "--" ]]; then
+      shift
+    fi
+    COMMAND=""
+  fi
+
+  if [[ -z "${COMMAND}" ]]; then
+    COMMAND="build"
+  fi
+
   if [[ ! -d "./node_modules" ]]; then
     "${BASH_SOURCE[0]%/*}/install"
   fi
@@ -25,7 +46,7 @@ function main() {
 
   (
     set -x
-    "${NPM}" run build
+    "${NPM}" run "${COMMAND[@]}" "$@"
   )
 
 }
