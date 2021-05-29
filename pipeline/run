@@ -14,9 +14,11 @@ function main() {
   local COMMAND="${1:-}"
 
   if [[ -n "${COMMAND}" && "${COMMAND}" != "-"* ]]; then
-    if ! jq --exit-status ".scripts.\"${COMMAND}\"" "./package.json" >/dev/null; then
+    if jq --exit-status ".scripts.\"start:${COMMAND}\"" "./package.json" >/dev/null; then
+      COMMAND="start:${COMMAND}"
+    elif ! jq --exit-status ".scripts.\"${COMMAND}\"" "./package.json" >/dev/null; then
       echo "Script '${COMMAND}' not found." >&2
-      exit 1
+      return 1
     fi
     shift
   else
