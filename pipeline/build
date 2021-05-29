@@ -46,7 +46,7 @@ function main() {
 
   (
     set -x
-    "${NPM}" run build
+    "${NPM}" run "${COMMAND[@]}" "$@"
   )
 
 }
