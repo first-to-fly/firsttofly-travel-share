@@ -278,6 +278,12 @@ function dependency() {
           brew install "jq"
         )
         echo
+      elif command -v "yum" >/dev/null; then
+        (
+          set -x
+          sudo yum install -y "jq"
+        )
+        echo
       else
         (
           set -x
