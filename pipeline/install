@@ -15,11 +15,19 @@ function main() {
 
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
+  (
+    set -x
+    npm install --global "npm@7.17.0"
+    npm --version
+  )
+
   NPM="$(command -v npm)"
 
   (
     set -x
+    # "--force" accepts dependency conflict
     "${NPM}" install \
+      --force \
       "$@"
   )
 
