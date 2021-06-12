@@ -11,7 +11,7 @@
     "build/*"
   ],
   "scripts": {
-    "postinstall": "(npx patch-package || true) && echo",
+    "postinstall": "(npm_config_yes=true npx patch-package || true) && echo",
     "ts-node": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:${NODE_DEBUG_PORT:-9229} --require ts-node/register --require tsconfig-paths/register",
     "dev:nodemon": "nodemon ./src/index.ts",
     "dev": "npm run dev:nodemon",
@@ -26,7 +26,7 @@
     "lint:stylelint": "stylelint --allow-empty-input --ignore-pattern \"submodules/**\" --ignore-pattern \"src/@nabstudio/**\" \"./**/*.{css,less,scss,sss}\"",
     "lint": "concurrently --kill-others-on-fail --names \"eslint,tsc,madge,stylelint\" \"npm run lint:eslint\" \"npm run lint:tsc\" \"npm run lint:madge\" \"npm run lint:stylelint\"",
     "test:mocha": "TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register --require tsconfig-paths/register \"./test/**/*\"",
-    "test:cypress": "npx cypress run",
+    "test:cypress": "npm_config_yes=true npx cypress run",
     "test": "concurrently --kill-others-on-fail --names \"mocha,cypress\" \"npm run test:mocha\" \"npm run test:cypress\""
   },
   "repository": {},
