@@ -111,30 +111,11 @@ pipeline {
   post {
 
     failure { script {
-      // withCredentials([
-      //   string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
-      //   string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
-      // ]) {
-      //   sh "./.bin/slack-send-build-failure"
-        echo ""
-      // }
+      sh "./.bin/slack-send-build-failure"
     }}
 
     success { script {
-      echo "A"
-      withCredentials([
-        string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
-        // string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
-      ]) {
-        echo "B"
-        withCredentials([
-          // string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
-          string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
-        ]) {
-          echo "C"
-          sh "./.bin/slack-send-build-success"
-        }
-      }
+      sh "./.bin/slack-send-build-success"
     }}
   }
 }
