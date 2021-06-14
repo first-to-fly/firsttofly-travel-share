@@ -124,7 +124,7 @@ pipeline {
       echo "A"
       withCredentials([
         string(credentialsId: "slack-webhook-url", variable: "SLACK_WEBHOOK_URL"),
-        string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
+        // string(credentialsId: "slack-token", variable: "SLACK_TOKEN"),
       ]) {
         echo "B"
         sh "./.bin/slack-send-build-success"
