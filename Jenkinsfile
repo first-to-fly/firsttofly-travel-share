@@ -132,9 +132,8 @@ pipeline {
       }
 
       if (!DELIVERED) {
-        PARALLELS["Deliver & Deploy without EnvKey"] = { script {
+        PARALLELS["Deliver without EnvKey"] = { script {
           sh "./pipeline/deliver"
-          sh "./pipeline/deploy"
         }}
       }
 
