@@ -103,6 +103,8 @@ pipeline {
         }}
       }
 
+      boolean DELIVERED = false
+
       JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
 
         if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
