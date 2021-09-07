@@ -212,8 +212,10 @@ function dependency() {
         (
           set -x
           curl \
+            --location \
             --output "./.bin/jq" \
             "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+          chmod +x "./.bin/jq"
         )
       fi
       ;;
