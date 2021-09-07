@@ -18,8 +18,8 @@
 
     // Markdown
     "DavidAnson.vscode-markdownlint",
-    "bierner.markdown-preview-github-styles",
     "yzhang.markdown-all-in-one",
+    "bierner.markdown-mermaid",
 
     // Jenkins
     "secanis.jenkinsfile-support",
