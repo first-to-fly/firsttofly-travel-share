@@ -45,7 +45,7 @@ function applyEnvVarsToTemplateFiles() {
     echo "Generating ${BLUE_COLOR}${OUTPUT_FILE}${CLEAR_COLOR}..."
 
     local CONTENT
-    CONTENT="$(cat "${TEMPLATE_FILE}")"
+    CONTENT="$(cat "${TEMPLATE_FILE}" 2>/dev/null)"
 
     local VARS
     VARS="$(
