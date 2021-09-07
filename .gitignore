@@ -55,6 +55,9 @@ Thumbs.db
 .env.*
 build/
 
+# Template Files
+*.generated.ts
+
 # NodeJS (due to large number of files)
 node_modules/
 

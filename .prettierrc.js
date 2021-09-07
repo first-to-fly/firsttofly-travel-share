@@ -29,8 +29,8 @@ module.exports = {
   // -> cleaner code
   jsxBracketSameLine: false,
 
-  // foo => {} -> cleaner code
-  arrowParens: "avoid",
+  // (foo) => {} -> cleaner code
+  arrowParens: "always",
 
   // Format files with & without pragma
   requirePragma: false,

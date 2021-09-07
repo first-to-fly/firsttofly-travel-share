@@ -278,18 +278,14 @@ function dependency() {
           brew install "jq"
         )
         echo
-      elif command -v "yum" >/dev/null; then
-        (
-          set -x
-          sudo yum install -y "jq"
-        )
-        echo
       else
         (
           set -x
           curl \
+            --location \
             --output "./.bin/jq" \
             "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+          chmod +x "./.bin/jq"
         )
       fi
       ;;
