@@ -17,8 +17,10 @@ function main() {
 
   (
     set -x
-    npm install --global "npm@7.17.0"
-    npm --version
+    npm install --global "npm@latest" ||
+      npm install --global "npm@latest" ||
+      true
+    npm --version || true
   )
 
   NPM="$(command -v npm)"
@@ -28,7 +30,10 @@ function main() {
     # "--force" accepts dependency conflict
     "${NPM}" install \
       --force \
-      "$@"
+      "$@" ||
+      "${NPM}" install \
+        --force \
+        "$@"
   )
 
   if [[ "${PRODUCTION}" != "true" ]]; then

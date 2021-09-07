@@ -57,7 +57,7 @@ function main() {
     (grep "nodemon" || true) |
     (grep "${PWD}/" || true) |
     awk '{print $1}' |
-    (xargs kill || true)
+    xargs kill
 
   export NODE_ENV="development"
 

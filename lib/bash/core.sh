@@ -368,12 +368,13 @@ function updateProjectVersion() {
     VERSION="${VERSION}.0"
   fi
 
-  local PATTERN="s|^  \"version\": \".+\",|  \"version\": \"${VERSION}\",|"
-  sed -i.bak -E "${PATTERN}" "./package.json"
-  sed -i.bak -E "${PATTERN}" "./package-lock.json"
+  TEMP_FILE="$(mktemp)"
 
-  rm -rf "./package.json.bak" || true
-  rm -rf "./package-lock.json.bak" || true
+  jq ".version=\"${VERSION}\"" "./package.json" >"${TEMP_FILE}" &&
+    mv "${TEMP_FILE}" "./package.json"
+
+  jq ".version=\"${VERSION}\"|.packages.\"\".version=\"${VERSION}\"" "./package-lock.json" >"${TEMP_FILE}" &&
+    mv "${TEMP_FILE}" "./package-lock.json"
 }
 
 # Git Hooks

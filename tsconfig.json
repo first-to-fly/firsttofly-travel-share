@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* Basic Options */
     "target": "ESNext" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */,
-    "module": "CommonJS" /* Only CommonJS, else will have "SyntaxError: Cannot use import statement outside a module" with ts-node */,
+    "module": "ESNext" /* Only ESNext, else VSCode Intellisense cannot follow imports for typings */,
     "lib": [
       //
       "DOM",
@@ -44,7 +44,7 @@
     // "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
 
     /* Module Resolution Options */
-    "moduleResolution": "Node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
+    "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "baseUrl": "./src" /* Base directory to resolve non-absolute module names. */,
     "paths": {
       "*": [
@@ -75,6 +75,7 @@
   },
   "include": [
     //
+    "test",
     "src"
   ],
   "exclude": [

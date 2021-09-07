@@ -7,6 +7,7 @@ module.exports = {
     "stylelint-scss",
   ],
   ignoreFiles: [
+    "node_modules/**",
     "**/*.js",
     "**/*.jsx",
     "**/*.ts",
@@ -24,5 +25,6 @@ module.exports = {
     ],
     "no-descending-specificity": null,
     "no-invalid-position-at-import-rule": null,
+    "value-keyword-case": null,
   },
 };
