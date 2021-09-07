@@ -17,6 +17,7 @@ pipeline {
   options {
     timeout(time: 2, unit: 'HOURS')
     disableConcurrentBuilds()
+    parallelsAlwaysFailFast()
   }
 
   // https://github.com/jenkinsci/pipeline-model-definition-plugin/wiki/Parametrized-pipelines
@@ -55,7 +56,7 @@ pipeline {
 
     }}}
 
-    stage('Integration') { steps { script {
+    stage('CI/CD/CD') { steps { script {
 
       sh "./pipeline/clean"
       sh "./pipeline/install"
@@ -73,35 +74,15 @@ pipeline {
         }
       }}
 
-      parallel PARALLELS
-
-    }}}
-
-    stage('Delivery') { steps { script {
-
-      def PARALLELS = [:]
-
-      PARALLELS['Deliver'] = { script {
+      PARALLELS['Deliver & Deploy'] = { script {
         withCredentials([
         ]) {
           sh "./pipeline/deliver"
-        }
-      }}
-
-      parallel PARALLELS
-
-    }}}
-
-    stage('Deployment') { steps { script {
-
-      def PARALLELS = [:]
-
-      PARALLELS['Deploy'] = { script {
-        withCredentials([
-        ]) {
           sh "./pipeline/deploy"
         }
       }}
+
+      PARALLELS.failFast = true
 
       parallel PARALLELS
 
