@@ -24,9 +24,9 @@
     "lint:tsc": "tsc --project ./tsconfig.lint.json --noEmit",
     "lint:madge": "madge --circular --no-spinner $(find ./src -type f | grep '\\.\\(ts\\|tsx\\|js\\|jsx\\|mjs\\)$' | paste -sd ' ' -)",
     "lint:stylelint": "stylelint --allow-empty-input --ignore-pattern \"submodules/**\" --ignore-pattern \"src/@nabstudio/**\" \"./**/*.{css,less,scss,sss}\"",
-    "lint:depcheck": "npm_config_yes=true npx depcheck || true",
+    "lint:depcheck": "npm_config_yes=true npx depcheck",
     "lint:unused-exports": "npm_config_yes=true npx ts-unused-exports ./tsconfig.json",
-    "lint": "concurrently --kill-others-on-fail --names \"eslint,tsc,madge,stylelint,depcheck,unused-exports\" --prefix-colors \"blue,cyan,magenta,gray,yellow,green\" \"npm run lint:eslint\" \"npm run lint:tsc\" \"npm run lint:madge\" \"npm run lint:stylelint\" \"npm run lint:depcheck\" \"npm run lint:unused-exports\"",
+    "lint": "concurrently --kill-others-on-fail --names \"eslint,tsc,madge,stylelint\" --prefix-colors \"blue,cyan,magenta,gray,yellow,green\" \"npm run lint:eslint\" \"npm run lint:tsc\" \"npm run lint:madge\" \"npm run lint:stylelint\"",
     "test:mocha": "TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register --require tsconfig-paths/register --timeout 300000 ./test/**/*.test.ts",
     "test:cypress": "npm_config_yes=true npx cypress run",
     "test": "concurrently --kill-others-on-fail --names \"mocha,cypress\" --prefix-colors \"magenta,gray\" \"npm run test:mocha\" \"npm run test:cypress\""
