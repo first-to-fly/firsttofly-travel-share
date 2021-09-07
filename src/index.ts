@@ -10,9 +10,6 @@ import sampleJS from "./sampleJS";
   console.log("Module loaded", dynamicSample);
 })();
 
-
-export {
-  sample,
-  sampleJS,
-  sampleTS,
-};
+console.log("sample", sample);
+console.log("sampleJS", sampleJS);
+console.log("sampleTS", sampleTS);

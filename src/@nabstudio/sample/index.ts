@@ -1,1 +1,3 @@
-export default "sample";
+const sample = "sample";
+
+export default sample;
