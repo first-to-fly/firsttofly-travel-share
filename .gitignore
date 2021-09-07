@@ -54,3 +54,6 @@ Thumbs.db
 .env
 .env.*
 build/
+
+# Template Files
+*.generated.ts
