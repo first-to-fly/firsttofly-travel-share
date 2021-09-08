@@ -1,2 +1,2 @@
-declare const _default: "sample";
-export default _default;
+declare const sample = "sample";
+export default sample;

@@ -54,6 +54,13 @@ function main() {
     "${NPM}" run "${COMMAND[@]}" "$@"
   )
 
+  (
+    set -x
+    rm -rf "./build/test"
+    mv "./build/src/"* "./build"
+    rm -rf "./build/src"
+  )
+
 }
 
 main "$@"

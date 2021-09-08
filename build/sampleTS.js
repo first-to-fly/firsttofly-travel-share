@@ -1,11 +1,5 @@
-"use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
-Object.defineProperty(exports, "__esModule", { value: true });
-exports.sample = void 0;
-const sample_1 = __importDefault(require("@nabstudio/sample"));
-exports.sample = sample_1.default;
+import sample from "@nabstudio/sample";
+export { sample, };
 const someArray2 = [
     "foo",
     "bar",
@@ -24,5 +18,5 @@ console.log(someString2);
 const testHash = {};
 console.log(testHash);
 const abc = "def";
-exports.default = abc;
+export default abc;
 //# sourceMappingURL=sampleTS.js.map
