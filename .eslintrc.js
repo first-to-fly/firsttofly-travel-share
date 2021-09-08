@@ -49,6 +49,8 @@ module.exports = {
 
     // 'prettier/@typescript-eslint',
     // 'prettier/react',
+
+    "next/core-web-vitals", // Must be last
   ],
 
   globals: {

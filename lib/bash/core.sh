@@ -278,18 +278,14 @@ function dependency() {
           brew install "jq"
         )
         echo
-      elif command -v "yum" >/dev/null; then
-        (
-          set -x
-          sudo yum install -y "jq"
-        )
-        echo
       else
         (
           set -x
           curl \
+            --location \
             --output "./.bin/jq" \
             "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
+          chmod +x "./.bin/jq"
         )
       fi
       ;;
@@ -368,12 +364,13 @@ function updateProjectVersion() {
     VERSION="${VERSION}.0"
   fi
 
-  local PATTERN="s|^  \"version\": \".+\",|  \"version\": \"${VERSION}\",|"
-  sed -i.bak -E "${PATTERN}" "./package.json"
-  sed -i.bak -E "${PATTERN}" "./package-lock.json"
+  TEMP_FILE="$(mktemp)"
 
-  rm -rf "./package.json.bak" || true
-  rm -rf "./package-lock.json.bak" || true
+  jq ".version=\"${VERSION}\"" "./package.json" >"${TEMP_FILE}" &&
+    mv "${TEMP_FILE}" "./package.json"
+
+  jq ".version=\"${VERSION}\"|.packages.\"\".version=\"${VERSION}\"" "./package-lock.json" >"${TEMP_FILE}" &&
+    mv "${TEMP_FILE}" "./package-lock.json"
 }
 
 # Git Hooks

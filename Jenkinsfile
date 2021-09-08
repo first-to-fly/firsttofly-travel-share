@@ -17,6 +17,7 @@ pipeline {
   options {
     timeout(time: 2, unit: 'HOURS')
     disableConcurrentBuilds()
+    parallelsAlwaysFailFast()
   }
 
   // https://github.com/jenkinsci/pipeline-model-definition-plugin/wiki/Parametrized-pipelines
@@ -58,7 +59,7 @@ pipeline {
 
     }}}
 
-    stage('Integration') { steps { script {
+    stage('CI/CD/CD') { steps { script {
 
       sh "./pipeline/clean"
       sh "./pipeline/install"
@@ -102,14 +103,6 @@ pipeline {
         }}
       }
 
-      parallel PARALLELS
-
-    }}}
-
-    stage('Delivery') { steps { script {
-
-      def PARALLELS = [:]
-
       boolean DELIVERED = false
 
       JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
@@ -127,9 +120,10 @@ pipeline {
 
             DELIVERED = true
 
-            PARALLELS["Deliver ${BRANCH_PATTERN}"] = { script {
+            PARALLELS["Deliver & Deploy ${BRANCH_PATTERN}"] = { script {
               withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
                 sh "./pipeline/deliver"
+                sh "./pipeline/deploy"
               }
             }}
 
@@ -144,42 +138,15 @@ pipeline {
       }
 
       // Don't parallel, else will overflow Docker!
+
+      // PARALLELS.failFast = true
+
+      // parallel PARALLELS
+
       PARALLELS.each { STAGE, SCRIPT ->
         echo "Running ${STAGE}..."
         SCRIPT()
       }
-
-    }}}
-
-    stage('Deployment') { steps { script {
-
-      def PARALLELS = [:]
-
-      JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
-
-        if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
-
-          echo "Matched '${BRANCH_PATTERN}'"
-
-          JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
-
-            if (!DEPLOY_ENVKEY_CREDENTIAL) {
-              echo "No DEPLOY_ENVKEY credential found."
-              return
-            }
-
-            PARALLELS["Deploy ${BRANCH_PATTERN}"] = { script {
-              withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
-                sh "./pipeline/deploy"
-              }
-            }}
-
-          }
-        }
-      }
-
-      parallel PARALLELS
-
     }}}
   }
 

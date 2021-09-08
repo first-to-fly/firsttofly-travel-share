@@ -8,6 +8,27 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
 function main() {
 
+  local COMMAND="${1:-}"
+
+  if [[ -n "${COMMAND}" && "${COMMAND}" != "-"* ]]; then
+    if jq --exit-status ".scripts.\"test:${COMMAND}\"" "./package.json" >/dev/null; then
+      COMMAND="test:${COMMAND}"
+    elif ! jq --exit-status ".scripts.\"${COMMAND}\"" "./package.json" >/dev/null; then
+      echo "Script '${COMMAND}' not found." >&2
+      return 1
+    fi
+    shift
+  else
+    if [[ "${COMMAND}" == "--" ]]; then
+      shift
+    fi
+    COMMAND=""
+  fi
+
+  if [[ -z "${COMMAND}" ]]; then
+    COMMAND="test"
+  fi
+
   if [[ ! -d "./node_modules" ]]; then
     "./pipeline/install"
   fi
@@ -16,13 +37,13 @@ function main() {
 
   loadEnvKey --optional
 
-  export NODE_ENV="test"
-
   NPM="$(command -v npm)"
 
   (
+    # shellcheck disable=SC2030,SC2031
+    export NODE_ENV="test"
     set -x
-    "${NPM}" run test
+    "${NPM}" run "${COMMAND[@]}" "$@"
   )
 
 }

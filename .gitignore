@@ -55,6 +55,9 @@ Thumbs.db
 .env.*
 # build/ Can't build in post-install with --production: missing devDependencies
 
+# Template Files
+*.generated.ts
+
 # NodeJS (due to large number of files)
 node_modules/
 

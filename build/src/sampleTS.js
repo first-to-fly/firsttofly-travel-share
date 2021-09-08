@@ -1,0 +1,22 @@
+import sample from "@nabstudio/sample";
+export { sample, };
+const someArray2 = [
+    "foo",
+    "bar",
+];
+console.log(someArray2);
+if (someArray2.length === 0) {
+    console.log(1);
+}
+else {
+    console.log(2);
+}
+let someString2 = "";
+someString2 = "def";
+// someString2 = 5; // <-- ts error
+console.log(someString2);
+const testHash = {};
+console.log(testHash);
+const abc = "def";
+export default abc;
+//# sourceMappingURL=sampleTS.js.map
