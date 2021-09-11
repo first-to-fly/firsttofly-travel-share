@@ -23,6 +23,10 @@ function main() {
     npm --version || true
   )
 
+  # Fix git+ssh "unsupported option accept-new"
+  # See https://github.com/npm/git/issues/31#issuecomment-862267072
+  export GIT_SSH_COMMAND="ssh"
+
   NPM="$(command -v npm)"
 
   (
