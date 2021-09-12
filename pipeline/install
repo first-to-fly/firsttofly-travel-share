@@ -27,6 +27,16 @@ function main() {
   # See https://github.com/npm/git/issues/31#issuecomment-862267072
   export GIT_SSH_COMMAND="ssh"
 
+  if [[ -n "${BITBUCKET_USERNAME:-}" && -n "${BITBUCKET_PASSWORD:-}" ]]; then
+    echo "Setting up Git for BitBucket..."
+    (
+      # set -x
+      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "ssh://git@bitbucket.org/"
+      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "git@bitbucket.org:"
+      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "https://bitbucket.org/"
+    )
+  fi
+
   NPM="$(command -v npm)"
 
   (
