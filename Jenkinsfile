@@ -62,7 +62,12 @@ pipeline {
     stage('CI/CD/CD') { steps { script {
 
       sh "./pipeline/clean"
-      sh "./pipeline/install"
+
+      withCredentials([
+        usernamePassword(credentialsId: 'a11573df-7da6-41d9-bdf5-9c6d400924e4', passwordVariable: 'BITBUCKET_PASSWORD', usernameVariable: 'BITBUCKET_USERNAME'),
+      ]) {
+        sh "./pipeline/install"
+      }
 
       def PARALLELS = [:]
 
