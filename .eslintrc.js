@@ -133,6 +133,14 @@ module.exports = {
       },
     ],
 
+    "no-param-reassign": [
+      "warn", {
+        ignorePropertyModificationsFor: [
+          "state",
+        ],
+      },
+    ],
+
     "no-plusplus": [
       "error",
       {
@@ -284,6 +292,13 @@ module.exports = {
     "react/jsx-one-expression-per-line": "off",
 
     "react/jsx-props-no-spreading": "off",
+
+    "react/require-default-props": [
+      "error",
+      {
+        ignoreFunctionalComponents: true,
+      },
+    ],
 
     "react/static-property-placement": "off",
 
