@@ -13,6 +13,14 @@ function main() {
     PRODUCTION="true"
   fi
 
+  if [[ "${HOME:-}" == "/vercel" ]]; then
+    (
+      set -x
+      rm -rf "./node_modules"
+      rm -rf "./submodules/"*"/node_modules"
+    )
+  fi
+
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
   (
@@ -34,6 +42,16 @@ function main() {
       git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "ssh://git@bitbucket.org/"
       git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "git@bitbucket.org:"
       git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "https://bitbucket.org/"
+    )
+  fi
+
+  local LOCK_FILE_VERSION
+  LOCK_FILE_VERSION="$(jq --raw-output '.lockfileVersion' "./package-lock.json")"
+  if [[ "${LOCK_FILE_VERSION}" == "1" ]]; then
+    echo "package-lock.json is outdated and at version 1. Removing file..."
+    (
+      set -x
+      rm -rf "./package-lock.json"
     )
   fi
 
