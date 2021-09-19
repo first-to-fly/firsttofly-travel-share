@@ -305,12 +305,12 @@ module.exports = {
     // ==> @typescript-eslint
 
     "@typescript-eslint/ban-ts-comment": [
-      "warn",
+      "error",
       {
         "ts-expect-error": "allow-with-description",
-        "ts-ignore": "allow-with-description",
-        "ts-nocheck": "allow-with-description",
-        "ts-check": "allow-with-description",
+        "ts-ignore": "allow-with-description", // Use ts-expect-error instead
+        "ts-nocheck": true, // Do not ignore whole files!
+        "ts-check": false,
         minimumDescriptionLength: 3,
       },
     ],
@@ -389,6 +389,10 @@ module.exports = {
     // Turned off: no auto-fix and duplicate @typescript-eslint/no-unused-vars
     "unused-imports/no-unused-vars": "off",
     "unused-imports/no-unused-vars-ts": "off",
+
+
+    // ==> next
+    "@next/next/no-img-element": "off",
   },
 
   settings: {
@@ -412,7 +416,7 @@ module.exports = {
     // ==> eslint-plugin-react
     react: {
       // Detect React version only if it is installed
-      // @ts-ignore - "packageJSON.dependencies" does not have "react"
+      // @ts-ignore - "packageJSON.dependencies" may not have "react"
       version: typeof packageJSON.dependencies !== "undefined" && packageJSON.dependencies.react ? "detect" : "latest",
     },
   },
