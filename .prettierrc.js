@@ -1,6 +1,18 @@
+const fs = require("fs");
+
+const vscodeSettingsString = fs.readFileSync("./.vscode/settings.json", "utf-8");
+const vscodeSettingsLines = (
+  vscodeSettingsString
+    .split("\n")
+    .filter((line) => !line.trim().startsWith("//"))
+);
+const vscodeSettings = JSON.parse(vscodeSettingsLines.join("\n"));
+
+
 module.exports = {
+
   // -> allows 3 vertical windows
-  printWidth: 1000,
+  printWidth: vscodeSettings["editor.rulers"][0],
 
   // -> use less screen width
   tabWidth: 2,
