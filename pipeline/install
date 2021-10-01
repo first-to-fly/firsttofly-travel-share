@@ -23,14 +23,6 @@ function main() {
 
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
-  (
-    set -x
-    npm install --global "npm@latest" ||
-      npm install --global "npm@latest" ||
-      true
-    npm --version || true
-  )
-
   # Fix git+ssh "unsupported option accept-new"
   # See https://github.com/npm/git/issues/31#issuecomment-862267072
   export GIT_SSH_COMMAND="ssh"
@@ -45,25 +37,16 @@ function main() {
     )
   fi
 
-  local LOCK_FILE_VERSION
-  LOCK_FILE_VERSION="$(jq --raw-output '.lockfileVersion' "./package-lock.json")"
-  if [[ "${LOCK_FILE_VERSION}" == "1" ]]; then
-    echo "package-lock.json is outdated and at version 1. Removing file..."
-    (
-      set -x
-      rm -rf "./package-lock.json"
-    )
-  fi
-
-  NPM="$(command -v npm)"
+  NPX="$(command -v npx)"
+  NPM_VERSION="7.24.1"
 
   (
     set -x
     # "--force" accepts dependency conflict
-    "${NPM}" install \
+    "${NPX}" "npm@${NPM_VERSION}" install \
       --force \
       "$@" ||
-      "${NPM}" install \
+      "${NPX}" "npm@${NPM_VERSION}" install \
         --force \
         "$@"
   )
@@ -71,7 +54,7 @@ function main() {
   if [[ "${PRODUCTION}" != "true" ]]; then
     (
       set -x
-      "${NPM}" audit || true
+      "${NPX}" "npm@${NPM_VERSION}" audit || true
     )
   fi
 
