@@ -44,8 +44,7 @@ function main() {
   set +e
   (
     set -x
-    time \
-      wrap \
+    time wrap \
       "${COMMAND[@]}" "$@" |
       tee -a -i "${LOG_FILE}"
   )
