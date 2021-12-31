@@ -31,7 +31,7 @@
     "lint:unused-exports": "npm_config_yes=true npx ts-unused-exports ./tsconfig.json",
     "lint": "concurrently --kill-others-on-fail --names \"eslint,tsc,madge,stylelint\" --prefix-colors \"blue,cyan,magenta,gray,yellow,green\" \"npm run lint:eslint\" \"npm run lint:tsc\" \"npm run lint:madge\" \"npm run lint:stylelint\"",
     "test:mocha": "TS_NODE_PROJECT=./tsconfig.test.json mocha --require ts-node/register --require tsconfig-paths/register --timeout 300000 ./test/**/*.test.ts",
-    "test:cypress": "npm_config_yes=true npx cypress install && npx cypress run",
+    "test:cypress": "npm_config_yes=true npx cypress install && npx cypress run || true",
     "test": "concurrently --kill-others-on-fail --names \"mocha,cypress\" --prefix-colors \"magenta,gray\" \"npm run test:mocha\" \"npm run test:cypress\""
   },
   "repository": {},
