@@ -9,20 +9,6 @@ function main() {
 
   loadDeployEnvKey --
 
-  if [[ -z "${GIT_COMMIT:-}" ]]; then
-    GIT_COMMIT="$(git rev-parse HEAD)"
-    export GIT_COMMIT="${GIT_COMMIT}"
-  fi
-
-  echo "${GIT_COMMIT}" >"./public/git-commit"
-
-  if [[ -z "${GIT_BRANCH:-}" ]]; then
-    GIT_BRANCH="$(git branch --show-current)"
-    export GIT_BRANCH="${GIT_BRANCH}"
-  fi
-
-  loadEnvKey --optional
-
 }
 
 main "$@"
