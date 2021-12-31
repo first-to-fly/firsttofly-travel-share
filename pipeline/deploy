@@ -9,6 +9,15 @@ function main() {
 
   loadDeployEnvKey --
 
+  echo "${GIT_COMMIT}" >"./public/git-commit"
+
+  if [[ -z "${GIT_BRANCH:-}" ]]; then
+    GIT_BRANCH="$(git branch --show-current)"
+    export GIT_BRANCH="${GIT_BRANCH}"
+  fi
+
+  loadEnvKey --optional
+
 }
 
 main "$@"

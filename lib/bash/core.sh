@@ -369,8 +369,10 @@ function updateProjectVersion() {
   jq ".version=\"${VERSION}\"" "./package.json" >"${TEMP_FILE}" &&
     mv "${TEMP_FILE}" "./package.json"
 
-  jq ".version=\"${VERSION}\"|.packages.\"\".version=\"${VERSION}\"" "./package-lock.json" >"${TEMP_FILE}" &&
-    mv "${TEMP_FILE}" "./package-lock.json"
+  if [[ -f "./package-lock.json" ]]; then
+    jq ".version=\"${VERSION}\"|.packages.\"\".version=\"${VERSION}\"" "./package-lock.json" >"${TEMP_FILE}" &&
+      mv "${TEMP_FILE}" "./package-lock.json"
+  fi
 }
 
 # Git Hooks
