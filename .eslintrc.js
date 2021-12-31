@@ -396,6 +396,8 @@ module.exports = {
 
     // ==> next
 
+    "@next/next/no-html-link-for-pages": "off",
+
     //  As discussed with team, some time <img /> give a better performance.
     "@next/next/no-img-element": "off",
 

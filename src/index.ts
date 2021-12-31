@@ -1,4 +1,3 @@
-import sample from "@nabstudio/sample";
 import sampleTS from "sampleTS";
 
 import sampleJS from "./sampleJS";
@@ -10,6 +9,5 @@ import sampleJS from "./sampleJS";
   console.log("Module loaded", dynamicSample);
 })();
 
-console.log("sample", sample);
 console.log("sampleJS", sampleJS);
 console.log("sampleTS", sampleTS);
