@@ -10,7 +10,6 @@
     "eamodio.gitlens",
 
     // All Languages
-    "coenraads.bracket-pair-colorizer",
     "wmaurer.change-case",
     "streetsidesoftware.code-spell-checker",
     "pucelle.run-on-save",
