@@ -21,7 +21,6 @@
     "build": "npm run build:node",
     "postbuild": "",
     "start:node": "NODE_PATH=./build node ./build",
-    "start:next": "next start",
     "start": "npm run start:node",
     "lint:eslint": "eslint --ignore-pattern \"submodules/**\" \"./**/*.{js,jsx,ts,tsx}\"",
     "lint:tsc": "tsc --project ./tsconfig.lint.json --noEmit",
