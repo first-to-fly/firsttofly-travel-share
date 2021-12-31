@@ -55,8 +55,7 @@ function main() {
   set +e
   (
     set -x
-    time \
-      wrap \
+    time wrap \
       "${NPM}" run "${COMMAND[@]}" "$@" |
       tee -a -i "${LOG_FILE}"
   )

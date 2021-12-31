@@ -17,6 +17,10 @@
   // Editor - Rulers
   "editor.rulers": [120],
 
+  // Editor - Others
+  "editor.bracketPairColorization.enabled": true,
+  "editor.guides.bracketPairs": "active",
+
   // Git
   "git.autofetch": true,
   "git.confirmSync": false,
@@ -26,7 +30,6 @@
 
   // Terminal
   "terminal.integrated.scrollback": 1000000000,
-  "terminal.integrated.rendererType": "auto",
 
   // Extensions
   "extensions.ignoreRecommendations": false,
@@ -62,7 +65,12 @@
   "shellcheck.useWorkspaceRootAsCwd": true,
   "shellcheck.customArgs": [
     //
+    "--enable=all",
     "--external-sources"
+  ],
+  "shellcheck.exclude": [
+    //
+    "SC2310"
   ],
 
   // CSS
@@ -128,5 +136,10 @@
   // Editor - Code
   "editor.codeActionsOnSave": {
     "source.fixAll": true
-  }
+  },
+
+  // cSpell
+  "cSpell.words": [
+    //
+  ]
 }
