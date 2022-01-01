@@ -1,4 +1,3 @@
-import sample from "@nabstudio/sample";
 import sampleTS from "sampleTS";
 import sampleJS from "./sampleJS";
 (async () => {
@@ -6,7 +5,6 @@ import sampleJS from "./sampleJS";
     const dynamicSample = await import("./sampleJS");
     console.log("Module loaded", dynamicSample);
 })();
-console.log("sample", sample);
 console.log("sampleJS", sampleJS);
 console.log("sampleTS", sampleTS);
 //# sourceMappingURL=index.js.map

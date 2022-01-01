@@ -70,3 +70,7 @@ cypress/videos/
 
 # SSH
 .ssh/
+
+# Yarn
+.yarn
+.yarnrc.yml

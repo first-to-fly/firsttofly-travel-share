@@ -1,7 +1,6 @@
 import deepCopy from "deepcopy";
-import abc, { sample } from "./sampleTS";
+import abc from "./sampleTS";
 console.log("deepCopy(abc)", deepCopy(abc));
-console.log("sample", sample);
 const someArray = [
     "foo",
     "bar",

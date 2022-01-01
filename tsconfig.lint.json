@@ -2,7 +2,6 @@
   "extends": "./tsconfig.json",
   "exclude": [
     //
-    "submodules",
-    "src/@nabstudio"
+    "submodules"
   ]
 }

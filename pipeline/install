@@ -31,30 +31,70 @@ function main() {
     echo "Setting up Git for BitBucket..."
     (
       # set -x
-      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "ssh://git@bitbucket.org/"
-      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "git@bitbucket.org:"
-      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "https://bitbucket.org/"
+      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "ssh://git@bitbucket.org/" || true
+      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "git@bitbucket.org:" || true
+      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "https://bitbucket.org/" || true
     )
   fi
 
-  NPX="$(command -v npx)"
-  NPM_VERSION="7.24.1"
+  YARN="$(command -v yarn)"
 
   (
     set -x
-    # "--force" accepts dependency conflict
-    "${NPX}" "npm@${NPM_VERSION}" install \
-      --force \
-      "$@" ||
-      "${NPX}" "npm@${NPM_VERSION}" install \
-        --force \
-        "$@"
+    rm -rf ./package-lock.json
+    cp -f "./.yarnrc.templ.yml" "./.yarnrc.yml"
+    "${YARN}" set version "stable" ||
+      "${YARN}" set version "stable" ||
+      true
   )
+
+  YARN_CJS="$(grep "yarnPath:" <"./.yarnrc.yml" | sed -E "s|^yarnPath: +||")"
+
+  export YARN_ENABLE_IMMUTABLE_INSTALLS="false"
+
+  if [[ -z "$*" ]]; then
+    (
+      set -x
+      "${YARN_CJS}" install ||
+        "${YARN_CJS}" install
+    )
+  else
+    (
+      set -x
+      "${YARN_CJS}" add "$@" ||
+        "${YARN_CJS}" add "$@"
+    )
+  fi
+
+  (
+    set -x
+    "${YARN}" run "postinstall"
+  )
+
+  # Fix for "file:" in yarn
+  # - By default, yarn always copies for "file:", while NPM creates symbolic links
+  # - Change to "link:", yarn will not install indirect dependencies
+  jq --raw-output '.dependencies' "./package.json" |
+    (grep "file:" || true) |
+    while IFS="" read -r DEPENDENCY; do
+      # echo "${DEPENDENCY}"
+      local D_NAME
+      D_NAME="$(sed -e 's|^ *"||' -e 's|":.*$||' <<<"${DEPENDENCY}")"
+      # echo "${D_NAME}"
+      local D_PATH
+      D_PATH="$(sed -e 's|.*": "file:||' -e 's|",$||' <<<"${DEPENDENCY}")"
+      # echo "${D_PATH}"
+      (
+        set -x
+        rm -rf "./node_modules/${D_NAME}"
+        ln -s "${PWD}/${D_PATH}" "./node_modules/${D_NAME}"
+      )
+    done
 
   if [[ "${PRODUCTION}" != "true" ]]; then
     (
       set -x
-      "${NPX}" "npm@${NPM_VERSION}" audit || true
+      "${YARN}" npm audit || true
     )
   fi
 

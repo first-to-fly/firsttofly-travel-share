@@ -1,10 +1,3 @@
-import sample from "@nabstudio/sample";
-
-
-export {
-  sample,
-};
-
 const someArray2 = [
   "foo",
   "bar",

@@ -107,7 +107,7 @@ module.exports = {
 
     // Max-len follows Prettier config
     "max-len": [
-      "error",
+      "warn",
       {
         ignoreUrls: true,
         ignoreComments: false,
@@ -365,6 +365,9 @@ module.exports = {
       },
     ],
 
+    // Prefer using "interface" instead of "type"
+    "@typescript-eslint/no-empty-interface": "off",
+
     "no-shadow": "off",
     "@typescript-eslint/no-shadow": "error",
 
@@ -392,7 +395,27 @@ module.exports = {
 
 
     // ==> next
+
+    "@next/next/no-html-link-for-pages": "off",
+
+    //  As discussed with team, some time <img /> give a better performance.
     "@next/next/no-img-element": "off",
+
+    // New errors
+    "@typescript-eslint/no-unnecessary-type-constraint": "off",
+    "class-methods-use-this": "off",
+    "default-case-last": "off",
+    "default-param-last": "off",
+    "function-call-argument-newline": "off",
+    "function-paren-newline": "off",
+    "import/no-import-module-exports": "off",
+    "import/no-relative-packages": "off",
+    "no-restricted-exports": "off",
+    "no-unsafe-optional-chaining": "off",
+    "react/function-component-definition": "off",
+    "react/jsx-no-constructed-context-values": "off",
+    "react/jsx-no-useless-fragment": "off",
+    "react/no-unstable-nested-components": "off",
   },
 
   settings: {
