@@ -84,11 +84,12 @@ function main() {
       local D_PATH
       D_PATH="$(sed -e 's|.*": "file:||' -e 's|",$||' <<<"${DEPENDENCY}")"
       # echo "${D_PATH}"
-      (
-        set -x
-        rm -rf "./node_modules/${D_NAME}"
-        ln -s "${PWD}/${D_PATH}" "./node_modules/${D_NAME}"
-      )
+      rm -rf "./node_modules/${D_NAME}"
+      if [[ "${D_NAME}" = *"/"* ]]; then
+        ln -s "../../${D_PATH}" "./node_modules/${D_NAME}"
+      else
+        ln -s "../${D_PATH}" "./node_modules/${D_NAME}"
+      fi
     done
 
   if [[ "${PRODUCTION}" != "true" ]]; then
