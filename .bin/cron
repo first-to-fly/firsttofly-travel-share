@@ -47,7 +47,7 @@ function main() {
 
       fi
 
-      sleep 1s
+      sleep 1
       DURATION_MS=$((DURATION_MS + 1000))
 
     done
