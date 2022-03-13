@@ -440,7 +440,7 @@ module.exports = {
     react: {
       // Detect React version only if it is installed
       // @ts-ignore - "packageJSON.dependencies" may not have "react"
-      version: typeof packageJSON.dependencies !== "undefined" && packageJSON.dependencies.react ? "detect" : "latest",
+      ...(packageJSON.dependencies?.react ? { version: "detect" } : {}),
     },
   },
 };
