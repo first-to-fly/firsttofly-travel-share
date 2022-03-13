@@ -37,38 +37,32 @@ function main() {
     )
   fi
 
-  YARN="$(command -v yarn)"
-
   (
     set -x
-    rm -rf ./package-lock.json
+    rm -rf "./package-lock.json"
+    rm -rf "./yarn.lock"
+    rm -rf "./.yarn/releases"
     cp -f "./.yarnrc.templ.yml" "./.yarnrc.yml"
-    "${YARN}" set version "stable" ||
-      "${YARN}" set version "stable" ||
-      true
+    yarn set version stable
   )
-
-  YARN_CJS="$(grep "yarnPath:" <"./.yarnrc.yml" | sed -E "s|^yarnPath: +||")"
 
   export YARN_ENABLE_IMMUTABLE_INSTALLS="false"
 
   if [[ -z "$*" ]]; then
     (
       set -x
-      "${YARN_CJS}" install ||
-        "${YARN_CJS}" install
+      yarn install
     )
   else
     (
       set -x
-      "${YARN_CJS}" add "$@" ||
-        "${YARN_CJS}" add "$@"
+      yarn add "$@"
     )
   fi
 
   (
     set -x
-    "${YARN}" run "postinstall"
+    yarn run "postinstall"
   )
 
   # Fix for "file:" in yarn
@@ -77,7 +71,7 @@ function main() {
   jq --raw-output '.dependencies' "./package.json" |
     (grep "file:" || true) |
     while IFS="" read -r DEPENDENCY; do
-      # echo "${DEPENDENCY}"
+      echo "- Linking ${DEPENDENCY}..."
       local D_NAME
       D_NAME="$(sed -e 's|^ *"||' -e 's|":.*$||' <<<"${DEPENDENCY}")"
       # echo "${D_NAME}"
@@ -95,7 +89,7 @@ function main() {
   if [[ "${PRODUCTION}" != "true" ]]; then
     (
       set -x
-      "${YARN}" npm audit || true
+      yarn npm audit || true
     )
   fi
 

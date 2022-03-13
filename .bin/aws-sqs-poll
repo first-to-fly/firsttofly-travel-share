@@ -102,8 +102,7 @@ function main() {
 
     (
       set -x
-      time \
-        "${COMMAND}" "$@" "${MESSAGE_FILE}" 2>&1 |
+      time "${COMMAND}" "$@" "${MESSAGE_FILE}" 2>&1 |
         tee "${LOG_FILE}"
     ) &
     local COMMAND_PID="$!"
@@ -129,7 +128,7 @@ function main() {
         # Stop
         break
       fi
-      sleep 1s
+      sleep 1
       DURATION_SECONDS=$((DURATION_SECONDS + 1))
     done
 
