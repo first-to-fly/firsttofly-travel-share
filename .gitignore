@@ -74,3 +74,4 @@ cypress/videos/
 # Yarn
 .yarn
 .yarnrc.yml
+yarn.lock

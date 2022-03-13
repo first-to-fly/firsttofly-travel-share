@@ -26,13 +26,21 @@ function checkNodeVersion() {
       (
         set -x
         fnm install "${EXPECTED_NODE_VERSION}"
+      ) || (
+        # shellcheck source=/dev/null
+        [[ -s "${HOME}/.nvm/nvm.sh" ]] && \. "${HOME}/.nvm/nvm.sh"
+        nvm install "${EXPECTED_NODE_VERSION}"
       )
     fi
 
-    (
+    if ! (
       set -x
       fnm use "${EXPECTED_NODE_VERSION}"
-    )
+    ); then
+      # shellcheck source=/dev/null
+      [[ -s "${HOME}/.nvm/nvm.sh" ]] && \. "${HOME}/.nvm/nvm.sh"
+      nvm use "${EXPECTED_NODE_VERSION}"
+    fi
 
     local NODE
     NODE="$(command -v node)"
@@ -53,5 +61,7 @@ function checkNodeVersion() {
     return 1
   fi
 }
+
+dependency "yarn"
 
 checkNodeVersion
