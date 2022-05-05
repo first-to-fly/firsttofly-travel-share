@@ -1,17 +1,6 @@
 module.exports = {
   extends: [
-    "stylelint-config-standard",
-    "stylelint-config-recommended-scss",
-  ],
-  plugins: [
-    "stylelint-scss",
-  ],
-  ignoreFiles: [
-    "node_modules/**",
-    "**/*.js",
-    "**/*.jsx",
-    "**/*.ts",
-    "**/*.tsx",
+    "stylelint-config-standard-scss",
   ],
   rules: {
     "string-quotes": "double",
@@ -25,7 +14,6 @@ module.exports = {
     "color-function-notation": null,
     "declaration-block-no-redundant-longhand-properties": null,
     "function-url-quotes": null,
-    "keyframes-name-pattern": null,
     "max-line-length": null,
     "media-feature-name-no-vendor-prefix": null,
     "no-descending-specificity": null,
@@ -34,8 +22,6 @@ module.exports = {
     "scss/at-import-no-partial-leading-underscore": null,
     "scss/at-import-partial-extension": null,
     "scss/comment-no-empty": null,
-    "selector-class-pattern": null,
-    "selector-id-pattern": null,
     "shorthand-property-no-redundant-values": null,
     "value-no-vendor-prefix": null,
   },

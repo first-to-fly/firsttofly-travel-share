@@ -25,7 +25,7 @@
     "lint:eslint": "eslint --ignore-pattern \"submodules/**\" \"./**/*.{js,jsx,ts,tsx}\"",
     "lint:tsc": "tsc --project ./tsconfig.lint.json --noEmit",
     "lint:madge": "madge --circular --no-spinner $(find ./src -type f | grep '\\.\\(ts\\|tsx\\|js\\|jsx\\|mjs\\)$' | paste -sd ' ' -)",
-    "lint:stylelint": "stylelint --allow-empty-input --ignore-pattern \"submodules/**\" \"./**/*.{css,less,scss,sss}\"",
+    "lint:stylelint": "stylelint ./**/*.{css,less,scss,sss}",
     "lint:depcheck": "npm_config_yes=true npx depcheck",
     "lint:unused-exports": "npm_config_yes=true npx ts-unused-exports ./tsconfig.json",
     "lint": "concurrently --kill-others-on-fail --names \"eslint,tsc,madge,stylelint\" --prefix-colors \"blue,cyan,magenta,gray,yellow,green\" \"npm run lint:eslint\" \"npm run lint:tsc\" \"npm run lint:madge\" \"npm run lint:stylelint\"",
@@ -65,11 +65,10 @@
     "prettier-eslint-cli": "^5.0.1",
     "prettier-stylelint": "^0.4.2",
     "stylelint": "^14.5.3",
-    "stylelint-config-recommended-scss": "^5.0.2",
-    "stylelint-config-standard": "^25.0.0",
-    "stylelint-scss": "^4.1.0",
+    "stylelint-config-standard-scss": "^3.0.0",
     "ts-node": "^10.7.0",
     "tsconfig-paths": "^3.13.0",
+    "typed-scss-modules": "^6.2.0",
     "typescript": "^4.6.2"
   }
 }
