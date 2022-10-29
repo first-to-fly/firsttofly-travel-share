@@ -8,7 +8,6 @@ module.exports = {
   rules: {
     indentation: [2, { ignore: "value" }],
     "max-line-length": 200,
-    "selector-class-pattern": null,
     "selector-pseudo-class-no-unknown": [true, { ignorePseudoClasses: ["global"] }],
     "string-quotes": "double",
     "scss/at-extend-no-missing-placeholder": null, // Allows @extend .class

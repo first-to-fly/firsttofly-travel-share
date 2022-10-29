@@ -43,6 +43,7 @@
 
     // Stylelint
     "stylelint.vscode-stylelint",
+    "clinyong.vscode-css-modules",
 
     // JSON
     "eriklynd.json-tools"
