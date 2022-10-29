@@ -20,6 +20,10 @@ if [[ "${PATH}" != *"/usr/local/bin"* && -d "/usr/local/bin" ]]; then
   export PATH="/usr/local/bin:${PATH}"
 fi
 
+if [[ "${PATH}" != *"/opt/homebrew/bin"* && -d "/opt/homebrew/bin" ]]; then
+  export PATH="/opt/homebrew/bin:${PATH}"
+fi
+
 if [[ "${PATH}" != *"${PWD}/.bin"* && -d "${PWD}/.bin" ]]; then
   export PATH="${PWD}/.bin:${PATH}"
 fi
