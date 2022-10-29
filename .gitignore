@@ -54,7 +54,7 @@ Thumbs.db
 .env
 .env.*
 build/
-tsconfig.build.tsbuildinfo
+tsconfig.*.tsbuildinfo
 
 # Template Files
 *.generated.*
