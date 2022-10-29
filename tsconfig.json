@@ -76,6 +76,9 @@
   },
   "include": [
     //
+    "**/*.*.js",
+    "**/*.*.ts",
+    "cypress",
     "test",
     "src"
   ],

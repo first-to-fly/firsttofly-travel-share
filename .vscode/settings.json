@@ -136,7 +136,5 @@
   },
 
   // cSpell
-  "cSpell.words": [
-    //
-  ]
+  "cSpell.words": ["clonedeep", "typedefs"]
 }

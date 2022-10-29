@@ -8,7 +8,7 @@ module.exports = {
   ...config,
 
   extends: [
-    ...config.extends,
+    ...(config.extends || []),
     "plugin:cypress/recommended",
   ],
 

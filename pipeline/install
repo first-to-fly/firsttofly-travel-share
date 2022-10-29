@@ -3,6 +3,9 @@
 # shellcheck source=./lib/bash/core.sh
 source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
+# shellcheck source=./lib/bash/templates.sh
+source "${BASH_SOURCE[0]%/*}/../lib/bash/templates.sh"
+
 # shellcheck source=./lib/bash/node.sh
 source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
 
@@ -23,6 +26,8 @@ function main() {
 
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
+  applyEnvVarsToTemplateFiles || removeGeneratedFiles
+
   # Fix git+ssh "unsupported option accept-new"
   # See https://github.com/npm/git/issues/31#issuecomment-862267072
   export GIT_SSH_COMMAND="ssh"
@@ -41,9 +46,12 @@ function main() {
     set -x
     rm -rf "./package-lock.json"
     rm -rf "./yarn.lock"
-    rm -rf "./.yarn/releases"
-    cp -f "./.yarnrc.templ.yml" "./.yarnrc.yml"
-    yarn set version stable
+    rm -rf "./yarnrc"
+    mv -f "./.yarnrc.generated.yml" "./.yarnrc.yml"
+    npm install --location=global "npm@latest"
+    npm install --location=global "yarn@latest"
+    npx yarn set version "stable" ||
+      npx yarn set version "stable"
   )
 
   export YARN_ENABLE_IMMUTABLE_INSTALLS="false"
@@ -51,7 +59,8 @@ function main() {
   if [[ -z "$*" ]]; then
     (
       set -x
-      yarn install
+      yarn install ||
+        yarn install
     )
   else
     (
