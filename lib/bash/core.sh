@@ -20,6 +20,10 @@ if [[ "${PATH}" != *"/usr/local/bin"* && -d "/usr/local/bin" ]]; then
   export PATH="/usr/local/bin:${PATH}"
 fi
 
+if [[ "${PATH}" != *"/opt/homebrew/bin"* && -d "/opt/homebrew/bin" ]]; then
+  export PATH="/opt/homebrew/bin:${PATH}"
+fi
+
 if [[ "${PATH}" != *"${PWD}/.bin"* && -d "${PWD}/.bin" ]]; then
   export PATH="${PWD}/.bin:${PATH}"
 fi
@@ -32,7 +36,7 @@ fi
 
 if [[ "${BOILERPLATE_NO_COLOR:-}" == "true" ]]; then
 
-  export NO_COLOR=""
+  export CLEAR_COLOR=""
   export BOLD_COLOR=""
   export DIM_COLOR=""
   export UNDERLINED_COLOR=""
@@ -78,7 +82,7 @@ if [[ "${BOILERPLATE_NO_COLOR:-}" == "true" ]]; then
 
 else
 
-  export NO_COLOR="\033[0m"
+  export CLEAR_COLOR="\033[0m"
   export BOLD_COLOR="\033[1m"
   export DIM_COLOR="\033[2m"
   export UNDERLINED_COLOR="\033[4m"
@@ -137,7 +141,7 @@ function logFormat() {
   SCRIPT_PATH=""
   for BASH_SOURCE_ITEM in "${BASH_SOURCE[@]}"; do
     if [[ "${BASH_SOURCE_ITEM}" != "${BASH_SOURCE[0]}" ]]; then
-      SCRIPT_PATH="${SCRIPT_PATH}${NO_COLOR}[${BLUE_COLOR}${BASH_SOURCE_ITEM##*/}${NO_COLOR}]"
+      SCRIPT_PATH="${SCRIPT_PATH}${CLEAR_COLOR}[${BLUE_COLOR}${BASH_SOURCE_ITEM##*/}${CLEAR_COLOR}]"
     fi
   done
 
@@ -152,12 +156,12 @@ function logFormat() {
 
       if [[ "${LINE}" == [+]*" "* ]]; then
         echo
-        echo -e "${BOLD_COLOR}${LINE}${NO_COLOR}"
+        echo -e "${BOLD_COLOR}${LINE}${CLEAR_COLOR}"
         echo
         continue
       fi
 
-      echo -e "${WARN_COLOR}STDERR${NO_COLOR} ${LINE}${NO_COLOR}"
+      echo -e "${WARN_COLOR}STDERR${CLEAR_COLOR} ${LINE}${CLEAR_COLOR}"
       continue
 
     fi
@@ -174,7 +178,7 @@ function logFormat() {
 
     PREFIX="${PREFIX}${SCRIPT_PATH}"
 
-    echo -e "${PREFIX}${NO_COLOR} ${LINE}${NO_COLOR}"
+    echo -e "${PREFIX}${CLEAR_COLOR} ${LINE}${CLEAR_COLOR}"
 
   done
 }
@@ -226,6 +230,9 @@ function dependency() {
           brew install "shellcheck"
         )
         echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
       fi
       ;;
     *)
@@ -242,6 +249,7 @@ function dependency() {
   fi
 }
 
+# Basic dependencies
 dependency "jq"
 
 # Project
