@@ -58,7 +58,7 @@ function main() {
   (
     set -x
     rm -rf "./build/test"
-    mv "./build/src/"* "./build"
+    mv "./build/src/"* "./build" || true
     rm -rf "./build/src"
   )
 

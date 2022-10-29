@@ -54,6 +54,7 @@ Thumbs.db
 .env
 .env.*
 # build/ Can't build in post-install with --production: missing devDependencies
+tsconfig.build.tsbuildinfo
 
 # Template Files
 *.generated.*

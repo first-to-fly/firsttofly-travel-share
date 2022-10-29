@@ -1,3 +1,5 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
 const someArray2 = [
     "foo",
     "bar",
@@ -16,5 +18,5 @@ console.log(someString2);
 const testHash = {};
 console.log(testHash);
 const abc = "def";
-export default abc;
+exports.default = abc;
 //# sourceMappingURL=sampleTS.js.map
