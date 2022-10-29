@@ -9,11 +9,13 @@
 // CommonJS
 /* eslint-disable @typescript-eslint/no-var-requires */
 
+const { existsSync } = require("fs");
 const prettierConfig = require("./.prettierrc");
 const packageJSON = require("./package.json");
 
 
-module.exports = {
+/** @type {import("eslint").ESLint.ConfigData} */
+const config = {
 
   root: true,
 
@@ -63,11 +65,10 @@ module.exports = {
     ecmaFeatures: { jsx: true },
     ecmaVersion: 2018,
     sourceType: "module",
-
-    // // ==> @typescript-eslint/parser
-    // We no longer need to set this!
-    // project: "./tsconfig.json",
-    // tsconfigRootDir: __dirname,
+    project: [
+      "./tsconfig.lint.json",
+      "./tsconfig.json",
+    ],
   },
 
   plugins: [
@@ -87,6 +88,8 @@ module.exports = {
     "simple-import-sort",
 
     "unused-imports",
+
+    "deprecation",
   ],
 
   rules: {
@@ -119,6 +122,8 @@ module.exports = {
         ignoreTrailingComments: false,
       },
     ],
+
+    "multiline-ternary": ["warn", "always-multiline"],
 
     // Allows "console" in code. These should be removed automatically in production.
     "no-console": "off",
@@ -256,6 +261,8 @@ module.exports = {
       { count: 2 },
     ],
 
+    "import/no-cycle": "error",
+
     // Conflicts with "sort-imports"
     // => Use "eslint-plugin-simple-import-sort"
     "import/order": "off",
@@ -294,13 +301,15 @@ module.exports = {
     "react/jsx-props-no-spreading": "off",
 
     "react/require-default-props": [
-      "error",
+      "off",
       {
         ignoreFunctionalComponents: true,
       },
     ],
 
     "react/static-property-placement": "off",
+
+    "react-hooks/exhaustive-deps": "error",
 
     // ==> @typescript-eslint
 
@@ -314,6 +323,9 @@ module.exports = {
         minimumDescriptionLength: 3,
       },
     ],
+
+    "comma-dangle": "off", // Note: you must disable the base rule as it can report incorrect errors
+    "@typescript-eslint/comma-dangle": ["warn", "always-multiline"],
 
     "@typescript-eslint/explicit-function-return-type": "off",
 
@@ -365,6 +377,11 @@ module.exports = {
       },
     ],
 
+    // Allow leading underscore in class names
+    "react/jsx-pascal-case": [2, { allowLeadingUnderscore: true }],
+
+    "jsx-a11y/click-events-have-key-events": "off",
+
     // Prefer using "interface" instead of "type"
     "@typescript-eslint/no-empty-interface": "off",
 
@@ -372,7 +389,31 @@ module.exports = {
     "@typescript-eslint/no-shadow": "error",
 
     "no-use-before-define": "off", // Why? https://stackoverflow.com/a/64024916
-    "@typescript-eslint/no-use-before-define": "error",
+    "@typescript-eslint/no-use-before-define": [
+      "error",
+      {
+        // Allow functions to be defined before they are used; because function is hoisted, so this is safe
+        functions: false,
+        typedefs: false, // Allow typedefs to be defined before they are used
+        variables: false, // false check when upper scope only, because variables are hoisted
+      },
+    ],
+
+    // Use correct typings or unknown
+    "@typescript-eslint/no-explicit-any": "error",
+
+    semi: "off", // Note: you must disable the base rule as it can report incorrect errors
+    "@typescript-eslint/semi": ["warn", "always"],
+
+    "@typescript-eslint/type-annotation-spacing": ["warn", {
+      before: false,
+      after: true,
+      overrides: {
+        arrow: {
+          before: true,
+        },
+      },
+    }],
 
     // ==> prettier
     // 'prettier/prettier': 'warn',
@@ -394,13 +435,29 @@ module.exports = {
     "unused-imports/no-unused-vars-ts": "off",
 
 
-    // ==> next
+    // ==> Deprecation
+    "deprecation/deprecation": "warn",
 
-    "@next/next/no-html-link-for-pages": "off",
+
+    // ==> next
 
     //  As discussed with team, some time <img /> give a better performance.
     "@next/next/no-img-element": "off",
+
+    ...(existsSync(`${__dirname}/src/pages`) ? {} : { "@next/next/no-html-link-for-pages": "off" }),
+
+    // when using a tag as children of next/link, href is not required
+    // https://nextjs.org/docs/api-reference/next/link
+    "jsx-a11y/anchor-is-valid": ["error", {
+      components: ["Link"],
+      specialLink: ["hrefLeft", "hrefRight"],
+      aspects: ["invalidHref", "preferButton"],
+    }],
+
   },
+
+  overrides: [
+  ],
 
   settings: {
 
@@ -418,13 +475,23 @@ module.exports = {
           "node_modules",
         ],
       },
+      alias: {
+        map: [
+        ],
+      },
     },
+
+    "import/core-modules": [
+      "styled-jsx/css",
+    ],
 
     // ==> eslint-plugin-react
     react: {
       // Detect React version only if it is installed
       // @ts-ignore - "packageJSON.dependencies" may not have "react"
-      ...(packageJSON.dependencies?.react ? { version: "detect" } : {}),
+      ...(packageJSON.dependencies?.react ? { version: "detect" } : { version: "18.0.0" }),
     },
   },
 };
+
+module.exports = config;

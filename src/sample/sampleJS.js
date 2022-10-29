@@ -1,9 +1,9 @@
-import deepCopy from "deepcopy";
+import cloneDeep from "lodash.clonedeep";
 
 import abc from "./sampleTS";
 
 
-console.log("deepCopy(abc)", deepCopy(abc));
+console.log("deepCopy(abc)", cloneDeep(abc));
 
 const someArray = [
   "foo",

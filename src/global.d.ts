@@ -8,15 +8,3 @@ declare namespace NodeJS {
     browser: boolean;
   }
 }
-
-
-declare module "*.less" {
-  const content: {[className: string]: string};
-  export default content;
-}
-
-
-declare module "*.scss" {
-  const content: {[className: string]: string};
-  export default content;
-}

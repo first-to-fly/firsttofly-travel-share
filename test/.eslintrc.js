@@ -12,12 +12,12 @@ module.exports = {
   },
 
   plugins: [
-    ...config.plugins,
+    ...(config.plugins || []),
     "mocha",
   ],
 
   extends: [
-    ...config.extends,
+    ...(config.extends || []),
     "plugin:mocha/recommended",
   ],
 

@@ -56,7 +56,7 @@ Thumbs.db
 # build/ Can't build in post-install with --production: missing devDependencies
 
 # Template Files
-*.generated.ts
+*.generated.*
 
 # NodeJS (due to large number of files)
 node_modules/
@@ -75,3 +75,6 @@ cypress/videos/
 .yarn
 .yarnrc.yml
 yarn.lock
+
+# SCSS
+*.scss.d.ts
