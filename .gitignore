@@ -76,6 +76,3 @@ cypress/videos/
 .yarn
 .yarnrc.yml
 yarn.lock
-
-# SCSS
-*.scss.d.ts

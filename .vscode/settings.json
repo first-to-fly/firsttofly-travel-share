@@ -120,14 +120,6 @@
   // Run on Save
   "runOnSave.commands": [
     //
-    {
-      // Match scss files except names start with `_`.
-      "match": ".*\\.scss$",
-      "command": "set -x && eval \"$(fnm env)\" && npm_config_yes=true npx typed-scss-modules ${file}",
-      "runIn": "backend",
-      "runningStatusMessage": "Generating .d.ts for ${fileBasename}...",
-      "finishStatusMessage": "${fileBasename}'s .d.ts compiled."
-    }
   ],
 
   // Editor - Code
@@ -136,5 +128,9 @@
   },
 
   // cSpell
-  "cSpell.words": ["clonedeep", "typedefs"]
+  "cSpell.words": [
+    //
+    "clonedeep",
+    "typedefs"
+  ]
 }
