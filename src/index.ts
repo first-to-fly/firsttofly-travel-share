@@ -1,1 +1,3 @@
-import "./sample";
+console.log("Hello world");
+
+export {};
