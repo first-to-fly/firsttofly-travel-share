@@ -16,7 +16,7 @@ pipeline {
 
   options {
     timeout(time: 2, unit: 'HOURS')
-    disableConcurrentBuilds()
+    // disableConcurrentBuilds() Allows concurrency as we have milestones later
     parallelsAlwaysFailFast()
   }
 
@@ -27,6 +27,11 @@ pipeline {
   stages {
 
     stage('Setup') { steps { script {
+
+      // Abort previous builds of current branch
+      def buildNumber = env.BUILD_NUMBER as int
+      if (buildNumber > 1) milestone(buildNumber - 1)
+      milestone(buildNumber)
 
       wrap([$class: 'BuildUser']) { script {
         try {
