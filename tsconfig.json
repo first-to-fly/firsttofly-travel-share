@@ -77,13 +77,14 @@
   "include": [
     //
     "**/*.*.js",
-    "**/*.*.ts",
-    "cypress",
-    "test",
-    "src"
+    "**/*.js",
+    "**/*.jsx",
+    "**/*.ts",
+    "**/*.tsx"
   ],
   "exclude": [
     //
+    "build",
     "node_modules"
   ]
 }

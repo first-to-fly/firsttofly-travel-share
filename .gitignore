@@ -65,10 +65,6 @@ node_modules/
 # Lint
 tsconfig.staged.json
 
-# Cypress
-cypress/screenshots/
-cypress/videos/
-
 # SSH
 .ssh/
 
@@ -76,6 +72,3 @@ cypress/videos/
 .yarn
 .yarnrc.yml
 yarn.lock
-
-# SCSS
-*.scss.d.ts
