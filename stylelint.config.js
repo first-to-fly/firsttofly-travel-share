@@ -6,6 +6,7 @@ module.exports = {
   ],
 
   rules: {
+    "color-function-notation": "legacy",
     indentation: [2, { ignore: "value" }],
     "max-line-length": 200,
     "selector-pseudo-class-no-unknown": [true, { ignorePseudoClasses: ["global"] }],
