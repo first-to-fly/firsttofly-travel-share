@@ -57,9 +57,6 @@ pipeline {
 
       env.GIT_COMMITTER_EMAIL = GIT_COMMITTER_EMAIL.split("\n")[0]
 
-      def JENKINS_CONFIG_JSON_STRING = readFile(file:"${WORKSPACE}/jenkins.config.json")
-      JENKINS_CONFIG = new JsonSlurperClassic().parseText(JENKINS_CONFIG_JSON_STRING)
-
       sh "printenv | sort"
 
     }}}
