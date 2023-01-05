@@ -5,9 +5,6 @@ import java.util.*
 import groovy.json.*
 
 
-def JENKINS_CONFIG
-
-
 // Declarative Pipeline
 // https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline
 pipeline {
@@ -57,9 +54,6 @@ pipeline {
 
       env.GIT_COMMITTER_EMAIL = GIT_COMMITTER_EMAIL.split("\n")[0]
 
-      def JENKINS_CONFIG_JSON_STRING = readFile(file:"${WORKSPACE}/jenkins.config.json")
-      JENKINS_CONFIG = new JsonSlurperClassic().parseText(JENKINS_CONFIG_JSON_STRING)
-
       sh "printenv | sort"
 
     }}}
@@ -80,83 +74,25 @@ pipeline {
         sh "./pipeline/lint"
       }}
 
-      boolean TESTED = false
-
-      JENKINS_CONFIG.testEnvkey.each { BRANCH_PATTERN, TEST_ENVKEY_CREDENTIALS ->
-
-        if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
-
-          echo "Matched '${BRANCH_PATTERN}'"
-
-          JENKINS_CONFIG.testEnvkey[BRANCH_PATTERN].each { TEST_ENVKEY_CREDENTIAL ->
-
-            if (!TEST_ENVKEY_CREDENTIAL) {
-              echo "No TEST_ENVKEY credential found."
-              return
-            }
-
-            TESTED = true
-
-            PARALLELS["Test ${BRANCH_PATTERN}"] = { script {
-              withCredentials([string(credentialsId: TEST_ENVKEY_CREDENTIAL, variable: 'ENVKEY')]) {
-                sh "./pipeline/test"
-              }
-            }}
-
-          }
-        }
-      }
-
-      if (!TESTED) {
-        PARALLELS["Test without EnvKey"] = { script {
+      PARALLELS["Test"] = { script {
+        withCredentials([
+        ]) {
           sh "./pipeline/test"
-        }}
-      }
-
-      boolean DELIVERED = false
-
-      JENKINS_CONFIG.deployEnvkey.each { BRANCH_PATTERN, DEPLOY_ENVKEY_CREDENTIALS ->
-
-        if (BRANCH_NAME ==~ /$BRANCH_PATTERN/) {
-
-          echo "Matched '${BRANCH_PATTERN}'"
-
-          JENKINS_CONFIG.deployEnvkey[BRANCH_PATTERN].each { DEPLOY_ENVKEY_CREDENTIAL ->
-
-            if (!DEPLOY_ENVKEY_CREDENTIAL) {
-              echo "No DEPLOY_ENVKEY credential found."
-              return
-            }
-
-            DELIVERED = true
-
-            PARALLELS["Deliver & Deploy ${BRANCH_PATTERN}"] = { script {
-              withCredentials([string(credentialsId: DEPLOY_ENVKEY_CREDENTIAL, variable: 'DEPLOY_ENVKEY')]) {
-                sh "./pipeline/deliver"
-                sh "./pipeline/deploy"
-              }
-            }}
-
-          }
         }
-      }
+      }}
 
-      if (!DELIVERED) {
-        PARALLELS["Deliver without EnvKey"] = { script {
+      PARALLELS['Deliver & Deploy'] = { script {
+        withCredentials([
+        ]) {
           sh "./pipeline/deliver"
-        }}
-      }
+          sh "./pipeline/deploy"
+        }
+      }}
 
-      // Don't parallel, else will overflow Docker!
+      PARALLELS.failFast = true
 
-      // PARALLELS.failFast = true
+      parallel PARALLELS
 
-      // parallel PARALLELS
-
-      PARALLELS.each { STAGE, SCRIPT ->
-        echo "Running ${STAGE}..."
-        SCRIPT()
-      }
     }}}
   }
 
