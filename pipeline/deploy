@@ -7,7 +7,7 @@ function main() {
 
   echo -e "${OK_COLOR}==> Deploying app..."
 
-  loadDeployEnvKey --
+  loadDeployEnvKey --optional
 
 }
 
