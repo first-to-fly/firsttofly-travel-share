@@ -5,9 +5,6 @@ import java.util.*
 import groovy.json.*
 
 
-def JENKINS_CONFIG
-
-
 // Declarative Pipeline
 // https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline
 pipeline {
