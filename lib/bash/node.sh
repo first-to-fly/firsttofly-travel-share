@@ -25,7 +25,8 @@ function checkNodeVersion() {
     if ! fnm ls | grep "${EXPECTED_NODE_VERSION}" >/dev/null; then
       (
         set -x
-        fnm install "${EXPECTED_NODE_VERSION}"
+        fnm install "${EXPECTED_NODE_VERSION}" ||
+          fnm install "${EXPECTED_NODE_VERSION}"
       ) || (
         # shellcheck source=/dev/null
         [[ -s "${HOME}/.nvm/nvm.sh" ]] && \. "${HOME}/.nvm/nvm.sh"
