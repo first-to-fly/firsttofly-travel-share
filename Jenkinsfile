@@ -9,7 +9,7 @@ import groovy.json.*
 // https://jenkins.io/doc/book/pipeline/syntax/#declarative-pipeline
 pipeline {
 
-  agent any
+  agent { label 'mac' }
 
   options {
     timeout(time: 2, unit: 'HOURS')
