@@ -233,14 +233,16 @@ function dependency() {
       (
         set -x
         (
-          curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" |
+          VERSION=$(curl https://envkey-releases.s3.amazonaws.com/latest/envkeysource-version.txt) &&
+            curl -s "https://envkey-releases.s3.amazonaws.com/envkeysource/release_artifacts/${VERSION}/install.sh" |
             bash &&
             command -v "envkey-source"
         ) ||
           (
-            curl -s "https://raw.githubusercontent.com/envkey/envkey-source/master/install.sh" |
+            VERSION=$(curl https://envkey-releases.s3.amazonaws.com/latest/envkeysource-version.txt) &&
+              curl -s "https://envkey-releases.s3.amazonaws.com/envkeysource/release_artifacts/${VERSION}/install.sh" |
               sed "s|sudo ||g" |
-              bash &&
+                bash &&
               command -v "envkey-source"
           )
       )
@@ -418,7 +420,11 @@ function loadEnvKey() {
 
   echo "Runing envkey-source..."
   # set -x
-  eval "$(envkey-source "${ENVKEY}")"
+  if command -v envkey-source-v2 >/dev/null; then
+    eval "$(envkey-source-v2)"
+  else
+    eval "$(envkey-source)"
+  fi
 
   local ENVKEY_AFTER="${TEMP_FOLDER}/envkey.after"
   printenv | sort >"${ENVKEY_AFTER}"
@@ -466,7 +472,12 @@ function loadDeployEnvKey() {
 
   echo "Runing envkey-source..."
   # set -x
-  eval "$(envkey-source "${DEPLOY_ENVKEY}")"
+  export ENVKEY="${DEPLOY_ENVKEY}"
+  if command -v envkey-source-v2 >/dev/null; then
+    eval "$(envkey-source-v2)"
+  else
+    eval "$(envkey-source)"
+  fi
 
   local ENVKEY_AFTER="${TEMP_FOLDER}/envkey.after"
   printenv | sort >"${ENVKEY_AFTER}"
