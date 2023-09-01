@@ -48,7 +48,7 @@ function main() {
     rm -rf "./yarn.lock"
     rm -rf "./yarnrc"
     mv -f "./.yarnrc.generated.yml" "./.yarnrc.yml"
-    npm install --location=global "npm@latest"
+    npm install --location=global "npm@latest" || true # Latest npm may not support current Node.js version
     npm install --location=global "yarn@latest"
     npx yarn set version "stable" ||
       npx yarn set version "stable"
