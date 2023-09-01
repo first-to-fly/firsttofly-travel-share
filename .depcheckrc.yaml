@@ -3,6 +3,7 @@ ignores:
     "@types/eslint",
     "@types/lodash.clonedeep",
     "eslint-config-prettier",
+    "postcss",
     "prettier-eslint",
     "prettier-eslint-cli",
     "prettier-stylelint",
