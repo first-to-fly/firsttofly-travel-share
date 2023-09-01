@@ -128,9 +128,5 @@
   },
 
   // cSpell
-  "cSpell.words": [
-    //
-    "clonedeep",
-    "typedefs"
-  ]
+  "cSpell.words": ["clonedeep", "postcss", "typedefs"]
 }
