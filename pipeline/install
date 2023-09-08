@@ -61,7 +61,7 @@ function main() {
       set -x
       yarn install ||
         yarn install
-    )
+    ) | grep --invert-match "can't be found in the cache"
   else
     (
       set -x
