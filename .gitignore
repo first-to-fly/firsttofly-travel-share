@@ -68,7 +68,5 @@ tsconfig.staged.json
 # SSH
 .ssh/
 
-# Yarn
-.yarn
-.yarnrc.yml
-yarn.lock
+# PNPM
+pnpm-lock.yaml

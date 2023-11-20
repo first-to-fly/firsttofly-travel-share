@@ -63,6 +63,6 @@ function checkNodeVersion() {
   fi
 }
 
-dependency "yarn"
+dependency "pnpm"
 
 checkNodeVersion

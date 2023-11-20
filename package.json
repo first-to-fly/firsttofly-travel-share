@@ -59,18 +59,11 @@
     "nodemon": "3.0.1",
     "postcss": "8.4.31",
     "prettier": "3.1.0",
-    "prettier-eslint": "16.1.2",
-    "prettier-eslint-cli": "8.0.1",
-    "prettier-stylelint": "0.4.2",
     "stylelint": "15.11.0",
     "stylelint-config-prettier-scss": "1.0.0",
     "stylelint-config-standard-scss": "11.1.0",
     "ts-node": "10.9.1",
     "tsconfig-paths": "4.2.0",
     "typescript": "5.2.2"
-  },
-  "resolutions": {
-    "eslint-config-next/eslint-plugin-react-hooks": "*"
-  },
-  "packageManager": "yarn@4.0.2"
+  }
 }
