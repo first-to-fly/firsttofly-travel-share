@@ -50,6 +50,8 @@ function main() {
     mv -f "./.yarnrc.generated.yml" "./.yarnrc.yml"
     npm install --location=global "npm@latest" || true # Latest npm may not support current Node.js version
     npm install --location=global "yarn@latest"
+    npm install --location=global "corepack@latest"
+    corepack enable
     npx yarn set version "stable" ||
       npx yarn set version "stable"
   )
