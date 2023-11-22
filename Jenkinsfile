@@ -60,33 +60,59 @@ pipeline {
 
     stage('CI/CD/CD') { steps { script {
 
-      sh "./pipeline/clean"
-      sh "./pipeline/install"
+      configFileProvider([configFile(fileId: "${BRANCH_NAME}", targetLocation: './.env')]) {
 
-      def PARALLELS = [:]
+        sh "./pipeline/clean"
 
-      PARALLELS["Lint"] = { script {
-        sh "./pipeline/lint"
-      }}
-
-      PARALLELS["Test"] = { script {
         withCredentials([
         ]) {
-          sh "./pipeline/test"
+          configFileProvider([configFile(fileId: "${BRANCH_NAME}.install", targetLocation: './.env.install')]) {
+            sh "./pipeline/install"
+          }
         }
-      }}
 
-      PARALLELS['Deliver & Deploy'] = { script {
-        withCredentials([
-        ]) {
-          sh "./pipeline/deliver"
-          sh "./pipeline/deploy"
-        }
-      }}
+        def PARALLELS = [:]
 
-      PARALLELS.failFast = true
+        PARALLELS["Lint"] = { script {
+          withCredentials([
+          ]) {
+            configFileProvider([configFile(fileId: "${BRANCH_NAME}.lint", targetLocation: './.env.lint')]) {
+              sh "./pipeline/lint"
+            }
+          }
+        }}
 
-      parallel PARALLELS
+        PARALLELS["Test"] = { script {
+          withCredentials([
+          ]) {
+            configFileProvider([configFile(fileId: "${BRANCH_NAME}.test", targetLocation: './.env.test')]) {
+              sh "./pipeline/test"
+            }
+          }
+        }}
+
+        PARALLELS['Deliver & Deploy'] = { script {
+
+          withCredentials([
+          ]) {
+            configFileProvider([configFile(fileId: "${BRANCH_NAME}.deliver", targetLocation: './.env.deliver')]) {
+              sh "./pipeline/deliver"
+            }
+          }
+
+          withCredentials([
+          ]) {
+            configFileProvider([configFile(fileId: "${BRANCH_NAME}.deploy", targetLocation: './.env.deploy')]) {
+              sh "./pipeline/deploy"
+            }
+          }
+        }}
+
+        PARALLELS.failFast = true
+
+        parallel PARALLELS
+
+      }
 
     }}}
   }
