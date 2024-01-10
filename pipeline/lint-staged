@@ -102,7 +102,7 @@ function main() {
         set -x
         git stash pop || true
       )
-      return ${EXIT_CODE}
+      return "${EXIT_CODE}"
     fi
     set -e
   fi
