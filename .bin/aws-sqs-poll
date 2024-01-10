@@ -158,7 +158,7 @@ function main() {
               --arg messageBody "${MESSAGE_BODY}" \
               --arg messageAttributes "${MESSAGE_ATTRIBUTES}" \
               --arg exitCode "${EXIT_CODE}" \
-              --arg consoleLog "$(tail -80 <"${LOG_FILE}")" \
+              --arg consoleLog "$(tail -80 <"${LOG_FILE}" || true)" \
               '.main = {
                 "attachments": [
                   {
@@ -196,7 +196,7 @@ function main() {
             --arg messageBody "${MESSAGE_BODY}" \
             --arg messageAttributes "${MESSAGE_ATTRIBUTES}" \
             --arg exitCode "${EXIT_CODE}" \
-            --arg consoleLog "$(tail -80 <"${LOG_FILE}")" \
+            --arg consoleLog "$(tail -80 <"${LOG_FILE}" || true)" \
             '.main = {
               "attachments": [
                 {
