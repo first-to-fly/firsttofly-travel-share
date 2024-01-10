@@ -370,7 +370,7 @@ function loadDotEnv() {
         KEY="$(sed -E "s|=.*$||" <<<"${LINE}")"
         # echo "KEY = '${KEY}'"
 
-        if [[ -z "$(eval "echo \${${KEY}:-}")" ]]; then
+        if [[ -z "$(eval "echo \${${KEY}:-}" || true)" ]]; then
           export "${LINE?}"
           echo "Loaded '${KEY}' from .env"
         fi
