@@ -186,8 +186,8 @@ function logFormat() {
 function registerLogger() {
   echo
   exec 3>&1
-  exec > >(logFormat)
-  exec 2> >(logFormat --error)
+  exec > >(logFormat || true)
+  exec 2> >(logFormat --error || true)
 }
 
 LOCAL_BOILERPLATE_LOGGER="${BOILERPLATE_LOGGER:-true}"
