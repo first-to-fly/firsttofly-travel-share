@@ -5,6 +5,21 @@ source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
 
 function main() {
 
+  echo -e "${OK_COLOR}==> Cleaning up previous temp folders..."
+
+  (
+    find "/var/folders" \
+      -type "d" \
+      -name ".boilerplate" \
+      2>/dev/null ||
+      true
+  ) | while IFS='' read -r BOILERPLATE_FOLDER || [[ -n "${BOILERPLATE_FOLDER}" ]]; do
+    (
+      set -x
+      rm -rf "${BOILERPLATE_FOLDER%/*}"
+    )
+  done
+
   echo -e "${OK_COLOR}==> Pushing published changes from current branch to others..."
 
   local GIT_REMOTE_URL
@@ -54,7 +69,8 @@ function main() {
     git branch --list --remote |
       grep "origin" |
       grep --invert-match "archived/" |
-      sed 's|^.*origin/||'
+      sed 's|^.*origin/||' ||
+      true
   )
 
   declare -a CLONE_PIDS=()
@@ -98,7 +114,8 @@ function main() {
       jq \
         --raw-output \
         ".dependencies[]" \
-        <"${TEMP_DIR}/${CURRENT_BRANCH}/.boilerplate/config.json"
+        <"${TEMP_DIR}/${CURRENT_BRANCH}/.boilerplate/config.json" ||
+        true
     )
     # echo "DEPENDENCIES = '${DEPENDENCIES}'"
 
@@ -158,7 +175,8 @@ function main() {
       jq \
         --raw-output \
         ".dependencies[]" \
-        <"${TEMP_DIR}/${CURRENT_BRANCH}/.boilerplate/config.json"
+        <"${TEMP_DIR}/${CURRENT_BRANCH}/.boilerplate/config.json" ||
+        true
     )
 
     if [[ "${UPGRADE_REQUIRED}" == "true" ]]; then
@@ -208,19 +226,6 @@ function main() {
     set -x
     rm -rf "${TEMP_DIR}"
   )
-
-  (
-    find "/var/folders" \
-      -type "d" \
-      -name ".boilerplate" \
-      2>/dev/null ||
-      true
-  ) | while IFS='' read -r BOILERPLATE_FOLDER || [[ -n "${BOILERPLATE_FOLDER}" ]]; do
-    (
-      set -x
-      rm -rf "${BOILERPLATE_FOLDER%/*}"
-    )
-  done
 
 }
 

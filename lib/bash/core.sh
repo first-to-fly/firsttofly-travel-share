@@ -186,8 +186,8 @@ function logFormat() {
 function registerLogger() {
   echo
   exec 3>&1
-  exec > >(logFormat)
-  exec 2> >(logFormat --error)
+  exec > >(logFormat || true)
+  exec 2> >(logFormat --error || true)
 }
 
 LOCAL_BOILERPLATE_LOGGER="${BOILERPLATE_LOGGER:-true}"
@@ -409,7 +409,7 @@ function loadDotEnv() {
         KEY="$(sed -E "s|=.*$||" <<<"${LINE}")"
         # echo "KEY = '${KEY}'"
 
-        if [[ -z "$(eval "echo \${${KEY}:-}")" ]]; then
+        if [[ -z "$(eval "echo \${${KEY}:-}" || true)" ]]; then
           export "${LINE?}"
           echo "Loaded '${KEY}' from .env"
         fi
@@ -460,9 +460,9 @@ function loadEnvKey() {
   echo "Runing envkey-source..."
   # set -x
   if command -v envkey-source-v2 >/dev/null; then
-    eval "$(envkey-source-v2)"
+    eval "$(envkey-source-v2 || true)"
   else
-    eval "$(envkey-source)"
+    eval "$(envkey-source || true)"
   fi
 
   local ENVKEY_AFTER="${TEMP_FOLDER}/envkey.after"
@@ -477,68 +477,6 @@ function loadEnvKey() {
   rm -rf "${TEMP_FOLDER}"
 
   echo "Done loading EnvKey."
-}
-
-function loadDeployEnvKey() {
-
-  local OPTIONAL="false"
-  if [[ "$*" == *"--optional"* || "$*" == *"-o"* ]]; then
-    OPTIONAL="true"
-  fi
-
-  loadDotEnv
-
-  echo
-  echo "Loading Deploy EnvKey..."
-
-  if [[ "${OPTIONAL}" != "true" && -z "${DEPLOY_ENVKEY:-}" ]]; then
-    echo "Missing DEPLOY_ENVKEY." >&2
-    return 1
-  fi
-
-  if [[ "${OPTIONAL}" == "true" && -z "${DEPLOY_ENVKEY:-}" ]]; then
-    echo "DEPLOY_ENVKEY not found. Skipped loading."
-    return
-  fi
-
-  dependency "envkey-source"
-
-  local TEMP_FOLDER
-  TEMP_FOLDER="$(mktemp -d)"
-
-  local ENVKEY_BEFORE="${TEMP_FOLDER}/envkey.before"
-  printenv | sort >"${ENVKEY_BEFORE}"
-
-  echo "Runing envkey-source..."
-  # set -x
-  export ENVKEY="${DEPLOY_ENVKEY}"
-  if command -v envkey-source-v2 >/dev/null; then
-    eval "$(envkey-source-v2)"
-  else
-    eval "$(envkey-source)"
-  fi
-
-  local ENVKEY_AFTER="${TEMP_FOLDER}/envkey.after"
-  printenv | sort >"${ENVKEY_AFTER}"
-
-  echo "Found:"
-  diff "${ENVKEY_BEFORE}" "${ENVKEY_AFTER}" |
-    grep -E "[A-Z_]+=" |
-    sed 's|=.*$||' ||
-    true
-
-  rm -rf "${TEMP_FOLDER}"
-
-  echo "Done loading Deploy EnvKey."
-
-  if [[ -n "${SERVICE_ENVKEY:-}" ]]; then
-    if [[ -z "${ENVKEY:-}" ]]; then
-      export ENVKEY="${SERVICE_ENVKEY}"
-      echo "SERVICE_ENVKEY exported as ENVKEY."
-    else
-      echo "SERVICE_ENVKEY ignored as ENVKEY exists."
-    fi
-  fi
 }
 
 # AWS

@@ -85,7 +85,7 @@ function main() {
           --arg "command" "${COMMAND}" \
           --arg exitCode "${EXIT_CODE}" \
           --arg errorMessage "${ERROR_MESSAGE}" \
-          --arg consoleLog "$(tail -80 <"${LOG_FILE}")" \
+          --arg consoleLog "$(tail -80 <"${LOG_FILE}" || true)" \
           '.main = {
             "attachments": [
               {

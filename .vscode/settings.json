@@ -124,7 +124,7 @@
 
   // Editor - Code
   "editor.codeActionsOnSave": {
-    "source.fixAll": true
+    "source.fixAll": "always"
   },
 
   // cSpell
