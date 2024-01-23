@@ -63,6 +63,4 @@ function checkNodeVersion() {
   fi
 }
 
-dependency "pnpm"
-
 checkNodeVersion
