@@ -340,6 +340,8 @@ function loadDotEnv() {
     echo
     echo "Loading .env..."
 
+    eval "$(sed -E 's|^([a-zA-Z][a-zA-Z0-9_]*)=|export \1=|' <./.env || true)"
+
     while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
 
       if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
@@ -349,7 +351,6 @@ function loadDotEnv() {
         # echo "KEY = '${KEY}'"
 
         if [[ -z "$(eval "echo \${${KEY}:-}" || true)" ]]; then
-          export "${LINE?}"
           echo "Loaded '${KEY}' from .env"
         fi
 
