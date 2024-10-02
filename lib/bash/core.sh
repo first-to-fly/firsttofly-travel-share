@@ -12,16 +12,12 @@ fi
 BOILERPLATE_CORE_IMPORTED="true"
 
 # Path
-if [[ "${PATH}" != *"/usr/sbin"* && -d "/usr/sbin" ]]; then
-  export PATH="/usr/sbin:${PATH}"
-fi
-
-if [[ "${PATH}" != *"/usr/local/bin"* && -d "/usr/local/bin" ]]; then
-  export PATH="/usr/local/bin:${PATH}"
-fi
-
-if [[ "${PATH}" != *"/opt/homebrew/bin"* && -d "/opt/homebrew/bin" ]]; then
-  export PATH="/opt/homebrew/bin:${PATH}"
+if (command -v "brew" >/dev/null); then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  export HOMEBREW_PREFIX="${HOMEBREW_PREFIX}"
+  if [[ "${PATH}" != *"${HOMEBREW_PREFIX}/bin"* && -d "${HOMEBREW_PREFIX}/bin" ]]; then
+    export PATH="${HOMEBREW_PREFIX}/bin:${PATH}"
+  fi
 fi
 
 if [[ "${PATH}" != *"${PWD}/.bin"* && -d "${PWD}/.bin" ]]; then
@@ -362,6 +358,8 @@ function loadDotEnv() {
     echo
     echo "Loading .env..."
 
+    eval "$(sed -E 's|^([a-zA-Z][a-zA-Z0-9_]*)=|export \1=|' <./.env || true)"
+
     while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
 
       if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
@@ -371,7 +369,6 @@ function loadDotEnv() {
         # echo "KEY = '${KEY}'"
 
         if [[ -z "$(eval "echo \${${KEY}:-}" || true)" ]]; then
-          export "${LINE?}"
           echo "Loaded '${KEY}' from .env"
         fi
 
