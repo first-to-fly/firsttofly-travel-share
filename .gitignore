@@ -51,5 +51,6 @@ Thumbs.db
 *.wmv
 
 # Common
+.bin/jq
 .env
 .env.*
