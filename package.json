@@ -19,7 +19,7 @@
     "build:tsc": "tsc --project ./tsconfig.build.json",
     "build:node": "npx --yes concurrently@latest --kill-others-on-fail --names \"tsc-declaration,tsc\" --prefix-colors \"blue,cyan\" \"npm run build:tsc-declaration\" \"npm run build:tsc\"",
     "build": "npm run build:node",
-    "postbuild": "",
+    "postbuild": "echo",
     "start:node": "NODE_PATH=./build node ./build",
     "start": "npm run start:node",
     "lint:eslint": "eslint --ignore-pattern \"submodules/**\" \"./**/*.{js,jsx,ts,tsx}\"",
