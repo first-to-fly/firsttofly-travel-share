@@ -69,5 +69,6 @@ tsconfig.staged.json
 # SSH
 .ssh/
 
-# PNPM
-pnpm-lock.yaml
+# Lock files
+bun.lockb
+yarn.lock

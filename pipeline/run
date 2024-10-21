@@ -42,9 +42,6 @@ function main() {
   export NODE_ENV="production"
   export BOILERPLATE_LOG_TIME="true"
 
-  local NPM
-  NPM="$(command -v npm)"
-
   # "time": Show running time of the process
   # "wrap": Show timestamp at the beginning of the command
   # "tee": outputs to both file and console
@@ -53,7 +50,7 @@ function main() {
   (
     set -x
     time wrap \
-      "${NPM}" run "${COMMAND[@]}" "$@" |
+      bun run "${COMMAND[@]}" "$@" |
       tee -a -i "${LOG_FILE}"
   )
   local EXIT_CODE="$?"

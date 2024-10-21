@@ -42,39 +42,23 @@ function main() {
     )
   fi
 
-  (
-    set -x
-    rm -rf "./package-lock.json"
-    rm -rf "./yarn.lock"
-    rm -rf "./pnpm-lock.yaml"
-    npm install --location=global "npm@latest" || true # Latest npm may not support current Node.js version
-    npm install --location=global "corepack@latest"
-    corepack enable
-    corepack prepare pnpm@latest --activate
-  )
-
   if [[ -z "$*" ]]; then
     (
       set -x
-      pnpm install ||
-        pnpm install
+      npm install --global bun@latest
+      bun install --yarn
     )
   else
     (
       set -x
-      pnpm add "$@"
+      bun add --yarn "$@"
     )
   fi
-
-  (
-    set -x
-    pnpm run "postinstall"
-  )
 
   if [[ "${PRODUCTION}" != "true" ]]; then
     (
       set -x
-      pnpm audit || true
+      bunx "yarn@<2" audit || true
     )
     sleep 1
   fi

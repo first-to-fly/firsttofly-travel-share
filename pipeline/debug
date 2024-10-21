@@ -71,12 +71,12 @@ function main() {
   if [[ "${COMMAND}" == *".ts" ]]; then
     (
       set -x
-      pnpm run ts-node "${COMMAND[@]}" "$@"
+      bun run ts-node "${COMMAND[@]}" "$@"
     )
   else
     (
       set -x
-      pnpm run "${COMMAND[@]}" "$@"
+      bun run "${COMMAND[@]}" "$@"
     )
   fi
 

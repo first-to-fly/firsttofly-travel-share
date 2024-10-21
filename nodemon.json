@@ -7,7 +7,7 @@
   ],
   "ext": "js,jsx,ts,tsx,json,html,css,scss,less,sss",
   "execMap": {
-    "js": "npm run ts-node",
-    "ts": "npm run ts-node"
+    "js": "bun run ts-node",
+    "ts": "bun run ts-node"
   }
 }
