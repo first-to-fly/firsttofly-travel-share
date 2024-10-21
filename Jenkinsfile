@@ -91,14 +91,4 @@ pipeline {
     }}}
   }
 
-  post {
-
-    failure { script {
-      sh "./.bin/slack-send-build-failure"
-    }}
-
-    success { script {
-      sh "./.bin/slack-send-build-success"
-    }}
-  }
 }
