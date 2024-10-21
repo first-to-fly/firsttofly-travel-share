@@ -201,18 +201,6 @@ function dependency() {
     echo "Dependency \"${DEPENDENCY_NAME}\" not found."
 
     case "${DEPENDENCY_NAME}" in
-    aws)
-      if command -v "brew" >/dev/null; then
-        (
-          set -x
-          brew install "awscli"
-        )
-        echo
-      else
-        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
-        return 1
-      fi
-      ;;
     bc)
       if command -v "brew" >/dev/null; then
         (
@@ -435,21 +423,4 @@ function loadEnvKey() {
   rm -rf "${TEMP_FOLDER}"
 
   echo "Done loading EnvKey."
-}
-
-# AWS
-function checkAWSCredentials() {
-
-  if [[ -z "${AWS_ACCESS_KEY_ID:-}" ]]; then
-    echo "Missing AWS_ACCESS_KEY_ID." >&2
-    return 1
-  fi
-
-  if [[ -z "${AWS_SECRET_ACCESS_KEY:-}" ]]; then
-    echo "Missing AWS_SECRET_ACCESS_KEY." >&2
-    return 1
-  fi
-
-  export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-"us-east-1"}"
-
 }
