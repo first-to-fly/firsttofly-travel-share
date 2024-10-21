@@ -12,16 +12,12 @@ fi
 BOILERPLATE_CORE_IMPORTED="true"
 
 # Path
-if [[ "${PATH}" != *"/usr/sbin"* && -d "/usr/sbin" ]]; then
-  export PATH="/usr/sbin:${PATH}"
-fi
-
-if [[ "${PATH}" != *"/usr/local/bin"* && -d "/usr/local/bin" ]]; then
-  export PATH="/usr/local/bin:${PATH}"
-fi
-
-if [[ "${PATH}" != *"/opt/homebrew/bin"* && -d "/opt/homebrew/bin" ]]; then
-  export PATH="/opt/homebrew/bin:${PATH}"
+if (command -v "brew" >/dev/null); then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  export HOMEBREW_PREFIX="${HOMEBREW_PREFIX}"
+  if [[ "${PATH}" != *"${HOMEBREW_PREFIX}/bin"* && -d "${HOMEBREW_PREFIX}/bin" ]]; then
+    export PATH="${HOMEBREW_PREFIX}/bin:${PATH}"
+  fi
 fi
 
 if [[ "${PATH}" != *"${PWD}/.bin"* && -d "${PWD}/.bin" ]]; then
@@ -205,18 +201,6 @@ function dependency() {
     echo "Dependency \"${DEPENDENCY_NAME}\" not found."
 
     case "${DEPENDENCY_NAME}" in
-    aws)
-      if command -v "brew" >/dev/null; then
-        (
-          set -x
-          brew install "awscli"
-        )
-        echo
-      else
-        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
-        return 1
-      fi
-      ;;
     bc)
       if command -v "brew" >/dev/null; then
         (
@@ -401,6 +385,8 @@ function loadDotEnv() {
     echo
     echo "Loading .env..."
 
+    eval "$(sed -E 's|^([a-zA-Z][a-zA-Z0-9_]*)=|export \1=|' <./.env || true)"
+
     while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
 
       if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
@@ -410,7 +396,6 @@ function loadDotEnv() {
         # echo "KEY = '${KEY}'"
 
         if [[ -z "$(eval "echo \${${KEY}:-}" || true)" ]]; then
-          export "${LINE?}"
           echo "Loaded '${KEY}' from .env"
         fi
 
@@ -477,21 +462,4 @@ function loadEnvKey() {
   rm -rf "${TEMP_FOLDER}"
 
   echo "Done loading EnvKey."
-}
-
-# AWS
-function checkAWSCredentials() {
-
-  if [[ -z "${AWS_ACCESS_KEY_ID:-}" ]]; then
-    echo "Missing AWS_ACCESS_KEY_ID." >&2
-    return 1
-  fi
-
-  if [[ -z "${AWS_SECRET_ACCESS_KEY:-}" ]]; then
-    echo "Missing AWS_SECRET_ACCESS_KEY." >&2
-    return 1
-  fi
-
-  export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-"us-east-1"}"
-
 }
