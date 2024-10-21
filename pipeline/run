@@ -31,9 +31,6 @@ function main() {
 
   loadEnvKey --
 
-  local PROJECT_KEY
-  PROJECT_KEY="$(projectKey)"
-
   local LOG_FILE
   LOG_FILE="$(mktemp)"
 
@@ -67,31 +64,7 @@ function main() {
         echo "[Not found]"
     )"
 
-    local DATA
-    DATA="$(
-      echo '{}' |
-        jq \
-          --compact-output \
-          --arg projectKey "${PROJECT_KEY}" \
-          --arg exitCode "${EXIT_CODE}" \
-          --arg errorMessage "${ERROR_MESSAGE}" \
-          --arg consoleLog "$(tail -80 <"${LOG_FILE}" || true)" \
-          '.main = {
-            "attachments": [
-              {
-                "fallback": "<!channel> [\($projectKey)] crashed with exit code \($exitCode)",
-                "color": "danger",
-                "text": "<!channel> *`\($projectKey)`* crashed with exit code *\($exitCode)*.\n\n*Error Message*\n```\($errorMessage)```\n\n*Console Log*\n```\($consoleLog)```",
-              }
-            ]
-          } | .main'
-    )"
-    # echo "DATA = '${DATA}'"
-
-    (
-      # set -x
-      slack-send "${DATA}"
-    )
+    echo "ERROR_MESSAGE = ${ERROR_MESSAGE}"
 
   fi
 

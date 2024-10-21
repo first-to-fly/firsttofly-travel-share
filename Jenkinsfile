@@ -54,51 +54,115 @@ pipeline {
 
       env.GIT_COMMITTER_EMAIL = GIT_COMMITTER_EMAIL.split("\n")[0]
 
+      env.CONFIG_NAME = BRANCH_NAME.replaceAll("/", "_")
+
       sh "printenv | sort"
 
     }}}
 
-    stage('CI/CD/CD') { steps { script {
+    stage('Install') {
 
-      sh "./pipeline/clean"
-      sh "./pipeline/install"
-
-      def PARALLELS = [:]
-
-      PARALLELS["Lint"] = { script {
-        sh "./pipeline/lint"
+      steps { script {
+        sh "./pipeline/install"
       }}
 
-      PARALLELS["Test"] = { script {
-        withCredentials([
-        ]) {
-          sh "./pipeline/test"
+      post {
+        always {
+          jiraSendBuildInfo()
         }
-      }}
+      }
 
-      PARALLELS['Deliver & Deploy'] = { script {
-        withCredentials([
-        ]) {
-          sh "./pipeline/deliver"
-          sh "./pipeline/deploy"
+    }
+
+    stage('CI/CD/CD') {
+
+      failFast true
+
+      parallel {
+
+        stage('Lint') { steps { script {
+          sh "./pipeline/lint"
+        }}}
+
+        stage('Test') { steps { script {
+          def HAS_CONFIG = false
+          try {
+            configFileProvider([configFile(fileId: "${CONFIG_NAME}__test", targetLocation: './.env')]) {
+              echo "Config file found."
+            }
+            HAS_CONFIG = true
+          } catch (error) {
+            echo "No config file found."
+          }
+          if (HAS_CONFIG) {
+            configFileProvider([configFile(fileId: "${CONFIG_NAME}__test", targetLocation: './.env')]) {
+              sh "./pipeline/test"
+            }
+          } else {
+            sh "./pipeline/test"
+          }
+        }}}
+
+        stage('Deliver & Deploy') {
+
+          stages {
+
+            stage('Deliver') { steps { script {
+              def HAS_CONFIG = false
+              try {
+                configFileProvider([configFile(fileId: "${CONFIG_NAME}__deliver", targetLocation: './.env')]) {
+                  echo "Config file found."
+                }
+                HAS_CONFIG = true
+              } catch (error) {
+                echo "No config file found."
+              }
+              if (HAS_CONFIG) {
+                configFileProvider([configFile(fileId: "${CONFIG_NAME}__deliver", targetLocation: './.env')]) {
+                  sh "./pipeline/deliver"
+                }
+              } else {
+                sh "./pipeline/deliver"
+              }
+            }}}
+
+            stage('Deploy') { steps { script {
+              def HAS_CONFIG = false
+              try {
+                configFileProvider([configFile(fileId: "${CONFIG_NAME}__deploy", targetLocation: './.env')]) {
+                  echo "Config file found."
+                }
+                HAS_CONFIG = true
+              } catch (error) {
+                echo "No config file found."
+              }
+              if (HAS_CONFIG) {
+                configFileProvider([configFile(fileId: "${CONFIG_NAME}__deploy", targetLocation: './.env')]) {
+                  sh "./pipeline/deploy"
+                }
+              } else {
+                echo "Skip deploy."
+              }
+            }}}
+
+          }
+
         }
-      }}
 
-      PARALLELS.failFast = true
+      }
 
-      parallel PARALLELS
+      post {
+        always {
+          jiraSendDeploymentInfo environmentId: env.GIT_BRANCH, environmentName: env.GIT_BRANCH, environmentType: [
+            develop: "development",
+            staging: "staging",
+            master: "production",
+          ][env.GIT_BRANCH] ?: "unmapped"
+        }
+      }
 
-    }}}
+    }
+
   }
 
-  post {
-
-    failure { script {
-      sh "./.bin/slack-send-build-failure"
-    }}
-
-    success { script {
-      sh "./.bin/slack-send-build-success"
-    }}
-  }
 }
