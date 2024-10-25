@@ -211,6 +211,7 @@ function dependency() {
       else
         (
           set -x
+          mkdir -p "./.bin"
           curl \
             --silent \
             --location \
