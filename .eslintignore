@@ -1,0 +1,6 @@
+# Config file is ignored by default
+!*.eslintrc.js
+
+build/
+node_modules/
+**/node_modules/

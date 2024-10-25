@@ -1,15 +1,13 @@
 ignores:
   [
-    "@eslint/*",
-    "@stylistic/*",
-    "@types/*",
-    "@typescript-eslint/*",
-    "eslint-*",
-    "globals",
-    "next",
+    "@types/eslint",
+    "@types/lodash.clonedeep",
+    "eslint-config-prettier",
     "postcss",
-    "prettier",
-    "stylelint-*",
-    "tsconfig-*",
+    "prettier-eslint",
+    "prettier-eslint-cli",
+    "prettier-stylelint",
+    "stylelint-config-prettier-scss",
+    "stylelint-config-standard-scss",
   ]
 skip-missing: true
