@@ -55,11 +55,11 @@ function main() {
   rm -rf "./.vscode/launch.json.bak"
 
   # Kill old processes
-  echo "Cleaning up old nodemon processes..."
+  echo "Cleaning up old processes..."
   # shellcheck disable=SC2009
   ps |
     grep --invert-match "grep" |
-    (grep "nodemon" || true) |
+    (grep "bun" || true) |
     (grep "${PWD}/" || true) |
     awk '{print $1}' |
     xargs kill
