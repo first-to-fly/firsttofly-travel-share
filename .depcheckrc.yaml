@@ -1,10 +1,9 @@
 ignores:
   [
-    "@types/eslint",
-    "eslint-config-prettier",
+    "@types/*",
+    "eslint-*",
     "postcss",
-    "stylelint-config-prettier-scss",
-    "stylelint-config-standard-scss",
-    "tsconfig-paths",
+    "stylelint-*",
+    "tsconfig-*",
   ]
 skip-missing: true
