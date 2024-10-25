@@ -34,7 +34,7 @@ function main() {
 
   echo -e "${OK_COLOR}==> Running app..."
 
-  loadEnvKey --
+  loadEnvKey --optional
 
   local LOG_FILE
   LOG_FILE="$(mktemp)"

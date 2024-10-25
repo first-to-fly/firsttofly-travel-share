@@ -2,7 +2,7 @@
   "compilerOptions": {
     /* Basic Options */
     "target": "ESNext" /* Specify ECMAScript target version: 'ES3' (default), 'ES5', 'ES2015', 'ES2016', 'ES2017', 'ES2018', 'ES2019' or 'ESNEXT'. */,
-    "module": "CommonJS" /* ts-node needs CommonJS to run */,
+    "module": "NodeNext" /* ts-node needs CommonJS to run */,
     "lib": [
       //
       "DOM",
@@ -44,7 +44,7 @@
     // "noFallthroughCasesInSwitch": true,    /* Report errors for fallthrough cases in switch statement. */
 
     /* Module Resolution Options */
-    "moduleResolution": "node" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
+    "moduleResolution": "NodeNext" /* Specify module resolution strategy: 'node' (Node.js) or 'classic' (TypeScript pre-1.6). */,
     "baseUrl": "./src" /* Base directory to resolve non-absolute module names. */,
     "paths": {
       "*": [
@@ -76,6 +76,7 @@
   },
   "include": [
     //
+    "eslint.config.mjs",
     "**/*.*.js",
     "**/*.js",
     "**/*.jsx",
