@@ -68,7 +68,7 @@ function main() {
   done < <(
     git branch --list --remote |
       grep "origin" |
-      grep --invert-match "archived/" |
+      grep -v "archived/" |
       sed 's|^.*origin/||' ||
       true
   )
