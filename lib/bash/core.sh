@@ -260,7 +260,9 @@ function dependency() {
       else
         (
           set -x
+          mkdir -p "./.bin"
           curl \
+            --silent \
             --location \
             --output "./.bin/jq" \
             "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
