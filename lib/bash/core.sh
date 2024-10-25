@@ -213,22 +213,17 @@ function dependency() {
         return 1
       fi
       ;;
-    envkey-source)
+    envkey-source-v2)
       (
         set -x
-        (
-          VERSION=$(curl https://envkey-releases.s3.amazonaws.com/latest/envkeysource-version.txt) &&
-            curl -s "https://envkey-releases.s3.amazonaws.com/envkeysource/release_artifacts/${VERSION}/install.sh" |
-            bash &&
-            command -v "envkey-source"
-        ) ||
-          (
-            VERSION=$(curl https://envkey-releases.s3.amazonaws.com/latest/envkeysource-version.txt) &&
-              curl -s "https://envkey-releases.s3.amazonaws.com/envkeysource/release_artifacts/${VERSION}/install.sh" |
-              sed "s|sudo ||g" |
-                bash &&
-              command -v "envkey-source"
-          )
+        VERSION="$(curl -s "https://envkey-releases.s3.amazonaws.com/latest/envkeysource-version.txt")" &&
+          curl -s "https://envkey-releases.s3.amazonaws.com/envkeysource/release_artifacts/${VERSION}/install.sh" |
+          sed \
+            -e 's|envkey-source |envkey-source-v2 |g' \
+            -e 's|envkey-source)|envkey-source-v2)|g' \
+            -e 's|sudo mv \(.*\)|sudo mv \1 \|\| mv \1|g' \
+            -e 's|tar \(.*\)|tar \1; mv envkey-source envkey-source-v2|g' |
+            bash
       )
       ;;
     fnm)
@@ -271,7 +266,9 @@ function dependency() {
       else
         (
           set -x
+          mkdir -p "./.bin"
           curl \
+            --silent \
             --location \
             --output "./.bin/jq" \
             "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
@@ -429,32 +426,21 @@ function loadEnvKey() {
     return
   fi
 
-  dependency "envkey-source"
+  dependency "envkey-source-v2"
 
-  local TEMP_FOLDER
-  TEMP_FOLDER="$(mktemp -d)"
+  echo "Runing envkey-source-v2..."
 
-  local ENVKEY_BEFORE="${TEMP_FOLDER}/envkey.before"
-  printenv | sort >"${ENVKEY_BEFORE}"
-
-  echo "Runing envkey-source..."
-  # set -x
-  if command -v envkey-source-v2 >/dev/null; then
-    eval "$(envkey-source-v2 || true)"
-  else
-    eval "$(envkey-source || true)"
-  fi
-
-  local ENVKEY_AFTER="${TEMP_FOLDER}/envkey.after"
-  printenv | sort >"${ENVKEY_AFTER}"
+  local ENVKEY_SOURCE
+  ENVKEY_SOURCE="$(ENVKEY="${ENVKEY}" envkey-source-v2)"
 
   echo "Found:"
-  diff "${ENVKEY_BEFORE}" "${ENVKEY_AFTER}" |
-    grep -E "[A-Z_]+=" |
-    sed 's|=.*$||' ||
-    true
 
-  rm -rf "${TEMP_FOLDER}"
+  echo "${ENVKEY_SOURCE}" |
+    sed -E "s|[^']*'([^']+)'='[^']*'?[^']*|> \\1\n|g" |
+    (grep "> " || true) |
+    sed -E "s|^[^>]*> |> |"
+
+  eval "${ENVKEY_SOURCE}"
 
   echo "Done loading EnvKey."
 }
