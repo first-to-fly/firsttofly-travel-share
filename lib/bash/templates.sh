@@ -8,7 +8,7 @@ TEMPLATE_FILES=""
 function findTemplateFilesIfNeeded() {
 
   if [[ -z "${TEMPLATE_FILES}" ]]; then
-    TEMPLATE_FILES="$(find "${SRCROOT:-.}" -type f -name "*.template.*" | grep --invert-match "/node_modules/\|/submodules/")"
+    TEMPLATE_FILES="$(find "${SRCROOT:-.}" -type f -name "*.template.*" | grep -v "/node_modules/\|/submodules/")"
   fi
 }
 
