@@ -16,14 +16,6 @@ function main() {
     PRODUCTION="true"
   fi
 
-  if [[ "${HOME:-}" == "/vercel" ]]; then
-    (
-      set -x
-      rm -rf "./node_modules"
-      rm -rf "./submodules/"*"/node_modules"
-    )
-  fi
-
   echo -e "${OK_COLOR}==> Installing dependencies..."
 
   applyEnvVarsToTemplateFiles || removeGeneratedFiles
