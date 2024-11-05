@@ -52,7 +52,7 @@ function main() {
       set -x
       bunx "yarn@<2" audit || true
     )
-    sleep 1
+    sleep 1s || sleep 1
   fi
 
 }
