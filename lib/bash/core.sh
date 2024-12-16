@@ -277,20 +277,12 @@ function dependency() {
       fi
       ;;
     node)
-      if command -v "brew" >/dev/null; then
-        (
-          set -x
-          brew install "node"
-        )
-        echo
-      else
-        dependency "fnm"
-        (
-          set -x
-          fnm install "latest"
-          fnm use "latest"
-        )
-      fi
+      dependency "fnm"
+      (
+        set -x
+        fnm install
+        fnm use
+      )
       ;;
     shellcheck)
       if command -v "brew" >/dev/null; then
