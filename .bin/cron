@@ -47,7 +47,7 @@ function main() {
 
       fi
 
-      sleep 1
+      sleep 1s || sleep 1
       DURATION_MS=$((DURATION_MS + 1000))
 
     done
@@ -69,7 +69,7 @@ function main() {
 
     echo
     echo -e "${OK_COLOR}==> Delaying end for ${CRON_END_DELAY_SECONDS} seconds..."
-    sleep "${CRON_END_DELAY_SECONDS}"
+    sleep "${CRON_END_DELAY_SECONDS}s" || sleep "${CRON_END_DELAY_SECONDS}"
     echo
 
   done
