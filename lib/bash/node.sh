@@ -19,7 +19,7 @@ function checkNodeVersion() {
 
     dependency "fnm"
 
-    eval "$(fnm env || true)"
+    eval "$(fnm env --use-on-cd || true)"
 
     # Check if expected version is already installed
     if ! (fnm ls || true) | grep "${EXPECTED_NODE_VERSION}" >/dev/null; then

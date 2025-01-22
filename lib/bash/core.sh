@@ -280,9 +280,11 @@ function dependency() {
       dependency "fnm"
       (
         set -x
-        fnm install
-        fnm use
+        fnm install --lts
+        fnm default "$(fnm ls-remote --lts | tail -1 || true)"
       )
+      eval "$(fnm env --use-on-cd || true)"
+      fnm use default
       ;;
     shellcheck)
       if command -v "brew" >/dev/null; then
