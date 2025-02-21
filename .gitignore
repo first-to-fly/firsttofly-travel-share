@@ -57,4 +57,4 @@ Thumbs.db
 build/
 
 # Template Files
-*.generated.ts
+*.generated.*
