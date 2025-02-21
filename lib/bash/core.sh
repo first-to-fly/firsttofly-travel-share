@@ -394,7 +394,7 @@ function loadEnvKey() {
 
   dependency "envkey-source-v2"
 
-  echo "Runing envkey-source-v2..."
+  echo "Running envkey-source-v2..."
 
   local ENVKEY_SOURCE
   ENVKEY_SOURCE="$(ENVKEY="${ENVKEY}" envkey-source-v2)"
