@@ -52,7 +52,7 @@ if [[ "${BOILERPLATE_NO_COLOR:-}" == "true" ]]; then
   export DARK_GRAY_COLOR=""
   export LIGHT_RED_COLOR=""
   export LIGHT_GREEN_COLOR=""
-  export LIGHT_YELLO_COLOR=""
+  export LIGHT_YELLOW_COLOR=""
   export LIGHT_BLUE_COLOR=""
   export LIGHT_MAGENTA_COLOR=""
   export LIGHT_CYAN_COLOR=""
@@ -98,7 +98,7 @@ else
   export DARK_GRAY_COLOR="\033[90m"
   export LIGHT_RED_COLOR="\033[91m"
   export LIGHT_GREEN_COLOR="\033[92m"
-  export LIGHT_YELLO_COLOR="\033[93m"
+  export LIGHT_YELLOW_COLOR="\033[93m"
   export LIGHT_BLUE_COLOR="\033[94m"
   export LIGHT_MAGENTA_COLOR="\033[95m"
   export LIGHT_CYAN_COLOR="\033[96m"
@@ -422,7 +422,7 @@ function loadEnvKey() {
 
   dependency "envkey-source-v2"
 
-  echo "Runing envkey-source-v2..."
+  echo "Running envkey-source-v2..."
 
   local ENVKEY_SOURCE
   ENVKEY_SOURCE="$(ENVKEY="${ENVKEY}" envkey-source-v2)"
