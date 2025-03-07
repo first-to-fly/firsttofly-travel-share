@@ -70,5 +70,6 @@ tsconfig.staged.json
 .ssh/
 
 # Lock files
+bun.lock
 bun.lockb
 yarn.lock
