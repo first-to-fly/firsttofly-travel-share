@@ -7,6 +7,13 @@ settings:
 importers:
 
   .:
+    dependencies:
+      '@ts-rest/core':
+        specifier: 3.22.0
+        version: 3.22.0(zod@3.22.4)
+      zod:
+        specifier: 3.22.4
+        version: 3.22.4
     devDependencies:
       '@types/eslint':
         specifier: ^9.6.1
@@ -199,6 +206,14 @@ packages:
 
   '@rushstack/eslint-patch@1.10.5':
     resolution: {integrity: sha512-kkKUDVlII2DQiKy7UstOR1ErJP8kUKAQ4oa+SQtM0K+lPdmmjj0YnnxBgtTVYH7mUKtbsxeFC9y0AmK7Yb78/A==}
+
+  '@ts-rest/core@3.22.0':
+    resolution: {integrity: sha512-65FhsjhdQntITzUwB2M8CTz8bdODwNmVHMBIQiXTZrkmzxA0YiyrShotkDrorSNH9IspU+qavb82ZVlU9ZdWnQ==}
+    peerDependencies:
+      zod: ^3.0.0
+    peerDependenciesMeta:
+      zod:
+        optional: true
 
   '@tsconfig/node10@1.0.11':
     resolution: {integrity: sha512-DcRjDCujK/kCk/cUe8Xz8ZSpm8mS3mNNpta+jGCA6USEDfktlNvm1+IuZ9eTcDbNk41BHwpHHeW+N1lKCz4zOw==}
@@ -1755,6 +1770,9 @@ packages:
     resolution: {integrity: sha512-rVksvsnNCdJ/ohGc6xgPwyN8eheCxsiLM8mxuE/t/mOVqJewPuO1miLpTHQiRgTKCLexL4MeAFVagts7HmNZ2Q==}
     engines: {node: '>=10'}
 
+  zod@3.22.4:
+    resolution: {integrity: sha512-iC+8Io04lddc+mVqQ9AZ7OQ2MrUKGN+oIQyq1vemgt46jwCwLfhq7/pwnBnNXXXZb8VTVLKwp9EDkx+ryxIWmg==}
+
 snapshots:
 
   '@babel/code-frame@7.26.2':
@@ -1857,6 +1875,10 @@ snapshots:
   '@rtsao/scc@1.1.0': {}
 
   '@rushstack/eslint-patch@1.10.5': {}
+
+  '@ts-rest/core@3.22.0(zod@3.22.4)':
+    optionalDependencies:
+      zod: 3.22.4
 
   '@tsconfig/node10@1.0.11': {}
 
@@ -3701,3 +3723,5 @@ snapshots:
   yn@3.1.1: {}
 
   yocto-queue@0.1.0: {}
+
+  zod@3.22.4: {}
