@@ -155,6 +155,7 @@ const config = {
 
     // Allows "_foo" - classes' private vars
     "no-underscore-dangle": "off",
+    "no-restricted-syntax": "off",
 
     // - Our code uses double quotes a lot -> less diff
     // - Convert from JSON -> JS with less diff
