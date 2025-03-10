@@ -66,4 +66,4 @@ function checkNodeVersion() {
 
 checkNodeVersion
 
-corepack disable
+export COREPACK_ENABLE_DOWNLOAD_PROMPT=0
