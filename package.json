@@ -6,9 +6,9 @@
   "author": {
     "name": "NAB Studio"
   },
-  "main": "build",
+  "main": "src",
   "files": [
-    "build/*"
+    "src/*"
   ],
   "scripts": {
     "postinstall": "npx --yes patch-package@latest && echo",

@@ -54,7 +54,7 @@ Thumbs.db
 .bin/jq
 .env
 .env.*
-# build/ Can't build in post-install with --production: missing devDependencies
+build/
 tsconfig.*.tsbuildinfo
 
 # Template Files
