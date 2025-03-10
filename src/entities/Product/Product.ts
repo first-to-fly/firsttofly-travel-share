@@ -1,6 +1,7 @@
 import { EntityType } from "entities/entityType";
-import { EntityZ } from "../entity";
 import { z } from "zod";
+
+import { EntityZ } from "../entity";
 
 
 export const ProductZ = EntityZ.extend({
@@ -20,12 +21,6 @@ export const ProductZ = EntityZ.extend({
   isActive: z.boolean(),
   isPublished: z.boolean(),
   status: z.string().max(50),
-
-  createdAt: z.date(),
-  updatedAt: z.date(),
-  createdBy: z.string().uuid(),
-  updatedBy: z.string().uuid().optional(),
-  deletedAt: z.date().optional(),
 
   sectorGroupId: z.string().uuid(),
   departmentId: z.string().uuid(),
