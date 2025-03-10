@@ -4,7 +4,7 @@
 // 	protoc        v3.20.3
 // source: authorization.proto
 
-package studio_contract
+package ftf_contract
 
 import (
 	protoreflect "google.golang.org/protobuf/reflect/protoreflect"
@@ -900,48 +900,48 @@ func file_authorization_proto_rawDescGZIP() []byte {
 
 var file_authorization_proto_msgTypes = make([]protoimpl.MessageInfo, 18)
 var file_authorization_proto_goTypes = []interface{}{
-	(*Empty)(nil),                           // 0: studio_contract.Empty
-	(*Pong)(nil),                            // 1: studio_contract.Pong
-	(*SimpleResultOutput)(nil),              // 2: studio_contract.SimpleResultOutput
-	(*UserGlobalPermsInput)(nil),            // 3: studio_contract.UserGlobalPermsInput
-	(*UserGlobalPermsOutput)(nil),           // 4: studio_contract.UserGlobalPermsOutput
-	(*UserGlobalActionsInput)(nil),          // 5: studio_contract.UserGlobalActionsInput
-	(*UserGlobalActionsOutput)(nil),         // 6: studio_contract.UserGlobalActionsOutput
-	(*UserEntityPermissionsInput)(nil),      // 7: studio_contract.UserEntityPermissionsInput
-	(*UserEntityPermissionsOutput)(nil),     // 8: studio_contract.UserEntityPermissionsOutput
-	(*UserEntityActionsInput)(nil),          // 9: studio_contract.UserEntityActionsInput
-	(*UserEntityActionsOutput)(nil),         // 10: studio_contract.UserEntityActionsOutput
-	(*UserPermsOnSolelyEntitiesInput)(nil),  // 11: studio_contract.UserPermsOnSolelyEntitiesInput
-	(*UserPermsOnSolelyEntitiesOutput)(nil), // 12: studio_contract.UserPermsOnSolelyEntitiesOutput
-	(*Permissions)(nil),                     // 13: studio_contract.Permissions
-	nil,                                     // 14: studio_contract.UserGlobalActionsOutput.ResultEntry
-	nil,                                     // 15: studio_contract.UserEntityPermissionsOutput.ResultEntry
-	nil,                                     // 16: studio_contract.UserEntityActionsOutput.ResultEntry
-	nil,                                     // 17: studio_contract.UserPermsOnSolelyEntitiesOutput.ResultEntry
+	(*Empty)(nil),                           // 0: ftf_contract.Empty
+	(*Pong)(nil),                            // 1: ftf_contract.Pong
+	(*SimpleResultOutput)(nil),              // 2: ftf_contract.SimpleResultOutput
+	(*UserGlobalPermsInput)(nil),            // 3: ftf_contract.UserGlobalPermsInput
+	(*UserGlobalPermsOutput)(nil),           // 4: ftf_contract.UserGlobalPermsOutput
+	(*UserGlobalActionsInput)(nil),          // 5: ftf_contract.UserGlobalActionsInput
+	(*UserGlobalActionsOutput)(nil),         // 6: ftf_contract.UserGlobalActionsOutput
+	(*UserEntityPermissionsInput)(nil),      // 7: ftf_contract.UserEntityPermissionsInput
+	(*UserEntityPermissionsOutput)(nil),     // 8: ftf_contract.UserEntityPermissionsOutput
+	(*UserEntityActionsInput)(nil),          // 9: ftf_contract.UserEntityActionsInput
+	(*UserEntityActionsOutput)(nil),         // 10: ftf_contract.UserEntityActionsOutput
+	(*UserPermsOnSolelyEntitiesInput)(nil),  // 11: ftf_contract.UserPermsOnSolelyEntitiesInput
+	(*UserPermsOnSolelyEntitiesOutput)(nil), // 12: ftf_contract.UserPermsOnSolelyEntitiesOutput
+	(*Permissions)(nil),                     // 13: ftf_contract.Permissions
+	nil,                                     // 14: ftf_contract.UserGlobalActionsOutput.ResultEntry
+	nil,                                     // 15: ftf_contract.UserEntityPermissionsOutput.ResultEntry
+	nil,                                     // 16: ftf_contract.UserEntityActionsOutput.ResultEntry
+	nil,                                     // 17: ftf_contract.UserPermsOnSolelyEntitiesOutput.ResultEntry
 }
 var file_authorization_proto_depIdxs = []int32{
-	14, // 0: studio_contract.UserGlobalActionsOutput.result:type_name -> studio_contract.UserGlobalActionsOutput.ResultEntry
-	15, // 1: studio_contract.UserEntityPermissionsOutput.result:type_name -> studio_contract.UserEntityPermissionsOutput.ResultEntry
-	16, // 2: studio_contract.UserEntityActionsOutput.result:type_name -> studio_contract.UserEntityActionsOutput.ResultEntry
-	17, // 3: studio_contract.UserPermsOnSolelyEntitiesOutput.result:type_name -> studio_contract.UserPermsOnSolelyEntitiesOutput.ResultEntry
-	8,  // 4: studio_contract.UserEntityActionsOutput.ResultEntry.value:type_name -> studio_contract.UserEntityPermissionsOutput
-	13, // 5: studio_contract.UserPermsOnSolelyEntitiesOutput.ResultEntry.value:type_name -> studio_contract.Permissions
-	0,  // 6: studio_contract.Authorization.Ping:input_type -> studio_contract.Empty
-	3,  // 7: studio_contract.Authorization.CheckIfUserHasGlobalPermissions:input_type -> studio_contract.UserGlobalPermsInput
-	5,  // 8: studio_contract.Authorization.CheckIfUserCanPerformGlobalActions:input_type -> studio_contract.UserGlobalActionsInput
-	7,  // 9: studio_contract.Authorization.CheckIfUserHasPermissionsOnEachEntities:input_type -> studio_contract.UserEntityPermissionsInput
-	7,  // 10: studio_contract.Authorization.CheckIfUserHasPermissionsOnAllEntities:input_type -> studio_contract.UserEntityPermissionsInput
-	9,  // 11: studio_contract.Authorization.CheckIfUserCanPerformActionsOnEachEntities:input_type -> studio_contract.UserEntityActionsInput
-	9,  // 12: studio_contract.Authorization.CheckIfUserCanPerformActionsOnAllEntities:input_type -> studio_contract.UserEntityActionsInput
-	11, // 13: studio_contract.Authorization.GetUserPermissionsOnSolelyEntities:input_type -> studio_contract.UserPermsOnSolelyEntitiesInput
-	1,  // 14: studio_contract.Authorization.Ping:output_type -> studio_contract.Pong
-	4,  // 15: studio_contract.Authorization.CheckIfUserHasGlobalPermissions:output_type -> studio_contract.UserGlobalPermsOutput
-	6,  // 16: studio_contract.Authorization.CheckIfUserCanPerformGlobalActions:output_type -> studio_contract.UserGlobalActionsOutput
-	8,  // 17: studio_contract.Authorization.CheckIfUserHasPermissionsOnEachEntities:output_type -> studio_contract.UserEntityPermissionsOutput
-	2,  // 18: studio_contract.Authorization.CheckIfUserHasPermissionsOnAllEntities:output_type -> studio_contract.SimpleResultOutput
-	10, // 19: studio_contract.Authorization.CheckIfUserCanPerformActionsOnEachEntities:output_type -> studio_contract.UserEntityActionsOutput
-	2,  // 20: studio_contract.Authorization.CheckIfUserCanPerformActionsOnAllEntities:output_type -> studio_contract.SimpleResultOutput
-	12, // 21: studio_contract.Authorization.GetUserPermissionsOnSolelyEntities:output_type -> studio_contract.UserPermsOnSolelyEntitiesOutput
+	14, // 0: ftf_contract.UserGlobalActionsOutput.result:type_name -> ftf_contract.UserGlobalActionsOutput.ResultEntry
+	15, // 1: ftf_contract.UserEntityPermissionsOutput.result:type_name -> ftf_contract.UserEntityPermissionsOutput.ResultEntry
+	16, // 2: ftf_contract.UserEntityActionsOutput.result:type_name -> ftf_contract.UserEntityActionsOutput.ResultEntry
+	17, // 3: ftf_contract.UserPermsOnSolelyEntitiesOutput.result:type_name -> ftf_contract.UserPermsOnSolelyEntitiesOutput.ResultEntry
+	8,  // 4: ftf_contract.UserEntityActionsOutput.ResultEntry.value:type_name -> ftf_contract.UserEntityPermissionsOutput
+	13, // 5: ftf_contract.UserPermsOnSolelyEntitiesOutput.ResultEntry.value:type_name -> ftf_contract.Permissions
+	0,  // 6: ftf_contract.Authorization.Ping:input_type -> ftf_contract.Empty
+	3,  // 7: ftf_contract.Authorization.CheckIfUserHasGlobalPermissions:input_type -> ftf_contract.UserGlobalPermsInput
+	5,  // 8: ftf_contract.Authorization.CheckIfUserCanPerformGlobalActions:input_type -> ftf_contract.UserGlobalActionsInput
+	7,  // 9: ftf_contract.Authorization.CheckIfUserHasPermissionsOnEachEntities:input_type -> ftf_contract.UserEntityPermissionsInput
+	7,  // 10: ftf_contract.Authorization.CheckIfUserHasPermissionsOnAllEntities:input_type -> ftf_contract.UserEntityPermissionsInput
+	9,  // 11: ftf_contract.Authorization.CheckIfUserCanPerformActionsOnEachEntities:input_type -> ftf_contract.UserEntityActionsInput
+	9,  // 12: ftf_contract.Authorization.CheckIfUserCanPerformActionsOnAllEntities:input_type -> ftf_contract.UserEntityActionsInput
+	11, // 13: ftf_contract.Authorization.GetUserPermissionsOnSolelyEntities:input_type -> ftf_contract.UserPermsOnSolelyEntitiesInput
+	1,  // 14: ftf_contract.Authorization.Ping:output_type -> ftf_contract.Pong
+	4,  // 15: ftf_contract.Authorization.CheckIfUserHasGlobalPermissions:output_type -> ftf_contract.UserGlobalPermsOutput
+	6,  // 16: ftf_contract.Authorization.CheckIfUserCanPerformGlobalActions:output_type -> ftf_contract.UserGlobalActionsOutput
+	8,  // 17: ftf_contract.Authorization.CheckIfUserHasPermissionsOnEachEntities:output_type -> ftf_contract.UserEntityPermissionsOutput
+	2,  // 18: ftf_contract.Authorization.CheckIfUserHasPermissionsOnAllEntities:output_type -> ftf_contract.SimpleResultOutput
+	10, // 19: ftf_contract.Authorization.CheckIfUserCanPerformActionsOnEachEntities:output_type -> ftf_contract.UserEntityActionsOutput
+	2,  // 20: ftf_contract.Authorization.CheckIfUserCanPerformActionsOnAllEntities:output_type -> ftf_contract.SimpleResultOutput
+	12, // 21: ftf_contract.Authorization.GetUserPermissionsOnSolelyEntities:output_type -> ftf_contract.UserPermsOnSolelyEntitiesOutput
 	14, // [14:22] is the sub-list for method output_type
 	6,  // [6:14] is the sub-list for method input_type
 	6,  // [6:6] is the sub-list for extension type_name
