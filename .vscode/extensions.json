@@ -1,8 +1,5 @@
 {
   "recommendations": [
-    // Theme
-    "vscode-icons-team.vscode-icons",
-
     // Git
     "codezombiech.gitignore",
     "sidneys1.gitconfig",
@@ -28,11 +25,8 @@
 
     // Shell
     "timonwong.shellcheck",
-    "foxundermoon.shell-format",
+    "mkhl.shfmt",
     "remisa.shellman",
-
-    // JIRA & BitBucket
-    "atlassian.atlascode",
 
     // Node
     "christian-kohler.npm-intellisense",
