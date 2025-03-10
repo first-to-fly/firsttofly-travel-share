@@ -46,7 +46,6 @@
   "files.trimTrailingWhitespace": true,
 
   // VSIcons
-  "workbench.iconTheme": "vscode-icons",
   "vsicons.projectDetection.autoReload": true,
   "vsicons.dontShowNewVersionMessage": true,
 
@@ -126,6 +125,9 @@
   "editor.codeActionsOnSave": {
     "source.fixAll": "always"
   },
+
+  // Node
+  "npm.packageManager": "bun",
 
   // cSpell
   "cSpell.words": [
