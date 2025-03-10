@@ -1,31 +1,28 @@
+import { EntityZ } from "../entity";
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
-import { EntityType } from "../entityType";
 
-// Product entity
-export const ProductIDZ = z.number();
-export const ProductOIDZ = z.string();
-export const ProductZ = EntityZ.pick({
-  oid: true,
-  entityType: true,
-}).extend({
-  entityType: z.literal(EntityType.PRODUCT),
-  code: z.string(),
+export const ProductZ = EntityZ.extend({
+  tenantId: z.string().uuid(),
+  code: z.string().max(255),
+
   validityStartDate: z.date(),
   validityEndDate: z.date(),
   salesStartDate: z.date(),
   salesEndDate: z.date(),
-  durationDays: z.number(),
-  durationNights: z.number(),
+
+  durationDays: z.number().int(),
+  durationNights: z.number().int(),
+
   isActive: z.boolean(),
   isPublished: z.boolean(),
-  status: z.string(),
-  sectorGroupId: z.number(),
-  departmentId: z.number(),
+  status: z.string().max(50),
+
+  createdAt: z.date(),
+  updatedAt: z.date(),
+  createdBy: z.string().uuid(),
+  updatedBy: z.string().uuid().optional(),
+  deletedAt: z.date().optional(),
 });
 
-// Type exports
-export type ProductID = z.infer<typeof ProductIDZ>;
-export type ProductOID = z.infer<typeof ProductOIDZ>;
 export type Product = z.infer<typeof ProductZ>;
