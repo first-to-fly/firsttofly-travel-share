@@ -1,8 +1,11 @@
+import { EntityType } from "entities/entityType";
 import { EntityZ } from "../entity";
 import { z } from "zod";
 
 
 export const ProductZ = EntityZ.extend({
+  entityType: z.literal(EntityType.PRODUCT),
+
   tenantId: z.string().uuid(),
   code: z.string().max(255),
 
@@ -23,6 +26,9 @@ export const ProductZ = EntityZ.extend({
   createdBy: z.string().uuid(),
   updatedBy: z.string().uuid().optional(),
   deletedAt: z.date().optional(),
+
+  sectorGroupId: z.string().uuid(),
+  departmentId: z.string().uuid(),
 });
 
 export type Product = z.infer<typeof ProductZ>;
