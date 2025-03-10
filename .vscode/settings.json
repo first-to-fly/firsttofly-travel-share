@@ -128,5 +128,14 @@
   },
 
   // cSpell
-  "cSpell.words": ["clonedeep", "postcss", "typedefs"]
+  "cSpell.words": [
+    //
+    "mysqldump",
+    "SRCROOT",
+    "UNPUSHED",
+    "zboilerplate",
+    "clonedeep",
+    "postcss",
+    "typedefs"
+  ]
 }

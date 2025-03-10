@@ -37,13 +37,11 @@ function main() {
 
   loadEnvKey --optional
 
-  NPM="$(command -v npm)"
-
   (
     # shellcheck disable=SC2030,SC2031
     export NODE_ENV="test"
     set -x
-    "${NPM}" run "${COMMAND[@]}" "$@"
+    bun run "${COMMAND[@]}" "$@"
   )
 
 }

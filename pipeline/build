@@ -47,12 +47,10 @@ function main() {
     rm -rf "./build"
   )
 
-  NPM="$(command -v npm)"
-
   (
     set -x
-    "${NPM}" run "${COMMAND[@]}" "$@"
-    "${NPM}" run "postbuild"
+    bun run "${COMMAND[@]}" "$@"
+    bun run "postbuild"
   )
 
   (

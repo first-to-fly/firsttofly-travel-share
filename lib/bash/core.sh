@@ -12,16 +12,12 @@ fi
 BOILERPLATE_CORE_IMPORTED="true"
 
 # Path
-if [[ "${PATH}" != *"/usr/sbin"* && -d "/usr/sbin" ]]; then
-  export PATH="/usr/sbin:${PATH}"
-fi
-
-if [[ "${PATH}" != *"/usr/local/bin"* && -d "/usr/local/bin" ]]; then
-  export PATH="/usr/local/bin:${PATH}"
-fi
-
-if [[ "${PATH}" != *"/opt/homebrew/bin"* && -d "/opt/homebrew/bin" ]]; then
-  export PATH="/opt/homebrew/bin:${PATH}"
+if (command -v "brew" >/dev/null); then
+  HOMEBREW_PREFIX="$(brew --prefix)"
+  export HOMEBREW_PREFIX="${HOMEBREW_PREFIX}"
+  if [[ "${PATH}" != *"${HOMEBREW_PREFIX}/bin"* && -d "${HOMEBREW_PREFIX}/bin" ]]; then
+    export PATH="${HOMEBREW_PREFIX}/bin:${PATH}"
+  fi
 fi
 
 if [[ "${PATH}" != *"${PWD}/.bin"* && -d "${PWD}/.bin" ]]; then
@@ -56,7 +52,7 @@ if [[ "${BOILERPLATE_NO_COLOR:-}" == "true" ]]; then
   export DARK_GRAY_COLOR=""
   export LIGHT_RED_COLOR=""
   export LIGHT_GREEN_COLOR=""
-  export LIGHT_YELLO_COLOR=""
+  export LIGHT_YELLOW_COLOR=""
   export LIGHT_BLUE_COLOR=""
   export LIGHT_MAGENTA_COLOR=""
   export LIGHT_CYAN_COLOR=""
@@ -102,7 +98,7 @@ else
   export DARK_GRAY_COLOR="\033[90m"
   export LIGHT_RED_COLOR="\033[91m"
   export LIGHT_GREEN_COLOR="\033[92m"
-  export LIGHT_YELLO_COLOR="\033[93m"
+  export LIGHT_YELLOW_COLOR="\033[93m"
   export LIGHT_BLUE_COLOR="\033[94m"
   export LIGHT_MAGENTA_COLOR="\033[95m"
   export LIGHT_CYAN_COLOR="\033[96m"
@@ -205,18 +201,6 @@ function dependency() {
     echo "Dependency \"${DEPENDENCY_NAME}\" not found."
 
     case "${DEPENDENCY_NAME}" in
-    aws)
-      if command -v "brew" >/dev/null; then
-        (
-          set -x
-          brew install "awscli"
-        )
-        echo
-      else
-        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
-        return 1
-      fi
-      ;;
     bc)
       if command -v "brew" >/dev/null; then
         (
@@ -229,22 +213,17 @@ function dependency() {
         return 1
       fi
       ;;
-    envkey-source)
+    envkey-source-v2)
       (
         set -x
-        (
-          VERSION=$(curl https://envkey-releases.s3.amazonaws.com/latest/envkeysource-version.txt) &&
-            curl -s "https://envkey-releases.s3.amazonaws.com/envkeysource/release_artifacts/${VERSION}/install.sh" |
-            bash &&
-            command -v "envkey-source"
-        ) ||
-          (
-            VERSION=$(curl https://envkey-releases.s3.amazonaws.com/latest/envkeysource-version.txt) &&
-              curl -s "https://envkey-releases.s3.amazonaws.com/envkeysource/release_artifacts/${VERSION}/install.sh" |
-              sed "s|sudo ||g" |
-                bash &&
-              command -v "envkey-source"
-          )
+        VERSION="$(curl -s "https://envkey-releases.s3.amazonaws.com/latest/envkeysource-version.txt")" &&
+          curl -s "https://envkey-releases.s3.amazonaws.com/envkeysource/release_artifacts/${VERSION}/install.sh" |
+          sed \
+            -e 's|envkey-source |envkey-source-v2 |g' \
+            -e 's|envkey-source)|envkey-source-v2)|g' \
+            -e 's|sudo mv \(.*\)|sudo mv \1 \|\| mv \1|g' \
+            -e 's|tar \(.*\)|tar \1; mv envkey-source envkey-source-v2|g' |
+            bash
       )
       ;;
     fnm)
@@ -287,7 +266,9 @@ function dependency() {
       else
         (
           set -x
+          mkdir -p "./.bin"
           curl \
+            --silent \
             --location \
             --output "./.bin/jq" \
             "https://github.com/stedolan/jq/releases/download/jq-1.6/jq-linux64"
@@ -296,20 +277,14 @@ function dependency() {
       fi
       ;;
     node)
-      if command -v "brew" >/dev/null; then
-        (
-          set -x
-          brew install "node"
-        )
-        echo
-      else
-        dependency "fnm"
-        (
-          set -x
-          fnm install "latest"
-          fnm use "latest"
-        )
-      fi
+      dependency "fnm"
+      (
+        set -x
+        fnm install --lts
+        fnm default "$(fnm ls-remote --lts | tail -1 || true)"
+      )
+      eval "$(fnm env --use-on-cd || true)"
+      fnm use default
       ;;
     shellcheck)
       if command -v "brew" >/dev/null; then
@@ -374,11 +349,6 @@ function updateProjectVersion() {
 
   jq ".version=\"${VERSION}\"" "./package.json" >"${TEMP_FILE}" &&
     mv "${TEMP_FILE}" "./package.json"
-
-  if [[ -f "./package-lock.json" ]]; then
-    jq ".version=\"${VERSION}\"|.packages.\"\".version=\"${VERSION}\"" "./package-lock.json" >"${TEMP_FILE}" &&
-      mv "${TEMP_FILE}" "./package-lock.json"
-  fi
 }
 
 # Git Hooks
@@ -401,6 +371,8 @@ function loadDotEnv() {
     echo
     echo "Loading .env..."
 
+    eval "$(sed -E 's|^([a-zA-Z][a-zA-Z0-9_]*)=|export \1=|' <./.env || true)"
+
     while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
 
       if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
@@ -410,7 +382,6 @@ function loadDotEnv() {
         # echo "KEY = '${KEY}'"
 
         if [[ -z "$(eval "echo \${${KEY}:-}" || true)" ]]; then
-          export "${LINE?}"
           echo "Loaded '${KEY}' from .env"
         fi
 
@@ -449,49 +420,21 @@ function loadEnvKey() {
     return
   fi
 
-  dependency "envkey-source"
+  dependency "envkey-source-v2"
 
-  local TEMP_FOLDER
-  TEMP_FOLDER="$(mktemp -d)"
+  echo "Running envkey-source-v2..."
 
-  local ENVKEY_BEFORE="${TEMP_FOLDER}/envkey.before"
-  printenv | sort >"${ENVKEY_BEFORE}"
-
-  echo "Runing envkey-source..."
-  # set -x
-  if command -v envkey-source-v2 >/dev/null; then
-    eval "$(envkey-source-v2 || true)"
-  else
-    eval "$(envkey-source || true)"
-  fi
-
-  local ENVKEY_AFTER="${TEMP_FOLDER}/envkey.after"
-  printenv | sort >"${ENVKEY_AFTER}"
+  local ENVKEY_SOURCE
+  ENVKEY_SOURCE="$(ENVKEY="${ENVKEY}" envkey-source-v2)"
 
   echo "Found:"
-  diff "${ENVKEY_BEFORE}" "${ENVKEY_AFTER}" |
-    grep -E "[A-Z_]+=" |
-    sed 's|=.*$||' ||
-    true
 
-  rm -rf "${TEMP_FOLDER}"
+  echo "${ENVKEY_SOURCE}" |
+    sed -E "s|[^']*'([^']+)'='[^']*'?[^']*|> \\1\n|g" |
+    (grep "> " || true) |
+    sed -E "s|^[^>]*> |> |"
+
+  eval "${ENVKEY_SOURCE}"
 
   echo "Done loading EnvKey."
-}
-
-# AWS
-function checkAWSCredentials() {
-
-  if [[ -z "${AWS_ACCESS_KEY_ID:-}" ]]; then
-    echo "Missing AWS_ACCESS_KEY_ID." >&2
-    return 1
-  fi
-
-  if [[ -z "${AWS_SECRET_ACCESS_KEY:-}" ]]; then
-    echo "Missing AWS_SECRET_ACCESS_KEY." >&2
-    return 1
-  fi
-
-  export AWS_DEFAULT_REGION="${AWS_DEFAULT_REGION:-"us-east-1"}"
-
 }

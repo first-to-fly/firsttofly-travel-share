@@ -19,14 +19,15 @@ function checkNodeVersion() {
 
     dependency "fnm"
 
-    eval "$(fnm env)"
+    fnm install "${EXPECTED_NODE_VERSION}"
+
+    eval "$(fnm env --use-on-cd || true)"
 
     # Check if expected version is already installed
-    if ! fnm ls | grep "${EXPECTED_NODE_VERSION}" >/dev/null; then
+    if ! (fnm ls || true) | grep "${EXPECTED_NODE_VERSION}" >/dev/null; then
       (
         set -x
-        fnm install "${EXPECTED_NODE_VERSION}" ||
-          fnm install "${EXPECTED_NODE_VERSION}"
+        fnm install "${EXPECTED_NODE_VERSION}"
       ) || (
         # shellcheck source=/dev/null
         [[ -s "${HOME}/.nvm/nvm.sh" ]] && \. "${HOME}/.nvm/nvm.sh"
@@ -64,3 +65,5 @@ function checkNodeVersion() {
 }
 
 checkNodeVersion
+
+corepack disable

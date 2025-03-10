@@ -34,19 +34,13 @@ function main() {
 
   echo -e "${OK_COLOR}==> Running app..."
 
-  loadEnvKey --
-
-  local PROJECT_KEY
-  PROJECT_KEY="$(projectKey)"
+  loadEnvKey --optional
 
   local LOG_FILE
   LOG_FILE="$(mktemp)"
 
   export NODE_ENV="production"
   export BOILERPLATE_LOG_TIME="true"
-
-  local NPM
-  NPM="$(command -v npm)"
 
   # "time": Show running time of the process
   # "wrap": Show timestamp at the beginning of the command
@@ -56,7 +50,7 @@ function main() {
   (
     set -x
     time wrap \
-      "${NPM}" run "${COMMAND[@]}" "$@" |
+      bun run "${COMMAND[@]}" "$@" |
       tee -a -i "${LOG_FILE}"
   )
   local EXIT_CODE="$?"
@@ -76,32 +70,7 @@ function main() {
         echo "[Not found]"
     )"
 
-    local DATA
-    DATA="$(
-      echo '{}' |
-        jq \
-          --compact-output \
-          --arg projectKey "${PROJECT_KEY}" \
-          --arg "command" "${COMMAND}" \
-          --arg exitCode "${EXIT_CODE}" \
-          --arg errorMessage "${ERROR_MESSAGE}" \
-          --arg consoleLog "$(tail -80 <"${LOG_FILE}" || true)" \
-          '.main = {
-            "attachments": [
-              {
-                "fallback": "<!channel> [\($projectKey)][\($command)] crashed with exit code \($exitCode)",
-                "color": "danger",
-                "text": "<!channel> *`\($projectKey)`* *`\($command)`* crashed with exit code *\($exitCode)*.\n\n*Error Message*\n```\($errorMessage)```\n\n*Console Log*\n```\($consoleLog)```",
-              }
-            ]
-          } | .main'
-    )"
-    # echo "DATA = '${DATA}'"
-
-    (
-      # set -x
-      slack-send "${DATA}"
-    )
+    echo "ERROR_MESSAGE = ${ERROR_MESSAGE}"
 
   fi
 

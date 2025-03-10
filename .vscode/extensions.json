@@ -36,7 +36,6 @@
 
     // Node
     "christian-kohler.npm-intellisense",
-    "eg2.vscode-npm-script",
     "pflannery.vscode-versionlens",
     "dbaeumer.vscode-eslint",
     "oouo-diogo-perdigao.docthis",
