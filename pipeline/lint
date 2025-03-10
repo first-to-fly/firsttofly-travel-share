@@ -36,7 +36,7 @@ function main() {
 
   (
     set -x
-    bun run lint
+    npm run lint
   )
 
 }

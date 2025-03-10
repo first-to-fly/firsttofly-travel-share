@@ -49,8 +49,8 @@ function main() {
 
   (
     set -x
-    bun run "${COMMAND[@]}" "$@"
-    bun run "postbuild"
+    npm run "${COMMAND[@]}" "$@"
+    npm run "postbuild"
   )
 
   (

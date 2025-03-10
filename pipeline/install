@@ -34,23 +34,27 @@ function main() {
     )
   fi
 
+  (
+    set -x
+    corepack enable pnpm
+  )
+
   if [[ -z "$*" ]]; then
     (
       set -x
-      npm install --global bun@latest
-      bun install --yarn
+      pnpm install
     )
   else
     (
       set -x
-      bun add --yarn "$@"
+      pnpm install "$@"
     )
   fi
 
   if [[ "${PRODUCTION}" != "true" ]]; then
     (
       set -x
-      bun x "yarn@<2" audit || true
+      pnpm audit || true
     )
     sleep 1s || sleep 1
   fi

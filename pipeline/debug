@@ -54,16 +54,6 @@ function main() {
     "./.vscode/launch.json"
   rm -rf "./.vscode/launch.json.bak"
 
-  # Kill old processes
-  echo "Cleaning up old processes..."
-  # shellcheck disable=SC2009
-  ps |
-    grep --invert-match "grep" |
-    (grep "bun" || true) |
-    (grep "${PWD}/" || true) |
-    awk '{print $1}' |
-    xargs kill
-
   export NODE_ENV="development"
 
   applyEnvVarsToTemplateFiles || removeGeneratedFiles
@@ -71,12 +61,12 @@ function main() {
   if [[ "${COMMAND}" == *".ts" ]]; then
     (
       set -x
-      bun run ts-node "${COMMAND[@]}" "$@"
+      npm run ts-node "${COMMAND[@]}" "$@"
     )
   else
     (
       set -x
-      bun run "${COMMAND[@]}" "$@"
+      npm run "${COMMAND[@]}" "$@"
     )
   fi
 

@@ -127,7 +127,7 @@
   },
 
   // Node
-  "npm.packageManager": "bun",
+  "npm.packageManager": "pnpm",
 
   // cSpell
   "cSpell.words": [

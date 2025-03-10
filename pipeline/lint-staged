@@ -115,7 +115,7 @@ function main() {
     set +e
     (
       set -x
-      bun x eslint "${ESLINT_FILES[@]}"
+      npx --yes eslint "${ESLINT_FILES[@]}"
     )
     local EXIT_CODE=$?
     if ((EXIT_CODE != 0)); then
@@ -156,7 +156,7 @@ function main() {
     set +e
     (
       set -x
-      bun x tsc --project "${TSC_CONFIG}" --noEmit
+      npx --yes tsc --project "${TSC_CONFIG}" --noEmit
     )
     local EXIT_CODE=$?
 
@@ -177,7 +177,7 @@ function main() {
     set +e
     (
       set -x
-      bun x madge "${MADGE_FILES[@]}"
+      npx --yes madge "${MADGE_FILES[@]}"
     )
     local EXIT_CODE=$?
     if ((EXIT_CODE != 0)); then
@@ -194,7 +194,7 @@ function main() {
     set +e
     (
       set -x
-      bun x stylelint "${STYLELINT_FILES[@]}"
+      npx --yes stylelint "${STYLELINT_FILES[@]}"
     )
     local EXIT_CODE=$?
     if ((EXIT_CODE != 0)); then

@@ -41,7 +41,7 @@ function main() {
     # shellcheck disable=SC2030,SC2031
     export NODE_ENV="test"
     set -x
-    bun run "${COMMAND[@]}" "$@"
+    npm run "${COMMAND[@]}" "$@"
   )
 
 }

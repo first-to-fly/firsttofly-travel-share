@@ -50,7 +50,7 @@ function main() {
   (
     set -x
     time wrap \
-      bun run "${COMMAND[@]}" "$@" |
+      npm run "${COMMAND[@]}" "$@" |
       tee -a -i "${LOG_FILE}"
   )
   local EXIT_CODE="$?"
