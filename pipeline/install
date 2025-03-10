@@ -1,0 +1,60 @@
+#!/usr/bin/env bash
+
+# shellcheck source=./lib/bash/core.sh
+source "${BASH_SOURCE[0]%/*}/../lib/bash/core.sh"
+
+# shellcheck source=./lib/bash/templates.sh
+source "${BASH_SOURCE[0]%/*}/../lib/bash/templates.sh"
+
+# shellcheck source=./lib/bash/node.sh
+source "${BASH_SOURCE[0]%/*}/../lib/bash/node.sh"
+
+function main() {
+
+  local PRODUCTION="false"
+  if [[ "$*" == *"--production"* ]]; then
+    PRODUCTION="true"
+  fi
+
+  echo -e "${OK_COLOR}==> Installing dependencies..."
+
+  applyEnvVarsToTemplateFiles || removeGeneratedFiles
+
+  # Fix git+ssh "unsupported option accept-new"
+  # See https://github.com/npm/git/issues/31#issuecomment-862267072
+  export GIT_SSH_COMMAND="ssh"
+
+  if [[ -n "${BITBUCKET_USERNAME:-}" && -n "${BITBUCKET_PASSWORD:-}" ]]; then
+    echo "Setting up Git for BitBucket..."
+    (
+      # set -x
+      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "ssh://git@bitbucket.org/" || true
+      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "git@bitbucket.org:" || true
+      git config --global url."https://${BITBUCKET_USERNAME}:${BITBUCKET_PASSWORD}@bitbucket.org/".insteadOf "https://bitbucket.org/" || true
+    )
+  fi
+
+  if [[ -z "$*" ]]; then
+    (
+      set -x
+      npm install --global bun@latest
+      bun install --yarn
+    )
+  else
+    (
+      set -x
+      bun add --yarn "$@"
+    )
+  fi
+
+  if [[ "${PRODUCTION}" != "true" ]]; then
+    (
+      set -x
+      bun x "yarn@<2" audit || true
+    )
+    sleep 1s || sleep 1
+  fi
+
+}
+
+main "$@"

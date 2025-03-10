@@ -54,3 +54,22 @@ Thumbs.db
 .bin/jq
 .env
 .env.*
+build/
+tsconfig.*.tsbuildinfo
+
+# Template Files
+*.generated.*
+
+# NodeJS (due to large number of files)
+node_modules/
+
+# Lint
+tsconfig.staged.json
+
+# SSH
+.ssh/
+
+# Lock files
+bun.lock
+bun.lockb
+yarn.lock

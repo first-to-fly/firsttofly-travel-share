@@ -23,7 +23,7 @@ function textFound() {
   if (
     grep -E --recursive "${TEXT}" . |
       grep '^\./' |
-      grep -v '^\./\.git/\|^\./pipeline/boilerplate-\|^\./submodules/'
+      grep -v '^\./\.git/\|^\./pipeline/boilerplate-\|^\./submodules/\|^\./node_modules/'
   ); then
     echo "\"${TEXT}\" found in file contents."
     return 0

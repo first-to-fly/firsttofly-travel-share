@@ -1,0 +1,9 @@
+ignores:
+  [
+    "@types/*",
+    "eslint-*",
+    "postcss",
+    "stylelint-*",
+    "tsconfig-*",
+  ]
+skip-missing: true

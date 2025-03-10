@@ -1,4 +1,7 @@
 {
+  // Debug
+  "debug.javascript.autoAttachFilter": "disabled",
+
   // Explorer
   "explorer.confirmDragAndDrop": false,
 
@@ -70,9 +73,48 @@
     "SC2310"
   ],
 
+  // YAML
+  "[yaml]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Javascript
+  "[javascript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false
+  },
+  "[javascriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false
+  },
+
   // JSON
   "[json]": {
     "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode"
+  },
+
+  // Typescript
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "[typescript]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false
+  },
+  "[typescriptreact]": {
+    "editor.defaultFormatter": "esbenp.prettier-vscode",
+    "editor.formatOnPaste": false,
+    "editor.formatOnSave": false
+  },
+
+  // MarkdownLint
+  "markdownlint.config": {
+    // Allow punctuation marks (?!) in headers
+    "MD026": false
   },
 
   // Run on Save
@@ -89,6 +131,11 @@
   "cSpell.words": [
     //
     "mysqldump",
-    "UNPUSHED"
+    "SRCROOT",
+    "UNPUSHED",
+    "zboilerplate",
+    "clonedeep",
+    "postcss",
+    "typedefs"
   ]
 }

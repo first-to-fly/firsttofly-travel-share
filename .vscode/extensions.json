@@ -10,14 +10,39 @@
     "eamodio.gitlens",
 
     // All Languages
+    "esbenp.prettier-vscode",
     "wmaurer.change-case",
     "streetsidesoftware.code-spell-checker",
     "pucelle.run-on-save",
+
+    // .env
+    "mikestead.dotenv",
+
+    // Markdown
+    "DavidAnson.vscode-markdownlint",
+    "yzhang.markdown-all-in-one",
+    "bierner.markdown-mermaid",
+
+    // Jenkins
+    "secanis.jenkinsfile-support",
 
     // Shell
     "timonwong.shellcheck",
     "foxundermoon.shell-format",
     "remisa.shellman",
+
+    // JIRA & BitBucket
+    "atlassian.atlascode",
+
+    // Node
+    "christian-kohler.npm-intellisense",
+    "pflannery.vscode-versionlens",
+    "dbaeumer.vscode-eslint",
+    "oouo-diogo-perdigao.docthis",
+
+    // Stylelint
+    "stylelint.vscode-stylelint",
+    "clinyong.vscode-css-modules",
 
     // JSON
     "eriklynd.json-tools"

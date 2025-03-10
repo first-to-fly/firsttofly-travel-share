@@ -201,6 +201,61 @@ function dependency() {
     echo "Dependency \"${DEPENDENCY_NAME}\" not found."
 
     case "${DEPENDENCY_NAME}" in
+    bc)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "bc"
+        )
+        echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
+      fi
+      ;;
+    envkey-source-v2)
+      (
+        set -x
+        VERSION="$(curl -s "https://envkey-releases.s3.amazonaws.com/latest/envkeysource-version.txt")" &&
+          curl -s "https://envkey-releases.s3.amazonaws.com/envkeysource/release_artifacts/${VERSION}/install.sh" |
+          sed \
+            -e 's|envkey-source |envkey-source-v2 |g' \
+            -e 's|envkey-source)|envkey-source-v2)|g' \
+            -e 's|sudo mv \(.*\)|sudo mv \1 \|\| mv \1|g' \
+            -e 's|tar \(.*\)|tar \1; mv envkey-source envkey-source-v2|g' |
+            bash
+      )
+      ;;
+    fnm)
+      (
+        set -x
+        curl -fsSL "https://github.com/Schniz/fnm/raw/master/.ci/install.sh" | bash
+      )
+      ;;
+    git)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "git"
+        )
+        echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
+      fi
+      ;;
+    git-lfs)
+      if command -v "brew" >/dev/null; then
+        (
+          set -x
+          brew install "git-lfs"
+        )
+        echo
+      else
+        echo "No installation script support for \"${DEPENDENCY_NAME}\"." >&2
+        return 1
+      fi
+      ;;
     jq)
       if command -v "brew" >/dev/null; then
         (
@@ -220,6 +275,16 @@ function dependency() {
           chmod +x "./.bin/jq"
         )
       fi
+      ;;
+    node)
+      dependency "fnm"
+      (
+        set -x
+        fnm install --lts
+        fnm default "$(fnm ls-remote --lts | tail -1 || true)"
+      )
+      eval "$(fnm env --use-on-cd || true)"
+      fnm use default
       ;;
     shellcheck)
       if command -v "brew" >/dev/null; then
@@ -252,7 +317,38 @@ dependency "jq"
 
 # Project
 function projectKey() {
-  echo "myawesomeproject"
+  jq --raw-output '.name' "./package.json" |
+    sed \
+      -e 's|/|-|g' \
+      -e 's|@||g'
+}
+
+function updateProjectVersion() {
+
+  local CURRENT_BRANCH
+  CURRENT_BRANCH="$(git rev-parse --abbrev-ref HEAD)"
+
+  if [[ "${CURRENT_BRANCH}" != "release/"* && "${CURRENT_BRANCH}" != "hotfix/"* ]]; then
+    return
+  fi
+
+  local VERSION="${CURRENT_BRANCH}"
+  VERSION="${VERSION#release/}"
+  VERSION="${VERSION#hotfix/}"
+
+  echo
+  echo "Detected project version:"
+  echo "VERSION='${VERSION}'"
+  echo
+
+  if [[ "${VERSION}" != *"."*"."* ]]; then
+    VERSION="${VERSION}.0"
+  fi
+
+  TEMP_FILE="$(mktemp)"
+
+  jq ".version=\"${VERSION}\"" "./package.json" >"${TEMP_FILE}" &&
+    mv "${TEMP_FILE}" "./package.json"
 }
 
 # Git Hooks
@@ -264,3 +360,81 @@ if command -v "git" >/dev/null && [[ -d "./.git" ]]; then
   git --no-optional-locks fetch --tags --prune "origin" 2>/dev/null &
 
 fi
+
+# DotEnv
+DOT_ENV_LOADED="false"
+
+function loadDotEnv() {
+
+  if [[ "${DOT_ENV_LOADED}" != "true" && -f "./.env" ]]; then
+
+    echo
+    echo "Loading .env..."
+
+    eval "$(sed -E 's|^([a-zA-Z][a-zA-Z0-9_]*)=|export \1=|' <./.env || true)"
+
+    while IFS='' read -r LINE || [[ -n "${LINE}" ]]; do
+
+      if [[ "${LINE}" == *"="* && "${LINE}" != "#"* ]]; then
+
+        local KEY
+        KEY="$(sed -E "s|=.*$||" <<<"${LINE}")"
+        # echo "KEY = '${KEY}'"
+
+        if [[ -z "$(eval "echo \${${KEY}:-}" || true)" ]]; then
+          echo "Loaded '${KEY}' from .env"
+        fi
+
+      fi
+
+    done <"./.env"
+
+    DOT_ENV_LOADED="true"
+
+    echo "Done loading .env."
+
+  fi
+
+}
+
+# EnvKey
+function loadEnvKey() {
+
+  local OPTIONAL="false"
+  if [[ "$*" == *"--optional"* || "$*" == *"-o"* ]]; then
+    OPTIONAL="true"
+  fi
+
+  loadDotEnv
+
+  echo
+  echo "Loading EnvKey..."
+
+  if [[ "${OPTIONAL}" != "true" && -z "${ENVKEY:-}" ]]; then
+    echo "Missing ENVKEY." >&2
+    return 1
+  fi
+
+  if [[ "${OPTIONAL}" == "true" && -z "${ENVKEY:-}" ]]; then
+    echo "ENVKEY not found. Skipped loading."
+    return
+  fi
+
+  dependency "envkey-source-v2"
+
+  echo "Running envkey-source-v2..."
+
+  local ENVKEY_SOURCE
+  ENVKEY_SOURCE="$(ENVKEY="${ENVKEY}" envkey-source-v2)"
+
+  echo "Found:"
+
+  echo "${ENVKEY_SOURCE}" |
+    sed -E "s|[^']*'([^']+)'='[^']*'?[^']*|> \\1\n|g" |
+    (grep "> " || true) |
+    sed -E "s|^[^>]*> |> |"
+
+  eval "${ENVKEY_SOURCE}"
+
+  echo "Done loading EnvKey."
+}
