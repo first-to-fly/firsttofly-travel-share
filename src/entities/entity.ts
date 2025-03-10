@@ -1,6 +1,6 @@
-import { DateISOStringZ } from "@firsttofly/travel-share/src/types/date";
 import { z } from "zod";
 
+import { DateISOStringZ } from "../types/date";
 import { EntityType } from "./entityType";
 
 

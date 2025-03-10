@@ -36,6 +36,7 @@ function main() {
 
   (
     set -x
+    npm install --global corepack@latest
     corepack enable pnpm
   )
 

@@ -4,7 +4,7 @@ import { ToOptional } from "./utils";
 type CommonKeys<T extends object> = keyof T;
 
 /** Get all keys in type in union. */
-export type AllKeys<T> = (T extends unknown ? keyof T : never) | keyof T
+export type AllKeys<T> = (T extends unknown ? keyof T : never) | keyof T;
 type Subtract<A, C> = A extends C ? never : A;
 type NonCommonKeys<T extends object> = Subtract<AllKeys<T>, CommonKeys<T>>;
 
