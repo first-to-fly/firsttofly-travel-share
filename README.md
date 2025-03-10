@@ -1,8 +1,8 @@
-# MyAwesomeProject
+# FirstToFly Travel Share
 
 (Short description for this project)
 
-- [MyAwesomeProject](#myawesomeproject)
+- [FirstToFly Travel Share](#firsttofly-travel-share)
   - [Installation](#installation)
   - [Usage](#usage)
   - [Development](#development)
