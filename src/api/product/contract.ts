@@ -1,6 +1,7 @@
 import { initContract } from "@ts-rest/core";
-import { ProductZ } from "entities/Product";
 import { z } from "zod";
+
+import { ProductZ } from "../../entities/Product";
 
 
 const basePath = "/api/projects";
