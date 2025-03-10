@@ -129,13 +129,13 @@
 
   // cSpell
   "cSpell.words": [
-    //
-    "mysqldump",
-    "SRCROOT",
-    "UNPUSHED",
-    "zboilerplate",
     "clonedeep",
+    "firsttofly",
+    "mysqldump",
     "postcss",
-    "typedefs"
+    "SRCROOT",
+    "typedefs",
+    "UNPUSHED",
+    "zboilerplate"
   ]
 }
