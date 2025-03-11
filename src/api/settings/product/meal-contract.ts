@@ -1,8 +1,8 @@
 import { initContract } from "@ts-rest/core";
-import { PageListIdsResponseZ } from "types/pageListIdsResponse";
 import { z } from "zod";
 
 import { MealZ } from "../../../entities/Settings/Product";
+import { PageListIdsResponseZ } from "../../../types/pageListIdsResponse";
 
 
 const basePath = "/api/settings/meals";
