@@ -129,6 +129,10 @@
   // Node
   "npm.packageManager": "pnpm",
 
+  // Import
+  "javascript.preferences.importModuleSpecifier": "relative",
+  "typescript.preferences.importModuleSpecifier": "relative",
+
   // cSpell
   "cSpell.words": [
     "clonedeep",

@@ -20,10 +20,10 @@
  *        - Networking
  */
 
-import { EntityType } from "entities/entityType";
 import { z } from "zod";
 
 import { EntityZ } from "../../entity";
+import { EntityType } from "../../entityType";
 
 
 export const SectorZ = EntityZ.extend({
