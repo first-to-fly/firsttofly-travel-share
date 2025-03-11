@@ -15,5 +15,8 @@ export enum EntityType {
   SECTOR_GROUP = "sectorGroup",
   TAG = "tag",
   TAG_GROUP = "tagGroup",
+
+  LOCATION = "location",
+  DEPARTMENT = "department",
 }
 export const EntityTypes = Object.values(EntityType);
