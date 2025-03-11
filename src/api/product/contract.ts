@@ -2,17 +2,11 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { ProductZ } from "../../entities/Product";
+import { PageListIdsResponseZ } from "../../types/pageListIdsResponse";
 
 
 const basePath = "/api/projects";
 
-
-const ProductListResponseZ = z.object({
-  data: z.array(z.string()), // array of product IDs
-  total: z.number(),
-  page: z.number(),
-  pageSize: z.number(),
-});
 
 export const productContract = initContract().router({
   getProducts: {
@@ -26,7 +20,7 @@ export const productContract = initContract().router({
       // Add other filter fields as needed
     }).passthrough(), // Allow additional filter properties
     responses: {
-      200: ProductListResponseZ,
+      200: PageListIdsResponseZ,
     },
   },
 

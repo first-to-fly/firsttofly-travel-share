@@ -5,5 +5,5 @@ export const PageListIdsResponseZ = z.object({
   page: z.number(),
   pageSize: z.number(),
   total: z.number(),
-  ids: z.array(z.string()),
+  oids: z.array(z.string()),
 });
