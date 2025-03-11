@@ -40,6 +40,7 @@ export const productContract = initContract().router({
       isPublished: true,
       status: true,
       sectorGroupId: true,
+      departmentId: true,
       // Add other required fields as needed
     }).extend({
       sectorIds: z.array(z.number()),
@@ -53,8 +54,23 @@ export const productContract = initContract().router({
   updateProduct: {
     summary: "Update an existing product",
     method: "PATCH",
-    path: `${basePath}/:productId`,
-    body: ProductZ.partial(),
+    path: `${basePath}/:productOid`,
+    body: ProductZ.pick({
+      validityStartDate: true,
+      validityEndDate: true,
+      salesStartDate: true,
+      salesEndDate: true,
+      durationDays: true,
+      durationNights: true,
+      isActive: true,
+      isPublished: true,
+      status: true,
+      sectorGroupId: true,
+      departmentId: true,
+    }).extend({
+      sectorIds: z.array(z.number()).optional(),
+      displaySectorIds: z.array(z.number()).optional(),
+    }),
     responses: {
       200: z.string(),
     },
@@ -63,7 +79,7 @@ export const productContract = initContract().router({
   deleteProduct: {
     summary: "Delete a product",
     method: "DELETE",
-    path: `${basePath}/:productId`,
+    path: `${basePath}/:productOid`,
     body: z.object({}),
     responses: {
       200: z.boolean(),
