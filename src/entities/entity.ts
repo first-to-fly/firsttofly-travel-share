@@ -9,8 +9,8 @@ export const EntityZ = z.object({
   oid: EntityOIDZ,
   entityType: z.nativeEnum(EntityType),
 
-  tenantId: z.string().uuid(),
-  departmentId: z.string().uuid().nullish(),
+  tenantID: z.string().uuid(),
+  departmentID: z.string().uuid().nullish(),
 
   createdBy: z.string().uuid(),
   updatedBy: z.string().uuid().optional(),

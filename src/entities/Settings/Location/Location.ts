@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
-import { EntityType } from "../entityType";
+import { EntityZ } from "../../entity";
+import { EntityType } from "../../entityType";
 
 
 export enum LocationType {
