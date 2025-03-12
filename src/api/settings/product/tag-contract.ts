@@ -13,6 +13,9 @@ export const tagContract = initContract().router({
     summary: "Get tags with pagination and filtering",
     method: "GET",
     path: basePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -25,6 +28,7 @@ export const tagContract = initContract().router({
     method: "POST",
     path: basePath,
     body: TagZ.pick({
+      tenantOid: true,
       name: true,
       isActive: true,
       sortOrder: true,
@@ -61,6 +65,9 @@ export const tagContract = initContract().router({
     summary: "Get tag groups with pagination and filtering",
     method: "GET",
     path: tagGroupBasePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -73,6 +80,7 @@ export const tagContract = initContract().router({
     method: "POST",
     path: tagGroupBasePath,
     body: TagGroupZ.pick({
+      tenantOid: true,
       name: true,
       description: true,
       tagIds: true,

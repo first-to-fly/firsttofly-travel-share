@@ -12,6 +12,9 @@ export const mealContract = initContract().router({
     summary: "Get meals with pagination and filtering",
     method: "GET",
     path: basePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -24,6 +27,7 @@ export const mealContract = initContract().router({
     method: "POST",
     path: basePath,
     body: MealZ.pick({
+      tenantOid: true,
       code: true,
       description: true,
       type: true,

@@ -12,6 +12,9 @@ export const productContract = initContract().router({
     summary: "Get products with pagination and filtering",
     method: "GET",
     path: basePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -24,6 +27,7 @@ export const productContract = initContract().router({
     method: "POST",
     path: basePath,
     body: ProductZ.pick({
+      tenantOid: true,
       code: true,
       validityStartDate: true,
       validityEndDate: true,

@@ -7,7 +7,6 @@ import { EntityType } from "../entityType";
 export const ProductZ = EntityZ.extend({
   entityType: z.literal(EntityType.PRODUCT),
 
-  tenantId: z.string().uuid(),
   code: z.string().max(255),
 
   validityStartDate: z.date(),

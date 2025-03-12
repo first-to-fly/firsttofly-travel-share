@@ -13,6 +13,9 @@ export const sectorContract = initContract().router({
     summary: "Get sectors with pagination and filtering",
     method: "GET",
     path: basePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -25,6 +28,7 @@ export const sectorContract = initContract().router({
     method: "POST",
     path: basePath,
     body: SectorZ.pick({
+      tenantOid: true,
       name: true,
       parentId: true,
       sectorGroupId: true,
@@ -60,6 +64,9 @@ export const sectorContract = initContract().router({
     summary: "Get sector groups with pagination and filtering",
     method: "GET",
     path: sectorGroupBasePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -72,6 +79,7 @@ export const sectorContract = initContract().router({
     method: "POST",
     path: sectorGroupBasePath,
     body: SectorGroupZ.pick({
+      tenantOid: true,
       name: true,
       description: true,
       sectorIds: true,

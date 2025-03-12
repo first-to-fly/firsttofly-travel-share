@@ -11,6 +11,9 @@ export const badgeContract = initContract().router({
     summary: "Get badges with pagination and filtering",
     method: "GET",
     path: basePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -23,6 +26,7 @@ export const badgeContract = initContract().router({
     method: "POST",
     path: basePath,
     body: BadgeZ.pick({
+      tenantOid: true,
       isActive: true,
       icon: true,
     }),

@@ -11,6 +11,9 @@ export const userContract = initContract().router({
     summary: "Get users with pagination and filtering",
     method: "GET",
     path: basePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),

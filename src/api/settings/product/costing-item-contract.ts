@@ -13,6 +13,9 @@ export const costingItemContract = initContract().router({
     summary: "Get costing items with pagination and filtering",
     method: "GET",
     path: basePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -25,6 +28,7 @@ export const costingItemContract = initContract().router({
     method: "POST",
     path: basePath,
     body: CostingItemZ.pick({
+      tenantOid: true,
       name: true,
       category: true,
       calculationBasis: true,
@@ -62,6 +66,9 @@ export const costingItemContract = initContract().router({
     summary: "Get costing item groups with pagination and filtering",
     method: "GET",
     path: costingItemGroupBasePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -74,6 +81,7 @@ export const costingItemContract = initContract().router({
     method: "POST",
     path: costingItemGroupBasePath,
     body: CostingItemGroupZ.pick({
+      tenantOid: true,
       name: true,
       remarks: true,
       isActive: true,

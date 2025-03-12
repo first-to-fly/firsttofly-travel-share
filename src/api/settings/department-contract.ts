@@ -12,6 +12,7 @@ export const departmentContract = initContract().router({
     method: "POST",
     path: basePath,
     body: DepartmentZ.pick({
+      tenantOid: true,
       name: true,
       locationOid: true,
       parentDepartmentOid: true,
@@ -37,6 +38,9 @@ export const departmentContract = initContract().router({
     summary: "Get departments with pagination and filtering",
     method: "GET",
     path: basePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),

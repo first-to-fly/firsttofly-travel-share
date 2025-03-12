@@ -11,6 +11,9 @@ export const locationContract = initContract().router({
     summary: "Get locations with pagination and filtering",
     method: "GET",
     path: basePath,
+    query: z.object({
+      tenantOid: z.string(),
+    }).passthrough(),
     responses: {
       200: z.object({
         oids: z.array(z.string()),
@@ -23,6 +26,7 @@ export const locationContract = initContract().router({
     method: "POST",
     path: basePath,
     body: LocationZ.pick({
+      tenantOid: true,
       name: true,
       description: true,
       type: true,
