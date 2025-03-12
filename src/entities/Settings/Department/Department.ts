@@ -8,8 +8,8 @@ export const DepartmentZ = EntityZ.extend({
   entityType: z.literal(EntityType.DEPARTMENT),
 
   name: z.string().min(1, "Department name is required"),
-  locationId: z.string().uuid(),
-  parentDepartmentId: z.string().uuid().optional(),
+  locationOid: z.string().uuid(),
+  parentDepartmentOid: z.string().uuid().optional(),
   code: z.string(),
   isActive: z.boolean().default(true),
 });

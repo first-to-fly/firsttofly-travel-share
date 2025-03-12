@@ -13,8 +13,8 @@ export const departmentContract = initContract().router({
     path: basePath,
     body: DepartmentZ.pick({
       name: true,
-      locationId: true,
-      parentDepartmentId: true,
+      locationOid: true,
+      parentDepartmentOid: true,
       code: true,
       isActive: true,
     }),
@@ -26,7 +26,7 @@ export const departmentContract = initContract().router({
   updateDepartment: {
     summary: "Update an existing department",
     method: "PATCH",
-    path: `${basePath}/:departmentId`,
+    path: `${basePath}/:departmentOid`,
     body: DepartmentZ.partial(),
     responses: {
       200: z.string(),
@@ -47,7 +47,7 @@ export const departmentContract = initContract().router({
   deleteDepartment: {
     summary: "Delete a department",
     method: "DELETE",
-    path: `${basePath}/:departmentId`,
+    path: `${basePath}/:departmentOid`,
     body: z.object({}),
     responses: {
       200: z.boolean(),

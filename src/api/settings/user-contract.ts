@@ -28,7 +28,7 @@ export const userContract = initContract().router({
       displayName: true,
       photoURL: true,
       phoneNumber: true,
-      departmentID: true,
+      departmentOid: true,
     }),
     responses: {
       200: z.string(),

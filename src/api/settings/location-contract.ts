@@ -35,7 +35,7 @@ export const locationContract = initContract().router({
   updateLocation: {
     summary: "Update an existing location",
     method: "PATCH",
-    path: `${basePath}/:locationId`,
+    path: `${basePath}/:locationOid`,
     body: LocationZ.partial(),
     responses: {
       200: z.string(),
@@ -45,7 +45,7 @@ export const locationContract = initContract().router({
   deleteLocation: {
     summary: "Delete a location",
     method: "DELETE",
-    path: `${basePath}/:locationId`,
+    path: `${basePath}/:locationOid`,
     body: z.object({}),
     responses: {
       200: z.boolean(),

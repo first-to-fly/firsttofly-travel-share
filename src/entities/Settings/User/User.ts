@@ -13,7 +13,7 @@ export const UserZ = EntityZ.extend({
   photoURL: z.string(),
   phoneNumber: z.string(),
 
-  departmentID: z.string().uuid(),
+  departmentOid: z.string().uuid(),
 });
 
 
