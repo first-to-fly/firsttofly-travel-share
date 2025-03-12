@@ -2,6 +2,8 @@ export enum EntityType {
   USER = "user",
   PRODUCT = "product",
 
+  TENANT = "tenant",
+
   // PRODUCT SETTINGS
   BADGE = "badge",
   BADGE_TRANSLATION = "badgeTranslation",
