@@ -38,12 +38,12 @@ export const productContract = initContract().router({
       isActive: true,
       isPublished: true,
       status: true,
-      sectorGroupId: true,
-      departmentId: true,
+      sectorGroupOid: true,
+      departmentOid: true,
       // Add other required fields as needed
     }).extend({
-      sectorIds: z.array(z.number()),
-      displaySectorIds: z.array(z.number()),
+      sectorOids: z.array(z.number()),
+      displaySectorOids: z.array(z.number()),
     }),
     responses: {
       200: z.string(),
@@ -64,11 +64,11 @@ export const productContract = initContract().router({
       isActive: true,
       isPublished: true,
       status: true,
-      sectorGroupId: true,
-      departmentId: true,
+      sectorGroupOid: true,
+      departmentOid: true,
     }).extend({
-      sectorIds: z.array(z.number()).optional(),
-      displaySectorIds: z.array(z.number()).optional(),
+      sectorOids: z.array(z.number()).optional(),
+      displaySectorOids: z.array(z.number()).optional(),
     }),
     responses: {
       200: z.string(),

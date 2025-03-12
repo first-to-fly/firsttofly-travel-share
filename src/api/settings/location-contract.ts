@@ -40,7 +40,7 @@ export const locationContract = initContract().router({
     summary: "Update an existing location",
     method: "PATCH",
     path: `${basePath}/:locationOid`,
-    body: LocationZ.partial(),
+    body: LocationZ,
     responses: {
       200: z.string(),
     },

@@ -21,8 +21,8 @@ export const ProductZ = EntityZ.extend({
   isPublished: z.boolean(),
   status: z.string().max(50),
 
-  sectorGroupId: z.string().uuid(),
-  departmentId: z.string().uuid(),
+  sectorGroupOid: z.string().uuid(),
+  departmentOid: z.string().uuid(),
 });
 
 export type Product = z.infer<typeof ProductZ>;
