@@ -2,7 +2,6 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { MealZ } from "../../../entities/Settings/Product";
-import { PageListIdsResponseZ } from "../../../types/pageListIdsResponse";
 
 
 const basePath = "/api/settings/meals";
@@ -13,14 +12,10 @@ export const mealContract = initContract().router({
     summary: "Get meals with pagination and filtering",
     method: "GET",
     path: basePath,
-    query: z.object({
-      page: z.string().optional(),
-      pageSize: z.string().optional(),
-      type: z.string().optional(),
-      // Add other filter fields as needed
-    }).passthrough(), // Allow additional filter properties
     responses: {
-      200: PageListIdsResponseZ,
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
     },
   },
 

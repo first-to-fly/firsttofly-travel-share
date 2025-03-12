@@ -2,7 +2,6 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { DepartmentZ } from "../../entities/Settings/Department";
-import { PageListIdsResponseZ } from "../../types/pageListIdsResponse";
 
 
 const basePath = "/api/settings/departments";
@@ -38,12 +37,10 @@ export const departmentContract = initContract().router({
     summary: "Get departments with pagination and filtering",
     method: "GET",
     path: basePath,
-    query: z.object({
-      page: z.string().optional(),
-      pageSize: z.string().optional(),
-    }).passthrough(),
     responses: {
-      200: PageListIdsResponseZ,
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
     },
   },
 

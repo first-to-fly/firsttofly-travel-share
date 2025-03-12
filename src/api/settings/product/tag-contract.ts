@@ -2,7 +2,6 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { TagGroupZ, TagZ } from "../../../entities/Settings/Product";
-import { PageListIdsResponseZ } from "../../../types/pageListIdsResponse";
 
 
 const basePath = "/api/settings/tags";
@@ -14,16 +13,10 @@ export const tagContract = initContract().router({
     summary: "Get tags with pagination and filtering",
     method: "GET",
     path: basePath,
-    query: z.object({
-      page: z.string().optional(),
-      pageSize: z.string().optional(),
-      name: z.string().optional(),
-      isActive: z.string().optional(),
-      tagGroupId: z.string().optional(),
-      // Add other filter fields as needed
-    }).passthrough(), // Allow additional filter properties
     responses: {
-      200: PageListIdsResponseZ,
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
     },
   },
 
@@ -68,13 +61,10 @@ export const tagContract = initContract().router({
     summary: "Get tag groups with pagination and filtering",
     method: "GET",
     path: tagGroupBasePath,
-    query: z.object({
-      page: z.string().optional(),
-      pageSize: z.string().optional(),
-      // Add other filter fields as needed
-    }).passthrough(), // Allow additional filter properties
     responses: {
-      200: PageListIdsResponseZ,
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
     },
   },
 

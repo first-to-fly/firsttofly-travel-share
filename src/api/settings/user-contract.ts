@@ -2,7 +2,6 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { UserZ } from "../../entities/Settings/User";
-import { PageListIdsResponseZ } from "../../types/pageListIdsResponse";
 
 
 const basePath = "/api/settings/users";
@@ -12,16 +11,10 @@ export const userContract = initContract().router({
     summary: "Get users with pagination and filtering",
     method: "GET",
     path: basePath,
-    query: z.object({
-      page: z.string().optional(),
-      pageSize: z.string().optional(),
-      email: z.string().optional(),
-      displayName: z.string().optional(),
-      departmentID: z.string().optional(),
-      // Add other filter fields as needed
-    }).passthrough(), // Allow additional filter properties
     responses: {
-      200: PageListIdsResponseZ,
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
     },
   },
 

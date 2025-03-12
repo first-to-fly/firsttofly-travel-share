@@ -2,7 +2,6 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { ProductZ } from "../../entities/Product";
-import { PageListIdsResponseZ } from "../../types/pageListIdsResponse";
 
 
 const basePath = "/api/projects";
@@ -13,14 +12,10 @@ export const productContract = initContract().router({
     summary: "Get products with pagination and filtering",
     method: "GET",
     path: basePath,
-    query: z.object({
-      page: z.string().optional(),
-      pageSize: z.string().optional(),
-      keyword: z.string().optional(),
-      // Add other filter fields as needed
-    }).passthrough(), // Allow additional filter properties
     responses: {
-      200: PageListIdsResponseZ,
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
     },
   },
 

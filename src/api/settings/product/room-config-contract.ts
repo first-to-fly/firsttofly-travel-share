@@ -2,7 +2,6 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { RoomConfigZ } from "../../../entities/Settings/Product";
-import { PageListIdsResponseZ } from "../../../types/pageListIdsResponse";
 
 
 const basePath = "/api/settings/room-configs";
@@ -13,16 +12,10 @@ export const roomConfigContract = initContract().router({
     summary: "Get room configurations with pagination and filtering",
     method: "GET",
     path: basePath,
-    query: z.object({
-      page: z.string().optional(),
-      pageSize: z.string().optional(),
-      name: z.string().optional(),
-      coverageType: z.string().optional(),
-      isActive: z.string().optional(),
-      // Add other filter fields as needed
-    }).passthrough(), // Allow additional filter properties
     responses: {
-      200: PageListIdsResponseZ,
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
     },
   },
 
