@@ -11,8 +11,8 @@ export const EntityZ = z.object({
 
   tenantOid: z.string(), // .uuid(), Temp disable for testing
 
-  createdBy: z.string().uuid(),
-  updatedBy: z.string().uuid().optional(),
+  createdBy: z.string(),
+  updatedBy: z.string().optional(),
 
   createdAt: DateISOStringZ,
   updatedAt: DateISOStringZ.optional(),
