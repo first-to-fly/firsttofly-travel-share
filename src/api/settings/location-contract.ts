@@ -50,11 +50,40 @@ export const locationContract = initContract().router({
     },
   },
 
+  updateLocations: {
+    summary: "Update multiple existing locations",
+    method: "PATCH",
+    path: `${basePath}/batch-update`,
+    body: z.record(
+      z.string().describe("OID of location to update"),
+      LocationZ.pick({
+        name: true,
+        description: true,
+        type: true,
+      }),
+    ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of updated locations")),
+    },
+  },
+
   deleteLocation: {
     summary: "Delete a location",
     method: "DELETE",
     path: `${basePath}/:locationOid`,
     body: z.object({}),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
+  deleteLocations: {
+    summary: "Delete multiple locations",
+    method: "DELETE",
+    path: `${basePath}/batch-delete`,
+    body: z.object({
+      locationOids: z.array(z.string().describe("OIDs of locations to delete")),
+    }),
     responses: {
       200: z.boolean(),
     },
