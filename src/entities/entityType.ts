@@ -20,5 +20,6 @@ export enum EntityType {
 
   LOCATION = "location",
   DEPARTMENT = "department",
+  PRIVACY_POLICY = "privacyPolicy",
 }
 export const EntityTypes = Object.values(EntityType);

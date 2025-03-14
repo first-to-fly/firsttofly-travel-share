@@ -12,7 +12,7 @@ export const locationContract = initContract().router({
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -26,7 +26,7 @@ export const locationContract = initContract().router({
     method: "POST",
     path: basePath,
     body: LocationZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       name: true,
       description: true,
       type: true,
@@ -39,7 +39,7 @@ export const locationContract = initContract().router({
   updateLocation: {
     summary: "Update an existing location",
     method: "PATCH",
-    path: `${basePath}/:locationOid`,
+    path: `${basePath}/:locationOID`,
     body: LocationZ.pick({
       name: true,
       description: true,
@@ -70,7 +70,7 @@ export const locationContract = initContract().router({
   deleteLocation: {
     summary: "Delete a location",
     method: "DELETE",
-    path: `${basePath}/:locationOid`,
+    path: `${basePath}/:locationOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),
@@ -82,7 +82,7 @@ export const locationContract = initContract().router({
     method: "POST",
     path: `${basePath}/batch-delete`,
     body: z.object({
-      locationOids: z.array(z.string().describe("OIDs of locations to delete")),
+      locationOIDs: z.array(z.string().describe("OIDs of locations to delete")),
     }),
     responses: {
       200: z.boolean(),
