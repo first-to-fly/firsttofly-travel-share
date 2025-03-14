@@ -12,7 +12,7 @@ export const badgeContract = initContract().router({
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -26,7 +26,7 @@ export const badgeContract = initContract().router({
     method: "POST",
     path: basePath,
     body: BadgeZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       isActive: true,
       icon: true,
     }),

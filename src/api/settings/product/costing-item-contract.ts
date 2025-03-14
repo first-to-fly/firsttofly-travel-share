@@ -14,7 +14,7 @@ export const costingItemContract = initContract().router({
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -28,7 +28,7 @@ export const costingItemContract = initContract().router({
     method: "POST",
     path: basePath,
     body: CostingItemZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       name: true,
       category: true,
       calculationBasis: true,
@@ -67,7 +67,7 @@ export const costingItemContract = initContract().router({
     method: "GET",
     path: costingItemGroupBasePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -81,7 +81,7 @@ export const costingItemContract = initContract().router({
     method: "POST",
     path: costingItemGroupBasePath,
     body: CostingItemGroupZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       name: true,
       remarks: true,
       isActive: true,

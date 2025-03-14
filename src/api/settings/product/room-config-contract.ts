@@ -13,7 +13,7 @@ export const roomConfigContract = initContract().router({
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -27,7 +27,7 @@ export const roomConfigContract = initContract().router({
     method: "POST",
     path: basePath,
     body: RoomConfigZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       name: true,
       coverageType: true,
       childNoBedStartAge: true,

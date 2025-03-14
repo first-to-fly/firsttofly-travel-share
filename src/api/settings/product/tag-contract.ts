@@ -14,7 +14,7 @@ export const tagContract = initContract().router({
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -28,7 +28,7 @@ export const tagContract = initContract().router({
     method: "POST",
     path: basePath,
     body: TagZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       name: true,
       isActive: true,
       sortOrder: true,
@@ -66,7 +66,7 @@ export const tagContract = initContract().router({
     method: "GET",
     path: tagGroupBasePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -80,7 +80,7 @@ export const tagContract = initContract().router({
     method: "POST",
     path: tagGroupBasePath,
     body: TagGroupZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       name: true,
       description: true,
       tagIds: true,

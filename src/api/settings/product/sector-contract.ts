@@ -14,7 +14,7 @@ export const sectorContract = initContract().router({
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -28,7 +28,7 @@ export const sectorContract = initContract().router({
     method: "POST",
     path: basePath,
     body: SectorZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       name: true,
       parentId: true,
       sectorGroupId: true,
@@ -65,7 +65,7 @@ export const sectorContract = initContract().router({
     method: "GET",
     path: sectorGroupBasePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -79,7 +79,7 @@ export const sectorContract = initContract().router({
     method: "POST",
     path: sectorGroupBasePath,
     body: SectorGroupZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       name: true,
       description: true,
       sectorIds: true,

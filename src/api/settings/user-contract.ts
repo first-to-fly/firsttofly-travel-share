@@ -12,7 +12,7 @@ export const userContract = initContract().router({
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -31,7 +31,7 @@ export const userContract = initContract().router({
       displayName: true,
       photoURL: true,
       phoneNumber: true,
-      departmentOid: true,
+      departmentOID: true,
     }),
     responses: {
       200: z.string(),

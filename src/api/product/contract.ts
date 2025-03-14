@@ -13,7 +13,7 @@ export const productContract = initContract().router({
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOid: z.string(),
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -27,7 +27,7 @@ export const productContract = initContract().router({
     method: "POST",
     path: basePath,
     body: ProductZ.pick({
-      tenantOid: true,
+      tenantOID: true,
       code: true,
       validityStartDate: true,
       validityEndDate: true,
@@ -38,12 +38,12 @@ export const productContract = initContract().router({
       isActive: true,
       isPublished: true,
       status: true,
-      sectorGroupOid: true,
-      departmentOid: true,
+      sectorGroupOID: true,
+      departmentOID: true,
       // Add other required fields as needed
     }).extend({
-      sectorOids: z.array(z.number()),
-      displaySectorOids: z.array(z.number()),
+      sectorOIDs: z.array(z.number()),
+      displaySectorOIDs: z.array(z.number()),
     }),
     responses: {
       200: z.string(),
@@ -53,7 +53,7 @@ export const productContract = initContract().router({
   updateProduct: {
     summary: "Update an existing product",
     method: "PATCH",
-    path: `${basePath}/:productOid`,
+    path: `${basePath}/:productOID`,
     body: ProductZ.pick({
       validityStartDate: true,
       validityEndDate: true,
@@ -64,11 +64,11 @@ export const productContract = initContract().router({
       isActive: true,
       isPublished: true,
       status: true,
-      sectorGroupOid: true,
-      departmentOid: true,
+      sectorGroupOID: true,
+      departmentOID: true,
     }).extend({
-      sectorOids: z.array(z.number()).optional(),
-      displaySectorOids: z.array(z.number()).optional(),
+      sectorOIDs: z.array(z.number()).optional(),
+      displaySectorOIDs: z.array(z.number()).optional(),
     }),
     responses: {
       200: z.string(),
@@ -78,7 +78,7 @@ export const productContract = initContract().router({
   deleteProduct: {
     summary: "Delete a product",
     method: "DELETE",
-    path: `${basePath}/:productOid`,
+    path: `${basePath}/:productOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),
