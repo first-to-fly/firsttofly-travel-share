@@ -4,6 +4,12 @@ import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
+export enum DepartmentEvents {
+  DEPARTMENT_UPDATED = "DEPARTMENT_UPDATED",
+  DEPARTMENT_LIST_UPDATED = "DEPARTMENT_LIST_UPDATED",
+}
+
+
 export const DepartmentZ = EntityZ.extend({
   entityType: z.literal(EntityType.DEPARTMENT),
 

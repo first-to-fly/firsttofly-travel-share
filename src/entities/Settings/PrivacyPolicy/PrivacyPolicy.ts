@@ -4,6 +4,12 @@ import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
+export enum PrivacyPolicyEvents {
+  PRIVACY_POLICY_UPDATED = "PRIVACY_POLICY_UPDATED",
+  PRIVACY_POLICY_LIST_UPDATED = "PRIVACY_POLICY_LIST_UPDATED",
+}
+
+
 export const PrivacyPolicyZ = EntityZ.extend({
   entityType: z.literal(EntityType.PRIVACY_POLICY),
 

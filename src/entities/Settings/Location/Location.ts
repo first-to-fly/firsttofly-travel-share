@@ -10,6 +10,11 @@ export enum LocationType {
   QUEUE = "queue",
 }
 
+export enum LocationEvents {
+  LOCATION_UPDATED = "LOCATION_UPDATED",
+  LOCATION_LIST_UPDATED = "LOCATION_LIST_UPDATED",
+}
+
 export const LocationZ = EntityZ.extend({
   entityType: z.literal(EntityType.LOCATION),
   name: z.string(),
