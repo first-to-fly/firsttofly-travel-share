@@ -28,7 +28,7 @@ export const privacyPolicyContract = initContract().router({
     body: PrivacyPolicyZ.pick({
       tenantOID: true,
       name: true,
-      fileURL: true,
+      file: true,
       isActive: true,
     }),
     responses: {
@@ -42,7 +42,7 @@ export const privacyPolicyContract = initContract().router({
     path: `${basePath}/:policyOID`,
     body: PrivacyPolicyZ.pick({
       name: true,
-      fileURL: true,
+      file: true,
       isActive: true,
     }),
     responses: {
@@ -58,7 +58,7 @@ export const privacyPolicyContract = initContract().router({
       z.string().describe("OID of privacy policy to update"),
       PrivacyPolicyZ.pick({
         name: true,
-        fileURL: true,
+        file: true,
         isActive: true,
       }),
     ),
