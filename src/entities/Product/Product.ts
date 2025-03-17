@@ -22,7 +22,7 @@ export const ProductZ = EntityZ.extend({
   status: z.string().max(50),
 
   sectorGroupOID: z.string().uuid(),
-  departmentOID: z.string().uuid(),
+  groupOID: z.string().uuid(),
 });
 
 export type Product = z.infer<typeof ProductZ>;
