@@ -60,7 +60,7 @@ export const sectorContract = initContract().router({
   },
 
   // SectorGroup methods
-  getSectorGroups: {
+  getSectorDepartments: {
     summary: "Get sector groups with pagination and filtering",
     method: "GET",
     path: sectorGroupBasePath,

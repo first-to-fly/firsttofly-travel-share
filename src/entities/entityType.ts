@@ -1,5 +1,6 @@
 export enum EntityType {
   USER = "user",
+  GROUP = "group",
   PRODUCT = "product",
 
   TENANT = "tenant",
