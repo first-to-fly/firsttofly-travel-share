@@ -62,7 +62,7 @@ export const costingItemContract = initContract().router({
   },
 
   // CostingItemGroup methods
-  getCostingItemGroups: {
+  getCostingItemDepartments: {
     summary: "Get costing item groups with pagination and filtering",
     method: "GET",
     path: costingItemGroupBasePath,
