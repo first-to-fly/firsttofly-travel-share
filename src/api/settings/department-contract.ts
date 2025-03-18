@@ -40,6 +40,25 @@ export const departmentContract = initContract().router({
     },
   },
 
+  updateDepartments: {
+    summary: "Update an existing department",
+    method: "PATCH",
+    path: `${basePath}/batch-update`,
+    body: z.record(
+      z.string().describe("OID of department to update"),
+      DepartmentZ.pick({
+        name: true,
+        locationOID: true,
+        parentDepartmentOID: true,
+        code: true,
+        isActive: true,
+      }),
+    ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of updated locations")),
+    },
+  },
+
   getDepartments: {
     summary: "Get departments with pagination and filtering",
     method: "GET",
@@ -59,6 +78,18 @@ export const departmentContract = initContract().router({
     method: "DELETE",
     path: `${basePath}/:departmentOID`,
     body: z.object({}),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
+  deleteDepartments: {
+    summary: "Delete a department",
+    method: "DELETE",
+    path: `${basePath}/batch-update`,
+    body: z.array(
+      z.array(z.string().describe("OID of department to delete")),
+    ),
     responses: {
       200: z.boolean(),
     },
