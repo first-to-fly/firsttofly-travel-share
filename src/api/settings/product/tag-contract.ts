@@ -61,7 +61,7 @@ export const tagContract = initContract().router({
   },
 
   // TagGroup methods
-  getTagGroups: {
+  getTagDepartments: {
     summary: "Get tag groups with pagination and filtering",
     method: "GET",
     path: tagGroupBasePath,
