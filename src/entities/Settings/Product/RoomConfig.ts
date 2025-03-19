@@ -20,7 +20,7 @@ export type RoomConfig = z.infer<typeof RoomConfigZ>;
 export const RoomConfigRuleZ = EntityZ.extend({
   entityType: z.literal(EntityType.ROOM_CONFIG_RULE),
 
-  roomConfigId: z.string().uuid(),
+  roomConfigOID: z.string().uuid(),
   roomType: z.enum(["single", "twin", "triple", "quad"]),
   occupantArrangement: z.unknown(),
   pricingArrangement: z.unknown(),
@@ -33,9 +33,9 @@ export type RoomConfigRule = z.infer<typeof RoomConfigRuleZ>;
 export const RoomConfigCoverageZ = EntityZ.extend({
   entityType: z.literal(EntityType.ROOM_CONFIG_COVERAGE),
 
-  roomConfigId: z.string().uuid(),
+  roomConfigOID: z.string().uuid(),
   coverageType: z.enum(["sectors", "sector-group", "products"]),
-  coverageId: z.string().uuid(),
+  coverageOID: z.string().uuid(),
 });
 
 export type RoomConfigCoverage = z.infer<typeof RoomConfigCoverageZ>;

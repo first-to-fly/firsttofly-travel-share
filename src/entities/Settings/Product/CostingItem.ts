@@ -68,7 +68,7 @@ export const CostingItemGroupZ = EntityZ.extend({
   remarks: z.string().optional(),
   isActive: z.boolean(),
 
-  costingItemIds: z.array(z.string()),
+  costingItemOIDs: z.array(z.string()),
 });
 
 export type CostingItemGroup = z.infer<typeof CostingItemGroupZ>;

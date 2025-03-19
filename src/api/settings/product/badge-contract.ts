@@ -38,7 +38,7 @@ export const badgeContract = initContract().router({
   updateBadge: {
     summary: "Update an existing badge",
     method: "PATCH",
-    path: `${basePath}/:badgeId`,
+    path: `${basePath}/:badgeOID`,
     body: BadgeZ.partial(),
     responses: {
       200: z.string(),
@@ -48,7 +48,7 @@ export const badgeContract = initContract().router({
   deleteBadge: {
     summary: "Delete a badge",
     method: "DELETE",
-    path: `${basePath}/:badgeId`,
+    path: `${basePath}/:badgeOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),

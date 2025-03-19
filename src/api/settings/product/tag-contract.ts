@@ -33,7 +33,7 @@ export const tagContract = initContract().router({
       isActive: true,
       sortOrder: true,
       style: true,
-      tagGroupId: true,
+      tagGroupOID: true,
     }),
     responses: {
       200: z.string(),
@@ -43,7 +43,7 @@ export const tagContract = initContract().router({
   updateTag: {
     summary: "Update an existing tag",
     method: "PATCH",
-    path: `${basePath}/:tagId`,
+    path: `${basePath}/:tagOID`,
     body: TagZ.partial(),
     responses: {
       200: z.string(),
@@ -53,7 +53,7 @@ export const tagContract = initContract().router({
   deleteTag: {
     summary: "Delete a tag",
     method: "DELETE",
-    path: `${basePath}/:tagId`,
+    path: `${basePath}/:tagOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),
@@ -83,7 +83,7 @@ export const tagContract = initContract().router({
       tenantOID: true,
       name: true,
       description: true,
-      tagIds: true,
+      tagOIDs: true,
     }),
     responses: {
       200: z.string(),
@@ -93,7 +93,7 @@ export const tagContract = initContract().router({
   updateTagGroup: {
     summary: "Update an existing tag group",
     method: "PATCH",
-    path: `${tagGroupBasePath}/:tagGroupId`,
+    path: `${tagGroupBasePath}/:tagGroupOID`,
     body: TagGroupZ.partial(),
     responses: {
       200: z.string(),
@@ -103,7 +103,7 @@ export const tagContract = initContract().router({
   deleteTagGroup: {
     summary: "Delete a tag group",
     method: "DELETE",
-    path: `${tagGroupBasePath}/:tagGroupId`,
+    path: `${tagGroupBasePath}/:tagGroupOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),

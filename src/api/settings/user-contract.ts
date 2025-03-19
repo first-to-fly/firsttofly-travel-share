@@ -41,7 +41,7 @@ export const userContract = initContract().router({
   updateUser: {
     summary: "Update an existing user",
     method: "PATCH",
-    path: `${basePath}/:userId`,
+    path: `${basePath}/:userOID`,
     body: UserZ.partial(),
     responses: {
       200: z.string(),
@@ -51,7 +51,7 @@ export const userContract = initContract().router({
   deleteUser: {
     summary: "Delete a user",
     method: "DELETE",
-    path: `${basePath}/:userId`,
+    path: `${basePath}/:userOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),

@@ -43,7 +43,7 @@ export const roomConfigContract = initContract().router({
   updateRoomConfig: {
     summary: "Update an existing room configuration",
     method: "PATCH",
-    path: `${basePath}/:roomConfigId`,
+    path: `${basePath}/:roomConfigOID`,
     body: RoomConfigZ.partial(),
     responses: {
       200: z.string(),
@@ -53,7 +53,7 @@ export const roomConfigContract = initContract().router({
   deleteRoomConfig: {
     summary: "Delete a room configuration",
     method: "DELETE",
-    path: `${basePath}/:roomConfigId`,
+    path: `${basePath}/:roomConfigOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),

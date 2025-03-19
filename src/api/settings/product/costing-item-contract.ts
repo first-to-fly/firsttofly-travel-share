@@ -44,7 +44,7 @@ export const costingItemContract = initContract().router({
   updateCostingItem: {
     summary: "Update an existing costing item",
     method: "PATCH",
-    path: `${basePath}/:costingItemId`,
+    path: `${basePath}/:costingItemOID`,
     body: CostingItemZ.partial(),
     responses: {
       200: z.string(),
@@ -54,7 +54,7 @@ export const costingItemContract = initContract().router({
   deleteCostingItem: {
     summary: "Delete a costing item",
     method: "DELETE",
-    path: `${basePath}/:costingItemId`,
+    path: `${basePath}/:costingItemOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),
@@ -85,7 +85,7 @@ export const costingItemContract = initContract().router({
       name: true,
       remarks: true,
       isActive: true,
-      costingItemIds: true,
+      costingItemOIDs: true,
     }),
     responses: {
       200: z.string(),
@@ -95,7 +95,7 @@ export const costingItemContract = initContract().router({
   updateCostingItemGroup: {
     summary: "Update an existing costing item group",
     method: "PATCH",
-    path: `${costingItemGroupBasePath}/:costingItemGroupId`,
+    path: `${costingItemGroupBasePath}/:costingItemGroupOID`,
     body: CostingItemGroupZ.partial(),
     responses: {
       200: z.string(),
@@ -105,7 +105,7 @@ export const costingItemContract = initContract().router({
   deleteCostingItemGroup: {
     summary: "Delete a costing item group",
     method: "DELETE",
-    path: `${costingItemGroupBasePath}/:costingItemGroupId`,
+    path: `${costingItemGroupBasePath}/:costingItemGroupOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),

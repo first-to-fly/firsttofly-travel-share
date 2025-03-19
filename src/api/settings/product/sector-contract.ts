@@ -30,8 +30,8 @@ export const sectorContract = initContract().router({
     body: SectorZ.pick({
       tenantOID: true,
       name: true,
-      parentId: true,
-      sectorGroupId: true,
+      parentOID: true,
+      sectorGroupOID: true,
       isActive: true,
     }),
     responses: {
@@ -42,7 +42,7 @@ export const sectorContract = initContract().router({
   updateSector: {
     summary: "Update an existing sector",
     method: "PATCH",
-    path: `${basePath}/:sectorId`,
+    path: `${basePath}/:sectorOID`,
     body: SectorZ.partial(),
     responses: {
       200: z.string(),
@@ -52,7 +52,7 @@ export const sectorContract = initContract().router({
   deleteSector: {
     summary: "Delete a sector",
     method: "DELETE",
-    path: `${basePath}/:sectorId`,
+    path: `${basePath}/:sectorOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),
@@ -82,7 +82,7 @@ export const sectorContract = initContract().router({
       tenantOID: true,
       name: true,
       description: true,
-      sectorIds: true,
+      sectorOIDs: true,
     }),
     responses: {
       200: z.string(),
@@ -92,7 +92,7 @@ export const sectorContract = initContract().router({
   updateSectorGroup: {
     summary: "Update an existing sector group",
     method: "PATCH",
-    path: `${sectorGroupBasePath}/:sectorGroupId`,
+    path: `${sectorGroupBasePath}/:sectorGroupOID`,
     body: SectorGroupZ.partial(),
     responses: {
       200: z.string(),
@@ -102,7 +102,7 @@ export const sectorContract = initContract().router({
   deleteSectorGroup: {
     summary: "Delete a sector group",
     method: "DELETE",
-    path: `${sectorGroupBasePath}/:sectorGroupId`,
+    path: `${sectorGroupBasePath}/:sectorGroupOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),

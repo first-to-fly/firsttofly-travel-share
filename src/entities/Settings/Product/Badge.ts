@@ -16,8 +16,8 @@ export type Badge = z.infer<typeof BadgeZ>;
 export const BadgeTranslationZ = EntityZ.extend({
   entityType: z.literal(EntityType.BADGE_TRANSLATION),
 
-  badgeId: z.string().uuid(),
-  languageId: z.string().uuid(),
+  badgeOID: z.string().uuid(),
+  languageOID: z.string().uuid(),
   name: z.string(),
 });
 

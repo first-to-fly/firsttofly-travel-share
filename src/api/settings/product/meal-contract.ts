@@ -42,7 +42,7 @@ export const mealContract = initContract().router({
   updateMeal: {
     summary: "Update an existing meal",
     method: "PATCH",
-    path: `${basePath}/:mealId`,
+    path: `${basePath}/:mealOID`,
     body: MealZ.partial(),
     responses: {
       200: z.string(),
@@ -52,7 +52,7 @@ export const mealContract = initContract().router({
   deleteMeal: {
     summary: "Delete a meal",
     method: "DELETE",
-    path: `${basePath}/:mealId`,
+    path: `${basePath}/:mealOID`,
     body: z.object({}),
     responses: {
       200: z.boolean(),
