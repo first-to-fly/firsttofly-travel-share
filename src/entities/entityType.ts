@@ -1,8 +1,10 @@
 export enum EntityType {
   USER = "user",
-  GROUP = "group",
+
   PRODUCT = "product",
   PRODUCT_TYPE = "productType",
+
+  TERM = "term",
 
   TENANT = "tenant",
 
@@ -20,6 +22,7 @@ export enum EntityType {
   TAG = "tag",
   TAG_GROUP = "tagGroup",
 
+  // GENERAL SETTINGS
   LOCATION = "location",
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
