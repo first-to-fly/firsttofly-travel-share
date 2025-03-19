@@ -66,4 +66,35 @@ export const sectorContract = initContract().router({
     },
   },
 
+  updateSectors: {
+    summary: "Update multiple existing sectors",
+    method: "POST",
+    path: `${basePath}/batch-update`,
+    body: z.record(
+      z.string().describe("OID of sector to update"),
+      SectorZ.pick({
+        name: true,
+        parentOID: true,
+        isActive: true,
+        isPopular: true,
+        images: true,
+        productTypeOIDs: true,
+      }),
+    ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of updated sectors")),
+    },
+  },
+
+  deleteSectors: {
+    summary: "Delete multiple sectors",
+    method: "POST",
+    path: `${basePath}/batch-delete`,
+    body: z.object({
+      sectorOIDs: z.array(z.string().describe("OIDs of sectors to delete")),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
 });
