@@ -6,6 +6,17 @@ import { UserZ } from "../../entities/Settings/User";
 
 const basePath = "/api/settings/users";
 
+const UpdateUserZ = UserZ.pick({
+  email: true,
+  emailVerified: true,
+  displayName: true,
+  photoURL: true,
+  phoneNumber: true,
+  departmentOID: true,
+});
+
+export type UpdateUser = z.infer<typeof UpdateUserZ>;
+
 export const userContract = initContract().router({
   getUsers: {
     summary: "Get users",
@@ -42,7 +53,7 @@ export const userContract = initContract().router({
     summary: "Update an existing user",
     method: "PATCH",
     path: `${basePath}/:userOID`,
-    body: UserZ.partial(),
+    body: UpdateUserZ,
     responses: {
       200: z.string(),
     },

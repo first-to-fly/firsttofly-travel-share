@@ -6,6 +6,17 @@ import { SectorZ } from "../../../entities/Settings/Product";
 
 const basePath = "/api/settings/sectors";
 
+const UpdateSectorZ = SectorZ.pick({
+  name: true,
+  parentOID: true,
+  isActive: true,
+  isPopular: true,
+  images: true,
+  productTypeOIDs: true,
+});
+
+export type UpdateSector = z.infer<typeof UpdateSectorZ>;
+
 export const sectorContract = initContract().router({
   getSectors: {
     summary: "Get sectors",
@@ -43,14 +54,7 @@ export const sectorContract = initContract().router({
     summary: "Update an existing sector",
     method: "PATCH",
     path: `${basePath}/:sectorOID`,
-    body: SectorZ.pick({
-      name: true,
-      parentOID: true,
-      isActive: true,
-      isPopular: true,
-      images: true,
-      productTypeOIDs: true,
-    }),
+    body: UpdateSectorZ,
     responses: {
       200: z.string(),
     },
@@ -72,14 +76,7 @@ export const sectorContract = initContract().router({
     path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of sector to update"),
-      SectorZ.pick({
-        name: true,
-        parentOID: true,
-        isActive: true,
-        isPopular: true,
-        images: true,
-        productTypeOIDs: true,
-      }),
+      UpdateSectorZ,
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated sectors")),

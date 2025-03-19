@@ -6,6 +6,14 @@ import { PrivacyPolicyZ } from "../../entities/Settings/PrivacyPolicy/PrivacyPol
 
 const basePath = "/api/settings/privacy-policies";
 
+const UpdatePrivacyPolicyZ = PrivacyPolicyZ.pick({
+  name: true,
+  file: true,
+  isActive: true,
+});
+
+export type UpdatePrivacyPolicy = z.infer<typeof UpdatePrivacyPolicyZ>;
+
 export const privacyPolicyContract = initContract().router({
   getPrivacyPolicies: {
     summary: "Get privacy policies",
@@ -40,11 +48,7 @@ export const privacyPolicyContract = initContract().router({
     summary: "Update an existing privacy policy",
     method: "PATCH",
     path: `${basePath}/:policyOID`,
-    body: PrivacyPolicyZ.pick({
-      name: true,
-      file: true,
-      isActive: true,
-    }),
+    body: UpdatePrivacyPolicyZ,
     responses: {
       200: z.string(),
     },
@@ -56,11 +60,7 @@ export const privacyPolicyContract = initContract().router({
     path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of privacy policy to update"),
-      PrivacyPolicyZ.pick({
-        name: true,
-        file: true,
-        isActive: true,
-      }),
+      UpdatePrivacyPolicyZ,
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated privacy policies")),

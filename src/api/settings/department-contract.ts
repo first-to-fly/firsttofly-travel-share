@@ -6,6 +6,16 @@ import { DepartmentZ } from "../../entities/Settings/Department";
 
 const basePath = "/api/settings/departments";
 
+const UpdateDepartmentZ = DepartmentZ.pick({
+  name: true,
+  locationOID: true,
+  parentDepartmentOID: true,
+  code: true,
+  isActive: true,
+});
+
+export type UpdateDepartment = z.infer<typeof UpdateDepartmentZ>;
+
 export const departmentContract = initContract().router({
   createDepartment: {
     summary: "Create a new department",
@@ -28,13 +38,7 @@ export const departmentContract = initContract().router({
     summary: "Update an existing department",
     method: "PATCH",
     path: `${basePath}/:departmentOID`,
-    body: DepartmentZ.pick({
-      name: true,
-      locationOID: true,
-      parentDepartmentOID: true,
-      code: true,
-      isActive: true,
-    }),
+    body: UpdateDepartmentZ,
     responses: {
       200: z.string(),
     },
@@ -46,13 +50,7 @@ export const departmentContract = initContract().router({
     path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of department to update"),
-      DepartmentZ.pick({
-        name: true,
-        locationOID: true,
-        parentDepartmentOID: true,
-        code: true,
-        isActive: true,
-      }),
+      UpdateDepartmentZ,
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated locations")),

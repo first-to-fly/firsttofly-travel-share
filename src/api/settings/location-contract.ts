@@ -6,6 +6,15 @@ import { LocationZ } from "../../entities/Settings/Location";
 
 const basePath = "/api/settings/locations";
 
+const UpdateLocationZ = LocationZ.pick({
+  name: true,
+  type: true,
+}).extend({
+  description: z.string().nullish(),
+});
+
+export type UpdateLocation = z.infer<typeof UpdateLocationZ>;
+
 export const locationContract = initContract().router({
   getLocations: {
     summary: "Get locations",
@@ -40,11 +49,7 @@ export const locationContract = initContract().router({
     summary: "Update an existing location",
     method: "PATCH",
     path: `${basePath}/:locationOID`,
-    body: LocationZ.pick({
-      name: true,
-      description: true,
-      type: true,
-    }),
+    body: UpdateLocationZ,
     responses: {
       200: z.string(),
     },
@@ -56,11 +61,7 @@ export const locationContract = initContract().router({
     path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of location to update"),
-      LocationZ.pick({
-        name: true,
-        description: true,
-        type: true,
-      }),
+      UpdateLocationZ,
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated locations")),
