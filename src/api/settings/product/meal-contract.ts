@@ -9,7 +9,7 @@ const basePath = "/api/settings/meals";
 
 export const mealContract = initContract().router({
   getMeals: {
-    summary: "Get meals with pagination and filtering",
+    summary: "Get meals",
     method: "GET",
     path: basePath,
     query: z.object({

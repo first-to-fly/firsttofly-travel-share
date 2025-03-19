@@ -9,7 +9,7 @@ const basePath = "/api/settings/room-configs";
 
 export const roomConfigContract = initContract().router({
   getRoomConfigs: {
-    summary: "Get room configurations with pagination and filtering",
+    summary: "Get room configurations",
     method: "GET",
     path: basePath,
     query: z.object({

@@ -10,7 +10,7 @@ const sectorGroupBasePath = "/api/settings/sector-groups";
 
 export const sectorContract = initContract().router({
   getSectors: {
-    summary: "Get sectors with pagination and filtering",
+    summary: "Get sectors",
     method: "GET",
     path: basePath,
     query: z.object({
@@ -61,7 +61,7 @@ export const sectorContract = initContract().router({
 
   // SectorGroup methods
   getSectorDepartments: {
-    summary: "Get sector groups with pagination and filtering",
+    summary: "Get sector groups",
     method: "GET",
     path: sectorGroupBasePath,
     query: z.object({

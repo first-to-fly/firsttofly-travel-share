@@ -30,9 +30,10 @@ export const SectorZ = EntityZ.extend({
   entityType: z.literal(EntityType.SECTOR),
 
   name: z.string(),
-  parentOID: z.string().uuid().optional(),
-  sectorGroupOID: z.string().uuid(),
   isActive: z.boolean().default(true),
+  images: z.array(z.string().url()).optional(),
+  parentOID: z.string().uuid().optional(),
+
 });
 
 export type Sector = z.infer<typeof SectorZ>;

@@ -2,6 +2,7 @@ export enum EntityType {
   USER = "user",
   GROUP = "group",
   PRODUCT = "product",
+  PRODUCT_TYPE = "productType",
 
   TENANT = "tenant",
 

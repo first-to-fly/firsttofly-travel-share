@@ -8,7 +8,7 @@ const basePath = "/api/settings/badges";
 
 export const badgeContract = initContract().router({
   getBadges: {
-    summary: "Get badges with pagination and filtering",
+    summary: "Get badges",
     method: "GET",
     path: basePath,
     query: z.object({

@@ -8,7 +8,7 @@ const basePath = "/api/settings/privacy-policies";
 
 export const privacyPolicyContract = initContract().router({
   getPrivacyPolicies: {
-    summary: "Get privacy policies with pagination and filtering",
+    summary: "Get privacy policies",
     method: "GET",
     path: basePath,
     query: z.object({

@@ -8,7 +8,7 @@ const basePath = "/api/settings/locations";
 
 export const locationContract = initContract().router({
   getLocations: {
-    summary: "Get locations with pagination and filtering",
+    summary: "Get locations",
     method: "GET",
     path: basePath,
     query: z.object({

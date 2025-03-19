@@ -10,7 +10,7 @@ const tagGroupBasePath = "/api/settings/tag-groups";
 
 export const tagContract = initContract().router({
   getTags: {
-    summary: "Get tags with pagination and filtering",
+    summary: "Get tags",
     method: "GET",
     path: basePath,
     query: z.object({
@@ -62,7 +62,7 @@ export const tagContract = initContract().router({
 
   // TagGroup methods
   getTagDepartments: {
-    summary: "Get tag groups with pagination and filtering",
+    summary: "Get tag groups",
     method: "GET",
     path: tagGroupBasePath,
     query: z.object({

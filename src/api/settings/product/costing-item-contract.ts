@@ -10,7 +10,7 @@ const costingItemGroupBasePath = "/api/settings/costing-item-groups";
 
 export const costingItemContract = initContract().router({
   getCostingItems: {
-    summary: "Get costing items with pagination and filtering",
+    summary: "Get costing items",
     method: "GET",
     path: basePath,
     query: z.object({
@@ -63,7 +63,7 @@ export const costingItemContract = initContract().router({
 
   // CostingItemGroup methods
   getCostingItemDepartments: {
-    summary: "Get costing item groups with pagination and filtering",
+    summary: "Get costing item groups",
     method: "GET",
     path: costingItemGroupBasePath,
     query: z.object({

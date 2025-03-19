@@ -60,7 +60,7 @@ export const departmentContract = initContract().router({
   },
 
   getDepartments: {
-    summary: "Get departments with pagination and filtering",
+    summary: "Get departments",
     method: "GET",
     path: basePath,
     query: z.object({

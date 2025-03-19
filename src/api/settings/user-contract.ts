@@ -8,7 +8,7 @@ const basePath = "/api/settings/users";
 
 export const userContract = initContract().router({
   getUsers: {
-    summary: "Get users with pagination and filtering",
+    summary: "Get users",
     method: "GET",
     path: basePath,
     query: z.object({

@@ -9,7 +9,7 @@ const basePath = "/api/projects";
 
 export const productContract = initContract().router({
   getProducts: {
-    summary: "Get products with pagination and filtering",
+    summary: "Get products",
     method: "GET",
     path: basePath,
     query: z.object({
