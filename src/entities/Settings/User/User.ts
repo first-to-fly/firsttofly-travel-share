@@ -13,7 +13,14 @@ export const UserZ = EntityZ.extend({
   photoURL: z.string(),
   phoneNumber: z.string(),
 
-  departmentOID: z.string().uuid(),
+  departmentOID: z.string(),
+
+  tourLeadingSkills: z.array(z.object({
+    sectorOID: z.string(),
+    termOID: z.string(),
+    startYear: z.number(),
+  })).optional(),
+
 });
 
 

@@ -10,11 +10,11 @@ export const SectorZ = EntityZ.extend({
   name: z.string(),
   isActive: z.boolean().default(true),
   images: z.array(z.string().url()).optional(),
-  parentOID: z.string().uuid().optional(),
+  parentOID: z.string().optional(),
 
   isPopular: z.boolean().default(false),
 
-  productTypeOIDs: z.array(z.string().uuid()).optional(),
+  productTypeOIDs: z.array(z.string()).optional(),
 
 });
 

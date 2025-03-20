@@ -17,7 +17,7 @@ export const TagGroupZ = EntityZ.extend({
 
   name: z.string(),
 
-  tagOIDs: z.array(z.string().uuid()),
+  tagOIDs: z.array(z.string()),
 
 });
 
@@ -31,7 +31,7 @@ export const TagZ = EntityZ.extend({
   sortOrder: z.number().int(),
   style: TagStyleZ,
 
-  tagGroupOID: z.string().uuid(),
+  tagGroupOID: z.string(),
 });
 
 export type Tag = z.infer<typeof TagZ>;

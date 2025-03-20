@@ -9,7 +9,7 @@ export const EntityZ = z.object({
   oid: EntityOIDZ,
   entityType: z.nativeEnum(EntityType),
 
-  tenantOID: z.string(), // .uuid(), Temp disable for testing
+  tenantOID: z.string(),
 
   createdBy: z.string(),
   updatedBy: z.string().optional(),
