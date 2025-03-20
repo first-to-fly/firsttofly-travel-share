@@ -1,10 +1,18 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { BadgeZ } from "../../../entities/Settings/Product";
+import { BadgeZ } from "../../../entities/Settings/Product/Badge";
 
 
 const basePath = "/api/settings/badges";
+
+const UpdateBadgeZ = BadgeZ.pick({
+  image: true,
+  isActive: true,
+  icon: true,
+});
+
+export type UpdateBadge = z.infer<typeof UpdateBadgeZ>;
 
 export const badgeContract = initContract().router({
   getBadges: {
@@ -27,6 +35,7 @@ export const badgeContract = initContract().router({
     path: basePath,
     body: BadgeZ.pick({
       tenantOID: true,
+      image: true,
       isActive: true,
       icon: true,
     }),
@@ -39,9 +48,22 @@ export const badgeContract = initContract().router({
     summary: "Update an existing badge",
     method: "PATCH",
     path: `${basePath}/:badgeOID`,
-    body: BadgeZ.partial(),
+    body: UpdateBadgeZ,
     responses: {
       200: z.string(),
+    },
+  },
+
+  updateBadges: {
+    summary: "Update multiple existing badges",
+    method: "POST",
+    path: `${basePath}/batch-update`,
+    body: z.record(
+      z.string().describe("OID of badge to update"),
+      UpdateBadgeZ,
+    ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of updated badges")),
     },
   },
 
@@ -50,6 +72,18 @@ export const badgeContract = initContract().router({
     method: "DELETE",
     path: `${basePath}/:badgeOID`,
     body: z.object({}),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
+  deleteBadges: {
+    summary: "Delete multiple badges",
+    method: "POST",
+    path: `${basePath}/batch-delete`,
+    body: z.object({
+      badgeOIDs: z.array(z.string().describe("OIDs of badges to delete")),
+    }),
     responses: {
       200: z.boolean(),
     },

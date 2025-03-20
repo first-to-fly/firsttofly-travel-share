@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { MultiLanguageDataZ } from "../../types/multipleLanguage";
+import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
@@ -18,7 +18,7 @@ export const TermZ = EntityZ.extend({
   entityType: z.literal(EntityType.TERM),
 
   type: z.nativeEnum(TermType),
-  value: MultiLanguageDataZ(z.string()),
+  value: MultiLangRecordZ(z.string()),
 });
 
 export type Term = z.infer<typeof TermZ>;

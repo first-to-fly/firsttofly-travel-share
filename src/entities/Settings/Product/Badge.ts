@@ -1,24 +1,15 @@
 import { z } from "zod";
 
+import { MultiLangRecordZ } from "../../../types/multipleLanguage";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
 export const BadgeZ = EntityZ.extend({
   entityType: z.literal(EntityType.BADGE),
-
+  image: MultiLangRecordZ(z.string()),
   isActive: z.boolean(),
-  icon: z.string(),
+  icon: z.string().uuid(),
 });
 
 export type Badge = z.infer<typeof BadgeZ>;
-
-export const BadgeTranslationZ = EntityZ.extend({
-  entityType: z.literal(EntityType.BADGE_TRANSLATION),
-
-  badgeOID: z.string(),
-  languageOID: z.string(),
-  name: z.string(),
-});
-
-export type BadgeTranslation = z.infer<typeof BadgeTranslationZ>;
