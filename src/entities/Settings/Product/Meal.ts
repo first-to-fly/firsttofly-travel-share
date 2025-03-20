@@ -8,10 +8,15 @@ export const MealZ = EntityZ.extend({
   entityType: z.literal(EntityType.MEAL),
 
   code: z.string(),
-  description: z.string().optional(),
+  description: z.string().optional().nullable(),
   type: z.enum(["Airline", "Land", "Cruise"]),
   seq: z.number().int().optional().default(0),
   offlineOperator: z.string().optional(),
 });
+
+export enum MealEvents {
+  MEAL_LIST_UPDATED = "MEAL_LIST_UPDATED",
+  MEAL_UPDATED = "MEAL_UPDATED",
+}
 
 export type Meal = z.infer<typeof MealZ>;
