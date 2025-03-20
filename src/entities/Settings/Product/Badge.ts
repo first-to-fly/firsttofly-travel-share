@@ -9,7 +9,7 @@ export const BadgeZ = EntityZ.extend({
   entityType: z.literal(EntityType.BADGE),
   image: MultiLangRecordZ(z.string()),
   isActive: z.boolean(),
-  icon: z.string().uuid(),
+  icon: z.string(),
 });
 
 export type Badge = z.infer<typeof BadgeZ>;
