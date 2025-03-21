@@ -23,6 +23,7 @@ export enum EntityType {
   TAG_GROUP = "tagGroup",
 
   // GENERAL SETTINGS
+  DESIGNATION = "designation",
   LOCATION = "location",
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",

@@ -18,8 +18,6 @@ export const DepartmentZ = EntityZ.extend({
   parentDepartmentOID: z.string().optional(),
   code: z.string(),
   isActive: z.boolean().default(true),
-
-  userOIDs: z.array(z.string()).optional(),
 });
 
 export type Department = z.infer<typeof DepartmentZ>;
