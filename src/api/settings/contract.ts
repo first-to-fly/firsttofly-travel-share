@@ -4,7 +4,7 @@ import { departmentContract } from "./department-contract";
 import { locationContract } from "./location-contract";
 import { privacyPolicyContract } from "./privacy-policy-contract";
 import { productSettingContract } from "./product/contract";
-import { userContract } from "./user-contract";
+import { userContract } from "./user/contract";
 
 
 export const settingsContract = initContract().router({

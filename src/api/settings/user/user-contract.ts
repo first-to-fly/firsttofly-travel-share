@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { UserZ } from "../../entities/Settings/User";
+import { UserZ } from "../../../entities/Settings/User";
 
 
 const basePath = "/api/settings/users";
@@ -13,11 +13,12 @@ const UpdateUserZ = UserZ.pick({
   photoURL: true,
   phoneNumber: true,
   departmentOID: true,
+  tourLeadingSkills: true,
 });
 
 export type UpdateUser = z.infer<typeof UpdateUserZ>;
 
-export const userContract = initContract().router({
+export const basicUserContract = initContract().router({
   getUsers: {
     summary: "Get users",
     method: "GET",
