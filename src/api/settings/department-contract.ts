@@ -12,6 +12,7 @@ const UpdateDepartmentZ = DepartmentZ.pick({
   parentDepartmentOID: true,
   code: true,
   isActive: true,
+  userOIDs: true,
 });
 
 export type UpdateDepartment = z.infer<typeof UpdateDepartmentZ>;
@@ -28,6 +29,7 @@ export const departmentContract = initContract().router({
       parentDepartmentOID: true,
       code: true,
       isActive: true,
+      userOIDs: true,
     }),
     responses: {
       200: z.string(),
