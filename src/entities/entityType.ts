@@ -8,6 +8,8 @@ export enum EntityType {
 
   TENANT = "tenant",
 
+  DOCUMENT = "document",
+
   // PRODUCT SETTINGS
   BADGE = "badge",
   BADGE_TRANSLATION = "badgeTranslation",
