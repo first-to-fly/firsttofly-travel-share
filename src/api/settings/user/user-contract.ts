@@ -7,16 +7,40 @@ import { UserZ } from "../../../entities/Settings/User";
 const basePath = "/api/settings/users";
 
 const UpdateUserZ = UserZ.pick({
-  email: true,
-  emailVerified: true,
-  displayName: true,
-  photoURL: true,
-  phoneNumber: true,
-  departmentOID: true,
+  tenantOID: true,
+
+  firstName: true,
+  lastName: true,
+  preferredName: true,
+  dob: true,
+  otherNames: true,
+  mobile: true,
+  altMobile: true,
+  personalEmail: true,
+  images: true,
+  avatar: true,
+  emergencyContact: true,
+  description: true,
+  salutation: true,
+  departmentOIDs: true,
+  roleOIDs: true,
+
+  isActive: true,
+  staffType: true,
+  buddyID: true,
+
   tourLeadingSkills: true,
+  languageSkills: true,
+
+  documentOIDs: true,
+});
+
+const CreateUserZ = UpdateUserZ.extend({
+  email: z.string(),
 });
 
 export type UpdateUser = z.infer<typeof UpdateUserZ>;
+export type CreateUser = z.infer<typeof CreateUserZ>;
 
 export const basicUserContract = initContract().router({
   getUsers: {
@@ -37,34 +61,30 @@ export const basicUserContract = initContract().router({
     summary: "Create a new user",
     method: "POST",
     path: basePath,
-    body: UserZ.pick({
-      email: true,
-      emailVerified: true,
-      displayName: true,
-      photoURL: true,
-      phoneNumber: true,
-      departmentOID: true,
-    }),
+    body: CreateUserZ,
     responses: {
       200: z.string(),
     },
   },
 
-  updateUser: {
+  updateUsers: {
     summary: "Update an existing user",
-    method: "PATCH",
-    path: `${basePath}/:userOID`,
-    body: UpdateUserZ,
+    method: "POST",
+    path: `${basePath}/batch-update`,
+    body: z.array(UpdateUserZ.strict()),
     responses: {
       200: z.string(),
     },
   },
 
-  deleteUser: {
-    summary: "Delete a user",
-    method: "DELETE",
-    path: `${basePath}/:userOID`,
-    body: z.object({}),
+  deleteUsers: {
+    summary: "Delete users",
+    method: "POST",
+    path: `${basePath}/batch-delete`,
+    body: z.array(z.object({
+      userOID: z.string(),
+      tenantOID: z.string(),
+    })),
     responses: {
       200: z.boolean(),
     },

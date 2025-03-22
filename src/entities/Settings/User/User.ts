@@ -1,19 +1,48 @@
 import { z } from "zod";
 
+import { MultiLangRecordZ } from "../../../types/multipleLanguage";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
+
+
+export enum UserDataEvents {
+  USER_DATA_UPDATED = "USER_DATA_UPDATED",
+  USER_DATA_LIST_UPDATED = "USER_DATA_LIST_UPDATED",
+}
 
 
 export const UserZ = EntityZ.extend({
   entityType: z.literal(EntityType.USER),
 
+  // Existing properties
   email: z.string(),
-  emailVerified: z.boolean(),
-  displayName: z.string(),
-  photoURL: z.string(),
-  phoneNumber: z.string(),
 
-  departmentOID: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  preferredName: z.string(),
+  dob: z.date(),
+  otherNames: MultiLangRecordZ(z.string()).optional(),
+  mobile: z.number(),
+  altMobile: z.number().optional(),
+  personalEmail: z.string().optional(),
+  images: z.array(z.string()).optional(),
+  avatar: z.string().optional(),
+  emergencyContact: z.object({
+    name: z.string(),
+    relationship: z.string().optional(),
+    mobile: z.number(),
+    email: z.string().optional(),
+  }).optional(),
+  description: z.string().optional(),
+  salutation: z.string(),
+
+  // Tenant specific properties
+  departmentOIDs: z.array(z.string()),
+  roleOIDs: z.array(z.string()).optional(),
+
+  isActive: z.boolean().default(true),
+  staffType: z.string(),
+  buddyID: z.string().optional(),
 
   tourLeadingSkills: z.array(z.object({
     sectorOID: z.string(),
@@ -21,6 +50,11 @@ export const UserZ = EntityZ.extend({
     startYear: z.number(),
   })).optional(),
 
+  languageSkills: z.array(z.object({
+    termOID: z.string(),
+  })).optional(),
+
+  documentOIDs: z.array(z.string()).optional(),
 });
 
 
