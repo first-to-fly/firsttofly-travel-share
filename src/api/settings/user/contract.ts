@@ -1,8 +1,92 @@
 import { initContract } from "@ts-rest/core";
+import { z } from "zod";
 
-import { basicUserContract } from "./user-contract";
+import { UserZ } from "../../../entities/Settings/User";
 
+
+const basePath = "/api/settings/users";
+
+const UpdateUserZ = UserZ.pick({
+  tenantOID: true,
+
+  firstName: true,
+  lastName: true,
+  preferredName: true,
+  dob: true,
+  otherNames: true,
+  mobile: true,
+  altMobile: true,
+  personalEmail: true,
+  images: true,
+  avatar: true,
+  emergencyContact: true,
+  description: true,
+  salutation: true,
+  departmentOIDs: true,
+  roleOIDs: true,
+
+  isActive: true,
+  staffType: true,
+  buddyID: true,
+
+  tourLeadingSkills: true,
+  languageSkills: true,
+
+  documentOIDs: true,
+});
+
+const CreateUserZ = UpdateUserZ.extend({
+  email: z.string(),
+});
+
+export type UpdateUser = z.infer<typeof UpdateUserZ>;
+export type CreateUser = z.infer<typeof CreateUserZ>;
 
 export const userContract = initContract().router({
-  basic: basicUserContract,
+  getUsers: {
+    summary: "Get users",
+    method: "GET",
+    path: basePath,
+    query: z.object({
+      tenantOID: z.string(),
+    }).passthrough(),
+    responses: {
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
+    },
+  },
+
+  createUser: {
+    summary: "Create a new user",
+    method: "POST",
+    path: basePath,
+    body: CreateUserZ,
+    responses: {
+      200: z.string(),
+    },
+  },
+
+  updateUsers: {
+    summary: "Update an existing user",
+    method: "POST",
+    path: `${basePath}/batch-update`,
+    body: z.array(UpdateUserZ.strict()),
+    responses: {
+      200: z.string(),
+    },
+  },
+
+  deleteUsers: {
+    summary: "Delete users",
+    method: "POST",
+    path: `${basePath}/batch-delete`,
+    body: z.array(z.object({
+      userOID: z.string(),
+      tenantOID: z.string(),
+    })),
+    responses: {
+      200: z.boolean(),
+    },
+  },
 });
