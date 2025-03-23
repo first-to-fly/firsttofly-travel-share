@@ -50,7 +50,7 @@ export const departmentContract = initContract().router({
 
   updateDepartments: {
     summary: "Update an existing department",
-    method: "PATCH",
+    method: "POST",
     path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of department to update"),
@@ -87,8 +87,8 @@ export const departmentContract = initContract().router({
 
   deleteDepartments: {
     summary: "Delete a department",
-    method: "DELETE",
-    path: `${basePath}/batch-update`,
+    method: "POST",
+    path: `${basePath}/batch-delete`,
     body: z.object({
       oids: z.array(z.string().describe("OID of department to delete")),
     }),

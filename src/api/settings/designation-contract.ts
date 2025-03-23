@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { DesignationZ } from "../../../entities/Settings/Product/Designation";
+import { DesignationZ } from "../../entities/Settings/Product/Designation";
 
 
 const basePath = "/api/settings/designations";
@@ -46,7 +46,7 @@ export const designationContract = c.router({
 
   updateDesignations: {
     summary: "Update multiple designations",
-    method: "PATCH",
+    method: "POST",
     path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of designation to update"),
@@ -83,8 +83,8 @@ export const designationContract = c.router({
 
   deleteDesignations: {
     summary: "Delete multiple designations",
-    method: "DELETE",
-    path: `${basePath}/batch-update`,
+    method: "POST",
+    path: `${basePath}/batch-delete`,
     body: z.object({
       oids: z.array(z.string().describe("OID of designation to delete")),
     }),
