@@ -37,6 +37,7 @@ export const UserZ = EntityZ.extend({
   salutation: z.string(),
 
   // Tenant specific properties
+  designationOIDs: z.array(z.string()),
   departmentOIDs: z.array(z.string()),
   roleOIDs: z.array(z.string()).optional(),
 
