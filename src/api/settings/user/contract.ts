@@ -7,6 +7,6 @@ import { userContract } from "./user-contract";
 
 export const userManagementContract = initContract().router({
   user: userContract,
-  departmentContract: departmentContract,
-  designationContract: designationContract,
+  department: departmentContract,
+  designation: designationContract,
 });
