@@ -10,7 +10,7 @@ export const MealZ = EntityZ.extend({
   code: z.string(),
   description: z.string().optional(),
   type: z.enum(["Airline", "Land", "Cruise"]),
-  seq: z.number().int().optional().default(0),
+  seq: z.string().optional().default("0"),
   offlineOperator: z.string().optional(),
 });
 

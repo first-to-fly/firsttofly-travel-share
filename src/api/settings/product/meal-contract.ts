@@ -6,6 +6,16 @@ import { MealZ } from "../../../entities/Settings/Product";
 
 const basePath = "/api/settings/meals";
 
+const UpdateMealZ = MealZ.pick({
+  code: true,
+  type: true,
+  seq: true,
+}).extend({
+  description: z.string().nullish(),
+  offlineOperator: z.string().nullish(),
+});
+
+export type UpdateMeal = z.infer<typeof UpdateMealZ>;
 
 export const mealContract = initContract().router({
   getMeals: {
@@ -43,9 +53,22 @@ export const mealContract = initContract().router({
     summary: "Update an existing meal",
     method: "PATCH",
     path: `${basePath}/:mealOID`,
-    body: MealZ.partial(),
+    body: UpdateMealZ,
     responses: {
       200: z.string(),
+    },
+  },
+
+  updateMeals: {
+    summary: "Update multiple existing meals",
+    method: "POST",
+    path: `${basePath}/batch-update`,
+    body: z.record(
+      z.string().describe("OID of meal to update"),
+      UpdateMealZ,
+    ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of updated meals")),
     },
   },
 
@@ -59,4 +82,15 @@ export const mealContract = initContract().router({
     },
   },
 
+  deleteMeals: {
+    summary: "Delete multiple meals",
+    method: "POST",
+    path: `${basePath}/batch-delete`,
+    body: z.object({
+      mealOIDs: z.array(z.string().describe("OIDs of meals to delete")),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
 });
