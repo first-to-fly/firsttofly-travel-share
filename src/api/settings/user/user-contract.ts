@@ -23,11 +23,12 @@ const UpdateUserZ = UserZ.pick({
   description: true,
   salutation: true,
   departmentOIDs: true,
+  designationOIDs: true,
   roleOIDs: true,
 
   isActive: true,
   staffType: true,
-  buddyID: true,
+  buddyOID: true,
 
   tourLeadingSkills: true,
   languageSkills: true,
