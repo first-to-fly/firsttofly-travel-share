@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { LocationZ } from "../../entities/Settings/Location";
+import { LocationZ } from "../../../entities/Settings/General/Location";
 
 
 const basePath = "/api/settings/locations";

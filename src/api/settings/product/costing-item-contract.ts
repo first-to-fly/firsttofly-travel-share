@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { CostingItemGroupZ, CostingItemZ } from "../../../entities/Settings/Product";
+import { CostingItemGroupZ, CostingItemZ } from "../../../entities/Settings/Product/CostingItem";
 
 
 const basePath = "/api/settings/costing-items";

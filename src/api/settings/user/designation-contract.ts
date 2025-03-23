@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { DesignationZ } from "../../entities/Settings/Product/Designation";
+import { DesignationZ } from "../../../entities/Settings/User/Designation";
 
 
 const basePath = "/api/settings/designations";

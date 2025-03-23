@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { TagGroupZ, TagZ } from "../../../entities/Settings/Product";
+import { TagGroupZ, TagZ } from "../../../entities/Settings/Product/Tag";
 
 
 const basePath = "/api/settings/tags";

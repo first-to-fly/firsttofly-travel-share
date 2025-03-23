@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { RoomConfigZ } from "../../../entities/Settings/Product";
+import { RoomConfigZ } from "../../../entities/Settings/Product/RoomConfig";
 
 
 const basePath = "/api/settings/room-configs";

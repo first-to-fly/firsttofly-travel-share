@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { PrivacyPolicyZ } from "../../entities/Settings/PrivacyPolicy/PrivacyPolicy";
+import { PrivacyPolicyZ } from "../../../entities/Settings/General/PrivacyPolicy";
 
 
 const basePath = "/api/settings/privacy-policies";

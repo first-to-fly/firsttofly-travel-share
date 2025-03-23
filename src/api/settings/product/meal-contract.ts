@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { MealZ } from "../../../entities/Settings/Product";
+import { MealZ } from "../../../entities/Settings/Product/Meal";
 
 
 const basePath = "/api/settings/meals";
