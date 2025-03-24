@@ -1,6 +1,8 @@
 import { z } from "zod";
+
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
+
 
 export enum InsuranceDiscountType {
   PERCENTAGE = "percentage",

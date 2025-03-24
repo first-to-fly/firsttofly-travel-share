@@ -1,6 +1,8 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
+
 import { InsuranceDiscountZ } from "../../../entities/Settings/Product/InsuranceDiscount";
+
 
 const basePath = "/api/settings/insurance-discounts";
 
