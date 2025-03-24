@@ -24,6 +24,7 @@ export enum EntityType {
   SECTOR_GROUP = "sectorGroup",
   TAG = "tag",
   TAG_GROUP = "tagGroup",
+  INSURANCE_DISCOUNT = "insuranceDiscount",
 
   // GENERAL SETTINGS
   DESIGNATION = "designation",
