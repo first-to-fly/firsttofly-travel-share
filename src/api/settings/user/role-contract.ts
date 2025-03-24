@@ -6,6 +6,16 @@ import { EntityOIDZ } from "../../../entities/entity";
 
 const basePath = "/api/roles";
 
+const UpdateRoleZ = z.object({
+  permissions: z.array(z.string()),
+});
+
+const CreateRoleZ = UpdateRoleZ.extend({
+  tenantOID: EntityOIDZ,
+});
+
+export type UpdateRole = z.infer<typeof UpdateRoleZ>;
+export type CreateRole = z.infer<typeof CreateRoleZ>;
 
 export const roleContract = initContract().router({
   getRoles: {
@@ -25,10 +35,7 @@ export const roleContract = initContract().router({
     summary: "Create a new role",
     method: "POST",
     path: `${basePath}`,
-    body: z.object({
-      tenantOID: EntityOIDZ,
-      permissions: z.array(z.string()),
-    }),
+    body: CreateRoleZ,
     responses: {
       200: EntityOIDZ,
     },
@@ -40,9 +47,7 @@ export const roleContract = initContract().router({
     pathParams: z.object({
       roleOID: EntityOIDZ,
     }),
-    body: z.object({
-      permissions: z.array(z.string()),
-    }),
+    body: UpdateRoleZ,
     responses: {
       200: EntityOIDZ,
       404: z.object({
@@ -54,9 +59,7 @@ export const roleContract = initContract().router({
     summary: "Update multiple roles at once",
     method: "PUT",
     path: `${basePath}`,
-    body: z.record(EntityOIDZ, z.object({
-      permissions: z.array(z.string()),
-    })),
+    body: z.record(EntityOIDZ, UpdateRoleZ),
     responses: {
       200: z.array(EntityOIDZ),
     },
