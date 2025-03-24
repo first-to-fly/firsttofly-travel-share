@@ -5,7 +5,7 @@ import { EntityOIDZ } from "../../../entities/entity";
 import { RoleZ } from "../../../entities/Settings/User/Role";
 
 
-const basePath = "/api/roles";
+const basePath = "/api/settings/roles";
 
 const UpdateRoleZ = z.object({
   permissions: z.array(z.string()),
