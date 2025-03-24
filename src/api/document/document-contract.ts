@@ -7,7 +7,6 @@ import { DocumentZ } from "../../entities/Document/Document";
 const basePath = "/api/documents";
 
 const UpdateDocumentZ = DocumentZ.pick({
-  entityOID: true,
   type: true,
   name: true,
   docIdentification: true,
@@ -17,6 +16,7 @@ const UpdateDocumentZ = DocumentZ.pick({
 });
 
 const CreateDocumentZ = UpdateDocumentZ.extend({
+  entityOID: z.string(),
   tenantOID: z.string(),
 });
 
