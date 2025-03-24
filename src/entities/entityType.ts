@@ -30,7 +30,7 @@ export enum EntityType {
   LOCATION = "location",
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
-  
+
   // USER SETTINGS
   ROLE = "role",
 }
