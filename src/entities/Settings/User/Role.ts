@@ -10,6 +10,7 @@ export enum RoleEvents {
 }
 
 export const RoleZ = EntityZ.extend({
+  name: z.string().min(3, "Role name is required"),
   entityType: z.literal(EntityType.ROLE),
   permissions: z.array(z.string()),
 });
