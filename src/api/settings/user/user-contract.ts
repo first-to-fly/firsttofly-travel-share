@@ -69,7 +69,7 @@ export const userContract = initContract().router({
   },
 
   updateUsers: {
-    summary: "Update an existing user",
+    summary: "Update multiple users",
     method: "POST",
     path: `${basePath}/batch-update`,
     body: z.array(UpdateUserZ.strict()),
