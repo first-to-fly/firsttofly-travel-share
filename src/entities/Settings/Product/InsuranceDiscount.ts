@@ -7,6 +7,11 @@ export enum InsuranceDiscountType {
   FIXED = "fixed",
 }
 
+export enum InsuranceDiscountEvents {
+  INSURANCE_DISCOUNT_UPDATED = "INSURANCE_DISCOUNT_UPDATED",
+  INSURANCE_DISCOUNT_LIST_UPDATED = "INSURANCE_DISCOUNT_LIST_UPDATED",
+}
+
 export const InsuranceDiscountZ = EntityZ.extend({
   entityType: z.literal(EntityType.INSURANCE_DISCOUNT),
 
