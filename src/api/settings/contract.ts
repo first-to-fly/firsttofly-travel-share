@@ -8,5 +8,5 @@ import { userManagementContract } from "./user/contract";
 export const settingsContract = initContract().router({
   product: productSettingContract,
   general: generalSettingContract,
-  user: userManagementContract,
+  userMgmt: userManagementContract,
 });
