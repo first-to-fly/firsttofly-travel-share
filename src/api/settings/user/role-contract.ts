@@ -2,6 +2,7 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { EntityOIDZ } from "../../../entities/entity";
+import { RoleZ } from "../../../entities/Settings/User/Role";
 
 
 const basePath = "/api/roles";
@@ -35,7 +36,11 @@ export const roleContract = initContract().router({
     summary: "Create a new role",
     method: "POST",
     path: `${basePath}`,
-    body: CreateRoleZ,
+    body: RoleZ.pick({
+      name: true,
+      tenantOID: true,
+      permissions: true,
+    }),
     responses: {
       200: EntityOIDZ,
     },
@@ -47,7 +52,11 @@ export const roleContract = initContract().router({
     pathParams: z.object({
       roleOID: EntityOIDZ,
     }),
-    body: UpdateRoleZ,
+    body: RoleZ.pick({
+      name: true,
+      permissions: true,
+    }),
+
     responses: {
       200: EntityOIDZ,
       404: z.object({
@@ -59,9 +68,27 @@ export const roleContract = initContract().router({
     summary: "Update multiple roles at once",
     method: "PUT",
     path: `${basePath}`,
-    body: z.record(EntityOIDZ, UpdateRoleZ),
+    body: z.record(EntityOIDZ, RoleZ.pick({
+      name: true,
+      permissions: true,
+    })),
     responses: {
       200: z.array(EntityOIDZ),
+    },
+  },
+  assignUserRoles: {
+    summary: "Assign roles to a user",
+    method: "POST",
+    path: `${basePath}/assign`,
+    body: z.array(z.object({
+      userOID: EntityOIDZ,
+      roleOIDs: z.array(EntityOIDZ),
+    })),
+    responses: {
+      200: z.boolean(),
+      404: z.object({
+        message: z.string(),
+      }),
     },
   },
   deleteRole: {
