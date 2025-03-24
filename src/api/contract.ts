@@ -1,6 +1,7 @@
 import { initContract } from "@ts-rest/core";
 
 import { authorizationContract } from "./authorization/contract";
+import { documentContract } from "./document/document-contract";
 import { i18nContract } from "./i18n/contract";
 import { productContract } from "./product/contract";
 import { settingsContract } from "./settings/contract";
@@ -12,5 +13,6 @@ export const apiContract = initContract().router({
   product: productContract,
   settings: settingsContract,
   term: termContract,
+  document: documentContract,
   authorization: authorizationContract,
 });
