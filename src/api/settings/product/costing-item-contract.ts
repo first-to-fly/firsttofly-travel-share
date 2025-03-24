@@ -7,6 +7,35 @@ import { CostingItemGroupZ, CostingItemZ } from "../../../entities/Settings/Prod
 const basePath = "/api/settings/costing-items";
 const costingItemGroupBasePath = "/api/settings/costing-item-groups";
 
+const UpdateCostingItemZ = CostingItemZ.pick({
+  name: true,
+  category: true,
+  calculationBasis: true,
+  packageType: true,
+  isActive: true,
+  description: true,
+});
+
+const CreateCostingItemZ = UpdateCostingItemZ.extend({
+  tenantOID: z.string(),
+});
+
+const UpdateCostingItemGroupZ = CostingItemGroupZ.pick({
+  name: true,
+  remarks: true,
+  isActive: true,
+  costingItemOIDs: true,
+});
+
+const CreateCostingItemGroupZ = UpdateCostingItemGroupZ.extend({
+  tenantOID: z.string(),
+});
+
+export type UpdateCostingItem = z.infer<typeof UpdateCostingItemZ>;
+export type CreateCostingItem = z.infer<typeof CreateCostingItemZ>;
+export type UpdateCostingItemGroup = z.infer<typeof UpdateCostingItemGroupZ>;
+export type CreateCostingItemGroup = z.infer<typeof CreateCostingItemGroupZ>;
+
 
 export const costingItemContract = initContract().router({
   getCostingItems: {
@@ -27,15 +56,7 @@ export const costingItemContract = initContract().router({
     summary: "Create a new costing item",
     method: "POST",
     path: basePath,
-    body: CostingItemZ.pick({
-      tenantOID: true,
-      name: true,
-      category: true,
-      calculationBasis: true,
-      packageType: true,
-      isActive: true,
-      description: true,
-    }),
+    body: CreateCostingItemZ,
     responses: {
       200: z.string(),
     },
@@ -45,7 +66,7 @@ export const costingItemContract = initContract().router({
     summary: "Update an existing costing item",
     method: "PATCH",
     path: `${basePath}/:costingItemOID`,
-    body: CostingItemZ.partial(),
+    body: UpdateCostingItemZ,
     responses: {
       200: z.string(),
     },
@@ -80,13 +101,7 @@ export const costingItemContract = initContract().router({
     summary: "Create a new costing item group",
     method: "POST",
     path: costingItemGroupBasePath,
-    body: CostingItemGroupZ.pick({
-      tenantOID: true,
-      name: true,
-      remarks: true,
-      isActive: true,
-      costingItemOIDs: true,
-    }),
+    body: CreateCostingItemGroupZ,
     responses: {
       200: z.string(),
     },
@@ -96,7 +111,7 @@ export const costingItemContract = initContract().router({
     summary: "Update an existing costing item group",
     method: "PATCH",
     path: `${costingItemGroupBasePath}/:costingItemGroupOID`,
-    body: CostingItemGroupZ.partial(),
+    body: UpdateCostingItemGroupZ,
     responses: {
       200: z.string(),
     },

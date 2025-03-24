@@ -6,6 +6,22 @@ import { RoomConfigZ } from "../../../entities/Settings/Product/RoomConfig";
 
 const basePath = "/api/settings/room-configs";
 
+const UpdateRoomConfigZ = RoomConfigZ.pick({
+  name: true,
+  coverageType: true,
+  childNoBedStartAge: true,
+  childNoBedEndAge: true,
+  remarks: true,
+  isActive: true,
+});
+
+const CreateRoomConfigZ = UpdateRoomConfigZ.extend({
+  tenantOID: z.string(),
+});
+
+export type UpdateRoomConfig = z.infer<typeof UpdateRoomConfigZ>;
+export type CreateRoomConfig = z.infer<typeof CreateRoomConfigZ>;
+
 
 export const roomConfigContract = initContract().router({
   getRoomConfigs: {
@@ -26,15 +42,7 @@ export const roomConfigContract = initContract().router({
     summary: "Create a new room configuration",
     method: "POST",
     path: basePath,
-    body: RoomConfigZ.pick({
-      tenantOID: true,
-      name: true,
-      coverageType: true,
-      childNoBedStartAge: true,
-      childNoBedEndAge: true,
-      remarks: true,
-      isActive: true,
-    }),
+    body: CreateRoomConfigZ,
     responses: {
       200: z.string(),
     },
@@ -44,7 +52,7 @@ export const roomConfigContract = initContract().router({
     summary: "Update an existing room configuration",
     method: "PATCH",
     path: `${basePath}/:roomConfigOID`,
-    body: RoomConfigZ.partial(),
+    body: UpdateRoomConfigZ,
     responses: {
       200: z.string(),
     },

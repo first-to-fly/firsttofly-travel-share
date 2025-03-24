@@ -12,7 +12,12 @@ const UpdatePrivacyPolicyZ = PrivacyPolicyZ.pick({
   isActive: true,
 });
 
+const CreatePrivacyPolicyZ = UpdatePrivacyPolicyZ.extend({
+  tenantOID: z.string(),
+});
+
 export type UpdatePrivacyPolicy = z.infer<typeof UpdatePrivacyPolicyZ>;
+export type CreatePrivacyPolicy = z.infer<typeof CreatePrivacyPolicyZ>;
 
 export const privacyPolicyContract = initContract().router({
   getPrivacyPolicies: {
@@ -33,12 +38,7 @@ export const privacyPolicyContract = initContract().router({
     summary: "Create a new privacy policy",
     method: "POST",
     path: basePath,
-    body: PrivacyPolicyZ.pick({
-      tenantOID: true,
-      name: true,
-      file: true,
-      isActive: true,
-    }),
+    body: CreatePrivacyPolicyZ,
     responses: {
       200: z.string(),
     },

@@ -13,7 +13,12 @@ const UpdateLocationZ = LocationZ.pick({
   description: z.string().nullish(),
 });
 
+const CreateLocationZ = UpdateLocationZ.extend({
+  tenantOID: z.string(),
+});
+
 export type UpdateLocation = z.infer<typeof UpdateLocationZ>;
+export type CreateLocation = z.infer<typeof CreateLocationZ>;
 
 export const locationContract = initContract().router({
   getLocations: {
@@ -34,12 +39,7 @@ export const locationContract = initContract().router({
     summary: "Create a new location",
     method: "POST",
     path: basePath,
-    body: LocationZ.pick({
-      tenantOID: true,
-      name: true,
-      description: true,
-      type: true,
-    }),
+    body: CreateLocationZ,
     responses: {
       200: z.string(),
     },

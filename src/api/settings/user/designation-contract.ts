@@ -13,7 +13,12 @@ const UpdateDesignationZ = DesignationZ.pick({
   userOIDs: z.array(z.string()).optional(),
 });
 
+const CreateDesignationZ = UpdateDesignationZ.extend({
+  tenantOID: z.string(),
+});
+
 export type UpdateDesignation = z.infer<typeof UpdateDesignationZ>;
+export type CreateDesignation = z.infer<typeof CreateDesignationZ>;
 
 const c = initContract();
 
@@ -22,13 +27,7 @@ export const designationContract = c.router({
     summary: "Create a new designation",
     method: "POST",
     path: basePath,
-    body: DesignationZ.pick({
-      tenantOID: true,
-      name: true,
-      abbreviation: true,
-    }).extend({
-      userOIDs: z.array(z.string()).optional(),
-    }),
+    body: CreateDesignationZ,
     responses: {
       200: z.string(),
     },

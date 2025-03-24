@@ -16,23 +16,19 @@ const UpdateDepartmentZ = DepartmentZ.pick({
   userOIDs: z.array(z.string()).optional(),
 });
 
+const CreateDepartmentZ = UpdateDepartmentZ.extend({
+  tenantOID: z.string(),
+});
+
 export type UpdateDepartment = z.infer<typeof UpdateDepartmentZ>;
+export type CreateDepartment = z.infer<typeof CreateDepartmentZ>;
 
 export const departmentContract = initContract().router({
   createDepartment: {
     summary: "Create a new department",
     method: "POST",
     path: basePath,
-    body: DepartmentZ.pick({
-      tenantOID: true,
-      name: true,
-      locationOID: true,
-      parentDepartmentOID: true,
-      code: true,
-      isActive: true,
-    }).extend({
-      userOIDs: z.array(z.string()).optional(),
-    }),
+    body: CreateDepartmentZ,
     responses: {
       200: z.string(),
     },

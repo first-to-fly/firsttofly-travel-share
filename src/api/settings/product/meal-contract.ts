@@ -15,7 +15,12 @@ const UpdateMealZ = MealZ.pick({
   offlineOperator: z.string().nullish(),
 });
 
+const CreateMealZ = UpdateMealZ.extend({
+  tenantOID: z.string(),
+});
+
 export type UpdateMeal = z.infer<typeof UpdateMealZ>;
+export type CreateMeal = z.infer<typeof CreateMealZ>;
 
 export const mealContract = initContract().router({
   getMeals: {
@@ -36,14 +41,7 @@ export const mealContract = initContract().router({
     summary: "Create a new meal",
     method: "POST",
     path: basePath,
-    body: MealZ.pick({
-      tenantOID: true,
-      code: true,
-      description: true,
-      type: true,
-      seq: true,
-      offlineOperator: true,
-    }),
+    body: CreateMealZ,
     responses: {
       200: z.string(),
     },

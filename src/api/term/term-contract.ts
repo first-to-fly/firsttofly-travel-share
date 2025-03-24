@@ -11,7 +11,12 @@ const UpdateTermZ = TermZ.pick({
   value: true,
 });
 
+const CreateTermZ = UpdateTermZ.extend({
+  tenantOID: z.string(),
+});
+
 export type UpdateTerm = z.infer<typeof UpdateTermZ>;
+export type CreateTerm = z.infer<typeof CreateTermZ>;
 
 export const termContract = initContract().router({
   getTerms: {
@@ -33,11 +38,7 @@ export const termContract = initContract().router({
     summary: "Create a new term",
     method: "POST",
     path: basePath,
-    body: TermZ.pick({
-      tenantOID: true,
-      type: true,
-      value: true,
-    }),
+    body: CreateTermZ,
     responses: {
       200: z.string(),
     },

@@ -12,7 +12,12 @@ const UpdateSectorGroupZ = SectorGroupZ.pick({
   sectorOIDs: true,
 });
 
+const CreateSectorGroupZ = UpdateSectorGroupZ.extend({
+  tenantOID: z.string(),
+});
+
 export type UpdateSectorGroup = z.infer<typeof UpdateSectorGroupZ>;
+export type CreateSectorGroup = z.infer<typeof CreateSectorGroupZ>;
 
 export const sectorGroupContract = initContract().router({
   getSectorGroups: {
@@ -33,12 +38,7 @@ export const sectorGroupContract = initContract().router({
     summary: "Create a new sector group",
     method: "POST",
     path: basePath,
-    body: SectorGroupZ.pick({
-      tenantOID: true,
-      name: true,
-      isActive: true,
-      sectorOIDs: true,
-    }),
+    body: CreateSectorGroupZ,
     responses: {
       200: z.string(),
     },

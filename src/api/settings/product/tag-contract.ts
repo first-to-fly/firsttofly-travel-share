@@ -7,6 +7,33 @@ import { TagGroupZ, TagZ } from "../../../entities/Settings/Product/Tag";
 const basePath = "/api/settings/tags";
 const tagGroupBasePath = "/api/settings/tag-groups";
 
+const UpdateTagZ = TagZ.pick({
+  name: true,
+  isActive: true,
+  sortOrder: true,
+  style: true,
+  tagGroupOID: true,
+});
+
+const CreateTagZ = UpdateTagZ.extend({
+  tenantOID: z.string(),
+});
+
+const UpdateTagGroupZ = TagGroupZ.pick({
+  name: true,
+  description: true,
+  tagOIDs: true,
+});
+
+const CreateTagGroupZ = UpdateTagGroupZ.extend({
+  tenantOID: z.string(),
+});
+
+export type UpdateTag = z.infer<typeof UpdateTagZ>;
+export type CreateTag = z.infer<typeof CreateTagZ>;
+export type UpdateTagGroup = z.infer<typeof UpdateTagGroupZ>;
+export type CreateTagGroup = z.infer<typeof CreateTagGroupZ>;
+
 
 export const tagContract = initContract().router({
   getTags: {
@@ -27,14 +54,7 @@ export const tagContract = initContract().router({
     summary: "Create a new tag",
     method: "POST",
     path: basePath,
-    body: TagZ.pick({
-      tenantOID: true,
-      name: true,
-      isActive: true,
-      sortOrder: true,
-      style: true,
-      tagGroupOID: true,
-    }),
+    body: CreateTagZ,
     responses: {
       200: z.string(),
     },
@@ -44,7 +64,7 @@ export const tagContract = initContract().router({
     summary: "Update an existing tag",
     method: "PATCH",
     path: `${basePath}/:tagOID`,
-    body: TagZ.partial(),
+    body: UpdateTagZ,
     responses: {
       200: z.string(),
     },
@@ -79,12 +99,7 @@ export const tagContract = initContract().router({
     summary: "Create a new tag group",
     method: "POST",
     path: tagGroupBasePath,
-    body: TagGroupZ.pick({
-      tenantOID: true,
-      name: true,
-      description: true,
-      tagOIDs: true,
-    }),
+    body: CreateTagGroupZ,
     responses: {
       200: z.string(),
     },
@@ -94,7 +109,7 @@ export const tagContract = initContract().router({
     summary: "Update an existing tag group",
     method: "PATCH",
     path: `${tagGroupBasePath}/:tagGroupOID`,
-    body: TagGroupZ.partial(),
+    body: UpdateTagGroupZ,
     responses: {
       200: z.string(),
     },

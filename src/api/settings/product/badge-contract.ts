@@ -12,7 +12,12 @@ const UpdateBadgeZ = BadgeZ.pick({
   icon: true,
 });
 
+const CreateBadgeZ = UpdateBadgeZ.extend({
+  tenantOID: z.string(),
+});
+
 export type UpdateBadge = z.infer<typeof UpdateBadgeZ>;
+export type CreateBadge = z.infer<typeof CreateBadgeZ>;
 
 export const badgeContract = initContract().router({
   getBadges: {
@@ -33,12 +38,7 @@ export const badgeContract = initContract().router({
     summary: "Create a new badge",
     method: "POST",
     path: basePath,
-    body: BadgeZ.pick({
-      tenantOID: true,
-      image: true,
-      isActive: true,
-      icon: true,
-    }),
+    body: CreateBadgeZ,
     responses: {
       200: z.string(),
     },
