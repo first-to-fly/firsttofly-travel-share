@@ -19,7 +19,7 @@ export const InsuranceDiscountZ = EntityZ.extend({
 
   tenantOID: z.string(),
 
-  code: z.number(),
+  code: z.string(),
   name: z.string(),
   startDate: z.string(),
   endDate: z.string(),
