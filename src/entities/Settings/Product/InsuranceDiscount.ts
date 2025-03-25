@@ -1,6 +1,8 @@
 import { z } from "zod";
+
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
+
 
 export enum InsuranceDiscountType {
   PERCENTAGE = "percentage",
@@ -17,7 +19,7 @@ export const InsuranceDiscountZ = EntityZ.extend({
 
   tenantOID: z.string(),
 
-  code: z.number(),
+  code: z.string(),
   name: z.string(),
   startDate: z.string(),
   endDate: z.string(),
