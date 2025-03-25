@@ -13,3 +13,8 @@ export const BadgeZ = EntityZ.extend({
 });
 
 export type Badge = z.infer<typeof BadgeZ>;
+
+export enum BadgeEvents {
+  BADGE_UPDATED = "BADGE_UPDATED",
+  BADGE_LIST_UPDATED = "BADGE_LIST_UPDATED",
+}
