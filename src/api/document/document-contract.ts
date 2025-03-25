@@ -9,6 +9,7 @@ const basePath = "/api/documents";
 const UpdateDocumentZ = DocumentZ.pick({
   type: true,
   name: true,
+  entityOID: true,
   docIdentification: true,
   issueDate: true,
   expiryDate: true,
