@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { DateISOStringZ } from "../../../types/date";
 import { MultiLangRecordZ } from "../../../types/multipleLanguage";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
@@ -20,7 +21,7 @@ export const UserZ = EntityZ.extend({
   firstName: z.string(),
   lastName: z.string(),
   preferredName: z.string(),
-  dob: z.date(),
+  dob: DateISOStringZ,
   otherNames: MultiLangRecordZ(z.string()).optional(),
   mobile: z.number(),
   altMobile: z.number().optional(),
