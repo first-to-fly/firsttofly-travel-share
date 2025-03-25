@@ -32,8 +32,13 @@ export enum EntityType {
   LOCATION = "location",
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
+  // REFERENCE CODE
+  MENU = "menu",
+  COUNTER = "COUNTER",
+  COUNTER_COMPONENT = "COUNTER_COMPONENT",
 
   // USER SETTINGS
   ROLE = "role",
+
 }
 export const EntityTypes = Object.values(EntityType);
