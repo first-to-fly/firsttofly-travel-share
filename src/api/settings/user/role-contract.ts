@@ -7,8 +7,10 @@ import { RoleZ } from "../../../entities/Settings/User/Role";
 
 const basePath = "/api/settings/roles";
 
-const UpdateRoleZ = z.object({
-  permissions: z.array(z.string()),
+const UpdateRoleZ = RoleZ.pick({
+  name: true,
+  description: true,
+  permissions: true,
 });
 
 const CreateRoleZ = UpdateRoleZ.extend({
@@ -36,11 +38,7 @@ export const roleContract = initContract().router({
     summary: "Create a new role",
     method: "POST",
     path: `${basePath}`,
-    body: RoleZ.pick({
-      name: true,
-      tenantOID: true,
-      permissions: true,
-    }),
+    body: CreateRoleZ,
     responses: {
       200: EntityOIDZ,
     },
@@ -52,10 +50,7 @@ export const roleContract = initContract().router({
     pathParams: z.object({
       roleOID: EntityOIDZ,
     }),
-    body: RoleZ.pick({
-      name: true,
-      permissions: true,
-    }),
+    body: UpdateRoleZ,
 
     responses: {
       200: EntityOIDZ,
@@ -68,10 +63,7 @@ export const roleContract = initContract().router({
     summary: "Update multiple roles at once",
     method: "PUT",
     path: `${basePath}`,
-    body: z.record(EntityOIDZ, RoleZ.pick({
-      name: true,
-      permissions: true,
-    })),
+    body: z.record(EntityOIDZ, UpdateRoleZ),
     responses: {
       200: z.array(EntityOIDZ),
     },
