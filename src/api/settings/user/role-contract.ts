@@ -72,10 +72,15 @@ export const roleContract = initContract().router({
     summary: "Assign roles to a user",
     method: "POST",
     path: `${basePath}/assign`,
-    body: z.array(z.object({
-      userOID: EntityOIDZ,
-      roleOIDs: z.array(EntityOIDZ),
-    })),
+    body: z.object({
+      users: z.array(
+        z.object({
+          userOID: EntityOIDZ,
+          roleOIDs: z.array(EntityOIDZ),
+        }),
+      ),
+      tenantOID: EntityOIDZ,
+    }),
     responses: {
       200: z.boolean(),
       404: z.object({
