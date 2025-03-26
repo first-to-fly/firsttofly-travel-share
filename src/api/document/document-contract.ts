@@ -36,6 +36,16 @@ export const documentContract = initContract().router({
     },
   },
 
+  createDocuments: {
+    summary: "Create multiple documents",
+    method: "POST",
+    path: `${basePath}/batch-create`,
+    body: z.array(CreateDocumentZ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of created documents")),
+    },
+  },
+
   updateDocument: {
     summary: "Update an existing document",
     method: "PATCH",
