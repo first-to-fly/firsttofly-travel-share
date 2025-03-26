@@ -10,9 +10,8 @@ const UpdateMealZ = MealZ.pick({
   code: true,
   type: true,
   seq: true,
-}).extend({
-  description: z.string().nullish(),
-  offlineOperator: z.string().nullish(),
+  description: true,
+  offlineOperator: true,
 });
 
 const CreateMealZ = UpdateMealZ.extend({
