@@ -1,1 +1,1 @@
-export enum Permissions {}
+export type Permissions = string;
