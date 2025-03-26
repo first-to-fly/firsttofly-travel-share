@@ -17,8 +17,6 @@ export enum InsuranceDiscountEvents {
 export const InsuranceDiscountZ = EntityZ.extend({
   entityType: z.literal(EntityType.INSURANCE_DISCOUNT),
 
-  tenantOID: z.string(),
-
   code: z.number(),
   name: z.string(),
   startDate: z.string(),
@@ -26,12 +24,8 @@ export const InsuranceDiscountZ = EntityZ.extend({
   type: z.nativeEnum(InsuranceDiscountType),
   valuePercentage: z.number(), // Value for primary discount (percentage or fixed amount)
   valueFixed: z.number(), // Value for secondary discount (if needed)
-  remarks: z.string().nullable(),
+  remarks: z.string().optional(),
 
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  createdBy: z.string(),
-  updatedBy: z.string().nullable(),
 });
 
 export type InsuranceDiscount = z.infer<typeof InsuranceDiscountZ>;
