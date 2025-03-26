@@ -9,8 +9,7 @@ const basePath = "/api/settings/locations";
 const UpdateLocationZ = LocationZ.pick({
   name: true,
   type: true,
-}).extend({
-  description: z.string().nullish(),
+  description: true,
 });
 
 const CreateLocationZ = UpdateLocationZ.extend({

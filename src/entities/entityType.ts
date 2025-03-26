@@ -32,6 +32,7 @@ export enum EntityType {
   LOCATION = "location",
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
+  REFERENCE_CODE_TREE = "referenceCodeTree",
   // REFERENCE CODE
   MENU = "menu",
   COUNTER = "COUNTER",
