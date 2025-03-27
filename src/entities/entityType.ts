@@ -39,6 +39,7 @@ export enum EntityType {
   COUNTER = "COUNTER",
   COUNTER_COMPONENT = "COUNTER_COMPONENT",
   REFERENCE_CODE_LIST = "referenceCodeList",
+  POI = "poi",
 
   // USER SETTINGS
   ROLE = "role",
