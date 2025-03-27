@@ -33,10 +33,12 @@ export enum EntityType {
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
   REFERENCE_CODE_TREE = "referenceCodeTree",
+  REFERENCE_CODE_TEMPLATE = "referenceCodeTemplate",
   // REFERENCE CODE
   MENU = "menu",
   COUNTER = "COUNTER",
   COUNTER_COMPONENT = "COUNTER_COMPONENT",
+  REFERENCE_CODE_LIST = "referenceCodeList",
 
   // USER SETTINGS
   ROLE = "role",
