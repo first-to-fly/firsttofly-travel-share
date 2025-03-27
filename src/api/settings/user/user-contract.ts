@@ -58,6 +58,17 @@ export const userContract = initContract().router({
     },
   },
 
+  getAccessibleTenants: {
+    summary: "Get accessible tenants for a user",
+    method: "GET",
+    path: `${basePath}/accessible-tenants`,
+    responses: {
+      200: z.object({
+        tenantOIDs: z.array(z.string()),
+      }),
+    },
+  },
+
   createUser: {
     summary: "Create a new user",
     method: "POST",
