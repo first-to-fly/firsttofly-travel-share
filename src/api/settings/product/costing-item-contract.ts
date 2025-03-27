@@ -11,9 +11,7 @@ const UpdateCostingItemZ = CostingItemZ.pick({
   name: true,
   category: true,
   calculationBasis: true,
-  packageType: true,
   isActive: true,
-  description: true,
 });
 
 const CreateCostingItemZ = UpdateCostingItemZ.extend({

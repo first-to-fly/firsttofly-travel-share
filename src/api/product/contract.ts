@@ -40,7 +40,6 @@ export const productContract = initContract().router({
       status: true,
       sectorGroupOID: true,
       departmentOID: true,
-      groupOID: true,
       // Add other required fields as needed
     }).extend({
       sectorOIDs: z.array(z.number()),
