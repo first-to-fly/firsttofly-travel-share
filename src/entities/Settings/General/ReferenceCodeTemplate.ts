@@ -17,15 +17,15 @@ const ReferenceCodeTemplateEventValues = Object.values(ReferenceCodeTemplateEven
 export type ReferenceCodeTemplateEvent = (typeof ReferenceCodeTemplateEventValues)[number];
 
 export enum CounterType {
-  Sequential = "Sequential",
-  Random = "Random",
+  Sequential = "sequential",
+  Random = "random",
 }
 
 export enum ResetCounterType {
-  Disabled = "Disabled",
-  Daily = "Daily",
-  Monthly = "Monthly",
-  Yearly = "Yearly",
+  Disabled = "disabled",
+  Daily = "daily",
+  Monthly = "monthly",
+  Yearly = "yearly",
 }
 
 export const ReferenceCodeTemplateZ = EntityZ.extend({
