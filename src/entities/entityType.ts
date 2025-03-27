@@ -15,7 +15,7 @@ export enum EntityType {
   BADGE = "badge",
   BADGE_TRANSLATION = "badgeTranslation",
   COSTING_ITEM = "costingItem",
-  COSTING_ITEM_GROUP = "costingItemGroup",
+  COSTING_TEMPLATE = "costingTemplate",
   MEAL = "meal",
   ROOM_CONFIG = "roomConfig",
   ROOM_CONFIG_RULE = "roomConfigRule",

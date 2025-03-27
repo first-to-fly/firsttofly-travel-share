@@ -1,0 +1,17 @@
+import { z } from "zod";
+
+import { EntityZ } from "../../entity";
+import { EntityType } from "../../entityType";
+
+
+export const CostingTemplateZ = EntityZ.extend({
+  entityType: z.literal(EntityType.COSTING_TEMPLATE),
+
+  name: z.string(),
+  remarks: z.string().optional(),
+  isActive: z.boolean(),
+
+  costingItemOIDs: z.array(z.string()).optional(),
+});
+
+export type CostingTemplate = z.infer<typeof CostingTemplateZ>;
