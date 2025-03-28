@@ -4,6 +4,12 @@ import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
 
+export enum ProductEvents {
+  PRODUCT_UPDATED = "PRODUCT_UPDATED",
+  PRODUCT_LIST_UPDATED = "PRODUCT_LIST_UPDATED",
+}
+
+
 export const ProductZ = EntityZ.extend({
   entityType: z.literal(EntityType.PRODUCT),
 

@@ -10,6 +10,11 @@ export enum MealType {
   CRUISE = "cruise",
 }
 
+export enum MealEvents {
+  MEAL_UPDATED = "MEAL_UPDATED",
+  MEAL_LIST_UPDATED = "MEAL_LIST_UPDATED",
+}
+
 
 export const MealZ = EntityZ.extend({
   entityType: z.literal(EntityType.MEAL),

@@ -4,6 +4,12 @@ import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
+export enum RoomConfigEvents {
+  ROOM_CONFIG_UPDATED = "ROOM_CONFIG_UPDATED",
+  ROOM_CONFIG_LIST_UPDATED = "ROOM_CONFIG_LIST_UPDATED",
+}
+
+
 export const RoomConfigZ = EntityZ.extend({
   entityType: z.literal(EntityType.ROOM_CONFIG),
 

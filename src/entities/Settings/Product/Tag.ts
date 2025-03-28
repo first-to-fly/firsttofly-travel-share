@@ -4,6 +4,12 @@ import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
+export enum TagEvents {
+  TAG_UPDATED = "TAG_UPDATED",
+  TAG_LIST_UPDATED = "TAG_LIST_UPDATED",
+}
+
+
 export const TagStyleZ = z.object({
   textColor: z.string(),
   backgroundColor: z.string(),
