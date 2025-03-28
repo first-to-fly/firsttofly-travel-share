@@ -7,6 +7,7 @@ import { UserZ } from "../../../entities/Settings/User/User";
 const basePath = "/api/settings/users";
 
 const UpdateUserZ = UserZ.pick({
+  oid: true,
   tenantOID: true,
 
   firstName: true,
