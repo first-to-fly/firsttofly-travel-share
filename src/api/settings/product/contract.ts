@@ -2,13 +2,14 @@ import { initContract } from "@ts-rest/core";
 
 import { badgeContract } from "./badge-contract";
 import { costingItemContract } from "./costing-item-contract";
+import { insuranceDiscountContract } from "./insurance-discount-contract";
 import { mealContract } from "./meal-contract";
 import { productTypeContract } from "./product-type-contract";
 import { roomConfigContract } from "./room-config-contract";
 import { sectorContract } from "./sector-contract";
 import { sectorGroupContract } from "./sector-group-contract";
 import { tagContract } from "./tag-contract";
-import { insuranceDiscountContract } from "./insurance-discount-contract";
+import { termConditionContract } from "./term-condition-contract";
 
 
 export const productSettingContract = initContract().router({
@@ -20,5 +21,6 @@ export const productSettingContract = initContract().router({
   insuranceDiscount: insuranceDiscountContract,
   sector: sectorContract,
   sectorGroup: sectorGroupContract,
+  termCondition: termConditionContract,
   tag: tagContract,
 });
