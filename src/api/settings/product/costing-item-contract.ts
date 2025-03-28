@@ -1,41 +1,33 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { CostingItemGroupZ, CostingItemZ } from "../../../entities/Settings/Product/CostingItem";
+import {
+  CalculationBasis,
+  CostingItemCategory,
+  CostingItemZ,
+  OccupancyType,
+  PackageType,
+} from "../../../entities/Settings/Product/CostingItem";
 
 
 const basePath = "/api/settings/costing-items";
-const costingItemGroupBasePath = "/api/settings/costing-item-groups";
 
 const UpdateCostingItemZ = CostingItemZ.pick({
   name: true,
   category: true,
   calculationBasis: true,
-  packageType: true,
+  applyToPackageType: true,
+  applyToOccupancyType: true,
+  remarks: true,
   isActive: true,
-  description: true,
 });
 
 const CreateCostingItemZ = UpdateCostingItemZ.extend({
   tenantOID: z.string(),
 });
 
-const UpdateCostingItemGroupZ = CostingItemGroupZ.pick({
-  name: true,
-  remarks: true,
-  isActive: true,
-  costingItemOIDs: true,
-});
-
-const CreateCostingItemGroupZ = UpdateCostingItemGroupZ.extend({
-  tenantOID: z.string(),
-});
-
 export type UpdateCostingItem = z.infer<typeof UpdateCostingItemZ>;
 export type CreateCostingItem = z.infer<typeof CreateCostingItemZ>;
-export type UpdateCostingItemGroup = z.infer<typeof UpdateCostingItemGroupZ>;
-export type CreateCostingItemGroup = z.infer<typeof CreateCostingItemGroupZ>;
-
 
 export const costingItemContract = initContract().router({
   getCostingItems: {
@@ -44,6 +36,11 @@ export const costingItemContract = initContract().router({
     path: basePath,
     query: z.object({
       tenantOID: z.string(),
+      category: z.nativeEnum(CostingItemCategory).optional(),
+      calculationBasis: z.nativeEnum(CalculationBasis).optional(),
+      applyToPackageType: z.nativeEnum(PackageType).optional(),
+      applyToOccupancyType: z.nativeEnum(OccupancyType).optional(),
+      isActive: z.boolean().optional(),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -72,6 +69,19 @@ export const costingItemContract = initContract().router({
     },
   },
 
+  updateCostingItems: {
+    summary: "Update multiple existing costing items",
+    method: "POST",
+    path: `${basePath}/batch-update`,
+    body: z.record(
+      z.string().describe("OID of costing item to update"),
+      UpdateCostingItemZ,
+    ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of updated costing items")),
+    },
+  },
+
   deleteCostingItem: {
     summary: "Delete a costing item",
     method: "DELETE",
@@ -82,46 +92,13 @@ export const costingItemContract = initContract().router({
     },
   },
 
-  // CostingItemGroup methods
-  getCostingItemDepartments: {
-    summary: "Get costing item groups",
-    method: "GET",
-    path: costingItemGroupBasePath,
-    query: z.object({
-      tenantOID: z.string(),
-    }).passthrough(),
-    responses: {
-      200: z.object({
-        oids: z.array(z.string()),
-      }),
-    },
-  },
-
-  createCostingItemGroup: {
-    summary: "Create a new costing item group",
+  deleteCostingItems: {
+    summary: "Delete multiple costing items",
     method: "POST",
-    path: costingItemGroupBasePath,
-    body: CreateCostingItemGroupZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
-  updateCostingItemGroup: {
-    summary: "Update an existing costing item group",
-    method: "PATCH",
-    path: `${costingItemGroupBasePath}/:costingItemGroupOID`,
-    body: UpdateCostingItemGroupZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
-  deleteCostingItemGroup: {
-    summary: "Delete a costing item group",
-    method: "DELETE",
-    path: `${costingItemGroupBasePath}/:costingItemGroupOID`,
-    body: z.object({}),
+    path: `${basePath}/batch-delete`,
+    body: z.object({
+      costingItemOIDs: z.array(z.string().describe("OIDs of costing items to delete")),
+    }),
     responses: {
       200: z.boolean(),
     },

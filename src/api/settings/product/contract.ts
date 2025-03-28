@@ -10,6 +10,7 @@ import { roomConfigContract } from "./room-config-contract";
 import { sectorContract } from "./sector-contract";
 import { sectorGroupContract } from "./sector-group-contract";
 import { tagContract } from "./tag-contract";
+import { termConditionContract } from "./term-condition-contract";
 
 
 export const productSettingContract = initContract().router({
@@ -22,5 +23,6 @@ export const productSettingContract = initContract().router({
   insuranceDiscount: insuranceDiscountContract,
   sector: sectorContract,
   sectorGroup: sectorGroupContract,
+  termCondition: termConditionContract,
   tag: tagContract,
 });

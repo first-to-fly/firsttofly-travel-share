@@ -1,17 +1,16 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { ReferenceCodeTreeZ } from "../entities/Settings/General/ReferenceCodeTree";
+import { ReferenceCodeTreeZ } from "../../../entities/Settings/General/ReferenceCodeTree";
 
 
-const basePath = "/api/reference-code-trees";
+const basePath = "/api/settings/reference-code-trees";
 
 const UpdateReferenceCodeTreeZ = ReferenceCodeTreeZ.pick({
   name: true,
   moduleId: true,
   parentId: true,
   seq: true,
-  offlineOperator: true,
 });
 
 const CreateReferenceCodeTreeZ = UpdateReferenceCodeTreeZ.extend({

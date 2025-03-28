@@ -21,7 +21,6 @@ const CreateTagZ = UpdateTagZ.extend({
 
 const UpdateTagGroupZ = TagGroupZ.pick({
   name: true,
-  description: true,
   tagOIDs: true,
 });
 

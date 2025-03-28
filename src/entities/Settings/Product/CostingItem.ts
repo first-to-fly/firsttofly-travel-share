@@ -7,14 +7,14 @@ import { EntityType } from "../../entityType";
 export enum CostingItemCategory {
   AIRLINE = "airline",
   ACCOMMODATION = "accommodation",
-  LAND_TOUR = "landTour",
+  LAND_TOUR = "land-tour",
   MARKETING = "marketing",
-  TOUR_LEAD = "tourLead",
+  TOUR_LEAD = "tour-lead",
   DISCOUNT = "discount",
   COMMISSION = "commission",
   OTHER = "other",
   MISCELLANEOUS = "miscellaneous",
-  OPTIONAL_SERVICE = "optionalService",
+  OPTIONAL_SERVICE = "optional-service",
 }
 
 export enum CalculationBasis {
@@ -40,9 +40,9 @@ export enum OccupancyType {
   TWIN = "twin",
   TRIPLE = "triple",
   QUAD = "quad",
-  CHILD_TWIN = "childTwin",
-  CHILD_WITH_BED = "childWithBed",
-  CHILD_NO_BED = "childNoBed",
+  CHILD_TWIN = "child-twin",
+  CHILD_WITH_BED = "child-with-bed",
+  CHILD_NO_BED = "child-no-bed",
   INFANT = "infant",
 }
 
@@ -60,15 +60,3 @@ export const CostingItemZ = EntityZ.extend({
 });
 
 export type CostingItem = z.infer<typeof CostingItemZ>;
-
-export const CostingItemGroupZ = EntityZ.extend({
-  entityType: z.literal(EntityType.COSTING_ITEM_GROUP),
-
-  name: z.string(),
-  remarks: z.string().optional(),
-  isActive: z.boolean(),
-
-  costingItemOIDs: z.array(z.string()),
-});
-
-export type CostingItemGroup = z.infer<typeof CostingItemGroupZ>;

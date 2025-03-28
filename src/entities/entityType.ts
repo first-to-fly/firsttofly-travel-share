@@ -15,7 +15,7 @@ export enum EntityType {
   BADGE = "badge",
   BADGE_TRANSLATION = "badgeTranslation",
   COSTING_ITEM = "costingItem",
-  COSTING_ITEM_GROUP = "costingItemGroup",
+  COSTING_TEMPLATE = "costingTemplate",
   MEAL = "meal",
   ROOM_CONFIG = "roomConfig",
   ROOM_CONFIG_RULE = "roomConfigRule",
@@ -25,6 +25,9 @@ export enum EntityType {
   TAG = "tag",
   TAG_GROUP = "tagGroup",
   INSURANCE_DISCOUNT = "insuranceDiscount",
+  TERM_CONDITION = "termCondition",
+  TERM_CONDITION_COVERAGE = "termConditionCoverage",
+  TERM_CONDITION_PRODUCT_TYPES = "termConditionProductTypes",
   STATION_CODE = "stationCode",
 
   // GENERAL SETTINGS
@@ -32,11 +35,14 @@ export enum EntityType {
   LOCATION = "location",
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
-  REFERENCE_CODE_TREE = "referenceCodeTree",
   // REFERENCE CODE
   MENU = "menu",
   COUNTER = "COUNTER",
   COUNTER_COMPONENT = "COUNTER_COMPONENT",
+  REFERENCE_CODE_TREE = "referenceCodeTree",
+  REFERENCE_CODE_TEMPLATE = "referenceCodeTemplate",
+  REFERENCE_CODE_COMPONENT = "referenceCodeComponent",
+  POI = "poi",
 
   // USER SETTINGS
   ROLE = "role",

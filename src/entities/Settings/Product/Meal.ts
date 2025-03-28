@@ -4,12 +4,19 @@ import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
+export enum MealType {
+  AIRLINE = "airline",
+  LAND = "land",
+  CRUISE = "cruise",
+}
+
+
 export const MealZ = EntityZ.extend({
   entityType: z.literal(EntityType.MEAL),
 
   code: z.string(),
   description: z.string().optional(),
-  type: z.enum(["Airline", "Land", "Cruise"]),
+  type: z.nativeEnum(MealType),
   seq: z.number().optional().default(0),
   offlineOperator: z.string().optional(),
 });
