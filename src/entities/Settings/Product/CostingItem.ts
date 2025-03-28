@@ -46,6 +46,12 @@ export enum OccupancyType {
   INFANT = "infant",
 }
 
+
+export const CostingItemEvents = {
+  COSTING_ITEM_UPDATED: "COSTING_ITEM_UPDATED",
+  COSTING_ITEM_LIST_UPDATED: "COSTING_ITEM_LIST_UPDATED",
+};
+
 export const CostingItemZ = EntityZ.extend({
   entityType: z.literal(EntityType.COSTING_ITEM),
 

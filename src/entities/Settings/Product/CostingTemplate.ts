@@ -4,6 +4,12 @@ import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
+export const CostingTemplateEvents = {
+  COSTING_TEMPLATE_UPDATED: "COSTING_TEMPLATE_UPDATED",
+  COSTING_TEMPLATE_LIST_UPDATED: "COSTING_TEMPLATE_LIST_UPDATED",
+};
+
+
 export const CostingTemplateZ = EntityZ.extend({
   entityType: z.literal(EntityType.COSTING_TEMPLATE),
 
