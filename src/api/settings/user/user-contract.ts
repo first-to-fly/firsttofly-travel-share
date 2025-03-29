@@ -7,7 +7,6 @@ import { UserZ } from "../../../entities/Settings/User/User";
 const basePath = "/api/settings/users";
 
 const UpdateUserZ = UserZ.pick({
-  oid: true,
   tenantOID: true,
 
   firstName: true,
@@ -84,7 +83,10 @@ export const userContract = initContract().router({
     summary: "Update multiple users",
     method: "POST",
     path: `${basePath}/batch-update`,
-    body: z.array(UpdateUserZ.strict()),
+    body: z.record(
+      z.string().describe("oid of user"),
+      UpdateUserZ,
+    ),
     responses: {
       200: z.string(),
     },
