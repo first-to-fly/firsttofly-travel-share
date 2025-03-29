@@ -24,7 +24,7 @@ export enum ReferenceCodeTemplateEvents {
 export const ReferenceCodeTemplateZ = EntityZ.extend({
   entityType: z.literal(EntityType.REFERENCE_CODE_TEMPLATE),
   name: z.string(),
-  moduleId: z.number(),
+  moduleId: z.string(),
   counterType: z.nativeEnum(CounterType).default(CounterType.SEQUENTIAL),
   resetCounterType: z.nativeEnum(ResetCounterType).default(ResetCounterType.DISABLED),
   counterWidth: z.number().default(5),

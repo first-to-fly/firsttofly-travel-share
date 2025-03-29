@@ -12,8 +12,8 @@ export enum ReferenceCodeTreeEvents {
 export const ReferenceCodeTreeZ = EntityZ.extend({
   entityType: z.literal(EntityType.REFERENCE_CODE_TREE),
   name: z.string(),
-  moduleId: z.number(),
-  parentId: z.number().optional(),
+  moduleId: z.string(),
+  parentId: z.string().optional(),
   seq: z.number().optional(),
 });
 
