@@ -12,6 +12,7 @@ import { sectorGroupContract } from "./sector-group-contract";
 import { specialInstructionContract } from "./special-instruction-contract";
 import { tagContract } from "./tag-contract";
 import { termConditionContract } from "./term-condition-contract";
+import { assembleLocationAirlinesContract } from "./assemble-location-airlines-contract";
 
 
 export const productSettingContract = initContract().router({
@@ -26,5 +27,6 @@ export const productSettingContract = initContract().router({
   sectorGroup: sectorGroupContract,
   specialInstruction: specialInstructionContract,
   termCondition: termConditionContract,
+  assembleLocationAirlines: assembleLocationAirlinesContract,
   tag: tagContract,
 });
