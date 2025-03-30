@@ -30,6 +30,7 @@ export enum EntityType {
   TERM_CONDITION_COVERAGE = "termConditionCoverage",
   TERM_CONDITION_PRODUCT_TYPES = "termConditionProductTypes",
   STATION_CODE = "stationCode",
+  ASSEMBLE_LOCATION_AIRLINES = "assembleLocationAirlines",
 
   // GENERAL SETTINGS
   DESIGNATION = "designation",
