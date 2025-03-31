@@ -1,6 +1,5 @@
 export const UserPermissions = {
 
-
   // Tenant level permissions
   "tenant:user:view-basic": {
     name: "View User Basic",
