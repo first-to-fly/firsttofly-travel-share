@@ -1,6 +1,7 @@
 import { initContract } from "@ts-rest/core";
 
 import { locationContract } from "./location-contract";
+import { poiContract } from "./poi-contract";
 import { privacyPolicyContract } from "./privacy-policy-contract";
 import { referenceCodeComponentContract } from "./reference-code-component-contract";
 import { referenceCodeTemplateContract } from "./reference-code-template-contract";
@@ -11,6 +12,7 @@ import { tenantContract } from "./tenant-contract";
 
 export const generalSettingContract = initContract().router({
   location: locationContract,
+  poi: poiContract,
   privacyPolicy: privacyPolicyContract,
   referenceCodeTree: referenceCodeTreeContract,
   referenceCodeTemplate: referenceCodeTemplateContract,
