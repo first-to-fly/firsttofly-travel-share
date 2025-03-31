@@ -1,5 +1,6 @@
 import { initContract } from "@ts-rest/core";
 
+import { assembleLocationAirlinesContract } from "./assemble-location-airlines-contract";
 import { badgeContract } from "./badge-contract";
 import { costingItemContract } from "./costing-item-contract";
 import { costingTemplateContract } from "./costing-template-contract";
@@ -12,7 +13,6 @@ import { sectorGroupContract } from "./sector-group-contract";
 import { specialInstructionContract } from "./special-instruction-contract";
 import { tagContract } from "./tag-contract";
 import { termConditionContract } from "./term-condition-contract";
-import { assembleLocationAirlinesContract } from "./assemble-location-airlines-contract";
 
 
 export const productSettingContract = initContract().router({
