@@ -9,7 +9,7 @@ const basePath = "/api/useful-infos";
 // Define the UsefulInfoRef schema
 const UsefulInfoRefZ = z.object({
   refId: z.number(),
-  name: z.string()
+  name: z.string(),
 });
 
 export type UsefulInfoRef = z.infer<typeof UsefulInfoRefZ>;
