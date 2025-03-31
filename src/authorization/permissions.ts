@@ -1,6 +1,6 @@
-import { DepartmentPermissions } from "./modules/department.permission";
-import { ProductPermissions } from "./modules/products.permission";
-import { UserPermissions } from "./modules/user.permission";
+import { DepartmentPermissions } from "./entities/department.permission";
+import { ProductPermissions } from "./entities/product.permission";
+import { UserPermissions } from "./entities/user.permission";
 import type { PermissionDeclaration } from "./permissions.types";
 
 
