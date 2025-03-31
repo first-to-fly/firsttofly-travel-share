@@ -13,7 +13,7 @@ export const UsefulInfoZ = EntityZ.extend({
   entityType: z.literal(EntityType.USEFUL_INFO),
 
   name: z.string(),
-  coverage: z.number().optional(),
+  coverageType: z.enum(["sectors", "sector-group", "products"]),
   status: z.boolean().default(true),
   offlineOperator: z.string().optional(),
   remarks: z.string().optional(),
