@@ -17,7 +17,7 @@ export type UsefulInfoRef = z.infer<typeof UsefulInfoRefZ>;
 // Define update schema with fields that can be updated
 const UpdateUsefulInfoZ = UsefulInfoZ.pick({
   name: true,
-  coverage: true,
+  coverageType: true,
   status: true,
   offlineOperator: true,
   remarks: true,
