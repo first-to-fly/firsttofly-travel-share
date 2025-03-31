@@ -1,4 +1,5 @@
 import { DepartmentPermissions } from "./modules/department.permission";
+import { ProductPermissions } from "./modules/products.permission";
 import { UserPermissions } from "./modules/user.permission";
 import type { PermissionDeclaration } from "./permissions.types";
 
@@ -12,8 +13,9 @@ keyof typeof ModulePermissions | keyof PermissionDeclaration
 >;
 
 const ModulePermissions = {
-  user: UserPermissions,
-  department: DepartmentPermissions,
+  "User Management": UserPermissions,
+  "Department Management": DepartmentPermissions,
+  "Product Management": ProductPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof ModulePermissions;

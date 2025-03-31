@@ -7,6 +7,7 @@ export const DepartmentPermissions = {
     name: "View Department",
     description: "Can view department",
   },
+
   // Department level permissions
   "dept:department:view": {
     name: "View Department",
@@ -16,6 +17,7 @@ export const DepartmentPermissions = {
     name: "Update Department",
     description: "Can update department",
   },
+
   // Department user management permissions
   "dept:department:assign-user": {
     name: "Assign User to Department",
@@ -42,6 +44,10 @@ export const DepartmentPermissions = {
   "tenant:department:delete": {
     name: "Delete Department",
     description: "Can delete department",
+  },
+  "tenant:department:view-user": {
+    name: "View User in Department",
+    description: "Can view user in department",
   },
   "tenant:department:assign-user": {
     name: "Assign User to Department",
