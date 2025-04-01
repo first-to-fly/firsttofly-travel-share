@@ -1,4 +1,6 @@
 export const ProductPermissions = {
+
+  // Department level permissions
   "dept:product:view-basic": {
     name: "View Product Basic",
     description: "Can view product basic info in department (name, avatar)",

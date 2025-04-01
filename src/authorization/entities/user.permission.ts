@@ -1,4 +1,15 @@
 export const UserPermissions = {
+// User level permissions (Self-management)
+  "user:user:view": {
+    name: "View Own Profile",
+    description: "Can view own user profile details",
+  },
+
+  // Department level permissions
+  "dept:user:view": {
+    name: "View User in Department",
+    description: "Can view users within their department",
+  },
 
   // Tenant level permissions
   "tenant:user:view-basic": {

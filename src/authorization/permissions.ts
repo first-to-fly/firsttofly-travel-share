@@ -1,3 +1,4 @@
+import { AssembleLocationAirlinesPermissions } from "./entities/assemble-location-airlines.permission";
 import { BadgePermissions } from "./entities/badge.permission";
 import { CostingItemPermissions } from "./entities/costing-item.permission";
 import { CostingTemplatePermissions } from "./entities/costing-template.permission";
@@ -5,16 +6,21 @@ import { DepartmentPermissions } from "./entities/department.permission";
 import { DesignationPermissions } from "./entities/designation.permission";
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
 import { LocationPermissions } from "./entities/location.permission";
+import { MealPermissions } from "./entities/meal.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { ProductPermissions } from "./entities/product.permission";
 import { ReferenceCodeComponentPermissions } from "./entities/reference-code-component.permission";
 import { ReferenceCodeTemplatePermissions } from "./entities/reference-code-template.permission";
 import { ReferenceCodeTreePermissions } from "./entities/reference-code-tree.permission";
-import { RolePermissions } from "./entities/role.permission";
+import { RolePermissions } from "./entities/role.permission"; // Corrected import path and name
+import { SectorPermissions } from "./entities/sector.permission";
+import { SectorGroupPermissions } from "./entities/sector-group.permission";
 import { SpecialInstructionPermissions } from "./entities/special-instruction.permission";
 import { StationCodePermissions } from "./entities/station-code.permission";
 import { TenantPermissions } from "./entities/tenant.permission";
+import { TermPermissions } from "./entities/term.permission";
 import { TermConditionPermissions } from "./entities/term-condition.permission";
+import { UsefulInfoPermissions } from "./entities/useful-info.permission";
 import { UserPermissions } from "./entities/user.permission";
 import type { PermissionDeclaration } from "./permissions.types";
 
@@ -46,6 +52,12 @@ const EntityPermissions = {
   StationCode: StationCodePermissions,
   Tenant: TenantPermissions,
   TermCondition: TermConditionPermissions,
+  Meal: MealPermissions,
+  Sector: SectorPermissions,
+  SectorGroup: SectorGroupPermissions,
+  Term: TermPermissions,
+  UsefulInfo: UsefulInfoPermissions,
+  AssembleLocationAirlines: AssembleLocationAirlinesPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
