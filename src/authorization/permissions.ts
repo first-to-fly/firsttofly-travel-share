@@ -1,5 +1,20 @@
+import { BadgePermissions } from "./entities/badge.permission";
+import { CostingItemPermissions } from "./entities/costing-item.permission";
+import { CostingTemplatePermissions } from "./entities/costing-template.permission";
 import { DepartmentPermissions } from "./entities/department.permission";
+import { DesignationPermissions } from "./entities/designation.permission";
+import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
+import { LocationPermissions } from "./entities/location.permission";
+import { POIPermissions } from "./entities/poi.permission";
 import { ProductPermissions } from "./entities/product.permission";
+import { ReferenceCodeComponentPermissions } from "./entities/reference-code-component.permission";
+import { ReferenceCodeTemplatePermissions } from "./entities/reference-code-template.permission";
+import { ReferenceCodeTreePermissions } from "./entities/reference-code-tree.permission";
+import { RolePermissions } from "./entities/role.permission";
+import { SpecialInstructionPermissions } from "./entities/special-instruction.permission";
+import { StationCodePermissions } from "./entities/station-code.permission";
+import { TenantPermissions } from "./entities/tenant.permission";
+import { TermConditionPermissions } from "./entities/term-condition.permission";
 import { UserPermissions } from "./entities/user.permission";
 import type { PermissionDeclaration } from "./permissions.types";
 
@@ -16,6 +31,21 @@ const EntityPermissions = {
   User: UserPermissions,
   Department: DepartmentPermissions,
   Product: ProductPermissions,
+  Badge: BadgePermissions,
+  CostingItem: CostingItemPermissions,
+  CostingTemplate: CostingTemplatePermissions,
+  Designation: DesignationPermissions,
+  InsuranceDiscount: InsuranceDiscountPermissions,
+  Location: LocationPermissions,
+  POI: POIPermissions,
+  ReferenceCodeComponent: ReferenceCodeComponentPermissions,
+  ReferenceCodeTemplate: ReferenceCodeTemplatePermissions,
+  ReferenceCodeTree: ReferenceCodeTreePermissions,
+  Role: RolePermissions,
+  SpecialInstruction: SpecialInstructionPermissions,
+  StationCode: StationCodePermissions,
+  Tenant: TenantPermissions,
+  TermCondition: TermConditionPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
