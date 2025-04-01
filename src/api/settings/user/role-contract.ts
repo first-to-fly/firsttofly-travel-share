@@ -61,8 +61,8 @@ export const roleContract = initContract().router({
   },
   updateRoles: {
     summary: "Update multiple roles at once",
-    method: "PUT",
-    path: `${basePath}`,
+    method: "POST",
+    path: `${basePath}/batch-update`,
     body: z.record(EntityOIDZ, UpdateRoleZ),
     responses: {
       200: z.array(EntityOIDZ),
@@ -105,8 +105,8 @@ export const roleContract = initContract().router({
   },
   deleteRoles: {
     summary: "Delete multiple roles at once",
-    method: "DELETE",
-    path: `${basePath}/batch`,
+    method: "POST",
+    path: `${basePath}/batch-delete`,
     body: z.object({
       roleOIDs: z.array(EntityOIDZ),
     }),
