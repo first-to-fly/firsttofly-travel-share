@@ -20,6 +20,7 @@ const CreateSectorZ = UpdateSectorZ.extend({
   tenantOID: z.string(),
 });
 
+
 export type UpdateSector = z.infer<typeof UpdateSectorZ>;
 export type CreateSector = z.infer<typeof CreateSectorZ>;
 
@@ -32,7 +33,9 @@ export const sectorContract = initContract().router({
       tenantOID: z.string(),
     }).passthrough(),
     responses: {
-      200: z.array(SectorZ), // Return full sector objects
+      200: z.object({
+        oids: z.array(z.string().describe("OIDs of sectors")),
+      }), // Return full sector objects
     },
   },
 
