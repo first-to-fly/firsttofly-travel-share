@@ -1,5 +1,5 @@
 export const UserPermissions = {
-// User level permissions (Self-management)
+  // User level permissions (Self-management)
   "user:user:view": {
     name: "View Own Profile",
     description: "Can view own user profile details",

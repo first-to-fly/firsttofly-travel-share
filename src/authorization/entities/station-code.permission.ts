@@ -2,17 +2,6 @@
  * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
  */
 export const StationCodePermissions = {
-  // User level permissions
-  "user:stationCode:view": {
-    name: "View Station Code",
-    description: "Can view station code",
-  },
-
-  // Department level permissions
-  "dept:stationCode:view": {
-    name: "View Station Code",
-    description: "Can view station code in department",
-  },
 
   // Tenant level permissions
   "tenant:stationCode:view": {

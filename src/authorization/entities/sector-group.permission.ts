@@ -2,7 +2,24 @@
  * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
  */
 export const SectorGroupPermissions = {
-  // Tenant scope
+
+  // User level permissions
+  "user:sector-group:view": {
+    name: "View Sector Group",
+    description: "Can view sector group",
+  },
+
+  // Department level permissions
+  "dept:sector-group:view": {
+    name: "View Sector Group",
+    description: "Can view sector group in department",
+  },
+  "dept:sector-group:update": {
+    name: "Update Sector Group",
+    description: "Can update sector group in department",
+  },
+
+  // Tenant level permissions
   "tenant:sector-group:view": {
     name: "View Sector Group",
     description: "Can view sector groups in tenant",

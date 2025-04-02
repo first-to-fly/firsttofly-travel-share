@@ -9,9 +9,7 @@ import { LocationPermissions } from "./entities/location.permission";
 import { MealPermissions } from "./entities/meal.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { ProductPermissions } from "./entities/product.permission";
-import { ReferenceCodeComponentPermissions } from "./entities/reference-code-component.permission";
-import { ReferenceCodeTemplatePermissions } from "./entities/reference-code-template.permission";
-import { ReferenceCodeTreePermissions } from "./entities/reference-code-tree.permission";
+import { ReferenceCodePermissions } from "./entities/reference-code.permission";
 import { RolePermissions } from "./entities/role.permission"; // Corrected import path and name
 import { SectorPermissions } from "./entities/sector.permission";
 import { SectorGroupPermissions } from "./entities/sector-group.permission";
@@ -44,9 +42,7 @@ const EntityPermissions = {
   InsuranceDiscount: InsuranceDiscountPermissions,
   Location: LocationPermissions,
   POI: POIPermissions,
-  ReferenceCodeComponent: ReferenceCodeComponentPermissions,
-  ReferenceCodeTemplate: ReferenceCodeTemplatePermissions,
-  ReferenceCodeTree: ReferenceCodeTreePermissions,
+  ReferenceCode: ReferenceCodePermissions,
   Role: RolePermissions,
   SpecialInstruction: SpecialInstructionPermissions,
   StationCode: StationCodePermissions,
