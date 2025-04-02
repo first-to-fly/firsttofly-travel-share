@@ -35,7 +35,7 @@ export const sectorContract = initContract().router({
     responses: {
       200: z.object({
         oids: z.array(z.string().describe("OIDs of sectors")),
-      }), // Return full sector objects
+      }),
     },
   },
 
