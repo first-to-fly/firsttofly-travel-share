@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
-import { EntityOIDZ } from "entities/entity";
 import { z } from "zod";
 
+import { EntityOIDZ } from "../../../entities/entity";
 import { UserZ } from "../../../entities/Settings/User/User";
 
 
