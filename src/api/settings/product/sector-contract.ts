@@ -13,6 +13,7 @@ const UpdateSectorZ = SectorZ.pick({
   isPopular: true,
   images: true,
   productTypeOIDs: true,
+  departmentOID: true,
 });
 
 const CreateSectorZ = UpdateSectorZ.extend({
@@ -31,9 +32,7 @@ export const sectorContract = initContract().router({
       tenantOID: z.string(),
     }).passthrough(),
     responses: {
-      200: z.object({
-        oids: z.array(z.string()),
-      }),
+      200: z.array(SectorZ), // Return full sector objects
     },
   },
 
