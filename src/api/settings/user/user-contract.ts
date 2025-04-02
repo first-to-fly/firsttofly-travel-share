@@ -1,4 +1,5 @@
 import { initContract } from "@ts-rest/core";
+import { EntityOIDZ } from "entities/entity";
 import { z } from "zod";
 
 import { UserZ } from "../../../entities/Settings/User/User";
@@ -88,7 +89,7 @@ export const userContract = initContract().router({
       UpdateUserZ,
     ),
     responses: {
-      200: z.string(),
+      200: z.array(EntityOIDZ),
     },
   },
 
