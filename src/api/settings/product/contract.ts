@@ -8,6 +8,7 @@ import { insuranceDiscountContract } from "./insurance-discount-contract";
 import { mealContract } from "./meal-contract";
 import { productTypeContract } from "./product-type-contract";
 import { roomConfigContract } from "./room-config-contract";
+import { roomConfigurationContract } from "./room-configuration-contract";
 import { sectorContract } from "./sector-contract";
 import { sectorGroupContract } from "./sector-group-contract";
 import { specialInstructionContract } from "./special-instruction-contract";
@@ -23,6 +24,7 @@ export const productSettingContract = initContract().router({
   meal: mealContract,
   productType: productTypeContract,
   roomConfig: roomConfigContract,
+  roomConfiguration: roomConfigurationContract,
   insuranceDiscount: insuranceDiscountContract,
   sector: sectorContract,
   sectorGroup: sectorGroupContract,
