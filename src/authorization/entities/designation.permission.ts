@@ -8,12 +8,6 @@ export const DesignationPermissions = {
     description: "Can view designation",
   },
 
-  // Department level permissions
-  "dept:designation:view": {
-    name: "View Designation",
-    description: "Can view designation in department",
-  },
-
   // Tenant level permissions
   "tenant:designation:view": {
     name: "View Designation",

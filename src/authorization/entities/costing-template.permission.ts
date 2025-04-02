@@ -8,12 +8,6 @@ export const CostingTemplatePermissions = {
     description: "Can view costing template",
   },
 
-  // Department level permissions
-  "dept:costing-template:view": {
-    name: "View Costing Template",
-    description: "Can view costing template in department",
-  },
-
   // Tenant level permissions
   "tenant:costing-template:view": {
     name: "View Costing Template",

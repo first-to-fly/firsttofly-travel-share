@@ -8,12 +8,6 @@ export const RolePermissions = {
     description: "Can view role",
   },
 
-  // Department level permissions
-  "dept:role:view": {
-    name: "View Role",
-    description: "Can view role in department",
-  },
-
   // Tenant level permissions
   "tenant:role:view": {
     name: "View Role",

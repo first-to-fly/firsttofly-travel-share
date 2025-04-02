@@ -8,12 +8,6 @@ export const TenantPermissions = {
     description: "Can view tenant",
   },
 
-  // Department level permissions
-  "dept:tenant:view": {
-    name: "View Tenant",
-    description: "Can view tenant in department",
-  },
-
   // Tenant level permissions (These might be more administrative/super-user level)
   "tenant:tenant:view": {
     name: "View Tenant",

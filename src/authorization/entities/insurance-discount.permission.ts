@@ -8,12 +8,6 @@ export const InsuranceDiscountPermissions = {
     description: "Can view insurance discount",
   },
 
-  // Department level permissions
-  "dept:insurance-discount:view": {
-    name: "View Insurance Discount",
-    description: "Can view insurance discount in department",
-  },
-
   // Tenant level permissions
   "tenant:insurance-discount:view": {
     name: "View Insurance Discount",

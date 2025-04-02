@@ -2,12 +2,6 @@
  * @type {Record<string, PermissionDeclaration>}
  */
 export const DepartmentPermissions = {
-  // User level permissions
-  "user:department:view": {
-    name: "View Department",
-    description: "Can view department",
-  },
-
   // Department level permissions
   "dept:department:view": {
     name: "View Department",

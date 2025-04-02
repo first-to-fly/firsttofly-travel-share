@@ -9,16 +9,6 @@ export const SectorGroupPermissions = {
     description: "Can view sector group",
   },
 
-  // Department level permissions
-  "dept:sector-group:view": {
-    name: "View Sector Group",
-    description: "Can view sector group in department",
-  },
-  "dept:sector-group:update": {
-    name: "Update Sector Group",
-    description: "Can update sector group in department",
-  },
-
   // Tenant level permissions
   "tenant:sector-group:view": {
     name: "View Sector Group",

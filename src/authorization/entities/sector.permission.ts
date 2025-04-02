@@ -9,16 +9,6 @@ export const SectorPermissions = {
     description: "Can view sector",
   },
 
-  // Department level permissions
-  "dept:sector:view": {
-    name: "View Sector",
-    description: "Can view sector in department",
-  },
-  "dept:sector:update": {
-    name: "Update Sector",
-    description: "Can update sector in department",
-  },
-
   // Tenant level permissions
   "tenant:sector:view": {
     name: "View Sector",

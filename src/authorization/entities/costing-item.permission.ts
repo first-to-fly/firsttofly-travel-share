@@ -8,12 +8,6 @@ export const CostingItemPermissions = {
     description: "Can view costing item",
   },
 
-  // Department level permissions
-  "dept:costing-item:view": {
-    name: "View Costing Item",
-    description: "Can view costing item in department",
-  },
-
   // Tenant level permissions
   "tenant:costing-item:view": {
     name: "View Costing Item",

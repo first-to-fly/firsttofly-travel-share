@@ -8,12 +8,6 @@ export const ReferenceCodePermissions = {
     description: "Can view reference code",
   },
 
-  // Department level permissions
-  "dept:referenceCode:view": {
-    name: "View Reference Code",
-    description: "Can view reference code in department",
-  },
-
   // Tenant level permissions
   "tenant:referenceCode:view": {
     name: "View Reference Code",

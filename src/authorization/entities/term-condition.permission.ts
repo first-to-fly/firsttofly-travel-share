@@ -8,12 +8,6 @@ export const TermConditionPermissions = {
     description: "Can view term & condition",
   },
 
-  // Department level permissions
-  "dept:termCondition:view": {
-    name: "View Term & Condition",
-    description: "Can view term & condition in department",
-  },
-
   // Tenant level permissions
   "tenant:termCondition:view": {
     name: "View Term & Condition",

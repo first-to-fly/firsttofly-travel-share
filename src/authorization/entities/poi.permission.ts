@@ -8,12 +8,6 @@ export const POIPermissions = {
     description: "Can view POI",
   },
 
-  // Department level permissions
-  "dept:poi:view": {
-    name: "View POI",
-    description: "Can view POI in department",
-  },
-
   // Tenant level permissions
   "tenant:poi:view": {
     name: "View POI",

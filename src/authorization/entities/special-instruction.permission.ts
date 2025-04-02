@@ -8,12 +8,6 @@ export const SpecialInstructionPermissions = {
     description: "Can view special instruction",
   },
 
-  // Department level permissions
-  "dept:special-instruction:view": {
-    name: "View Special Instruction",
-    description: "Can view special instruction in department",
-  },
-
   // Tenant level permissions
   "tenant:special-instruction:view": {
     name: "View Special Instruction",

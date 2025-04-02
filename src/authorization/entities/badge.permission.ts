@@ -8,12 +8,6 @@ export const BadgePermissions = {
     description: "Can view badge",
   },
 
-  // Department level permissions
-  "dept:badge:view": {
-    name: "View Badge",
-    description: "Can view badge in department",
-  },
-
   // Tenant level permissions
   "tenant:badge:view": {
     name: "View Badge",
