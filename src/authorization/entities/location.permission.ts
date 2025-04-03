@@ -2,33 +2,40 @@
  * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
  */
 export const LocationPermissions = {
-  // User level permissions
-  "user:location:view": {
-    name: "View Location",
-    description: "Can view location",
-  },
-
   // Department level permissions
   "dept:location:view": {
-    name: "View Location",
-    description: "Can view location in department",
+    name: "View Department Locations",
+    description: "Can view Locations within their department",
+  },
+  "dept:location:create": {
+    name: "Create Department Location",
+    description: "Can create Location within their department",
+  },
+  "dept:location:update": {
+    name: "Update Department Location",
+    description: "Can update Location within their department",
+  },
+  "dept:location:delete": {
+    name: "Delete Department Location",
+    description: "Can delete Location within their department",
   },
 
   // Tenant level permissions
   "tenant:location:view": {
-    name: "View Location",
-    description: "Can view location in tenant",
+    name: "View Tenant Locations",
+    description: "Can view all Locations within the tenant",
   },
   "tenant:location:create": {
-    name: "Create Location",
-    description: "Can create location in tenant",
+    name: "Create Tenant Location",
+    description: "Can create Location within the tenant",
   },
   "tenant:location:update": {
-    name: "Update Location",
-    description: "Can update location in tenant",
+    name: "Update Tenant Location",
+    description: "Can update Location within the tenant",
   },
   "tenant:location:delete": {
-    name: "Delete Location",
-    description: "Can delete location in tenant",
+    name: "Delete Tenant Location",
+    description: "Can delete Location within the tenant",
   },
+  // Add other permissions as needed
 };
