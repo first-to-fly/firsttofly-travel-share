@@ -5,10 +5,6 @@ export const ProductPermissions = {
     name: "View Product",
     description: "Can view product",
   },
-  "user:product:create": {
-    name: "Create Product",
-    description: "Can create product",
-  },
   "user:product:update": {
     name: "Update Product",
     description: "Can update product",
@@ -19,19 +15,19 @@ export const ProductPermissions = {
   },
 
   // Department level permissions
-  "department:product:view": {
+  "dept:product:view": {
     name: "View Product",
     description: "Can view product in department",
   },
-  "department:product:create": {
+  "dept:product:create": {
     name: "Create Product",
     description: "Can create product in department",
   },
-  "department:product:update": {
+  "dept:product:update": {
     name: "Update Product",
     description: "Can update product in department",
   },
-  "department:product:delete": {
+  "dept:product:delete": {
     name: "Delete Product",
     description: "Can delete product in department",
   },
