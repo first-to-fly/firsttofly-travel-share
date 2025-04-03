@@ -11,6 +11,7 @@ import { POIPermissions } from "./entities/poi.permission";
 import { ProductPermissions } from "./entities/product.permission";
 import { ReferenceCodePermissions } from "./entities/reference-code.permission";
 import { RolePermissions } from "./entities/role.permission"; // Corrected import path and name
+import { RoomConfigurationPermissions } from "./entities/room-configuration.permission";
 import { SectorPermissions } from "./entities/sector.permission";
 import { SectorGroupPermissions } from "./entities/sector-group.permission";
 import { SpecialInstructionPermissions } from "./entities/special-instruction.permission";
@@ -54,6 +55,7 @@ const EntityPermissions = {
   Term: TermPermissions,
   UsefulInfo: UsefulInfoPermissions,
   AssembleLocationAirlines: AssembleLocationAirlinesPermissions,
+  RoomConfiguration: RoomConfigurationPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
