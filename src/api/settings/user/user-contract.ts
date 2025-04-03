@@ -1,6 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
+import { EntityOIDZ } from "../../../entities/entity";
 import { UserZ } from "../../../entities/Settings/User/User";
 
 
@@ -53,7 +54,7 @@ export const userContract = initContract().router({
     }).passthrough(),
     responses: {
       200: z.object({
-        oids: z.array(z.string()),
+        oids: z.array(EntityOIDZ),
       }),
     },
   },
@@ -75,7 +76,7 @@ export const userContract = initContract().router({
     path: basePath,
     body: CreateUserZ,
     responses: {
-      200: z.string(),
+      200: EntityOIDZ,
     },
   },
 
@@ -88,7 +89,7 @@ export const userContract = initContract().router({
       UpdateUserZ,
     ),
     responses: {
-      200: z.array(z.string()),
+      200: z.array(EntityOIDZ),
     },
   },
 
