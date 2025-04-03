@@ -1,5 +1,41 @@
 export const ProductPermissions = {
 
+  // User level permissions
+  "user:product:view": {
+    name: "View Product",
+    description: "Can view product",
+  },
+  "user:product:create": {
+    name: "Create Product",
+    description: "Can create product",
+  },
+  "user:product:update": {
+    name: "Update Product",
+    description: "Can update product",
+  },
+  "user:product:delete": {
+    name: "Delete Product",
+    description: "Can delete product",
+  },
+
+  // Department level permissions
+  "department:product:view": {
+    name: "View Product",
+    description: "Can view product in department",
+  },
+  "department:product:create": {
+    name: "Create Product",
+    description: "Can create product in department",
+  },
+  "department:product:update": {
+    name: "Update Product",
+    description: "Can update product in department",
+  },
+  "department:product:delete": {
+    name: "Delete Product",
+    description: "Can delete product in department",
+  },
+
   // Tenant level permissions
   "tenant:product:view-basic": {
     name: "View Product Basic",
