@@ -1,22 +1,33 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
 export const MealPermissions = {
-  // Tenant scope
+  // User level permissions (based on createdBy)
+  "user:meal:view": {
+    name: "View Own Meal",
+    description: "Can view meals created by the user",
+  },
+  "user:meal:update": {
+    name: "Update Own Meal",
+    description: "Can update meals created by the user",
+  },
+  "user:meal:delete": {
+    name: "Delete Own Meal",
+    description: "Can delete meals created by the user",
+  },
+
+  // Tenant level permissions
   "tenant:meal:view": {
-    name: "View Meal",
-    description: "Can view meals in tenant",
+    name: "View Tenant Meals",
+    description: "Can view all Meals within the tenant",
   },
   "tenant:meal:create": {
-    name: "Create Meal",
-    description: "Can create meals in tenant",
+    name: "Create Tenant Meal",
+    description: "Can create Meals within the tenant",
   },
   "tenant:meal:update": {
-    name: "Update Meal",
-    description: "Can update meals in tenant",
+    name: "Update Tenant Meals",
+    description: "Can update any Meal within the tenant",
   },
   "tenant:meal:delete": {
-    name: "Delete Meal",
-    description: "Can delete meals in tenant",
+    name: "Delete Tenant Meals",
+    description: "Can delete any Meal within the tenant",
   },
-};
+} as const;
