@@ -1,28 +1,33 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
 export const CostingItemPermissions = {
   // User level permissions
   "user:costing-item:view": {
-    name: "View Costing Item",
-    description: "Can view costing item",
+    name: "View Own Costing Items",
+    description: "Can view costing items they created",
+  },
+  "user:costing-item:update": {
+    name: "Update Own Costing Items",
+    description: "Can update costing items they created",
+  },
+  "user:costing-item:delete": {
+    name: "Delete Own Costing Items",
+    description: "Can delete costing items they created",
   },
 
   // Tenant level permissions
   "tenant:costing-item:view": {
-    name: "View Costing Item",
-    description: "Can view costing item in tenant",
+    name: "View Tenant Costing Items",
+    description: "Can view all costing items within the tenant",
   },
   "tenant:costing-item:create": {
-    name: "Create Costing Item",
-    description: "Can create costing item in tenant",
+    name: "Create Tenant Costing Items",
+    description: "Can create costing items within the tenant",
   },
   "tenant:costing-item:update": {
-    name: "Update Costing Item",
-    description: "Can update costing item in tenant",
+    name: "Update Tenant Costing Items",
+    description: "Can update any costing item within the tenant",
   },
   "tenant:costing-item:delete": {
-    name: "Delete Costing Item",
-    description: "Can delete costing item in tenant",
+    name: "Delete Tenant Costing Items",
+    description: "Can delete any costing item within the tenant",
   },
-};
+} as const;
