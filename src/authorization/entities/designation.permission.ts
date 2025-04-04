@@ -1,28 +1,25 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
 export const DesignationPermissions = {
-  // User level permissions
+  // User level permissions (assuming users can be associated with designations, e.g., via a join table)
   "user:designation:view": {
-    name: "View Designation",
-    description: "Can view designation",
+    name: "View Own Designations", // Or a more specific name if the relationship is indirect
+    description: "Can view designations they are associated with",
   },
 
   // Tenant level permissions
   "tenant:designation:view": {
-    name: "View Designation",
-    description: "Can view designation in tenant",
+    name: "View Tenant Designations",
+    description: "Can view all designations within the tenant",
   },
   "tenant:designation:create": {
-    name: "Create Designation",
-    description: "Can create designation in tenant",
+    name: "Create Tenant Designation",
+    description: "Can create designations within the tenant",
   },
   "tenant:designation:update": {
-    name: "Update Designation",
-    description: "Can update designation in tenant",
+    name: "Update Tenant Designation",
+    description: "Can update designations within the tenant",
   },
   "tenant:designation:delete": {
-    name: "Delete Designation",
-    description: "Can delete designation in tenant",
+    name: "Delete Tenant Designation",
+    description: "Can delete designations within the tenant",
   },
-};
+} as const;
