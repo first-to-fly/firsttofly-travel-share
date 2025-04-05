@@ -1,28 +1,33 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
 export const InsuranceDiscountPermissions = {
   // User level permissions
   "user:insurance-discount:view": {
-    name: "View Insurance Discount",
-    description: "Can view insurance discount",
+    name: "View Own Insurance Discounts",
+    description: "Can view insurance discounts created by them", // Assuming 'user' scope relates to creator
+  },
+  "user:insurance-discount:update": {
+    name: "Update Own Insurance Discounts",
+    description: "Can update insurance discounts created by them",
+  },
+  "user:insurance-discount:delete": {
+    name: "Delete Own Insurance Discounts",
+    description: "Can delete insurance discounts created by them",
   },
 
   // Tenant level permissions
   "tenant:insurance-discount:view": {
-    name: "View Insurance Discount",
-    description: "Can view insurance discount in tenant",
+    name: "View Tenant Insurance Discounts",
+    description: "Can view all insurance discounts within the tenant",
   },
   "tenant:insurance-discount:create": {
-    name: "Create Insurance Discount",
-    description: "Can create insurance discount in tenant",
+    name: "Create Tenant Insurance Discounts",
+    description: "Can create insurance discounts within the tenant",
   },
   "tenant:insurance-discount:update": {
-    name: "Update Insurance Discount",
-    description: "Can update insurance discount in tenant",
+    name: "Update Tenant Insurance Discounts",
+    description: "Can update any insurance discount within the tenant",
   },
   "tenant:insurance-discount:delete": {
-    name: "Delete Insurance Discount",
-    description: "Can delete insurance discount in tenant",
+    name: "Delete Tenant Insurance Discounts",
+    description: "Can delete any insurance discount within the tenant",
   },
-};
+} as const;
