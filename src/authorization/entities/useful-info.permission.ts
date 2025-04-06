@@ -1,22 +1,33 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
 export const UsefulInfoPermissions = {
-  // Tenant scope
+  // User level permissions
+  "user:useful-info:view": {
+    name: "View Own Useful Info",
+    description: "Can view useful info they created or are associated with",
+  },
+  "user:useful-info:update": {
+    name: "Update Own Useful Info",
+    description: "Can update useful info they created or are associated with",
+  },
+  "user:useful-info:delete": {
+    name: "Delete Own Useful Info",
+    description: "Can delete useful info they created or are associated with",
+  },
+
+  // Tenant level permissions
   "tenant:useful-info:view": {
-    name: "View Useful Info",
-    description: "Can view useful info in tenant",
+    name: "View Tenant Useful Info",
+    description: "Can view all useful info within the tenant",
   },
   "tenant:useful-info:create": {
-    name: "Create Useful Info",
-    description: "Can create useful info in tenant",
+    name: "Create Tenant Useful Info",
+    description: "Can create useful info within the tenant",
   },
   "tenant:useful-info:update": {
-    name: "Update Useful Info",
-    description: "Can update useful info in tenant",
+    name: "Update Tenant Useful Info",
+    description: "Can update useful info within the tenant",
   },
   "tenant:useful-info:delete": {
-    name: "Delete Useful Info",
-    description: "Can delete useful info in tenant",
+    name: "Delete Tenant Useful Info",
+    description: "Can delete useful info within the tenant",
   },
-};
+} as const;
