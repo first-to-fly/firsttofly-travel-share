@@ -1,28 +1,33 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
 export const TermConditionPermissions = {
   // User level permissions
-  "user:termCondition:view": {
-    name: "View Term & Condition",
-    description: "Can view term & condition",
+  "user:term-condition:view": {
+    name: "View Own Term Conditions",
+    description: "Can view term conditions they created or are associated with",
+  },
+  "user:term-condition:update": {
+    name: "Update Own Term Conditions",
+    description: "Can update term conditions they created or are associated with",
+  },
+  "user:term-condition:delete": {
+    name: "Delete Own Term Conditions",
+    description: "Can delete term conditions they created or are associated with",
   },
 
   // Tenant level permissions
-  "tenant:termCondition:view": {
-    name: "View Term & Condition",
-    description: "Can view term & condition in tenant",
+  "tenant:term-condition:view": {
+    name: "View Tenant Term Conditions",
+    description: "Can view all term conditions within the tenant",
   },
-  "tenant:termCondition:create": {
-    name: "Create Term & Condition",
-    description: "Can create term & condition in tenant",
+  "tenant:term-condition:create": {
+    name: "Create Tenant Term Conditions",
+    description: "Can create term conditions within the tenant",
   },
-  "tenant:termCondition:update": {
-    name: "Update Term & Condition",
-    description: "Can update term & condition in tenant",
+  "tenant:term-condition:update": {
+    name: "Update Tenant Term Conditions",
+    description: "Can update term conditions within the tenant",
   },
-  "tenant:termCondition:delete": {
-    name: "Delete Term & Condition",
-    description: "Can delete term & condition in tenant",
+  "tenant:term-condition:delete": {
+    name: "Delete Tenant Term Conditions",
+    description: "Can delete term conditions within the tenant",
   },
-};
+} as const;

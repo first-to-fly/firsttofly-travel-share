@@ -1,23 +1,33 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
 export const StationCodePermissions = {
+  // User level permissions
+  "user:station-code:view": {
+    name: "View Own Station Codes",
+    description: "Can view station codes they created or are associated with",
+  },
+  "user:station-code:update": {
+    name: "Update Own Station Codes",
+    description: "Can update station codes they created or are associated with",
+  },
+  "user:station-code:delete": {
+    name: "Delete Own Station Codes",
+    description: "Can delete station codes they created or are associated with",
+  },
 
   // Tenant level permissions
-  "tenant:stationCode:view": {
-    name: "View Station Code",
-    description: "Can view station code in tenant",
+  "tenant:station-code:view": {
+    name: "View Tenant Station Codes",
+    description: "Can view all station codes within the tenant",
   },
-  "tenant:stationCode:create": {
-    name: "Create Station Code",
-    description: "Can create station code in tenant",
+  "tenant:station-code:create": {
+    name: "Create Tenant Station Codes",
+    description: "Can create station codes within the tenant",
   },
-  "tenant:stationCode:update": {
-    name: "Update Station Code",
-    description: "Can update station code in tenant",
+  "tenant:station-code:update": {
+    name: "Update Tenant Station Codes",
+    description: "Can update station codes within the tenant",
   },
-  "tenant:stationCode:delete": {
-    name: "Delete Station Code",
-    description: "Can delete station code in tenant",
+  "tenant:station-code:delete": {
+    name: "Delete Tenant Station Codes",
+    description: "Can delete station codes within the tenant",
   },
-};
+} as const;
