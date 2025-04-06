@@ -1,47 +1,51 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
 export const SectorPermissions = {
-
   // User level permissions
   "user:sector:view": {
-    name: "View Sector",
-    description: "Can view sector",
+    name: "View Own Sectors",
+    description: "Can view sectors they created or are associated with (if applicable, logic defined in service)",
+  },
+  "user:sector:update": {
+    name: "Update Own Sectors",
+    description: "Can update sectors they created or are associated with",
+  },
+  "user:sector:delete": {
+    name: "Delete Own Sectors",
+    description: "Can delete sectors they created or are associated with",
   },
 
   // Department level permissions
   "dept:sector:view": {
-    name: "View Sector",
-    description: "Can view sector in department",
+    name: "View Department Sectors",
+    description: "Can view sectors within their department",
   },
   "dept:sector:create": {
-    name: "Create Sector",
-    description: "Can create sector in department",
+    name: "Create Department Sector",
+    description: "Can create sectors within their department",
   },
   "dept:sector:update": {
-    name: "Update Sector",
-    description: "Can update sector in department",
+    name: "Update Department Sectors",
+    description: "Can update sectors within their department",
   },
   "dept:sector:delete": {
-    name: "Delete Sector",
-    description: "Can delete sector in department",
+    name: "Delete Department Sectors",
+    description: "Can delete sectors within their department",
   },
 
   // Tenant level permissions
   "tenant:sector:view": {
-    name: "View Sector",
-    description: "Can view sectors in tenant",
+    name: "View Tenant Sectors",
+    description: "Can view all sectors within the tenant",
   },
   "tenant:sector:create": {
-    name: "Create Sector",
-    description: "Can create sectors in tenant",
+    name: "Create Tenant Sectors",
+    description: "Can create sectors within the tenant",
   },
   "tenant:sector:update": {
-    name: "Update Sector",
-    description: "Can update sectors in tenant",
+    name: "Update Tenant Sectors",
+    description: "Can update sectors within the tenant",
   },
   "tenant:sector:delete": {
-    name: "Delete Sector",
-    description: "Can delete sectors in tenant",
+    name: "Delete Tenant Sectors",
+    description: "Can delete sectors within the tenant",
   },
-};
+} as const;
