@@ -9,6 +9,7 @@ import { InsuranceDiscountPermissions } from "./entities/insurance-discount.perm
 import { LocationPermissions } from "./entities/location.permission";
 import { MealPermissions } from "./entities/meal.permission";
 import { POIPermissions } from "./entities/poi.permission";
+import { PrivacyPolicyPermissions } from "./entities/privacy-policy.permission";
 import { ProductPermissions } from "./entities/product.permission";
 import { ReferenceCodePermissions } from "./entities/reference-code.permission";
 import { RolePermissions } from "./entities/role.permission"; // Corrected import path and name
@@ -45,6 +46,7 @@ const EntityPermissions = {
   InsuranceDiscount: InsuranceDiscountPermissions,
   Location: LocationPermissions,
   POI: POIPermissions,
+  PrivacyPolicy: PrivacyPolicyPermissions,
   ReferenceCode: ReferenceCodePermissions,
   Role: RolePermissions,
   SpecialInstruction: SpecialInstructionPermissions,
