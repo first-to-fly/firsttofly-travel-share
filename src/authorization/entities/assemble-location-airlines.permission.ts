@@ -2,6 +2,19 @@
  * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
  */
 export const AssembleLocationAirlinesPermissions = {
+  // User level permissions
+  "user:assemble-location-airlines:view": {
+    name: "View Own Assemble Location Airlines",
+    description: "Can view own created Assemble Location Airlines",
+  },
+  "user:assemble-location-airlines:update": {
+    name: "Update Own Assemble Location Airlines",
+    description: "Can update own created Assemble Location Airlines",
+  },
+  "user:assemble-location-airlines:delete": {
+    name: "Delete Own Assemble Location Airlines",
+    description: "Can delete own created Assemble Location Airlines",
+  },
 
   // Tenant scope
   "tenant:assemble-location-airlines:view": {
