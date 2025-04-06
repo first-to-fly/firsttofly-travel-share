@@ -1,28 +1,33 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
 export const POIPermissions = {
   // User level permissions
   "user:poi:view": {
-    name: "View POI",
-    description: "Can view POI",
+    name: "View Own POI",
+    description: "Can view own created POI", // Assuming 'own' refers to createdBy
+  },
+  "user:poi:update": {
+    name: "Update Own POI",
+    description: "Can update own created POI",
+  },
+  "user:poi:delete": {
+    name: "Delete Own POI",
+    description: "Can delete own created POI",
   },
 
   // Tenant level permissions
   "tenant:poi:view": {
-    name: "View POI",
-    description: "Can view POI in tenant",
+    name: "View Tenant POIs",
+    description: "Can view all POIs within the tenant",
   },
   "tenant:poi:create": {
-    name: "Create POI",
-    description: "Can create POI in tenant",
+    name: "Create Tenant POI",
+    description: "Can create POIs within the tenant",
   },
   "tenant:poi:update": {
-    name: "Update POI",
-    description: "Can update POI in tenant",
+    name: "Update Tenant POI",
+    description: "Can update any POI within the tenant",
   },
   "tenant:poi:delete": {
-    name: "Delete POI",
-    description: "Can delete POI in tenant",
+    name: "Delete Tenant POI",
+    description: "Can delete any POI within the tenant",
   },
-};
+} as const;
