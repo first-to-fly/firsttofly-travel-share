@@ -4,25 +4,33 @@
 export const RoomConfigurationPermissions = {
   // User level permissions
   "user:room-configuration:view": {
-    name: "View Special RoomConfiguration",
-    description: "Can view Room Configuration",
+    name: "View Own Room Configuration",
+    description: "Can view own created Room Configuration",
+  },
+  "user:room-configuration:update": {
+    name: "Update Own Room Configuration",
+    description: "Can update own created Room Configuration",
+  },
+  "user:room-configuration:delete": {
+    name: "Delete Own Room Configuration",
+    description: "Can delete own created Room Configuration",
   },
 
   // Tenant level permissions
   "tenant:room-configuration:view": {
-    name: "View Special Instruction",
-    description: "Can view Room Configuration in tenant",
+    name: "View Tenant Room Configurations",
+    description: "Can view all Room Configurations within the tenant",
   },
   "tenant:room-configuration:create": {
-    name: "Create Special Instruction",
-    description: "Can create Room Configuration in tenant",
+    name: "Create Tenant Room Configuration",
+    description: "Can create Room Configurations within the tenant",
   },
   "tenant:room-configuration:update": {
-    name: "Update Special Instruction",
-    description: "Can update Room Configuration in tenant",
+    name: "Update Tenant Room Configuration",
+    description: "Can update any Room Configuration within the tenant",
   },
   "tenant:room-configuration:delete": {
-    name: "Delete Special Instruction",
-    description: "Can delete Room Configuration in tenant",
+    name: "Delete Tenant Room Configuration",
+    description: "Can delete any Room Configuration within the tenant",
   },
 };
