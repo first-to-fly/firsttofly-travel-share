@@ -1,6 +1,7 @@
 import { initContract } from "@ts-rest/core";
-import { DiscountTemplateZ } from "entities/Settings/Product/DiscountTemplate";
 import { z } from "zod";
+
+import { DiscountTemplateZ } from "../../../entities/Settings/Product/DiscountTemplate";
 
 
 const c = initContract();
@@ -34,7 +35,7 @@ const UpdateDiscountTemplateZ = DiscountTemplateZ.pick({
   discountValue: true,
   howToApply: true,
   useDiscountCode: true,
-}).partial(); // Make all fields optional for PATCH
+});
 
 // Define Create Schema - Extend Update schema, make required fields non-optional
 const CreateDiscountTemplateZ = UpdateDiscountTemplateZ.extend({

@@ -1,6 +1,7 @@
 import { initContract } from "@ts-rest/core";
-import { DiscountZ } from "entities/Settings/Product/Discount";
 import { z } from "zod";
+
+import { DiscountZ } from "../../../entities/Settings/Product/Discount";
 
 
 const c = initContract();
@@ -42,8 +43,7 @@ const UpdateDiscountZ = DiscountZ.pick({ // Access inner ZodObject
   sectorIds: true, // Include relationship IDs for update
   productIds: true,
   tourIds: true,
-})
-  .partial(); // Make all fields optional for PATCH
+});
 
 // Define Create Schema - Extend Update schema, make required fields non-optional
 // tenantOID is inherited from EntityZ and required by default

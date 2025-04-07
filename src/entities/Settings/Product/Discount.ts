@@ -10,54 +10,116 @@ export enum DiscountEvents {
   DISCOUNT_UPDATED = "DISCOUNT_UPDATED",
 }
 
-// Enums defined in the schema
-export const DiscountStatusZ = z.enum(["Active", "Inactive"]);
-export const DiscountBookingChannelZ = z.enum(["Web", "iPad", "App"]);
-export const DiscountMechanicsZ = z.enum(["Per Room", "Per Booking"]);
-export const DiscountTypeZ = z.enum(["Air Ticket", "Land Tour", "Full Tour"]);
-export const DiscountBasePriceZ = z.enum(["Net Price", "Gross Price"]);
-export const DiscountModeZ = z.enum(["Percentage", "Fixed Amount", "Fixed Price", "Free Gift"]);
-export const DiscountWhichPaxZ = z.enum(["1st", "2nd", "3rd", "4th", "5th", "6th", "N/A"]);
-export const DiscountPaxTypeZ = z.enum(["Adult", "Child", "Child w/Bed", "Child No Bed", "All Pax", "N/A"]);
-export const DiscountAmountTypeZ = z.enum(["LimitedSingle", "LimitedRange", "Unlimited"]);
-export const DiscountSpecialDatesTypeZ = z.enum(["Specific Date Range", "N/A"]);
-export const DiscountTimeslotTypeZ = z.enum(["Specific Hours", "N/A"]);
-export const DiscountHowToApplyZ = z.enum(["Manually Tick", "Manually Input", "Auto"]);
+// TypeScript native enums
+export enum DiscountStatus {
+  ACTIVE = "active",
+  INACTIVE = "inactive",
+}
 
-// Extend EntityZ
+export enum DiscountBookingChannel {
+  WEB = "web",
+  IPAD = "ipad",
+  APP = "app",
+}
+
+export enum DiscountMechanics {
+  PER_ROOM = "per-room",
+  PER_BOOKING = "per-booking",
+}
+
+export enum DiscountType {
+  AIR_TICKET = "air-ticket",
+  LAND_TOUR = "land-tour",
+  FULL_TOUR = "full-tour",
+}
+
+export enum DiscountBasePrice {
+  NET_PRICE = "net-price",
+  GROSS_PRICE = "gross-price",
+}
+
+export enum DiscountMode {
+  PERCENTAGE = "percentage",
+  FIXED_AMOUNT = "fixed-amount",
+  FIXED_PRICE = "fixed-price",
+  FREE_GIFT = "free-gift",
+}
+
+export enum DiscountWhichPax {
+  FIRST = "1st",
+  SECOND = "2nd",
+  THIRD = "3rd",
+  FOURTH = "4th",
+  FIFTH = "5th",
+  SIXTH = "6th",
+  NA = "n/a",
+}
+
+export enum DiscountPaxType {
+  ADULT = "adult",
+  CHILD = "child",
+  CHILD_WITH_BED = "child-with-bed",
+  CHILD_NO_BED = "child-no-bed",
+  ALL_PAX = "all-pax",
+  NA = "n/a",
+}
+
+export enum DiscountAmountType {
+  LIMITED_SINGLE = "limited-single",
+  LIMITED_RANGE = "limited-range",
+  UNLIMITED = "unlimited",
+}
+
+export enum DiscountSpecialDatesType {
+  SPECIFIC_DATE_RANGE = "specific-date-range",
+  NA = "n/a",
+}
+
+export enum DiscountTimeslotType {
+  SPECIFIC_HOURS = "specific-hours",
+  NA = "n/a",
+}
+
+export enum DiscountHowToApply {
+  MANUALLY_TICK = "manually-tick",
+  MANUALLY_INPUT = "manually-input",
+  AUTO = "auto",
+}
+
+// Use z.nativeEnum with TypeScript enums
 export const DiscountZ = EntityZ.extend({
   entityType: z.literal(EntityType.DISCOUNT).default(EntityType.DISCOUNT), // Override entityType
   discountCode: z.string().max(20),
   discountName: z.string(),
   description: z.string().nullable().optional(),
-  validityStartDate: DateISOStringZ, // Use DateISOStringZ
-  validityEndDate: DateISOStringZ, // Use DateISOStringZ
-  status: DiscountStatusZ.default("Inactive"),
-  bookingChannel: DiscountBookingChannelZ,
-  discountMechanics: DiscountMechanicsZ,
-  discountType: DiscountTypeZ,
-  basePrice: DiscountBasePriceZ,
-  discountMode: DiscountModeZ,
+  validityStartDate: DateISOStringZ,
+  validityEndDate: DateISOStringZ,
+  status: z.nativeEnum(DiscountStatus).default(DiscountStatus.INACTIVE),
+  bookingChannel: z.nativeEnum(DiscountBookingChannel),
+  discountMechanics: z.nativeEnum(DiscountMechanics),
+  discountType: z.nativeEnum(DiscountType),
+  basePrice: z.nativeEnum(DiscountBasePrice),
+  discountMode: z.nativeEnum(DiscountMode),
   applyWithTierDiscounts: z.boolean().default(false),
   applyWithOtherDiscounts: z.boolean().default(false),
-  whichPax: DiscountWhichPaxZ.default("N/A"),
-  paxType: DiscountPaxTypeZ.default("N/A"),
+  whichPax: z.nativeEnum(DiscountWhichPax).default(DiscountWhichPax.NA),
+  paxType: z.nativeEnum(DiscountPaxType).default(DiscountPaxType.NA),
   minPax: z.number().int().min(0).default(0),
   minSpending: z.number().min(0).default(0),
-  amountType: DiscountAmountTypeZ.default("Unlimited"),
+  amountType: z.nativeEnum(DiscountAmountType).default(DiscountAmountType.UNLIMITED),
   amountValue: z.number().int().nullable().optional(),
   amountRangeStart: z.number().int().nullable().optional(),
   amountRangeEnd: z.number().int().nullable().optional(),
-  specialDatesType: DiscountSpecialDatesTypeZ.default("N/A"),
-  specialDatesStart: DateISOStringZ.nullable().optional(), // Use DateISOStringZ
-  specialDatesEnd: DateISOStringZ.nullable().optional(), // Use DateISOStringZ
-  timeslotType: DiscountTimeslotTypeZ.default("N/A"),
-  timeslotStart: z.string().nullable().optional(), // Keep as string for TIME HH:MM:SS
-  timeslotEnd: z.string().nullable().optional(), // Keep as string for TIME HH:MM:SS
+  specialDatesType: z.nativeEnum(DiscountSpecialDatesType).default(DiscountSpecialDatesType.NA),
+  specialDatesStart: DateISOStringZ.nullable().optional(),
+  specialDatesEnd: DateISOStringZ.nullable().optional(),
+  timeslotType: z.nativeEnum(DiscountTimeslotType).default(DiscountTimeslotType.NA),
+  timeslotStart: z.string().nullable().optional(),
+  timeslotEnd: z.string().nullable().optional(),
   discountValue: z.number().default(0),
-  howToApply: DiscountHowToApplyZ.default("Auto"),
+  howToApply: z.nativeEnum(DiscountHowToApply).default(DiscountHowToApply.AUTO),
   useDiscountCode: z.boolean().default(false),
-  // Many-to-many relationships - Use UUIDs as per SQL junction tables
+
   sectorIds: z.array(z.string().uuid()).optional().default([]),
   productIds: z.array(z.string().uuid()).optional().default([]),
   tourIds: z.array(z.string().uuid()).optional().default([]),
