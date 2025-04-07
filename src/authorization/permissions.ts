@@ -4,6 +4,7 @@ import { CostingItemPermissions } from "./entities/costing-item.permission";
 import { CostingTemplatePermissions } from "./entities/costing-template.permission";
 import { DepartmentPermissions } from "./entities/department.permission";
 import { DesignationPermissions } from "./entities/designation.permission";
+import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
 import { LocationPermissions } from "./entities/location.permission";
@@ -60,6 +61,8 @@ const EntityPermissions = {
   UsefulInfo: UsefulInfoPermissions,
   AssembleLocationAirlines: AssembleLocationAirlinesPermissions,
   RoomConfiguration: RoomConfigurationPermissions,
+  Discount: DiscountPermissions, // Add Discount
+  DiscountTemplate: DiscountTemplatePermissions, // Add DiscountTemplate
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;

@@ -4,6 +4,8 @@ import { assembleLocationAirlinesContract } from "./assemble-location-airlines-c
 import { badgeContract } from "./badge-contract";
 import { costingItemContract } from "./costing-item-contract";
 import { costingTemplateContract } from "./costing-template-contract";
+import { discountContract } from "./discount-contract";
+import { discountTemplateContract } from "./discount-template-contract";
 import { insuranceDiscountContract } from "./insurance-discount-contract";
 import { mealContract } from "./meal-contract";
 import { productTypeContract } from "./product-type-contract";
@@ -33,4 +35,6 @@ export const productSettingContract = initContract().router({
   assembleLocationAirlines: assembleLocationAirlinesContract,
   usefulInfo: usefulInfoContract,
   tag: tagContract,
+  discount: discountContract,
+  discountTemplate: discountTemplateContract,
 });
