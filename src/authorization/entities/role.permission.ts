@@ -25,20 +25,4 @@ export const RolePermissions = {
     name: "Delete Role",
     description: "Can delete role in tenant",
   },
-  "tenant:role:assign-permission": {
-    name: "Assign Permission to Role",
-    description: "Can assign permission to role in tenant",
-  },
-  "tenant:role:unassign-permission": {
-    name: "Unassign Permission from Role",
-    description: "Can unassign permission from role in tenant",
-  },
-  "tenant:role:assign-user": {
-    name: "Assign User to Role",
-    description: "Can assign user to role in tenant",
-  },
-  "tenant:role:unassign-user": {
-    name: "Unassign User from Role",
-    description: "Can unassign user from role in tenant",
-  },
 };
