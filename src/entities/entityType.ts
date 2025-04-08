@@ -4,6 +4,7 @@ export enum EntityType {
 
   PRODUCT = "product",
   PRODUCT_TYPE = "productType",
+  TOUR = "tour",
 
   TERM = "term",
 

@@ -120,9 +120,9 @@ export const DiscountZ = EntityZ.extend({
   howToApply: z.nativeEnum(DiscountHowToApply).default(DiscountHowToApply.AUTO),
   useDiscountCode: z.boolean().default(false),
 
-  sectorIds: z.array(z.string().uuid()).optional().default([]),
-  productIds: z.array(z.string().uuid()).optional().default([]),
-  tourIds: z.array(z.string().uuid()).optional().default([]),
+  sectorOIDs: z.array(z.string().uuid()).optional().default([]),
+  productOIDs: z.array(z.string().uuid()).optional().default([]),
+  tourOIDs: z.array(z.string().uuid()).optional().default([]),
 });
 
 export type Discount = z.infer<typeof DiscountZ>;

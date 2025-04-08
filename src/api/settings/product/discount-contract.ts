@@ -40,9 +40,10 @@ const UpdateDiscountZ = DiscountZ.pick({ // Access inner ZodObject
   discountValue: true,
   howToApply: true,
   useDiscountCode: true,
-  sectorIds: true, // Include relationship IDs for update
-  productIds: true,
-  tourIds: true,
+
+  sectorOIDs: true,
+  productOIDs: true,
+  tourOIDs: true,
 });
 
 // Define Create Schema - Extend Update schema, make required fields non-optional
