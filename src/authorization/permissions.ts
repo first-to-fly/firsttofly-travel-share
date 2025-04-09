@@ -69,4 +69,7 @@ export type PermissionsModules = keyof typeof EntityPermissions;
 export type APermissions = (typeof EntityPermissions)[PermissionsModules];
 
 
-export const AllPermissions: Record<string, Record<string, PermissionDeclaration>> = EntityPermissions;
+export const AllPermissions: Record<
+keyof typeof EntityPermissions,
+Record<string, PermissionDeclaration>
+> = EntityPermissions;
