@@ -78,7 +78,6 @@ export const discountTemplateContract = c.router({
     body: UpdateDiscountTemplateZ,
     responses: {
       200: z.string(), // Return OID of updated template
-      404: z.object({ message: z.string() }), // Example error
     },
   },
   deleteDiscountTemplate: {
@@ -89,7 +88,6 @@ export const discountTemplateContract = c.router({
     body: z.object({}), // Empty body
     responses: {
       200: z.boolean(),
-      404: z.object({ message: z.string() }), // Example error
     },
   },
   updateDiscountTemplates: {
