@@ -1,5 +1,6 @@
-import { EntityZ } from "entities/entity";
 import { z } from "zod";
+
+import { EntityZ } from "../entity";
 
 
 export const GroupTourPNLSimulationZ = EntityZ.extend({

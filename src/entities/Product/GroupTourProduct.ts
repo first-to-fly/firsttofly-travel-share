@@ -1,5 +1,7 @@
-import { EntityZ } from "entities/entity";
 import { z } from "zod";
+
+import { DateISOStringZ } from "../../types/date";
+import { EntityZ } from "../entity";
 
 
 export const GroupTourProductZ = EntityZ.extend({
@@ -15,10 +17,10 @@ export const GroupTourProductZ = EntityZ.extend({
   exclusions: z.record(z.string(), z.string()),
   durationDays: z.number(),
   durationNights: z.number(),
-  validityStartDate: z.date(),
-  validityEndDate: z.date(),
-  salesPeriodStartDate: z.date(),
-  salesPeriodEndDate: z.date(),
+  validityStartDate: DateISOStringZ,
+  validityEndDate: DateISOStringZ,
+  salesPeriodStartDate: DateISOStringZ,
+  salesPeriodEndDate: DateISOStringZ,
   isActive: z.boolean(),
   published: z.boolean(),
 });

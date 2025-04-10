@@ -1,5 +1,7 @@
-import { EntityZ } from "entities/entity";
 import { z } from "zod";
+
+import { DateISOStringZ } from "../../types/date";
+import { EntityZ } from "../entity";
 
 
 export const GroupTourPricingZ = EntityZ.extend({
@@ -9,8 +11,8 @@ export const GroupTourPricingZ = EntityZ.extend({
   code: z.string(),
   remarks: z.string(),
   targetYieldPercentage: z.number(),
-  validityStartDate: z.date(),
-  validityEndDate: z.date(),
+  validityStartDate: DateISOStringZ,
+  validityEndDate: DateISOStringZ,
   isActive: z.boolean(),
 });
 
