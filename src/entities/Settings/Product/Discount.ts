@@ -10,12 +10,6 @@ export enum DiscountEvents {
   DISCOUNT_UPDATED = "DISCOUNT_UPDATED",
 }
 
-// TypeScript native enums
-export enum DiscountStatus {
-  ACTIVE = "active",
-  INACTIVE = "inactive",
-}
-
 export enum DiscountBookingChannel {
   WEB = "web",
   IPAD = "ipad",
@@ -88,41 +82,51 @@ export enum DiscountHowToApply {
 
 // Use z.nativeEnum with TypeScript enums
 export const DiscountZ = EntityZ.extend({
-  entityType: z.literal(EntityType.DISCOUNT).default(EntityType.DISCOUNT), // Override entityType
+  entityType: z.literal(EntityType.DISCOUNT),
+
   discountCode: z.string().max(20),
   discountName: z.string(),
   description: z.string().nullable().optional(),
+
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ,
-  status: z.nativeEnum(DiscountStatus).default(DiscountStatus.INACTIVE),
+
+  isActive: z.boolean(),
+
   bookingChannel: z.nativeEnum(DiscountBookingChannel),
   discountMechanics: z.nativeEnum(DiscountMechanics),
   discountType: z.nativeEnum(DiscountType),
   basePrice: z.nativeEnum(DiscountBasePrice),
   discountMode: z.nativeEnum(DiscountMode),
+
   applyWithTierDiscounts: z.boolean().default(false),
   applyWithOtherDiscounts: z.boolean().default(false),
+
   whichPax: z.nativeEnum(DiscountWhichPax).default(DiscountWhichPax.NA),
   paxType: z.nativeEnum(DiscountPaxType).default(DiscountPaxType.NA),
   minPax: z.number().int().min(0).default(0),
   minSpending: z.number().min(0).default(0),
+
   amountType: z.nativeEnum(DiscountAmountType).default(DiscountAmountType.UNLIMITED),
   amountValue: z.number().int().nullable().optional(),
   amountRangeStart: z.number().int().nullable().optional(),
   amountRangeEnd: z.number().int().nullable().optional(),
+
   specialDatesType: z.nativeEnum(DiscountSpecialDatesType).default(DiscountSpecialDatesType.NA),
   specialDatesStart: DateISOStringZ.nullable().optional(),
   specialDatesEnd: DateISOStringZ.nullable().optional(),
+
   timeslotType: z.nativeEnum(DiscountTimeslotType).default(DiscountTimeslotType.NA),
-  timeslotStart: z.string().nullable().optional(),
-  timeslotEnd: z.string().nullable().optional(),
+  timeslotStart: DateISOStringZ.nullable().optional(),
+  timeslotEnd: DateISOStringZ.nullable().optional(),
+
   discountValue: z.number().default(0),
   howToApply: z.nativeEnum(DiscountHowToApply).default(DiscountHowToApply.AUTO),
   useDiscountCode: z.boolean().default(false),
 
-  sectorOIDs: z.array(z.string().uuid()).optional().default([]),
-  productOIDs: z.array(z.string().uuid()).optional().default([]),
-  tourOIDs: z.array(z.string().uuid()).optional().default([]),
+  sectorOIDs: z.array(z.string().uuid()).optional(),
+  productOIDs: z.array(z.string().uuid()).optional(),
+  tourOIDs: z.array(z.string().uuid()).optional(),
 });
 
 export type Discount = z.infer<typeof DiscountZ>;
