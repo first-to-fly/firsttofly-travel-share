@@ -15,7 +15,7 @@ const UpdateDiscountZ = DiscountZ.pick({ // Access inner ZodObject
   description: true,
   validityStartDate: true,
   validityEndDate: true,
-  status: true,
+  isActive: true,
   bookingChannel: true,
   discountMechanics: true,
   discountType: true,
@@ -49,7 +49,7 @@ const UpdateDiscountZ = DiscountZ.pick({ // Access inner ZodObject
 // Define Create Schema - Extend Update schema, make required fields non-optional
 // tenantOID is inherited from EntityZ and required by default
 const CreateDiscountZ = UpdateDiscountZ.extend({
-  tenantOID: z.string(), // Required field
+  tenantOID: z.string(),
 });
 
 export type UpdateDiscount = z.infer<typeof UpdateDiscountZ>;
@@ -66,11 +66,8 @@ export const discountContract = c.router({
     }).passthrough(), // Allow other query params like filtering/sorting
     responses: {
       200: z.object({
-        // Assuming response returns full entities or just OIDs
-        // Let's return OIDs for now as per example
-        oids: z.array(z.string()), // OIDs are strings
+        oids: z.array(z.string()),
       }),
-      // Add other potential responses (e.g., 401, 403, 500)
     },
   },
 
@@ -80,8 +77,7 @@ export const discountContract = c.router({
     path: basePath,
     body: CreateDiscountZ,
     responses: {
-      201: z.string(), // Return OID of created discount
-      // Add other potential responses (e.g., 400, 401, 403, 500)
+      201: z.string(),
     },
   },
 
@@ -92,22 +88,20 @@ export const discountContract = c.router({
     pathParams: z.object({ discountOID: z.string() }), // OID is string
     body: UpdateDiscountZ,
     responses: {
-      200: z.string(), // Return OID of updated discount
-      // Add other potential responses (e.g., 400, 401, 403, 404, 500)
+      200: z.string(),
     },
   },
 
   updateDiscounts: {
     summary: "Update multiple existing discounts",
-    method: "POST", // Using POST for batch operations is common
+    method: "POST",
     path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of discount to update"), // OID is string
       UpdateDiscountZ,
     ),
     responses: {
-      200: z.array(z.string().describe("OIDs of updated discounts")), // OIDs are strings
-      // Add other potential responses (e.g., 400, 401, 403, 500)
+      200: z.array(z.string().describe("OIDs of updated discounts")),
     },
   },
 
@@ -118,8 +112,7 @@ export const discountContract = c.router({
     pathParams: z.object({ discountOID: z.string() }), // OID is string
     body: z.object({}), // Empty body for DELETE
     responses: {
-      200: z.boolean(), // Return true on success
-      // Add other potential responses (e.g., 401, 403, 404, 500)
+      200: z.boolean(),
     },
   },
 
@@ -131,8 +124,7 @@ export const discountContract = c.router({
       discountOIDs: z.array(z.string().describe("OIDs of discounts to delete")), // OIDs are strings
     }),
     responses: {
-      200: z.boolean(), // Return true on success
-      // Add other potential responses (e.g., 400, 401, 403, 500)
+      200: z.boolean(),
     },
   },
 });
