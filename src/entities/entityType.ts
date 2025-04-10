@@ -3,6 +3,13 @@ export enum EntityType {
   USER_TENANT = "userTenant",
 
   PRODUCT = "product",
+
+  GROUP_TOUR_PRODUCT = "groupTourProduct",
+  GROUP_TOUR_ITINERARY = "groupTourItinerary",
+  GROUP_TOUR_COSTING = "groupTourCosting",
+  GROUP_TOUR_PRICING = "groupTourPricing",
+  GROUP_TOUR_PNL_SIMULATION = "groupTourPNLSimulation",
+
   PRODUCT_TYPE = "productType",
   TOUR = "tour",
 
