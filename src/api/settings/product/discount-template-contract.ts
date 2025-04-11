@@ -70,26 +70,6 @@ export const discountTemplateContract = c.router({
       201: z.string(), // Return OID of created template
     },
   },
-  updateDiscountTemplate: {
-    summary: "Update an existing discount template",
-    method: "PATCH",
-    path: `${basePath}/:templateOID`,
-    pathParams: z.object({ templateOID: z.string() }),
-    body: UpdateDiscountTemplateZ,
-    responses: {
-      200: z.string(), // Return OID of updated template
-    },
-  },
-  deleteDiscountTemplate: {
-    summary: "Delete a discount template",
-    method: "DELETE",
-    path: `${basePath}/:templateOID`,
-    pathParams: z.object({ templateOID: z.string() }),
-    body: z.object({}), // Empty body
-    responses: {
-      200: z.boolean(),
-    },
-  },
   updateDiscountTemplates: {
     summary: "Update multiple existing discount templates",
     method: "POST",
