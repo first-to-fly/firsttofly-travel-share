@@ -81,17 +81,6 @@ export const discountContract = c.router({
     },
   },
 
-  updateDiscount: {
-    summary: "Update an existing discount",
-    method: "PATCH",
-    path: `${basePath}/:discountOID`, // Use discountOID as path param
-    pathParams: z.object({ discountOID: z.string() }), // OID is string
-    body: UpdateDiscountZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateDiscounts: {
     summary: "Update multiple existing discounts",
     method: "POST",
@@ -102,17 +91,6 @@ export const discountContract = c.router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated discounts")),
-    },
-  },
-
-  deleteDiscount: {
-    summary: "Delete a discount",
-    method: "DELETE",
-    path: `${basePath}/:discountOID`, // Use discountOID as path param
-    pathParams: z.object({ discountOID: z.string() }), // OID is string
-    body: z.object({}), // Empty body for DELETE
-    responses: {
-      200: z.boolean(),
     },
   },
 
