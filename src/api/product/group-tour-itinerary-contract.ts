@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { GroupTourItineraryZ } from "../../entities/Product/GroupTourItinerary";
+import { GroupTourItineraryDayZ, GroupTourItineraryEventZ, GroupTourItineraryMealZ, GroupTourItineraryZ } from "../../entities/Product/GroupTourItinerary";
 
 
 const basePath = "/api/group-tour";
@@ -9,9 +9,42 @@ const basePath = "/api/group-tour";
 // Create/Update schemas
 const UpdateGroupTourItineraryZ = GroupTourItineraryZ.pick({
   name: true,
+
   validityStartDate: true,
   validityEndDate: true,
   isActive: true,
+
+}).extend({
+  groupTourItineraryDays: z.array(GroupTourItineraryDayZ.pick({
+    dayNumber: true,
+    title: true,
+    description: true,
+  }).extend({
+
+    oid: z.string().optional(),
+
+    groupTourItineraryMeals: z.array(GroupTourItineraryMealZ.pick({
+      type: true,
+      title: true,
+      description: true,
+
+      provided: true,
+      onBoard: true,
+      poiOID: true,
+    }).extend({
+      oid: z.string().optional(),
+    })),
+
+    groupTourItineraryEvents: z.array(GroupTourItineraryEventZ.pick({
+      title: true,
+      description: true,
+
+      poiOID: true,
+    }).extend({
+      oid: z.string().optional(),
+    })),
+
+  })),
 });
 
 const CreateGroupTourItineraryZ = UpdateGroupTourItineraryZ.extend({
