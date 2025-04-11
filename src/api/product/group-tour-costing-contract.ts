@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { GroupTourCostingZ } from "../../entities/Product/GroupTourCosting";
+import { GroupTourCostingEntryZ, GroupTourCostingZ } from "../../entities/Product/GroupTourCosting";
 
 
 const basePath = "/api/group-tour";
@@ -14,7 +14,25 @@ const UpdateGroupTourCostingZ = GroupTourCostingZ.pick({
   remarks: true,
   validityStartDate: true,
   validityEndDate: true,
+  landTourGroupSizeTiers: true,
+  freeOfChargeTiers: true,
+  leadManagerCountTiers: true,
   isActive: true,
+  airlineOIDs: true,
+}).extend({
+  groupTourCostingEntries: z.array(GroupTourCostingEntryZ.pick({
+    category: true,
+    calculationBasis: true,
+    applyToPackageType: true,
+    applyToOccupancyType: true,
+    remarks: true,
+    quantity: true,
+    isTieredPrice: true,
+    currency: true,
+    prices: true,
+  }).extend({
+    oid: z.string().optional(),
+  })),
 });
 
 const CreateGroupTourCostingZ = UpdateGroupTourCostingZ.extend({

@@ -10,6 +10,7 @@ export enum EntityType {
   GROUP_TOUR_ITINERARY_MEAL = "groupTourItineraryMeal",
   GROUP_TOUR_ITINERARY_EVENT = "groupTourItineraryEvent",
   GROUP_TOUR_COSTING = "groupTourCosting",
+  GROUP_TOUR_COSTING_ENTRY = "groupTourCostingEntry",
   GROUP_TOUR_PRICING = "groupTourPricing",
   GROUP_TOUR_PNL_SIMULATION = "groupTourPNLSimulation",
 

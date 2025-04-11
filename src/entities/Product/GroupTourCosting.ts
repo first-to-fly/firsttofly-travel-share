@@ -2,17 +2,66 @@ import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
 import { EntityZ } from "../entity";
+import { CalculationBasis, CostingItemCategory, OccupancyType, PackageType } from "../Settings/Product/CostingItem";
+
+
+export const GroupTourCostingEntryZ = EntityZ.extend({
+
+  // Copy from CostingItem
+  category: z.nativeEnum(CostingItemCategory),
+  calculationBasis: z.nativeEnum(CalculationBasis),
+  applyToPackageType: z.nativeEnum(PackageType),
+  applyToOccupancyType: z.nativeEnum(OccupancyType),
+
+  remarks: z.string().optional(),
+
+  quantity: z.number(),
+
+  isTieredPrice: z.boolean(),
+  currency: z.string(),
+
+  prices: z.array(z.object({
+    tierIndex: z.number().optional(), // Optional for non-tiered prices
+    amount: z.number(),
+    tax: z.number(),
+  })).min(1),
+});
 
 
 export const GroupTourCostingZ = EntityZ.extend({
   groupTourProductOID: z.string(),
+
   templateOID: z.string(),
   name: z.string(),
   code: z.string(),
+
   remarks: z.string(),
+
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ,
+
+  landTourGroupSizeTiers: z.array(z.object({
+    from: z.number(),
+    to: z.number(),
+  })).min(1),
+
+  freeOfChargeTiers: z.array(z.object({
+    pax: z.number(),
+    freePax: z.number(),
+  })).optional(),
+
+  leadManagerCountTiers: z.array(z.object({
+    pax: z.number(),
+    leadCount: z.number(),
+    managerCount: z.number(),
+  })).optional(),
+
+  groupTourCostingEntries: z.array(GroupTourCostingEntryZ),
+
   isActive: z.boolean(),
+
+  airlineOIDs: z.array(z.string()).optional(), // ???
 });
 
 export type GroupTourCosting = z.infer<typeof GroupTourCostingZ>;
+export type GroupTourCostingEntry = z.infer<typeof GroupTourCostingEntryZ>;
