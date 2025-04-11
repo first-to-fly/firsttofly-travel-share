@@ -1,3 +1,4 @@
+import { MultiLangRecordZ } from "types/multipleLanguage";
 import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
@@ -5,22 +6,35 @@ import { EntityZ } from "../entity";
 
 
 export const GroupTourProductZ = EntityZ.extend({
-  productCode: z.string(),
-  name: z.record(z.string(), z.string()),
+  code: z.string(),
+
+  name: MultiLangRecordZ(z.string()),
   description: z.record(z.string(), z.string()),
+
   departmentOID: z.string(),
-  shoutout: z.record(z.string(), z.string()),
-  writeup: z.record(z.string(), z.string()),
-  highlights: z.record(z.string(), z.string()),
-  importantNotes: z.record(z.string(), z.string()),
-  inclusions: z.record(z.string(), z.string()),
-  exclusions: z.record(z.string(), z.string()),
+  sectorOIDs: z.array(z.string()),
+  displaySectorOIDs: z.array(z.string()),
+
+  sectorGroupOID: z.string().optional(),
+  itineraryOIDs: z.array(z.string()).optional(),
+  costingOIDs: z.array(z.string()).optional(),
+
+  shoutout: MultiLangRecordZ(z.string()).optional(),
+  highlights: MultiLangRecordZ(z.string()).optional(),
+  writeup: MultiLangRecordZ(z.string()).optional(),
+  importantNotes: MultiLangRecordZ(z.string()).optional(),
+  inclusions: MultiLangRecordZ(z.string()).optional(),
+  exclusions: MultiLangRecordZ(z.string()).optional(),
+
   durationDays: z.number(),
   durationNights: z.number(),
+
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ,
+
   salesPeriodStartDate: DateISOStringZ,
   salesPeriodEndDate: DateISOStringZ,
+
   isActive: z.boolean(),
   published: z.boolean(),
 });

@@ -9,21 +9,34 @@ const basePath = "/api/group-tour";
 // Create/Update schemas
 const UpdateGroupTourProductZ = GroupTourProductZ.pick({
   productCode: true,
+
   name: true,
   description: true,
+
   departmentOID: true,
+  sectorOIDs: true,
+  displaySectorOIDs: true,
+
+  sectorGroupOID: true,
+  itineraryOIDs: true,
+  costingOIDs: true,
+
   shoutout: true,
   writeup: true,
   highlights: true,
   importantNotes: true,
   inclusions: true,
   exclusions: true,
+
   durationDays: true,
   durationNights: true,
+
   validityStartDate: true,
   validityEndDate: true,
+
   salesPeriodStartDate: true,
   salesPeriodEndDate: true,
+
   isActive: true,
   published: true,
 });
@@ -60,16 +73,6 @@ export const groupTourProductContract = initContract().router({
     },
   },
 
-  updateGroupTourProduct: {
-    summary: "Update an existing group tour product",
-    method: "PATCH",
-    path: `${basePath}/products/:productOID`,
-    body: UpdateGroupTourProductZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateGroupTourProducts: {
     summary: "Update multiple existing group tour products",
     method: "POST",
@@ -80,16 +83,6 @@ export const groupTourProductContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated group tour products")),
-    },
-  },
-
-  deleteGroupTourProduct: {
-    summary: "Delete a group tour product",
-    method: "DELETE",
-    path: `${basePath}/products/:productOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 
