@@ -11,11 +11,20 @@ const UpdateGroupTourPricingZ = GroupTourPricingZ.pick({
   groupTourCostingOID: true,
   name: true,
   code: true,
+
   remarks: true,
   targetYieldPercentage: true,
+
   validityStartDate: true,
   validityEndDate: true,
+
   isActive: true,
+
+  fullFare: true,
+  landFare: true,
+  airportTax: true,
+
+  groupTourPricingEntries: true,
 });
 
 const CreateGroupTourPricingZ = UpdateGroupTourPricingZ.extend({
