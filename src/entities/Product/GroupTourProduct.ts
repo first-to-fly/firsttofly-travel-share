@@ -1,7 +1,7 @@
-import { MultiLangRecordZ } from "types/multipleLanguage";
 import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
+import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { EntityZ } from "../entity";
 
 
