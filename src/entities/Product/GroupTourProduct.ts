@@ -16,8 +16,6 @@ export const GroupTourProductZ = EntityZ.extend({
   displaySectorOIDs: z.array(z.string()),
 
   sectorGroupOID: z.string().optional(),
-  itineraryOIDs: z.array(z.string()).optional(),
-  costingOIDs: z.array(z.string()).optional(),
 
   shoutout: MultiLangRecordZ(z.string()).optional(),
   highlights: MultiLangRecordZ(z.string()).optional(),
