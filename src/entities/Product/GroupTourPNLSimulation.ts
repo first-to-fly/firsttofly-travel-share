@@ -9,7 +9,9 @@ export enum GroupTourPNLEvents {
 }
 
 
-export const GroupTourPNLSimulationZ = EntityZ.extend({
+export const GroupTourPNLSimulationZ = EntityZ.omit({
+  tenantOID: true,
+}).extend({
   groupTourPricingOID: z.string(),
   groupVolumes: z.array(z.number()),
 });
