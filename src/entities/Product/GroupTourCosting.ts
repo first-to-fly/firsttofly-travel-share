@@ -5,6 +5,12 @@ import { EntityZ } from "../entity";
 import { CalculationBasis, CostingItemCategory, OccupancyType, PackageType } from "../Settings/Product/CostingItem";
 
 
+export enum GroupTourCostingEvents {
+  GROUP_TOUR_COSTING_UPDATED = "GROUP_TOUR_COSTING_UPDATED",
+  GROUP_TOUR_COSTING_LIST_UPDATED = "GROUP_TOUR_COSTING_LIST_UPDATED",
+}
+
+
 export const GroupTourCostingEntryZ = EntityZ.extend({
 
   // Copy from CostingItem

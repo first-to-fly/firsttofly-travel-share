@@ -5,6 +5,12 @@ import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { EntityZ } from "../entity";
 
 
+export enum GroupTourItineraryEvents {
+  GROUP_TOUR_ITINERARY_UPDATED = "GROUP_TOUR_ITINERARY_UPDATED",
+  GROUP_TOUR_ITINERARY_LIST_UPDATED = "GROUP_TOUR_ITINERARY_LIST_UPDATED",
+}
+
+
 export enum MealType {
   BREAKFAST = "breakfast",
   LUNCH = "lunch",

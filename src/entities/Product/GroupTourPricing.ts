@@ -4,6 +4,12 @@ import { DateISOStringZ } from "../../types/date";
 import { EntityZ } from "../entity";
 
 
+export enum GroupTourPricingEvents {
+  GROUP_TOUR_PRICING_UPDATED = "GROUP_TOUR_PRICING_UPDATED",
+  GROUP_TOUR_PRICING_LIST_UPDATED = "GROUP_TOUR_PRICING_LIST_UPDATED",
+}
+
+
 export const GroupTourPricingEntryZ = z.object({
   groupTourCostingEntryOID: z.string(), // oid of GroupTourCostingEntryZ
 

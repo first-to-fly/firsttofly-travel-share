@@ -5,6 +5,12 @@ import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { EntityZ } from "../entity";
 
 
+export enum GroupTourProductEvents {
+  GROUP_TOUR_PRODUCT_UPDATED = "GROUP_TOUR_PRODUCT_UPDATED",
+  GROUP_TOUR_PRODUCT_LIST_UPDATED = "GROUP_TOUR_PRODUCT_LIST_UPDATED",
+}
+
+
 export const GroupTourProductZ = EntityZ.extend({
   code: z.string(),
 
