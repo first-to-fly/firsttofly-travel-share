@@ -62,6 +62,7 @@ export const groupTourItineraryContract = initContract().router({
     path: `${basePath}`,
     query: z.object({
       tenantOID: z.string(),
+      groupTourProductOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({

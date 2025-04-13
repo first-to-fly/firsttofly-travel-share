@@ -4,7 +4,7 @@ import { z } from "zod";
 import { GroupTourPNLSimulationZ } from "../../entities/Product/GroupTourPNLSimulation";
 
 
-const basePath = "/api/group-tour";
+const basePath = "/api/group-tour/simulations";
 
 // Create/Update schemas
 const UpdateGroupTourPNLSimulationZ = GroupTourPNLSimulationZ.pick({
@@ -20,34 +20,11 @@ export type UpdateGroupTourPNLSimulation = z.infer<typeof UpdateGroupTourPNLSimu
 export type CreateGroupTourPNLSimulation = z.infer<typeof CreateGroupTourPNLSimulationZ>;
 
 export const groupTourPNLSimulationContract = initContract().router({
-  getGroupTourPNLSimulations: {
-    summary: "Get group tour P&L simulations",
-    method: "GET",
-    path: `${basePath}/pricings/:pricingOID/simulations`,
-    query: z.object({
-      tenantOID: z.string(),
-    }).passthrough(),
-    responses: {
-      200: z.object({
-        oids: z.array(z.string()),
-      }),
-    },
-  },
-
-  createGroupTourPNLSimulation: {
-    summary: "Create a new group tour P&L simulation",
-    method: "POST",
-    path: `${basePath}/pricings/simulations`,
-    body: CreateGroupTourPNLSimulationZ,
-    responses: {
-      200: z.string(),
-    },
-  },
 
   updateGroupTourPNLSimulations: {
     summary: "Update multiple existing group tour P&L simulations",
     method: "POST",
-    path: `${basePath}/pricings/simulations/batch-update`,
+    path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of group tour P&L simulation to update"),
       UpdateGroupTourPNLSimulationZ,
@@ -60,7 +37,7 @@ export const groupTourPNLSimulationContract = initContract().router({
   deleteGroupTourPNLSimulations: {
     summary: "Delete multiple group tour P&L simulations",
     method: "POST",
-    path: `${basePath}/pricings/simulations/batch-delete`,
+    path: `${basePath}/batch-delete`,
     body: z.object({
       simulationOIDs: z.array(z.string().describe("OIDs of group tour P&L simulations to delete")),
     }),
