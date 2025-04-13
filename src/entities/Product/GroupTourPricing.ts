@@ -56,6 +56,24 @@ export const GroupTourPricingZ = EntityZ.extend({
     child: z.number(),
   }),
 
+  discount: z.object({
+    tierConfigs: z.array(z.object({
+      from: z.number(),
+      to: z.number(),
+    })).min(1),
+
+    groups: z.array(z.object({
+      name: z.string(),
+      tierData: z.record(
+        z.number().describe("Tier index"),
+        z.object({
+          adult: z.number(),
+          child: z.number(),
+        }),
+      ),
+    })).min(1),
+  }).optional(),
+
   groupTourPricingEntries: z.array(GroupTourPricingEntryZ),
 });
 

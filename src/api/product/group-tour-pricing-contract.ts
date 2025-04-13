@@ -4,7 +4,7 @@ import { z } from "zod";
 import { GroupTourPricingZ } from "../../entities/Product/GroupTourPricing";
 
 
-const basePath = "/api/group-tour";
+const basePath = "/api/products/group-tours-pricings";
 
 // Create/Update schemas
 const UpdateGroupTourPricingZ = GroupTourPricingZ.pick({
@@ -39,7 +39,7 @@ export const groupTourPricingContract = initContract().router({
   getGroupTourPricings: {
     summary: "Get group tour pricings",
     method: "GET",
-    path: `${basePath}/products/:productOID/pricings`,
+    path: `${basePath}`,
     query: z.object({
       tenantOID: z.string(),
     }).passthrough(),
@@ -53,18 +53,8 @@ export const groupTourPricingContract = initContract().router({
   createGroupTourPricing: {
     summary: "Create a new group tour pricing",
     method: "POST",
-    path: `${basePath}/products/:productOID/pricings`,
+    path: `${basePath}`,
     body: CreateGroupTourPricingZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
-  updateGroupTourPricing: {
-    summary: "Update an existing group tour pricing",
-    method: "PATCH",
-    path: `${basePath}/products/:productOID/pricings/:pricingOID`,
-    body: UpdateGroupTourPricingZ,
     responses: {
       200: z.string(),
     },
@@ -73,7 +63,7 @@ export const groupTourPricingContract = initContract().router({
   updateGroupTourPricings: {
     summary: "Update multiple existing group tour pricings",
     method: "POST",
-    path: `${basePath}/products/:productOID/pricings/batch-update`,
+    path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of group tour pricing to update"),
       UpdateGroupTourPricingZ,
@@ -83,20 +73,10 @@ export const groupTourPricingContract = initContract().router({
     },
   },
 
-  deleteGroupTourPricing: {
-    summary: "Delete a group tour pricing",
-    method: "DELETE",
-    path: `${basePath}/products/:productOID/pricings/:pricingOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
-    },
-  },
-
   deleteGroupTourPricings: {
     summary: "Delete multiple group tour pricings",
     method: "POST",
-    path: `${basePath}/products/:productOID/pricings/batch-delete`,
+    path: `${basePath}/batch-delete`,
     body: z.object({
       pricingOIDs: z.array(z.string().describe("OIDs of group tour pricings to delete")),
     }),

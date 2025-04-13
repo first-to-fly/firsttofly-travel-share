@@ -8,8 +8,7 @@ const basePath = "/api/group-tour";
 
 // Create/Update schemas
 const UpdateGroupTourPNLSimulationZ = GroupTourPNLSimulationZ.pick({
-  groupVolume: true,
-  passengerCount: true,
+  groupVolumes: true,
 });
 
 const CreateGroupTourPNLSimulationZ = UpdateGroupTourPNLSimulationZ.extend({
@@ -38,18 +37,8 @@ export const groupTourPNLSimulationContract = initContract().router({
   createGroupTourPNLSimulation: {
     summary: "Create a new group tour P&L simulation",
     method: "POST",
-    path: `${basePath}/pricings/:pricingOID/simulations`,
+    path: `${basePath}/pricings/simulations`,
     body: CreateGroupTourPNLSimulationZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
-  updateGroupTourPNLSimulation: {
-    summary: "Update an existing group tour P&L simulation",
-    method: "PATCH",
-    path: `${basePath}/pricings/:pricingOID/simulations/:simulationOID`,
-    body: UpdateGroupTourPNLSimulationZ,
     responses: {
       200: z.string(),
     },
@@ -58,7 +47,7 @@ export const groupTourPNLSimulationContract = initContract().router({
   updateGroupTourPNLSimulations: {
     summary: "Update multiple existing group tour P&L simulations",
     method: "POST",
-    path: `${basePath}/pricings/:pricingOID/simulations/batch-update`,
+    path: `${basePath}/pricings/simulations/batch-update`,
     body: z.record(
       z.string().describe("OID of group tour P&L simulation to update"),
       UpdateGroupTourPNLSimulationZ,
@@ -68,20 +57,10 @@ export const groupTourPNLSimulationContract = initContract().router({
     },
   },
 
-  deleteGroupTourPNLSimulation: {
-    summary: "Delete a group tour P&L simulation",
-    method: "DELETE",
-    path: `${basePath}/pricings/:pricingOID/simulations/:simulationOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
-    },
-  },
-
   deleteGroupTourPNLSimulations: {
     summary: "Delete multiple group tour P&L simulations",
     method: "POST",
-    path: `${basePath}/pricings/:pricingOID/simulations/batch-delete`,
+    path: `${basePath}/pricings/simulations/batch-delete`,
     body: z.object({
       simulationOIDs: z.array(z.string().describe("OIDs of group tour P&L simulations to delete")),
     }),

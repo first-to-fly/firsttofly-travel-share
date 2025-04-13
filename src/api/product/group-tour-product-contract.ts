@@ -4,7 +4,7 @@ import { z } from "zod";
 import { GroupTourProductZ } from "../../entities/Product/GroupTourProduct";
 
 
-const basePath = "/api/group-tour";
+const basePath = "/api/products/group-tours";
 
 // Create/Update schemas
 const UpdateGroupTourProductZ = GroupTourProductZ.pick({
@@ -52,7 +52,7 @@ export const groupTourProductContract = initContract().router({
   getGroupTourProducts: {
     summary: "Get group tour products",
     method: "GET",
-    path: `${basePath}/products`,
+    path: `${basePath}`,
     query: z.object({
       tenantOID: z.string(),
     }).passthrough(),
@@ -66,7 +66,7 @@ export const groupTourProductContract = initContract().router({
   createGroupTourProduct: {
     summary: "Create a new group tour product",
     method: "POST",
-    path: `${basePath}/products`,
+    path: `${basePath}`,
     body: CreateGroupTourProductZ,
     responses: {
       200: z.string(),
@@ -76,7 +76,7 @@ export const groupTourProductContract = initContract().router({
   updateGroupTourProducts: {
     summary: "Update multiple existing group tour products",
     method: "POST",
-    path: `${basePath}/products/batch-update`,
+    path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of group tour product to update"),
       UpdateGroupTourProductZ,
@@ -89,7 +89,7 @@ export const groupTourProductContract = initContract().router({
   deleteGroupTourProducts: {
     summary: "Delete multiple group tour products",
     method: "POST",
-    path: `${basePath}/products/batch-delete`,
+    path: `${basePath}/batch-delete`,
     body: z.object({
       productOIDs: z.array(z.string().describe("OIDs of group tour products to delete")),
     }),
