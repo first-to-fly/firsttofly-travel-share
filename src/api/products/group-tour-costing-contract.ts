@@ -20,7 +20,7 @@ const CreateGroupTourCostingEntryZ = GroupTourCostingEntryZ.pick({
 });
 
 const UpdateGroupTourCostingEntryZ = CreateGroupTourCostingEntryZ.extend({
-  oid: z.string().optional(),
+  oid: z.string().optional(), // update costing, but create new entry
 }).partial();
 
 const CreateGroupTourCostingZ = GroupTourCostingZ.pick({
