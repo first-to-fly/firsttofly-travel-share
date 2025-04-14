@@ -7,50 +7,65 @@ import { GroupTourItineraryDayZ, GroupTourItineraryEventZ, GroupTourItineraryMea
 const basePath = "/api/products/group-tours-itineraries";
 
 // Create/Update schemas
-const UpdateGroupTourItineraryZ = GroupTourItineraryZ.pick({
-  name: true,
+const CreateGroupTourItineraryMealZ = GroupTourItineraryMealZ.pick({
+  type: true,
+  title: true,
+  description: true,
+  provided: true,
+  onBoard: true,
+  poiOID: true,
+});
 
+const UpdateGroupTourItineraryMealZ = CreateGroupTourItineraryMealZ.extend({
+  oid: z.string().optional(),
+}).partial();
+
+const CreateGroupTourItineraryEventZ = GroupTourItineraryEventZ.pick({
+  title: true,
+  description: true,
+  poiOID: true,
+});
+
+const UpdateGroupTourItineraryEventZ = CreateGroupTourItineraryEventZ.extend({
+  oid: z.string().optional(),
+}).partial();
+
+const CreateGroupTourItineraryDayZ = GroupTourItineraryDayZ.pick({
+  dayNumber: true,
+  title: true,
+  description: true,
+}).extend({
+  groupTourItineraryMeals: z.array(CreateGroupTourItineraryMealZ),
+  groupTourItineraryEvents: z.array(CreateGroupTourItineraryEventZ),
+});
+
+const UpdateGroupTourItineraryDayZ = CreateGroupTourItineraryDayZ.omit({
+  groupTourItineraryMeals: true,
+  groupTourItineraryEvents: true,
+}).extend({
+  oid: z.string().optional(),
+  groupTourItineraryMeals: z.array(UpdateGroupTourItineraryMealZ),
+  groupTourItineraryEvents: z.array(UpdateGroupTourItineraryEventZ),
+}).partial();
+
+const CreateGroupTourItineraryZ = GroupTourItineraryZ.pick({
+  name: true,
   validityStartDate: true,
   validityEndDate: true,
   isActive: true,
-
+  groupTourProductOID: true,
+  tenantOID: true,
 }).extend({
-  groupTourItineraryDays: z.array(GroupTourItineraryDayZ.pick({
-    dayNumber: true,
-    title: true,
-    description: true,
-  }).extend({
-
-    oid: z.string().optional(),
-
-    groupTourItineraryMeals: z.array(GroupTourItineraryMealZ.pick({
-      type: true,
-      title: true,
-      description: true,
-
-      provided: true,
-      onBoard: true,
-      poiOID: true,
-    }).extend({
-      oid: z.string().optional(),
-    })),
-
-    groupTourItineraryEvents: z.array(GroupTourItineraryEventZ.pick({
-      title: true,
-      description: true,
-
-      poiOID: true,
-    }).extend({
-      oid: z.string().optional(),
-    })),
-
-  })),
+  groupTourItineraryDays: z.array(CreateGroupTourItineraryDayZ),
 });
 
-const CreateGroupTourItineraryZ = UpdateGroupTourItineraryZ.extend({
-  groupTourProductOID: z.string(),
-  tenantOID: z.string(),
-});
+const UpdateGroupTourItineraryZ = CreateGroupTourItineraryZ.omit({
+  groupTourProductOID: true,
+  tenantOID: true,
+  groupTourItineraryDays: true,
+}).extend({
+  groupTourItineraryDays: z.array(UpdateGroupTourItineraryDayZ),
+}).partial();
 
 export type UpdateGroupTourItinerary = z.infer<typeof UpdateGroupTourItineraryZ>;
 export type CreateGroupTourItinerary = z.infer<typeof CreateGroupTourItineraryZ>;

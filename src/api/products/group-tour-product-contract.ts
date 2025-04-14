@@ -7,7 +7,10 @@ import { GroupTourProductZ } from "../../entities/Products/GroupTourProduct";
 const basePath = "/api/products/group-tours";
 
 // Create/Update schemas
-const UpdateGroupTourProductZ = GroupTourProductZ.pick({
+const CreateGroupTourProductZ = GroupTourProductZ.pick({
+
+  tenantOID: true,
+
   code: true,
 
   name: true,
@@ -41,9 +44,9 @@ const UpdateGroupTourProductZ = GroupTourProductZ.pick({
   published: true,
 });
 
-const CreateGroupTourProductZ = UpdateGroupTourProductZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateGroupTourProductZ = CreateGroupTourProductZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateGroupTourProduct = z.infer<typeof UpdateGroupTourProductZ>;
 export type CreateGroupTourProduct = z.infer<typeof CreateGroupTourProductZ>;

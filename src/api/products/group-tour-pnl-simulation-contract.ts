@@ -7,14 +7,16 @@ import { GroupTourPNLSimulationZ } from "../../entities/Products/GroupTourPNLSim
 const basePath = "/api/group-tour/simulations";
 
 // Create/Update schemas
-const UpdateGroupTourPNLSimulationZ = GroupTourPNLSimulationZ.pick({
+const CreateGroupTourPNLSimulationZ = GroupTourPNLSimulationZ.pick({
+  groupTourPricingOID: true,
+  tenantOID: true,
   groupVolumes: true,
 });
 
-const CreateGroupTourPNLSimulationZ = UpdateGroupTourPNLSimulationZ.extend({
-  groupTourPricingOID: z.string(),
-  tenantOID: z.string(),
-});
+const UpdateGroupTourPNLSimulationZ = CreateGroupTourPNLSimulationZ.omit({
+  groupTourPricingOID: true,
+  tenantOID: true,
+}).partial();
 
 export type UpdateGroupTourPNLSimulation = z.infer<typeof UpdateGroupTourPNLSimulationZ>;
 export type CreateGroupTourPNLSimulation = z.infer<typeof CreateGroupTourPNLSimulationZ>;

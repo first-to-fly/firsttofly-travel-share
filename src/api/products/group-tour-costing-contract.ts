@@ -7,7 +7,27 @@ import { GroupTourCostingEntryZ, GroupTourCostingZ } from "../../entities/Produc
 const basePath = "/api/products/group-tours-costings";
 
 // Create/Update schemas
-const UpdateGroupTourCostingZ = GroupTourCostingZ.pick({
+const CreateGroupTourCostingEntryZ = GroupTourCostingEntryZ.pick({
+  category: true,
+  calculationBasis: true,
+  applyToPackageType: true,
+  applyToOccupancyType: true,
+  remarks: true,
+  quantity: true,
+  isTieredPrice: true,
+  currency: true,
+  prices: true,
+});
+
+const UpdateGroupTourCostingEntryZ = CreateGroupTourCostingEntryZ.extend({
+  oid: z.string().optional(),
+}).partial();
+
+const CreateGroupTourCostingZ = GroupTourCostingZ.pick({
+
+  groupTourProductOID: true,
+  tenantOID: true,
+
   templateOID: true,
   name: true,
   code: true,
@@ -20,25 +40,15 @@ const UpdateGroupTourCostingZ = GroupTourCostingZ.pick({
   isActive: true,
   airlineOIDs: true,
 }).extend({
-  groupTourCostingEntries: z.array(GroupTourCostingEntryZ.pick({
-    category: true,
-    calculationBasis: true,
-    applyToPackageType: true,
-    applyToOccupancyType: true,
-    remarks: true,
-    quantity: true,
-    isTieredPrice: true,
-    currency: true,
-    prices: true,
-  }).extend({
-    oid: z.string().optional(),
-  })),
+  groupTourCostingEntries: z.array(CreateGroupTourCostingEntryZ),
 });
 
-const CreateGroupTourCostingZ = UpdateGroupTourCostingZ.extend({
-  groupTourProductOID: z.string(),
-  tenantOID: z.string(),
-});
+const UpdateGroupTourCostingZ = CreateGroupTourCostingZ.omit({
+  groupTourProductOID: true,
+  tenantOID: true,
+}).extend({
+  groupTourCostingEntries: z.array(UpdateGroupTourCostingEntryZ),
+}).partial();
 
 export type UpdateGroupTourCosting = z.infer<typeof UpdateGroupTourCostingZ>;
 export type CreateGroupTourCosting = z.infer<typeof CreateGroupTourCostingZ>;
