@@ -6,14 +6,17 @@ import { LocationZ } from "../../../entities/Settings/General/Location";
 
 const basePath = "/api/settings/locations";
 
-const UpdateLocationZ = LocationZ.pick({
+const CreateLocationZ = LocationZ.pick({
+  tenantOID: true,
   name: true,
   type: true,
   description: true,
 });
 
-const CreateLocationZ = UpdateLocationZ.extend({
-  tenantOID: z.string(),
+const UpdateLocationZ = CreateLocationZ.omit({
+  tenantOID: true,
+}).partial().extend({
+  oid: z.string(),
 });
 
 export type UpdateLocation = z.infer<typeof UpdateLocationZ>;
