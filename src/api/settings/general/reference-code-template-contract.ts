@@ -6,7 +6,8 @@ import { ReferenceCodeTemplateZ } from "../../../entities/Settings/General/Refer
 
 const basePath = "/api/settings/reference-code-templates";
 
-const UpdateReferenceCodeTemplateZ = ReferenceCodeTemplateZ.pick({
+const CreateReferenceCodeTemplateZ = ReferenceCodeTemplateZ.pick({
+  tenantOID: true,
   name: true,
   moduleId: true,
   counterType: true,
@@ -17,9 +18,9 @@ const UpdateReferenceCodeTemplateZ = ReferenceCodeTemplateZ.pick({
   componentIds: true,
 });
 
-const CreateReferenceCodeTemplateZ = UpdateReferenceCodeTemplateZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateReferenceCodeTemplateZ = CreateReferenceCodeTemplateZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateReferenceCodeTemplate = z.infer<typeof UpdateReferenceCodeTemplateZ>;
 export type CreateReferenceCodeTemplate = z.infer<typeof CreateReferenceCodeTemplateZ>;

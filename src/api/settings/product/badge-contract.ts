@@ -6,15 +6,16 @@ import { BadgeZ } from "../../../entities/Settings/Product/Badge";
 
 const basePath = "/api/settings/badges";
 
-const UpdateBadgeZ = BadgeZ.pick({
+const CreateBadgeZ = BadgeZ.pick({
+  tenantOID: true,
   image: true,
   isActive: true,
   icon: true,
 });
 
-const CreateBadgeZ = UpdateBadgeZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateBadgeZ = CreateBadgeZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateBadge = z.infer<typeof UpdateBadgeZ>;
 export type CreateBadge = z.infer<typeof CreateBadgeZ>;

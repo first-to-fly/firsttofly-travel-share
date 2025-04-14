@@ -7,9 +7,8 @@ import { DiscountZ } from "../../../entities/Settings/Product/Discount";
 const c = initContract();
 const basePath = "/api/discounts"; // Plural entity name
 
-// Define Update Schema by picking fields from DiscountZ
-// Exclude oid, entityType, tenantOID, createdAt, createdBy, updatedAt, updatedBy, deletedAt
-const UpdateDiscountZ = DiscountZ.pick({ // Access inner ZodObject
+const CreateDiscountZ = DiscountZ.pick({
+  tenantOID: true,
   discountCode: true,
   discountName: true,
   description: true,
@@ -40,17 +39,14 @@ const UpdateDiscountZ = DiscountZ.pick({ // Access inner ZodObject
   discountValue: true,
   howToApply: true,
   useDiscountCode: true,
-
   sectorOIDs: true,
   productOIDs: true,
   tourOIDs: true,
 });
 
-// Define Create Schema - Extend Update schema, make required fields non-optional
-// tenantOID is inherited from EntityZ and required by default
-const CreateDiscountZ = UpdateDiscountZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateDiscountZ = CreateDiscountZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateDiscount = z.infer<typeof UpdateDiscountZ>;
 export type CreateDiscount = z.infer<typeof CreateDiscountZ>;

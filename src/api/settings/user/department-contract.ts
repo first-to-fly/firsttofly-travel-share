@@ -6,7 +6,8 @@ import { DepartmentZ } from "../../../entities/Settings/User/Department";
 
 const basePath = "/api/settings/departments";
 
-const UpdateDepartmentZ = DepartmentZ.pick({
+const CreateDepartmentZ = DepartmentZ.pick({
+  tenantOID: true,
   name: true,
   locationOID: true,
   parentDepartmentOID: true,
@@ -16,9 +17,9 @@ const UpdateDepartmentZ = DepartmentZ.pick({
   userOIDs: z.array(z.string()).optional(),
 });
 
-const CreateDepartmentZ = UpdateDepartmentZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateDepartmentZ = CreateDepartmentZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateDepartment = z.infer<typeof UpdateDepartmentZ>;
 export type CreateDepartment = z.infer<typeof CreateDepartmentZ>;

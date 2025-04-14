@@ -6,7 +6,8 @@ import { InsuranceDiscountZ } from "../../../entities/Settings/Product/Insurance
 
 const basePath = "/api/settings/insurance-discounts";
 
-const UpdateInsuranceDiscountZ = InsuranceDiscountZ.pick({
+const CreateInsuranceDiscountZ = InsuranceDiscountZ.pick({
+  tenantOID: true,
   code: true,
   name: true,
   startDate: true,
@@ -17,9 +18,9 @@ const UpdateInsuranceDiscountZ = InsuranceDiscountZ.pick({
   remarks: true,
 });
 
-const CreateInsuranceDiscountZ = UpdateInsuranceDiscountZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateInsuranceDiscountZ = CreateInsuranceDiscountZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateInsuranceDiscount = z.infer<typeof UpdateInsuranceDiscountZ>;
 export type CreateInsuranceDiscount = z.infer<typeof CreateInsuranceDiscountZ>;

@@ -6,16 +6,17 @@ import { ReferenceCodeTreeZ } from "../../../entities/Settings/General/Reference
 
 const basePath = "/api/settings/reference-code-trees";
 
-const UpdateReferenceCodeTreeZ = ReferenceCodeTreeZ.pick({
+const CreateReferenceCodeTreeZ = ReferenceCodeTreeZ.pick({
+  tenantOID: true,
   name: true,
   moduleId: true,
   parentId: true,
   seq: true,
 });
 
-const CreateReferenceCodeTreeZ = UpdateReferenceCodeTreeZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateReferenceCodeTreeZ = CreateReferenceCodeTreeZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateReferenceCodeTree = z.infer<typeof UpdateReferenceCodeTreeZ>;
 export type CreateReferenceCodeTree = z.infer<typeof CreateReferenceCodeTreeZ>;

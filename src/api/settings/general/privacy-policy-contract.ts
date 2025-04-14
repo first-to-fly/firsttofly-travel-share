@@ -6,15 +6,16 @@ import { PrivacyPolicyZ } from "../../../entities/Settings/General/PrivacyPolicy
 
 const basePath = "/api/settings/privacy-policies";
 
-const UpdatePrivacyPolicyZ = PrivacyPolicyZ.pick({
+const CreatePrivacyPolicyZ = PrivacyPolicyZ.pick({
+  tenantOID: true,
   name: true,
   file: true,
   isActive: true,
 });
 
-const CreatePrivacyPolicyZ = UpdatePrivacyPolicyZ.extend({
-  tenantOID: z.string(),
-});
+const UpdatePrivacyPolicyZ = CreatePrivacyPolicyZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdatePrivacyPolicy = z.infer<typeof UpdatePrivacyPolicyZ>;
 export type CreatePrivacyPolicy = z.infer<typeof CreatePrivacyPolicyZ>;

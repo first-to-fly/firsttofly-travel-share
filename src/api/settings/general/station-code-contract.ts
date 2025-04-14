@@ -6,7 +6,8 @@ import { StationCodeZ } from "../../../entities/Settings/General/StationCode";
 
 const basePath = "/api/settings/station-codes";
 
-const UpdateStationCodeZ = StationCodeZ.pick({
+const CreateStationCodeZ = StationCodeZ.pick({
+  tenantOID: true,
   code: true,
   isActive: true,
   seq: true,
@@ -14,9 +15,9 @@ const UpdateStationCodeZ = StationCodeZ.pick({
   departmentOIDs: z.array(z.string()).optional(),
 });
 
-const CreateStationCodeZ = UpdateStationCodeZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateStationCodeZ = CreateStationCodeZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateStationCode = z.infer<typeof UpdateStationCodeZ>;
 export type CreateStationCode = z.infer<typeof CreateStationCodeZ>;

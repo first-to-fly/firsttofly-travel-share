@@ -6,7 +6,8 @@ import { AssembleLocationAirlinesZ } from "../../../entities/Settings/Product/As
 
 const basePath = "/api/settings/assemble-location-airlines";
 
-const UpdateAssembleLocationAirlinesZ = AssembleLocationAirlinesZ.pick({
+const CreateAssembleLocationAirlinesZ = AssembleLocationAirlinesZ.pick({
+  tenantOID: true,
   airlineCode: true,
   airportCode: true,
   location: true,
@@ -15,9 +16,9 @@ const UpdateAssembleLocationAirlinesZ = AssembleLocationAirlinesZ.pick({
   offlineOperator: true,
 });
 
-const CreateAssembleLocationAirlinesZ = UpdateAssembleLocationAirlinesZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateAssembleLocationAirlinesZ = CreateAssembleLocationAirlinesZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateAssembleLocationAirlines = z.infer<typeof UpdateAssembleLocationAirlinesZ>;
 export type CreateAssembleLocationAirlines = z.infer<typeof CreateAssembleLocationAirlinesZ>;

@@ -6,16 +6,17 @@ import { DesignationZ } from "../../../entities/Settings/User/Designation";
 
 const basePath = "/api/settings/designations";
 
-const UpdateDesignationZ = DesignationZ.pick({
+const CreateDesignationZ = DesignationZ.pick({
+  tenantOID: true,
   name: true,
   abbreviation: true,
 }).extend({
   userOIDs: z.array(z.string()).optional(),
 });
 
-const CreateDesignationZ = UpdateDesignationZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateDesignationZ = CreateDesignationZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateDesignation = z.infer<typeof UpdateDesignationZ>;
 export type CreateDesignation = z.infer<typeof CreateDesignationZ>;

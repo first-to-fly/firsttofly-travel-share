@@ -7,9 +7,9 @@ import { UserZ } from "../../../entities/Settings/User/User";
 
 const basePath = "/api/settings/users";
 
-const UpdateUserZ = UserZ.pick({
+const CreateUserZ = UserZ.pick({
   tenantOID: true,
-
+  email: true,
   firstName: true,
   lastName: true,
   preferredName: true,
@@ -26,20 +26,18 @@ const UpdateUserZ = UserZ.pick({
   departmentOIDs: true,
   designationOIDs: true,
   roleOIDs: true,
-
   isActive: true,
   staffType: true,
   buddyOID: true,
-
   tourLeadingSkills: true,
   languageSkills: true,
-
   documentOIDs: true,
 });
 
-const CreateUserZ = UpdateUserZ.extend({
-  email: z.string(),
-});
+const UpdateUserZ = CreateUserZ.omit({
+  tenantOID: true,
+  email: true,
+}).partial();
 
 export type UpdateUser = z.infer<typeof UpdateUserZ>;
 export type CreateUser = z.infer<typeof CreateUserZ>;

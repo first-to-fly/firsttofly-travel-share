@@ -14,8 +14,8 @@ const TermConditionCoverageZ = z.object({
 
 export type TermConditionCoverage = z.infer<typeof TermConditionCoverageZ>;
 
-// Define update schema with fields that can be updated
-const UpdateTermConditionZ = FTFTermConditionZ.pick({
+const CreateTermConditionZ = FTFTermConditionZ.pick({
+  tenantOID: true,
   name: true,
   pdf: true,
   isCustomized: true,
@@ -30,11 +30,9 @@ const UpdateTermConditionZ = FTFTermConditionZ.pick({
   coverages: z.array(TermConditionCoverageZ).optional(),
 });
 
-// Define create schema by extending update schema with required fields
-const CreateTermConditionZ = UpdateTermConditionZ.extend({
-  tenantOID: z.string(),
-  coverages: z.array(TermConditionCoverageZ).optional(),
-});
+const UpdateTermConditionZ = CreateTermConditionZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateTermCondition = z.infer<typeof UpdateTermConditionZ>;
 export type CreateTermCondition = z.infer<typeof CreateTermConditionZ>;

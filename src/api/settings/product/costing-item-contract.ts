@@ -12,7 +12,8 @@ import {
 
 const basePath = "/api/settings/costing-items";
 
-const UpdateCostingItemZ = CostingItemZ.pick({
+const CreateCostingItemZ = CostingItemZ.pick({
+  tenantOID: true,
   name: true,
   category: true,
   calculationBasis: true,
@@ -22,9 +23,9 @@ const UpdateCostingItemZ = CostingItemZ.pick({
   isActive: true,
 });
 
-const CreateCostingItemZ = UpdateCostingItemZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateCostingItemZ = CreateCostingItemZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateCostingItem = z.infer<typeof UpdateCostingItemZ>;
 export type CreateCostingItem = z.infer<typeof CreateCostingItemZ>;

@@ -7,8 +7,8 @@ import { DiscountTemplateZ } from "../../../entities/Settings/Product/DiscountTe
 const c = initContract();
 const basePath = "/api/discount-templates"; // Plural entity name
 
-
-const UpdateDiscountTemplateZ = DiscountTemplateZ.pick({
+const CreateDiscountTemplateZ = DiscountTemplateZ.pick({
+  tenantOID: true,
   templateName: true,
   description: true,
   bookingChannel: true,
@@ -37,11 +37,9 @@ const UpdateDiscountTemplateZ = DiscountTemplateZ.pick({
   useDiscountCode: true,
 });
 
-// Define Create Schema - Extend Update schema, make required fields non-optional
-const CreateDiscountTemplateZ = UpdateDiscountTemplateZ.extend({
-  // Need tenantOID for creation context
-  tenantOID: z.string(),
-});
+const UpdateDiscountTemplateZ = CreateDiscountTemplateZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateDiscountTemplate = z.infer<typeof UpdateDiscountTemplateZ>;
 export type CreateDiscountTemplate = z.infer<typeof CreateDiscountTemplateZ>;

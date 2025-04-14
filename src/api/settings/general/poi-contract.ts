@@ -6,7 +6,8 @@ import { POIZ } from "../../../entities/Settings/General/POI";
 
 const basePath = "/api/settings/pois";
 
-const UpdatePOIZ = POIZ.pick({
+const CreatePOIZ = POIZ.pick({
+  tenantOID: true,
   name: true,
   address: true,
   type: true,
@@ -19,9 +20,9 @@ const UpdatePOIZ = POIZ.pick({
   additionalInfo: true,
 });
 
-const CreatePOIZ = UpdatePOIZ.extend({
-  tenantOID: z.string(),
-});
+const UpdatePOIZ = CreatePOIZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdatePOI = z.infer<typeof UpdatePOIZ>;
 export type CreatePOI = z.infer<typeof CreatePOIZ>;

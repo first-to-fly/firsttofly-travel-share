@@ -6,7 +6,8 @@ import { RoomConfigZ } from "../../../entities/Settings/Product/RoomConfig";
 
 const basePath = "/api/settings/room-configs";
 
-const UpdateRoomConfigZ = RoomConfigZ.pick({
+const CreateRoomConfigZ = RoomConfigZ.pick({
+  tenantOID: true,
   name: true,
   coverageType: true,
   childNoBedStartAge: true,
@@ -15,9 +16,9 @@ const UpdateRoomConfigZ = RoomConfigZ.pick({
   isActive: true,
 });
 
-const CreateRoomConfigZ = UpdateRoomConfigZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateRoomConfigZ = CreateRoomConfigZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateRoomConfig = z.infer<typeof UpdateRoomConfigZ>;
 export type CreateRoomConfig = z.infer<typeof CreateRoomConfigZ>;

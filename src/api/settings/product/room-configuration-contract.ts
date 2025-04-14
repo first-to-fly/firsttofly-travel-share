@@ -6,7 +6,8 @@ import { RoomConfigurationZ } from "../../../entities/Settings/Product/RoomConfi
 
 const basePath = "/api/settings/room-configurations";
 
-const UpdateRoomConfigurationZ = RoomConfigurationZ.pick({
+const CreateRoomConfigurationZ = RoomConfigurationZ.pick({
+  tenantOID: true,
   name: true,
   status: true,
   remarks: true,
@@ -22,9 +23,9 @@ const UpdateRoomConfigurationZ = RoomConfigurationZ.pick({
   personInChargeOIDs: true,
 });
 
-const CreateRoomConfigurationZ = UpdateRoomConfigurationZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateRoomConfigurationZ = CreateRoomConfigurationZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateRoomConfiguration = z.infer<typeof UpdateRoomConfigurationZ>;
 export type CreateRoomConfiguration = z.infer<typeof CreateRoomConfigurationZ>;

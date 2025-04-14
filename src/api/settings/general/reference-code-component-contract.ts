@@ -6,7 +6,8 @@ import { ReferenceCodeComponentZ } from "../../../entities/Settings/General/Refe
 
 const basePath = "/api/settings/reference-code-components";
 
-const UpdateReferenceCodeComponentZ = ReferenceCodeComponentZ.pick({
+const CreateReferenceCodeComponentZ = ReferenceCodeComponentZ.pick({
+  tenantOID: true,
   name: true,
   code: true,
   type: true,
@@ -14,9 +15,9 @@ const UpdateReferenceCodeComponentZ = ReferenceCodeComponentZ.pick({
   description: true,
 });
 
-const CreateReferenceCodeComponentZ = UpdateReferenceCodeComponentZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateReferenceCodeComponentZ = CreateReferenceCodeComponentZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateReferenceCodeComponent = z.infer<typeof UpdateReferenceCodeComponentZ>;
 export type CreateReferenceCodeComponent = z.infer<typeof CreateReferenceCodeComponentZ>;

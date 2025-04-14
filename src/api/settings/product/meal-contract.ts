@@ -6,7 +6,8 @@ import { MealZ } from "../../../entities/Settings/Product/Meal";
 
 const basePath = "/api/settings/meals";
 
-const UpdateMealZ = MealZ.pick({
+const CreateMealZ = MealZ.pick({
+  tenantOID: true,
   code: true,
   type: true,
   seq: true,
@@ -14,9 +15,9 @@ const UpdateMealZ = MealZ.pick({
   offlineOperator: true,
 });
 
-const CreateMealZ = UpdateMealZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateMealZ = CreateMealZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateMeal = z.infer<typeof UpdateMealZ>;
 export type CreateMeal = z.infer<typeof CreateMealZ>;

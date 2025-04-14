@@ -15,9 +15,7 @@ const CreateLocationZ = LocationZ.pick({
 
 const UpdateLocationZ = CreateLocationZ.omit({
   tenantOID: true,
-}).partial().extend({
-  oid: z.string(),
-});
+}).partial();
 
 export type UpdateLocation = z.infer<typeof UpdateLocationZ>;
 export type CreateLocation = z.infer<typeof CreateLocationZ>;

@@ -14,8 +14,8 @@ const UsefulInfoRefZ = z.object({
 
 export type UsefulInfoRef = z.infer<typeof UsefulInfoRefZ>;
 
-// Define update schema with fields that can be updated
-const UpdateUsefulInfoZ = UsefulInfoZ.pick({
+const CreateUsefulInfoZ = UsefulInfoZ.pick({
+  tenantOID: true,
   name: true,
   coverageType: true,
   status: true,
@@ -27,10 +27,9 @@ const UpdateUsefulInfoZ = UsefulInfoZ.pick({
   refs: z.array(UsefulInfoRefZ).optional(),
 });
 
-// Define create schema by extending update schema with required fields
-const CreateUsefulInfoZ = UpdateUsefulInfoZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateUsefulInfoZ = CreateUsefulInfoZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateUsefulInfo = z.infer<typeof UpdateUsefulInfoZ>;
 export type CreateUsefulInfo = z.infer<typeof CreateUsefulInfoZ>;

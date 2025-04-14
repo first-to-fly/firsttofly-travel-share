@@ -6,7 +6,8 @@ import { SpecialInstructionZ } from "../../../entities/Settings/Product/SpecialI
 
 const basePath = "/api/settings/special-instructions";
 
-const UpdateSpecialInstructionZ = SpecialInstructionZ.pick({
+const CreateSpecialInstructionZ = SpecialInstructionZ.pick({
+  tenantOID: true,
   isPrepare: true,
   description: true,
   remark: true,
@@ -21,9 +22,9 @@ const UpdateSpecialInstructionZ = SpecialInstructionZ.pick({
   productTypeOIDs: true,
 });
 
-const CreateSpecialInstructionZ = UpdateSpecialInstructionZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateSpecialInstructionZ = CreateSpecialInstructionZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateSpecialInstruction = z.infer<typeof UpdateSpecialInstructionZ>;
 export type CreateSpecialInstruction = z.infer<typeof CreateSpecialInstructionZ>;

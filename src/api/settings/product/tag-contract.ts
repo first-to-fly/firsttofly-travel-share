@@ -7,7 +7,8 @@ import { TagGroupZ, TagZ } from "../../../entities/Settings/Product/Tag";
 const basePath = "/api/settings/tags";
 const tagGroupBasePath = "/api/settings/tag-groups";
 
-const UpdateTagZ = TagZ.pick({
+const CreateTagZ = TagZ.pick({
+  tenantOID: true,
   name: true,
   isActive: true,
   sortOrder: true,
@@ -15,18 +16,19 @@ const UpdateTagZ = TagZ.pick({
   tagGroupOID: true,
 });
 
-const CreateTagZ = UpdateTagZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateTagZ = CreateTagZ.omit({
+  tenantOID: true,
+}).partial();
 
-const UpdateTagGroupZ = TagGroupZ.pick({
+const CreateTagGroupZ = TagGroupZ.pick({
+  tenantOID: true,
   name: true,
   tagOIDs: true,
 });
 
-const CreateTagGroupZ = UpdateTagGroupZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateTagGroupZ = CreateTagGroupZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateTag = z.infer<typeof UpdateTagZ>;
 export type CreateTag = z.infer<typeof CreateTagZ>;

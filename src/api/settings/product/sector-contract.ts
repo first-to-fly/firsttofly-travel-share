@@ -6,7 +6,8 @@ import { SectorZ } from "../../../entities/Settings/Product/Sector";
 
 const basePath = "/api/settings/sectors";
 
-const UpdateSectorZ = SectorZ.pick({
+const CreateSectorZ = SectorZ.pick({
+  tenantOID: true,
   name: true,
   parentOID: true,
   isActive: true,
@@ -16,10 +17,9 @@ const UpdateSectorZ = SectorZ.pick({
   departmentOID: true,
 });
 
-const CreateSectorZ = UpdateSectorZ.extend({
-  tenantOID: z.string(),
-});
-
+const UpdateSectorZ = CreateSectorZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateSector = z.infer<typeof UpdateSectorZ>;
 export type CreateSector = z.infer<typeof CreateSectorZ>;

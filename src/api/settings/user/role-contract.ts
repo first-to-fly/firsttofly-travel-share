@@ -7,15 +7,16 @@ import { RoleZ } from "../../../entities/Settings/User/Role";
 
 const basePath = "/api/settings/roles";
 
-const UpdateRoleZ = RoleZ.pick({
+const CreateRoleZ = RoleZ.pick({
+  tenantOID: true,
   name: true,
   description: true,
   permissions: true,
 });
 
-const CreateRoleZ = UpdateRoleZ.extend({
-  tenantOID: EntityOIDZ,
-});
+const UpdateRoleZ = CreateRoleZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateRole = z.infer<typeof UpdateRoleZ>;
 export type CreateRole = z.infer<typeof CreateRoleZ>;

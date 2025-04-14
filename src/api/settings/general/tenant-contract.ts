@@ -6,7 +6,7 @@ import { TenantZ } from "../../../entities/Settings/General/Tenant";
 
 const basePath = "/api/settings/tenants";
 
-const UpdateTenantZ = TenantZ.pick({
+const CreateTenantZ = TenantZ.pick({
   name: true,
   logo: true,
   description: true,
@@ -16,7 +16,7 @@ const UpdateTenantZ = TenantZ.pick({
   currencyExtra: true,
 });
 
-const CreateTenantZ = UpdateTenantZ;
+const UpdateTenantZ = CreateTenantZ.partial();
 
 export type UpdateTenant = z.infer<typeof UpdateTenantZ>;
 export type CreateTenant = z.infer<typeof CreateTenantZ>;

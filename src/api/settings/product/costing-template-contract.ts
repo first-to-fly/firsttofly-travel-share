@@ -8,16 +8,17 @@ import {
 
 const basePath = "/api/settings/costing-templates";
 
-const UpdateCostingTemplateZ = CostingTemplateZ.pick({
+const CreateCostingTemplateZ = CostingTemplateZ.pick({
+  tenantOID: true,
   name: true,
   remarks: true,
   isActive: true,
   costingItemOIDs: true,
 });
 
-const CreateCostingTemplateZ = UpdateCostingTemplateZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateCostingTemplateZ = CreateCostingTemplateZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateCostingTemplate = z.infer<typeof UpdateCostingTemplateZ>;
 export type CreateCostingTemplate = z.infer<typeof CreateCostingTemplateZ>;

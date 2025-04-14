@@ -6,15 +6,16 @@ import { SectorGroupZ } from "../../../entities/Settings/Product/SectorGroup";
 
 const basePath = "/api/settings/sector-groups";
 
-const UpdateSectorGroupZ = SectorGroupZ.pick({
+const CreateSectorGroupZ = SectorGroupZ.pick({
+  tenantOID: true,
   name: true,
   isActive: true,
   sectorOIDs: true,
 });
 
-const CreateSectorGroupZ = UpdateSectorGroupZ.extend({
-  tenantOID: z.string(),
-});
+const UpdateSectorGroupZ = CreateSectorGroupZ.omit({
+  tenantOID: true,
+}).partial();
 
 export type UpdateSectorGroup = z.infer<typeof UpdateSectorGroupZ>;
 export type CreateSectorGroup = z.infer<typeof CreateSectorGroupZ>;
