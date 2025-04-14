@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { GroupTourPricingZ } from "../../entities/Product/GroupTourPricing";
+import { GroupTourPricingZ } from "../../entities/Products/GroupTourPricing";
 
 
 const basePath = "/api/products/group-tours-pricings";

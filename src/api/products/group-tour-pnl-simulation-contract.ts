@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { GroupTourPNLSimulationZ } from "../../entities/Product/GroupTourPNLSimulation";
+import { GroupTourPNLSimulationZ } from "../../entities/Products/GroupTourPNLSimulation";
 
 
 const basePath = "/api/group-tour/simulations";
