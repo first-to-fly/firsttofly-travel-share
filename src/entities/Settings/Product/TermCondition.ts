@@ -37,11 +37,11 @@ export const TermConditionCoverageZ = EntityZ.extend({
 
 export type TermConditionCoverage = z.infer<typeof TermConditionCoverageZ>;
 
-export const TermConditionProductTypeZ = EntityZ.extend({
+export const TermConditionProductTypesZ = EntityZ.extend({
   entityType: z.literal(EntityType.TERM_CONDITION_PRODUCT_TYPES),
 
   termConditionOID: z.string(),
   productTypeOID: z.string(),
 });
 
-export type TermConditionProductType = z.infer<typeof TermConditionProductTypeZ>;
+export type TermConditionProductTypes = z.infer<typeof TermConditionProductTypesZ>;

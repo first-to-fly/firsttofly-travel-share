@@ -5,11 +5,11 @@ import { EntityType } from "../../entityType";
 
 
 export enum AssembleLocationAirlinesEvents {
-  ASSEMBLE_LOCATION_AIRLINE_UPDATED = "ASSEMBLE_LOCATION_AIRLINE_UPDATED",
-  ASSEMBLE_LOCATION_AIRLINE_LIST_UPDATED = "ASSEMBLE_LOCATION_AIRLINE_LIST_UPDATED",
+  ASSEMBLE_LOCATION_AIRLINES_UPDATED = "ASSEMBLE_LOCATION_AIRLINES_UPDATED",
+  ASSEMBLE_LOCATION_AIRLINES_LIST_UPDATED = "ASSEMBLE_LOCATION_AIRLINES_LIST_UPDATED",
 }
 
-export const AssembleLocationAirlineZ = EntityZ.extend({
+export const AssembleLocationAirlinesZ = EntityZ.extend({
   entityType: z.literal(EntityType.ASSEMBLE_LOCATION_AIRLINES),
 
   tenantOID: z.string(),
@@ -22,4 +22,4 @@ export const AssembleLocationAirlineZ = EntityZ.extend({
   offlineOperator: z.string().nullable(),
 });
 
-export type AssembleLocationAirline = z.infer<typeof AssembleLocationAirlineZ>;
+export type AssembleLocationAirlines = z.infer<typeof AssembleLocationAirlinesZ>;
