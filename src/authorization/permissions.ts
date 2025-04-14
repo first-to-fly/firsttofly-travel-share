@@ -6,6 +6,9 @@ import { DepartmentPermissions } from "./entities/department.permission";
 import { DesignationPermissions } from "./entities/designation.permission";
 import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
+import { GroupTourCostingPermissions } from "./entities/group-tour-costing.permission";
+import { GroupTourPricingPermissions } from "./entities/group-tour-pricing.permission";
+import { GroupTourProductPermissions } from "./entities/group-tour-product.permission";
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
 import { LocationPermissions } from "./entities/location.permission";
 import { MealPermissions } from "./entities/meal.permission";
@@ -61,8 +64,11 @@ const EntityPermissions = {
   UsefulInfo: UsefulInfoPermissions,
   AssembleLocationAirlines: AssembleLocationAirlinesPermissions,
   RoomConfiguration: RoomConfigurationPermissions,
-  Discount: DiscountPermissions, // Add Discount
-  DiscountTemplate: DiscountTemplatePermissions, // Add DiscountTemplate
+  Discount: DiscountPermissions,
+  DiscountTemplate: DiscountTemplatePermissions,
+  GroupTourCosting: GroupTourCostingPermissions,
+  GroupTourProduct: GroupTourProductPermissions,
+  GroupTourPricing: GroupTourPricingPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
