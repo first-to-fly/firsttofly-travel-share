@@ -1,12 +1,12 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { AssembleLocationAirlinesZ } from "../../../entities/Settings/Product/AssembleLocationAirlines";
+import { AssembleLocationAirlineZ } from "../../../entities/Settings/Product/AssembleLocationAirline";
 
 
 const basePath = "/api/settings/assemble-location-airlines";
 
-const CreateAssembleLocationAirlinesZ = AssembleLocationAirlinesZ.pick({
+const CreateAssembleLocationAirlinesZ = AssembleLocationAirlineZ.pick({
   tenantOID: true,
   airlineCode: true,
   airportCode: true,
