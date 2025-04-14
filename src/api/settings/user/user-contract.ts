@@ -35,9 +35,10 @@ const CreateUserZ = UserZ.pick({
 });
 
 const UpdateUserZ = CreateUserZ.omit({
-  tenantOID: true,
   email: true,
-}).partial();
+}).partial().required({
+  tenantOID: true,
+});
 
 export type UpdateUser = z.infer<typeof UpdateUserZ>;
 export type CreateUser = z.infer<typeof CreateUserZ>;
