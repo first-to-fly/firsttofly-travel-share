@@ -8,7 +8,7 @@ const basePath = "/api/products/group-tours";
 
 // Create/Update schemas
 const UpdateGroupTourProductZ = GroupTourProductZ.pick({
-  productCode: true,
+  code: true,
 
   name: true,
   description: true,
