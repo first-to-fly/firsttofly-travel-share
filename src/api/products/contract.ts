@@ -7,7 +7,7 @@ import { groupTourPricingContract } from "./group-tour-pricing-contract";
 import { groupTourProductContract } from "./group-tour-product-contract";
 
 
-export const productContract = initContract().router({
+export const productsContract = initContract().router({
 
   groupTour: {
     product: groupTourProductContract,
