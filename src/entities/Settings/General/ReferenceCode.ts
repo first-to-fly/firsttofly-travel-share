@@ -148,7 +148,7 @@ export const ReferenceCodeZ = EntityZ.extend({
   resetCounterType: z.nativeEnum(ResetCounterType).default(ResetCounterType.DISABLED),
   counterWidth: z.number().default(5),
   template: z.string(),
-  remarks: z.string().optional(),
+  machineName: z.string(),
 
   allowedComponents: z.array(z.string()).optional(),
 });

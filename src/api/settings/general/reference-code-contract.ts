@@ -14,7 +14,6 @@ const CreateReferenceCodeZ = ReferenceCodeZ.pick({
   resetCounterType: true,
   counterWidth: true,
   template: true,
-  remarks: true,
   componentIds: true,
 });
 
