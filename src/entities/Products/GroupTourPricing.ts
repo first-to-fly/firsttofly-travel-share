@@ -22,6 +22,7 @@ export const GroupTourPricingEntryZ = z.object({
 
 
 export const GroupTourPricingZ = EntityZ.extend({
+  groupTourProductOID: z.string(),
   groupTourCostingOID: z.string(),
 
   name: z.string(),
