@@ -21,6 +21,8 @@ export enum MealType {
 export const GroupTourItineraryMealZ = EntityZ.omit({
   tenantOID: true,
 }).extend({
+  groupTourItineraryDayOID: z.string(),
+
   type: z.nativeEnum(MealType),
   title: MultiLangRecordZ(z.string()),
   description: MultiLangRecordZ(z.string()),
@@ -34,6 +36,8 @@ export const GroupTourItineraryMealZ = EntityZ.omit({
 export const GroupTourItineraryEventZ = EntityZ.omit({
   tenantOID: true,
 }).extend({
+  groupTourItineraryDayOID: z.string(),
+
   title: MultiLangRecordZ(z.string()),
   description: MultiLangRecordZ(z.string()),
 
@@ -43,6 +47,8 @@ export const GroupTourItineraryEventZ = EntityZ.omit({
 export const GroupTourItineraryDayZ = EntityZ.omit({
   tenantOID: true,
 }).extend({
+  groupTourItineraryOID: z.string(),
+
   dayNumber: z.number(),
   title: MultiLangRecordZ(z.string()),
   description: MultiLangRecordZ(z.string()),
