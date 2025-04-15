@@ -12,6 +12,7 @@ export enum GroupTourCostingEvents {
 
 
 export const GroupTourCostingEntryZ = EntityZ.extend({
+  groupTourCostingOID: z.string(),
 
   // Copy from CostingItem
   category: z.nativeEnum(CostingItemCategory),
