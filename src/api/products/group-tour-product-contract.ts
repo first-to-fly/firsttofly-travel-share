@@ -4,7 +4,7 @@ import { z } from "zod";
 import { GroupTourProductZ } from "../../entities/Products/GroupTourProduct";
 
 
-const basePath = "/api/products/group-tours";
+const basePath = "/api/products/group-tour-products";
 
 // Create/Update schemas
 const CreateGroupTourProductZ = GroupTourProductZ.pick({
