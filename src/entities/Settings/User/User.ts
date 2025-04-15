@@ -43,7 +43,7 @@ export const UserZ = EntityZ.extend({
   roleOIDs: z.array(z.string()).optional(),
 
   isActive: z.boolean().default(true),
-  staffType: z.string(),
+  staffType: z.string().default("permanent"),
   buddyOID: z.string().optional(),
 
   tourLeadingSkills: z.array(z.object({
