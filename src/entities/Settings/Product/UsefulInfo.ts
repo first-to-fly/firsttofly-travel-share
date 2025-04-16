@@ -14,8 +14,7 @@ export const UsefulInfoZ = EntityZ.extend({
 
   name: z.string(),
   coverageType: z.enum(["sectors", "sector-group", "products"]),
-  status: z.boolean().default(true),
-  offlineOperator: z.string().optional(),
+  isActive: z.boolean().default(true),
   remarks: z.string().optional(),
   info: z.object({
     otherInfo: z.string().optional(),
@@ -30,22 +29,3 @@ export const UsefulInfoZ = EntityZ.extend({
 });
 
 export type UsefulInfo = z.infer<typeof UsefulInfoZ>;
-
-export const UsefulInfoRefZ = EntityZ.extend({
-  entityType: z.literal(EntityType.USEFUL_INFO_REF),
-  usefulInfoOID: z.string(),
-  refId: z.number(),
-  name: z.string(),
-});
-
-export type UsefulInfoRef = z.infer<typeof UsefulInfoRefZ>;
-
-export const UsefulInfoProductTypeZ = EntityZ.extend({
-  entityType: z.literal(EntityType.USEFUL_INFO_PRODUCT_TYPE),
-  usefulInfoOID: z.string(),
-  productTypeOID: z.string(),
-  offlineOperator: z.string().optional(),
-  productTypeName: z.string().optional(),
-});
-
-export type UsefulInfoProductType = z.infer<typeof UsefulInfoProductTypeZ>;

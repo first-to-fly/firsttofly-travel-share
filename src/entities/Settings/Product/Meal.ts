@@ -23,7 +23,7 @@ export const MealZ = EntityZ.extend({
   description: z.string().optional(),
   type: z.nativeEnum(MealType),
   seq: z.number().optional().default(0),
-  offlineOperator: z.string().optional(),
+
 });
 
 export type Meal = z.infer<typeof MealZ>;

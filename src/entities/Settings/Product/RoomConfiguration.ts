@@ -13,18 +13,17 @@ export const RoomConfigurationZ = EntityZ.extend({
   entityType: z.literal(EntityType.ROOM_CONFIG),
 
   name: z.string(),
-  status: z.number().int(),
+  isActive: z.boolean(),
   remarks: z.string().optional(),
-  offlineOperator: z.string().optional(),
   childWithoutBedStartAge: z.number().int(),
   childWithoutBedEndAge: z.number().int(),
   typeNames: z.string().optional(),
   checkChart: z.string().optional(),
+
   sectorOIDs: z.array(z.string()).optional(),
   sectorGroupOIDs: z.array(z.string()).optional(),
   productOIDs: z.array(z.string()).optional(),
-  participatorOIDs: z.array(z.string()).optional(),
-  personInChargeOIDs: z.array(z.string()).optional(),
+
 });
 
 export type RoomConfiguration = z.infer<typeof RoomConfigurationZ>;
@@ -47,7 +46,6 @@ export const RoomConfigurationRuleZ = EntityZ.extend({
   childWithBed: z.number().int().optional(),
   childWithoutBed: z.number().int().optional(),
   infant: z.number().int().optional(),
-  offlineOperator: z.string().optional(),
   isBackend: z.boolean().optional(),
   isTcp: z.boolean().optional(),
 });

@@ -16,10 +16,10 @@ export const AssembleLocationAirlinesZ = EntityZ.extend({
 
   airlineCode: z.string(),
   airportCode: z.string(),
-  file: z.array(z.string().url()).nullable(),
+
   location: z.string().nullable(),
-  status: z.boolean(),
-  offlineOperator: z.string().nullable(),
+  files: z.array(z.string().url()).nullable(),
+  isActive: z.boolean(),
 });
 
 export type AssembleLocationAirlines = z.infer<typeof AssembleLocationAirlinesZ>;

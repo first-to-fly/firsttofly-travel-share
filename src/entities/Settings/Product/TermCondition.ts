@@ -14,14 +14,16 @@ export const FTFTermConditionZ = EntityZ.extend({
   entityType: z.literal(EntityType.TERM_CONDITION),
 
   name: z.string(),
+
   pdf: z.string().optional(),
   isCustomized: z.boolean(),
   isPrint: z.boolean(),
   type: z.number().optional(),
-  status: z.boolean(),
+
+  isActive: z.boolean(),
   description: z.string().optional(),
   remarks: z.string().optional(),
-  offlineOperator: z.string().optional(),
+
   productTypeOIDs: z.array(z.string()).optional(),
 });
 
