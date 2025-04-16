@@ -58,9 +58,7 @@ export enum EntityType {
   MENU = "menu",
   COUNTER = "COUNTER",
   COUNTER_COMPONENT = "COUNTER_COMPONENT",
-  REFERENCE_CODE_TREE = "referenceCodeTree",
-  REFERENCE_CODE_TEMPLATE = "referenceCodeTemplate",
-  REFERENCE_CODE_COMPONENT = "referenceCodeComponent",
+  REFERENCE_CODE = "referenceCode",
   POI = "poi",
 
   // USER SETTINGS
