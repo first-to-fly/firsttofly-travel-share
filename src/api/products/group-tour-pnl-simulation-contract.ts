@@ -4,7 +4,7 @@ import { z } from "zod";
 import { GroupTourPNLSimulationZ } from "../../entities/Products/GroupTourPNLSimulation";
 
 
-const basePath = "/api/group-tour/simulations";
+const basePath = "/api/products/group-tour-pnl-simulations";
 
 // Create/Update schemas
 const CreateGroupTourPNLSimulationZ = GroupTourPNLSimulationZ.pick({
