@@ -9,9 +9,8 @@ const basePath = "/api/settings/room-configurations";
 const CreateRoomConfigurationZ = RoomConfigurationZ.pick({
   tenantOID: true,
   name: true,
-  status: true,
+  isActive: true,
   remarks: true,
-  offlineOperator: true,
   childWithoutBedStartAge: true,
   childWithoutBedEndAge: true,
   typeNames: true,
@@ -19,8 +18,6 @@ const CreateRoomConfigurationZ = RoomConfigurationZ.pick({
   sectorOIDs: true,
   sectorGroupOIDs: true,
   productOIDs: true,
-  participatorOIDs: true,
-  personInChargeOIDs: true,
 });
 
 const UpdateRoomConfigurationZ = CreateRoomConfigurationZ.omit({
