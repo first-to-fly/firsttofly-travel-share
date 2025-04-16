@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { TermType, TermZ } from "../../entities/Term";
+import { TermType, TermZ } from "../../entities/Term/Term";
 
 
 const basePath = "/api/settings/terms";
