@@ -4,7 +4,7 @@ import { z } from "zod";
 import { ReferenceCodeZ } from "../../../entities/Settings/General/ReferenceCode";
 
 
-const basePath = "/api/settings/reference-code-templates";
+const basePath = "/api/settings/reference-codes";
 
 const CreateReferenceCodeZ = ReferenceCodeZ.pick({
   tenantOID: true,
@@ -26,7 +26,7 @@ export type CreateReferenceCodeTemplate = z.infer<typeof CreateReferenceCodeZ>;
 
 export const referenceCodeContract = initContract().router({
   getReferenceCodes: {
-    summary: "Get reference code templates",
+    summary: "Get reference codes",
     method: "GET",
     path: basePath,
     query: z.object({
@@ -50,7 +50,7 @@ export const referenceCodeContract = initContract().router({
   // },
 
   updateReferenceCode: {
-    summary: "Update an existing reference code template",
+    summary: "Update an existing reference code",
     method: "PATCH",
     path: `${basePath}/:referenceCodeOID`,
     body: UpdateReferenceCodeZ,
@@ -60,20 +60,20 @@ export const referenceCodeContract = initContract().router({
   },
 
   updateReferenceCodes: {
-    summary: "Update multiple existing reference code templates",
+    summary: "Update multiple existing reference codes",
     method: "POST",
     path: `${basePath}/batch-update`,
     body: z.record(
-      z.string().describe("OID of reference code template to update"),
+      z.string().describe("OID of reference code to update"),
       UpdateReferenceCodeZ,
     ),
     responses: {
-      200: z.array(z.string().describe("OIDs of updated reference code templates")),
+      200: z.array(z.string().describe("OIDs of updated reference codes")),
     },
   },
 
   deleteReferenceCode: {
-    summary: "Delete a reference code template",
+    summary: "Delete a reference code",
     method: "DELETE",
     path: `${basePath}/:referenceCodeOID`,
     body: z.object({}),
@@ -83,11 +83,11 @@ export const referenceCodeContract = initContract().router({
   },
 
   deleteReferenceCodes: {
-    summary: "Delete multiple reference code templates",
+    summary: "Delete multiple reference codes",
     method: "POST",
     path: `${basePath}/batch-delete`,
     body: z.object({
-      referenceCodeOIDs: z.array(z.string().describe("OIDs of reference code templates to delete")),
+      referenceCodeOIDs: z.array(z.string().describe("OIDs of reference codes to delete")),
     }),
     responses: {
       200: z.boolean(),

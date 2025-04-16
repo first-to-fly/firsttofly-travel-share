@@ -150,7 +150,7 @@ export const ReferenceCodeZ = EntityZ.extend({
   template: z.string(),
   machineCode: z.string(),
 
-  allowedComponents: z.array(z.string()).optional(),
+  availableComponents: z.array(z.string()).optional(),
 });
 
 
