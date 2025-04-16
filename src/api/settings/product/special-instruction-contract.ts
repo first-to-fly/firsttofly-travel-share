@@ -11,14 +11,12 @@ const CreateSpecialInstructionZ = SpecialInstructionZ.pick({
   isPrepare: true,
   description: true,
   remark: true,
-  status: true,
+  isActive: true,
   isCustomized: true,
   offlineOperator: true,
   sectorOIDs: true,
   sectorGroupOIDs: true,
   productOIDs: true,
-  participatorOIDs: true,
-  personInChargeOIDs: true,
   productTypeOIDs: true,
 });
 
