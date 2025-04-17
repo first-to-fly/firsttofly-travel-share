@@ -12,8 +12,9 @@ export enum UsefulInfoEvents {
 export const UsefulInfoZ = EntityZ.extend({
   entityType: z.literal(EntityType.USEFUL_INFO),
 
+  productTypeOIDs: z.array(z.string()).optional(),
+
   name: z.string(),
-  coverageType: z.enum(["sectors", "sector-group", "products"]),
   isActive: z.boolean().default(true),
   remarks: z.string().optional(),
   info: z.object({
@@ -24,8 +25,7 @@ export const UsefulInfoZ = EntityZ.extend({
     optionalTours: z.string().optional(),
   }).optional(),
 
-  refOIDs: z.array(z.string()).optional(),
-  productTypeOIDs: z.array(z.string()).optional(),
+  applyToEntityOIDs: z.array(z.string()).optional(),
 });
 
 export type UsefulInfo = z.infer<typeof UsefulInfoZ>;

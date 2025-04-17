@@ -17,12 +17,11 @@ export type UsefulInfoRef = z.infer<typeof UsefulInfoRefZ>;
 const CreateUsefulInfoZ = UsefulInfoZ.pick({
   tenantOID: true,
   name: true,
-  coverageType: true,
-  status: true,
-  offlineOperator: true,
+  isActive: true,
   remarks: true,
   info: true,
   productTypeOIDs: true,
+  applyToEntityOIDs: true,
 }).extend({
   refs: z.array(UsefulInfoRefZ).optional(),
 });
@@ -60,16 +59,6 @@ export const usefulInfoContract = initContract().router({
     },
   },
 
-  updateUsefulInfo: {
-    summary: "Update an existing useful info",
-    method: "PATCH",
-    path: `${basePath}/:usefulInfoOID`,
-    body: UpdateUsefulInfoZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateUsefulInfos: {
     summary: "Update multiple existing useful infos",
     method: "POST",
@@ -80,16 +69,6 @@ export const usefulInfoContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated useful infos")),
-    },
-  },
-
-  deleteUsefulInfo: {
-    summary: "Delete a useful info",
-    method: "DELETE",
-    path: `${basePath}/:usefulInfoOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 
