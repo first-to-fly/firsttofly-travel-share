@@ -22,7 +22,7 @@ export const TermConditionZ = EntityZ.extend({
 
   name: z.string(),
 
-  pdf: NamedURLZ,
+  pdf: NamedURLZ.optional(),
 
   isCustomized: z.boolean(),
   isPrint: z.boolean(),
