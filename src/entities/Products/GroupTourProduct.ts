@@ -34,10 +34,10 @@ export const GroupTourProductZ = EntityZ.extend({
   durationNights: z.number(),
 
   validityStartDate: DateISOStringZ,
-  validityEndDate: DateISOStringZ,
+  validityEndDate: DateISOStringZ.optional(), // end indefinitely
 
   salesPeriodStartDate: DateISOStringZ,
-  salesPeriodEndDate: DateISOStringZ,
+  salesPeriodEndDate: DateISOStringZ.optional(), // end indefinitely
 
   isActive: z.boolean(),
   published: z.boolean(),
