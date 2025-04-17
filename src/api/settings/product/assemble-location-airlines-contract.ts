@@ -11,9 +11,8 @@ const CreateAssembleLocationAirlinesZ = AssembleLocationAirlinesZ.pick({
   airlineCode: true,
   airportCode: true,
   location: true,
-  file: true,
-  status: true,
-  offlineOperator: true,
+  files: true,
+  isActive: true,
 });
 
 const UpdateAssembleLocationAirlinesZ = CreateAssembleLocationAirlinesZ.omit({

@@ -16,9 +16,8 @@ export const AssembleLocationAirlinesZ = EntityZ.extend({
 
   airlineCode: z.string(),
   airportCode: z.string(),
-
-  location: z.string().nullable(),
   files: z.array(z.string().url()).nullable(),
+  location: z.string().nullable(),
   isActive: z.boolean(),
 });
 
