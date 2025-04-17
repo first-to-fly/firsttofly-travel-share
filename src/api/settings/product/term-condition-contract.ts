@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { FTFTermConditionZ } from "../../../entities/Settings/Product/TermCondition";
+import { TermConditionZ } from "../../../entities/Settings/Product/TermCondition";
 
 
 const basePath = "/api/term-conditions";
@@ -14,19 +14,25 @@ const TermConditionCoverageZ = z.object({
 
 export type TermConditionCoverage = z.infer<typeof TermConditionCoverageZ>;
 
-const CreateTermConditionZ = FTFTermConditionZ.pick({
+const CreateTermConditionZ = TermConditionZ.pick({
   tenantOID: true,
+
   name: true,
+
   pdf: true,
+
   isCustomized: true,
   isPrint: true,
+
   type: true,
+
   isActive: true,
-  productTypeOIDs: true,
   description: true,
   remarks: true,
-}).extend({
-  coverages: z.array(TermConditionCoverageZ).optional(),
+
+  productTypeOIDs: true,
+
+  coveredEntityOIDs: true,
 });
 
 const UpdateTermConditionZ = CreateTermConditionZ.omit({
@@ -62,16 +68,6 @@ export const termConditionContract = initContract().router({
     },
   },
 
-  updateTermCondition: {
-    summary: "Update an existing term condition",
-    method: "PATCH",
-    path: `${basePath}/:termConditionOID`,
-    body: UpdateTermConditionZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateTermConditions: {
     summary: "Update multiple existing term conditions",
     method: "POST",
@@ -82,16 +78,6 @@ export const termConditionContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated term conditions")),
-    },
-  },
-
-  deleteTermCondition: {
-    summary: "Delete a term condition",
-    method: "DELETE",
-    path: `${basePath}/:termConditionOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 
@@ -107,19 +93,4 @@ export const termConditionContract = initContract().router({
     },
   },
 
-  // getTermConditionCoverages: {
-  //   summary: "Get coverages for a term condition",
-  //   method: "GET",
-  //   path: `${basePath}/:termConditionOID/coverages`,
-  //   query: z.object({
-  //     tenantOID: z.string(),
-  //   }).passthrough(),
-  //   responses: {
-  //     200: z.array(z.object({
-  //       oid: z.string(),
-  //       coverageType: z.enum(["sectors", "sector-group", "products"]),
-  //       coverageOID: z.string(),
-  //     })),
-  //   },
-  // },
 });

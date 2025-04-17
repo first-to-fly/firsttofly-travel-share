@@ -39,8 +39,6 @@ export enum EntityType {
   INSURANCE_DISCOUNT = "insuranceDiscount",
   SPECIAL_INSTRUCTION = "specialInstruction",
   TERM_CONDITION = "termCondition",
-  TERM_CONDITION_COVERAGE = "termConditionCoverage",
-  TERM_CONDITION_PRODUCT_TYPES = "termConditionProductTypes",
   STATION_CODE = "stationCode",
   USEFUL_INFO = "usefulInfo",
   ASSEMBLE_LOCATION_AIRLINES = "assembleLocationAirlines",
@@ -52,6 +50,7 @@ export enum EntityType {
   LOCATION = "location",
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
+
   // REFERENCE CODE
   MENU = "menu",
   COUNTER = "COUNTER",

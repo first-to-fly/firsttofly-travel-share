@@ -1,7 +1,14 @@
 import { z } from "zod";
 
+import { NamedURLZ } from "../../../types/url";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
+
+
+export enum TermConditionType {
+  TERM_CONDITION = "term-condition",
+  ADDENDUM = "addendum",
+}
 
 
 export enum TermConditionEvents {
@@ -10,40 +17,25 @@ export enum TermConditionEvents {
 }
 
 
-export const FTFTermConditionZ = EntityZ.extend({
+export const TermConditionZ = EntityZ.extend({
   entityType: z.literal(EntityType.TERM_CONDITION),
 
   name: z.string(),
 
-  pdf: z.string().optional(),
+  pdf: NamedURLZ,
+
   isCustomized: z.boolean(),
   isPrint: z.boolean(),
-  type: z.number().optional(),
+
+  type: z.nativeEnum(TermConditionType).default(TermConditionType.TERM_CONDITION),
 
   isActive: z.boolean(),
   description: z.string().optional(),
   remarks: z.string().optional(),
 
-  productTypeOIDs: z.array(z.string()).optional(),
+  coveredEntityOIDs: z.array(z.string()), // OIDs of Sectors / SectorGroups / GroupTourProducts
+
+  productTypeOIDs: z.array(z.string()),
 });
 
-export type FTFTermCondition = z.infer<typeof FTFTermConditionZ>;
-
-export const TermConditionCoverageZ = EntityZ.extend({
-  entityType: z.literal(EntityType.TERM_CONDITION_COVERAGE),
-
-  termConditionOID: z.string(),
-  coverageType: z.enum(["sectors", "sector-group", "products"]),
-  coverageOID: z.string(),
-});
-
-export type TermConditionCoverage = z.infer<typeof TermConditionCoverageZ>;
-
-export const TermConditionProductTypesZ = EntityZ.extend({
-  entityType: z.literal(EntityType.TERM_CONDITION_PRODUCT_TYPES),
-
-  termConditionOID: z.string(),
-  productTypeOID: z.string(),
-});
-
-export type TermConditionProductTypes = z.infer<typeof TermConditionProductTypesZ>;
+export type TermCondition = z.infer<typeof TermConditionZ>;
