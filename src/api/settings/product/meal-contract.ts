@@ -12,7 +12,6 @@ const CreateMealZ = MealZ.pick({
   type: true,
   seq: true,
   description: true,
-  offlineOperator: true,
 });
 
 const UpdateMealZ = CreateMealZ.omit({
