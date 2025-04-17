@@ -21,11 +21,10 @@ const CreateTermConditionZ = FTFTermConditionZ.pick({
   isCustomized: true,
   isPrint: true,
   type: true,
-  status: true,
+  isActive: true,
   productTypeOIDs: true,
   description: true,
   remarks: true,
-  offlineOperator: true,
 }).extend({
   coverages: z.array(TermConditionCoverageZ).optional(),
 });
