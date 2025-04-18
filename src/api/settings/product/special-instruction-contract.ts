@@ -8,15 +8,15 @@ const basePath = "/api/settings/special-instructions";
 
 const CreateSpecialInstructionZ = SpecialInstructionZ.pick({
   tenantOID: true,
-  isPrepare: true,
+
+  isPreset: true,
   description: true,
-  remark: true,
+
+  remarks: true,
   isActive: true,
   isCustomized: true,
-  offlineOperator: true,
-  sectorOIDs: true,
-  sectorGroupOIDs: true,
-  productOIDs: true,
+
+  coveredEntityOIDs: true,
   productTypeOIDs: true,
 });
 
@@ -52,16 +52,6 @@ export const specialInstructionContract = initContract().router({
     },
   },
 
-  updateSpecialInstruction: {
-    summary: "Update an existing special instruction",
-    method: "PATCH",
-    path: `${basePath}/:specialInstructionOID`,
-    body: UpdateSpecialInstructionZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateSpecialInstructions: {
     summary: "Update multiple existing special instructions",
     method: "POST",
@@ -72,16 +62,6 @@ export const specialInstructionContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated special instructions")),
-    },
-  },
-
-  deleteSpecialInstruction: {
-    summary: "Delete a special instruction",
-    method: "DELETE",
-    path: `${basePath}/:specialInstructionOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 

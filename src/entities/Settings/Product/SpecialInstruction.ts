@@ -13,17 +13,16 @@ export enum SpecialInstructionEvents {
 export const SpecialInstructionZ = EntityZ.extend({
   entityType: z.literal(EntityType.SPECIAL_INSTRUCTION),
 
-  isPrepare: z.boolean(),
-  description: z.string().nullable(),
-  remark: z.string().nullable(),
+  isPreset: z.boolean(),
+  description: z.string().optional(),
+
+  remarks: z.string().optional(),
   isActive: z.boolean().default(true),
-  isCustomized: z.boolean().nullable(),
+  isCustomized: z.boolean().optional(),
 
   // Relationships
-  sectorOIDs: z.array(z.string()).optional(),
-  sectorGroupOIDs: z.array(z.string()).optional(),
-  productOIDs: z.array(z.string()).optional(),
-  productTypeOIDs: z.array(z.string()).optional(),
+  coveredEntityOIDs: z.array(z.string()), // OIDs of Sectors / SectorGroups / GroupTourProducts
+  productTypeOIDs: z.array(z.string()),
 });
 
 export type SpecialInstruction = z.infer<typeof SpecialInstructionZ>;
