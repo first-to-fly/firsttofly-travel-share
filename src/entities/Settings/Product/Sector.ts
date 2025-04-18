@@ -22,7 +22,7 @@ export const SectorZ = EntityZ.extend({
 
   productTypeOIDs: z.array(z.string()).optional(),
 
-  departmentOID: z.string().uuid().optional(),
+  departmentOID: z.string().optional(),
 });
 
 export type Sector = z.infer<typeof SectorZ>;
