@@ -1,10 +1,22 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { RoomConfigurationZ } from "../../../entities/Settings/Product/RoomConfiguration";
+import { RoomConfigurationRuleZ, RoomConfigurationZ } from "../../../entities/Settings/Product/RoomConfiguration";
 
 
 const basePath = "/api/settings/room-configurations";
+
+const CreateRoomConfigurationRuleZ = RoomConfigurationRuleZ.pick({
+  roomType: true,
+  occupancy: true,
+  pricingArrangement: true,
+  isBackendOnly: true,
+  isTcp: true,
+});
+
+const UpdateRoomConfigurationRuleZ = CreateRoomConfigurationRuleZ.extend({
+  oid: z.string().optional(),
+}).partial();
 
 const CreateRoomConfigurationZ = RoomConfigurationZ.pick({
   tenantOID: true,
@@ -13,15 +25,15 @@ const CreateRoomConfigurationZ = RoomConfigurationZ.pick({
   remarks: true,
   childWithoutBedStartAge: true,
   childWithoutBedEndAge: true,
-  typeNames: true,
-  checkChart: true,
-  sectorOIDs: true,
-  sectorGroupOIDs: true,
-  productOIDs: true,
+  coveredEntityOIDs: true,
+}).extend({
+  roomConfigurationRules: z.array(CreateRoomConfigurationRuleZ),
 });
 
 const UpdateRoomConfigurationZ = CreateRoomConfigurationZ.omit({
   tenantOID: true,
+}).extend({
+  roomConfigurationRules: z.array(UpdateRoomConfigurationRuleZ),
 }).partial();
 
 export type UpdateRoomConfiguration = z.infer<typeof UpdateRoomConfigurationZ>;
@@ -54,16 +66,6 @@ export const roomConfigurationContract = initContract().router({
     },
   },
 
-  updateRoomConfiguration: {
-    summary: "Update an existing room configuration",
-    method: "PATCH",
-    path: `${basePath}/:roomConfigurationOID`,
-    body: UpdateRoomConfigurationZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateRoomConfigurations: {
     summary: "Update multiple existing room configurations",
     method: "POST",
@@ -71,16 +73,6 @@ export const roomConfigurationContract = initContract().router({
     body: z.record(z.string().describe("OID of room configuration to update"), UpdateRoomConfigurationZ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated room configurations")),
-    },
-  },
-
-  deleteRoomConfiguration: {
-    summary: "Delete a room configuration",
-    method: "DELETE",
-    path: `${basePath}/:roomConfigurationOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 

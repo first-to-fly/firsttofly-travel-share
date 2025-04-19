@@ -9,45 +9,60 @@ export enum RoomConfigurationEvents {
   ROOM_CONFIGURATION_LIST_UPDATED = "ROOM_CONFIGURATION_LIST_UPDATED",
 }
 
-export const RoomConfigurationZ = EntityZ.extend({
-  entityType: z.literal(EntityType.ROOM_CONFIG),
-
-  name: z.string(),
-  isActive: z.boolean(),
-  remarks: z.string().optional(),
-  childWithoutBedStartAge: z.number().int(),
-  childWithoutBedEndAge: z.number().int(),
-  typeNames: z.string().optional(),
-  checkChart: z.string().optional(),
-
-  sectorOIDs: z.array(z.string()).optional(),
-  sectorGroupOIDs: z.array(z.string()).optional(),
-  productOIDs: z.array(z.string()).optional(),
-
-});
-
-export type RoomConfiguration = z.infer<typeof RoomConfigurationZ>;
+export enum RoomType {
+  SINGLE = "single",
+  TWIN = "twin",
+  TRIPLE = "triple",
+  QUADRUPLE = "quadruple",
+}
 
 export const RoomConfigurationRuleZ = EntityZ.extend({
   entityType: z.literal(EntityType.ROOM_CONFIG_RULE),
 
   roomConfigurationOID: z.string(),
-  formula: z.string().optional(),
-  roomType: z.string().optional(),
-  adultNum: z.number().int().optional(),
-  childWithBedNum: z.number().int().optional(),
-  childWithoutBedNum: z.number().int().optional(),
-  infantNum: z.number().int().optional(),
-  adultSingle: z.number().int().optional(),
-  adultTwin: z.number().int().optional(),
-  adultTriple: z.number().int().optional(),
-  adultQuad: z.number().int().optional(),
-  childWithHalfTwin: z.number().int().optional(),
-  childWithBed: z.number().int().optional(),
-  childWithoutBed: z.number().int().optional(),
-  infant: z.number().int().optional(),
-  isBackend: z.boolean().optional(),
+
+  roomType: z.nativeEnum(RoomType),
+
+  occupancy: z.object({
+    adultNum: z.number().int().nonnegative().lte(4)
+      .optional(),
+    childWithBedNum: z.number().int().nonnegative().lte(4)
+      .optional(),
+    childWithoutBedNum: z.number().int().nonnegative().lte(4)
+      .optional(),
+    infantNum: z.number().int().nonnegative().lte(4)
+      .optional(),
+  }),
+
+  pricingArrangement: z.object({
+    single: z.number().int().nonnegative().optional(),
+    twin: z.number().int().nonnegative().optional(),
+    triple: z.number().int().nonnegative().optional(),
+    quad: z.number().int().nonnegative().optional(),
+    childTwin: z.number().int().nonnegative().optional(),
+    childWithBed: z.number().int().nonnegative().optional(),
+    childNoBed: z.number().int().nonnegative().optional(),
+    infant: z.number().int().nonnegative().optional(),
+  }),
+
+  isBackendOnly: z.boolean().optional(),
   isTcp: z.boolean().optional(),
 });
 
+
+export const RoomConfigurationZ = EntityZ.extend({
+  entityType: z.literal(EntityType.ROOM_CONFIG),
+
+  name: z.string(),
+  isActive: z.boolean().default(true),
+  remarks: z.string().optional(),
+
+  childWithoutBedStartAge: z.number().int().nonnegative(),
+  childWithoutBedEndAge: z.number().int().nonnegative(),
+
+  coveredEntityOIDs: z.array(z.string()).min(1),
+  roomConfigurationRules: z.array(RoomConfigurationRuleZ),
+});
+
+export type RoomConfiguration = z.infer<typeof RoomConfigurationZ>;
 export type RoomConfigurationRule = z.infer<typeof RoomConfigurationRuleZ>;

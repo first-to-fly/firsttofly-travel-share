@@ -31,7 +31,6 @@ export enum EntityType {
   MEAL = "meal",
   ROOM_CONFIG = "roomConfiguration",
   ROOM_CONFIG_RULE = "roomConfigurationRule",
-  ROOM_CONFIG_COVERAGE = "roomConfigurationCoverage",
   SECTOR = "sector",
   SECTOR_GROUP = "sectorGroup",
   TAG = "tag",
