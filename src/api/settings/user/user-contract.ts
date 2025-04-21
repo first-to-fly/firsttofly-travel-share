@@ -103,5 +103,31 @@ export const userContract = initContract().router({
     responses: {
       200: z.boolean(),
     },
+  }, // End of deleteUsers
+
+  inviteUser: {
+    summary: "Invite a user by email",
+    method: "POST",
+    path: `${basePath}/invite`,
+    body: z.object({
+      email: z.string().email(),
+      tenantOID: z.string(),
+    }),
+    responses: {
+      200: z.object({
+        message: z.string(),
+      }),
+    },
+  },
+
+  activateUser: {
+    summary: "Activate a user using an invitation token",
+    method: "GET",
+    path: `${basePath}/activate`,
+    query: z.object({
+      inviteToken: z.string(),
+      tenantOID: z.string(), // Added tenantOID
+    }),
+    responses: { 200: z.boolean() },
   },
 });
