@@ -16,6 +16,28 @@ export enum RoomType {
   QUADRUPLE = "quadruple",
 }
 
+const RoomOccupancyZ = z.object({
+  adultNum: z.number().int().nonnegative().optional(),
+  childWithBedNum: z.number().int().nonnegative().optional(),
+  childWithoutBedNum: z.number().int().nonnegative().optional(),
+  infantNum: z.number().int().nonnegative().optional(),
+});
+
+export type RoomOccupancy = z.infer<typeof RoomOccupancyZ>;
+
+const RoomPricingArrangementZ = z.object({
+  single: z.number().int().nonnegative().optional(),
+  twin: z.number().int().nonnegative().optional(),
+  triple: z.number().int().nonnegative().optional(),
+  quad: z.number().int().nonnegative().optional(),
+  childTwin: z.number().int().nonnegative().optional(),
+  childWithBed: z.number().int().nonnegative().optional(),
+  childNoBed: z.number().int().nonnegative().optional(),
+  infant: z.number().int().nonnegative().optional(),
+});
+
+export type RoomPricingArrangement = z.infer<typeof RoomPricingArrangementZ>;
+
 export const RoomConfigurationRuleZ = EntityZ.extend({
   entityType: z.literal(EntityType.ROOM_CONFIG_RULE),
 
@@ -23,27 +45,9 @@ export const RoomConfigurationRuleZ = EntityZ.extend({
 
   roomType: z.nativeEnum(RoomType),
 
-  occupancy: z.object({
-    adultNum: z.number().int().nonnegative().lte(4)
-      .optional(),
-    childWithBedNum: z.number().int().nonnegative().lte(4)
-      .optional(),
-    childWithoutBedNum: z.number().int().nonnegative().lte(4)
-      .optional(),
-    infantNum: z.number().int().nonnegative().lte(4)
-      .optional(),
-  }),
+  occupancy: RoomOccupancyZ,
 
-  pricingArrangement: z.object({
-    single: z.number().int().nonnegative().optional(),
-    twin: z.number().int().nonnegative().optional(),
-    triple: z.number().int().nonnegative().optional(),
-    quad: z.number().int().nonnegative().optional(),
-    childTwin: z.number().int().nonnegative().optional(),
-    childWithBed: z.number().int().nonnegative().optional(),
-    childNoBed: z.number().int().nonnegative().optional(),
-    infant: z.number().int().nonnegative().optional(),
-  }),
+  pricingArrangement: RoomPricingArrangementZ,
 
   isBackendOnly: z.boolean().optional(),
   isTcp: z.boolean().optional(),
