@@ -26,7 +26,6 @@ const CreateUserZ = UserZ.pick({
   departmentOIDs: true,
   designationOIDs: true,
   roleOIDs: true,
-  isActive: true,
   staffType: true,
   buddyOID: true,
   tourLeadingSkills: true,
@@ -34,11 +33,15 @@ const CreateUserZ = UserZ.pick({
   documentOIDs: true,
 });
 
-const UpdateUserZ = CreateUserZ.omit({
-  email: true,
-}).partial().required({
-  tenantOID: true,
-});
+const UpdateUserZ = CreateUserZ.extend({ isActive: z.boolean() })
+  .omit({
+    email: true,
+  })
+
+  .partial()
+  .required({
+    tenantOID: true,
+  });
 
 export type UpdateUser = z.infer<typeof UpdateUserZ>;
 export type CreateUser = z.infer<typeof CreateUserZ>;
@@ -48,9 +51,11 @@ export const userContract = initContract().router({
     summary: "Get users",
     method: "GET",
     path: basePath,
-    query: z.object({
-      tenantOID: z.string(),
-    }).passthrough(),
+    query: z
+      .object({
+        tenantOID: z.string(),
+      })
+      .passthrough(),
     responses: {
       200: z.object({
         oids: z.array(EntityOIDZ),
@@ -83,10 +88,7 @@ export const userContract = initContract().router({
     summary: "Update multiple users",
     method: "POST",
     path: `${basePath}/batch-update`,
-    body: z.record(
-      z.string().describe("oid of user"),
-      UpdateUserZ,
-    ),
+    body: z.record(z.string().describe("oid of user"), UpdateUserZ),
     responses: {
       200: z.array(EntityOIDZ),
     },
@@ -96,29 +98,16 @@ export const userContract = initContract().router({
     summary: "Delete users",
     method: "POST",
     path: `${basePath}/batch-delete`,
-    body: z.array(z.object({
-      userOID: z.string(),
-      tenantOID: z.string(),
-    })),
+    body: z.array(
+      z.object({
+        userOID: z.string(),
+        tenantOID: z.string(),
+      }),
+    ),
     responses: {
       200: z.boolean(),
     },
   }, // End of deleteUsers
-
-  inviteUser: {
-    summary: "Invite a user by email",
-    method: "POST",
-    path: `${basePath}/invite`,
-    body: z.object({
-      email: z.string().email(),
-      tenantOID: z.string(),
-    }),
-    responses: {
-      200: z.object({
-        message: z.string(),
-      }),
-    },
-  },
 
   activateUser: {
     summary: "Activate a user using an invitation token",
