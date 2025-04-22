@@ -119,4 +119,19 @@ export const userContract = initContract().router({
     }),
     responses: { 200: z.boolean() },
   },
+
+  getCustomTokenByInviteToken: {
+    method: "POST",
+    path: `${basePath}/get-custom-token-by-invite-token`,
+    body: z.object({
+      inviteToken: z.string().min(1),
+      tenantOID: EntityOIDZ, // Added tenantOID
+    }),
+    responses: {
+      200: z.object({
+        customToken: z.string(),
+      }),
+    },
+    summary: "Get Firebase custom token using an invite token",
+  },
 });
