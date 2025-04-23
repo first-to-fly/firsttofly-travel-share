@@ -45,26 +45,6 @@ export const sectorGroupContract = initContract().router({
     },
   },
 
-  updateSectorGroup: {
-    summary: "Update an existing sector group",
-    method: "PATCH",
-    path: `${basePath}/:sectorGroupOID`,
-    body: UpdateSectorGroupZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
-  deleteSectorGroup: {
-    summary: "Delete a sector group",
-    method: "DELETE",
-    path: `${basePath}/:sectorGroupOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
-    },
-  },
-
   updateSectorGroups: {
     summary: "Update multiple existing sector groups",
     method: "POST",
