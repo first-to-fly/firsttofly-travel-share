@@ -44,22 +44,7 @@ export const roleContract = initContract().router({
       200: EntityOIDZ,
     },
   },
-  updateRole: {
-    summary: "Update a role",
-    method: "PUT",
-    path: `${basePath}/:roleOID`,
-    pathParams: z.object({
-      roleOID: EntityOIDZ,
-    }),
-    body: UpdateRoleZ,
 
-    responses: {
-      200: EntityOIDZ,
-      404: z.object({
-        message: z.string(),
-      }),
-    },
-  },
   updateRoles: {
     summary: "Update multiple roles at once",
     method: "POST",
@@ -69,6 +54,7 @@ export const roleContract = initContract().router({
       200: z.array(EntityOIDZ),
     },
   },
+
   assignUserRoles: {
     summary: "Assign roles to a user",
     method: "POST",
@@ -89,21 +75,7 @@ export const roleContract = initContract().router({
       }),
     },
   },
-  deleteRole: {
-    summary: "Delete a role",
-    method: "DELETE",
-    path: `${basePath}/:roleOID`,
-    pathParams: z.object({
-      roleOID: EntityOIDZ,
-    }),
-    body: undefined,
-    responses: {
-      200: z.boolean(),
-      404: z.object({
-        message: z.string(),
-      }),
-    },
-  },
+
   deleteRoles: {
     summary: "Delete multiple roles at once",
     method: "POST",
