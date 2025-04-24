@@ -48,16 +48,6 @@ export const costingTemplateContract = initContract().router({
     },
   },
 
-  updateCostingTemplate: {
-    summary: "Update an existing costing template",
-    method: "PATCH",
-    path: `${basePath}/:costingTemplateOID`,
-    body: UpdateCostingTemplateZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateCostingTemplates: {
     summary: "Update multiple existing costing templates",
     method: "POST",
@@ -68,16 +58,6 @@ export const costingTemplateContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated costing templates")),
-    },
-  },
-
-  deleteCostingTemplate: {
-    summary: "Delete a costing template",
-    method: "DELETE",
-    path: `${basePath}/:costingTemplateOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 
