@@ -2,8 +2,6 @@ export enum EntityType {
   USER = "user",
   USER_TENANT = "userTenant",
 
-  PRODUCT = "product",
-
   GROUP_TOUR_PRODUCT = "groupTourProduct",
   GROUP_TOUR_ITINERARY = "groupTourItinerary",
   GROUP_TOUR_ITINERARY_DAY = "groupTourItineraryDay",
