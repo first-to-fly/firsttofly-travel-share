@@ -47,16 +47,6 @@ export const stationCodeContract = initContract().router({
     },
   },
 
-  updateStationCode: {
-    summary: "Update an existing station code",
-    method: "PATCH",
-    path: `${basePath}/:stationCodeOID`,
-    body: UpdateStationCodeZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateStationCodes: {
     summary: "Update multiple existing station codes",
     method: "POST",
@@ -67,16 +57,6 @@ export const stationCodeContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated station codes")),
-    },
-  },
-
-  deleteStationCode: {
-    summary: "Delete a station code",
-    method: "DELETE",
-    path: `${basePath}/:stationCodeOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 
