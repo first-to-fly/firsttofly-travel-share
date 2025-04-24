@@ -49,26 +49,6 @@ export const sectorContract = initContract().router({
     },
   },
 
-  updateSector: {
-    summary: "Update an existing sector",
-    method: "PATCH",
-    path: `${basePath}/:sectorOID`,
-    body: UpdateSectorZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
-  deleteSector: {
-    summary: "Delete a sector",
-    method: "DELETE",
-    path: `${basePath}/:sectorOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
-    },
-  },
-
   updateSectors: {
     summary: "Update multiple existing sectors",
     method: "POST",
