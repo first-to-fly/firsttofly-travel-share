@@ -35,16 +35,6 @@ export const departmentContract = initContract().router({
     },
   },
 
-  updateDepartment: {
-    summary: "Update an existing department",
-    method: "PATCH",
-    path: `${basePath}/:departmentOID`,
-    body: UpdateDepartmentZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateDepartments: {
     summary: "Update an existing department",
     method: "POST",
@@ -69,16 +59,6 @@ export const departmentContract = initContract().router({
       200: z.object({
         oids: z.array(z.string()),
       }),
-    },
-  },
-
-  deleteDepartment: {
-    summary: "Delete a department",
-    method: "DELETE",
-    path: `${basePath}/:departmentOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 
