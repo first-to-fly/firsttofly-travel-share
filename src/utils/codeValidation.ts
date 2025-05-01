@@ -10,7 +10,11 @@
  *          { result: "duplicate", code: string, ids: string[] } if a code is assigned to multiple IDs,
  *          { result: "valid" } if no duplicates are found
  */
-export function validateCode(currentIdToCodeMap: Map<string, string>, comingIdToCodeMap: Map<string, string>) {
+export function validateCode(currentIdToCodeMap: Map<string, string>, comingIdToCodeMap: Map<string, string>): {
+  result: "duplicate" | "valid";
+  code?: string;
+  ids?: string[];
+} {
   // Create a map to track which IDs are using each code
   const codeToIdsMap = new Map<string, string[]>();
 
