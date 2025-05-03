@@ -1,8 +1,8 @@
 import { z } from "zod";
 
-import { MultiLangRecordZ } from "../../types/multipleLanguage";
-import { EntityZ } from "../entity";
-import { EntityType } from "../entityType";
+import { MultiLangRecordZ } from "../../../types/multipleLanguage";
+import { EntityZ } from "../../entity";
+import { EntityType } from "../../entityType";
 
 
 export enum TermEvents {

@@ -6,6 +6,7 @@ import { privacyPolicyContract } from "./privacy-policy-contract";
 import { referenceCodeContract } from "./reference-code-contract";
 import { stationCodeContract } from "./station-code-contract";
 import { tenantContract } from "./tenant-contract";
+import { termContract } from "./term-contract";
 
 
 export const generalSettingContract = initContract().router({
@@ -14,5 +15,6 @@ export const generalSettingContract = initContract().router({
   privacyPolicy: privacyPolicyContract,
   referenceCode: referenceCodeContract,
   stationCode: stationCodeContract,
-  tenantContract: tenantContract,
+  tenant: tenantContract,
+  term: termContract,
 });

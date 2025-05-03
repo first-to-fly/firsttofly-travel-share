@@ -1,5 +1,5 @@
 import { EntityType } from "../entities/entityType";
-import { TermType } from "../entities/Term/Term";
+import { TermType } from "../entities/Settings/General/Term";
 
 
 export const ENTITY_FIELD_TERM_TYPE = {

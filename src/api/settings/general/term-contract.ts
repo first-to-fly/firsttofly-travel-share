@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { TermType, TermZ } from "../../entities/Term/Term";
+import { TermZ } from "../../../entities/Settings/General/Term";
 
 
 const basePath = "/api/settings/terms";
@@ -25,7 +25,6 @@ export const termContract = initContract().router({
     path: basePath,
     query: z.object({
       tenantOID: z.string(),
-      type: z.nativeEnum(TermType),
     }).passthrough(),
     responses: {
       200: z.object({
@@ -44,16 +43,6 @@ export const termContract = initContract().router({
     },
   },
 
-  updateTerm: {
-    summary: "Update an existing term",
-    method: "PATCH",
-    path: `${basePath}/:termOID`,
-    body: UpdateTermZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateTerms: {
     summary: "Update multiple existing terms",
     method: "POST",
@@ -64,16 +53,6 @@ export const termContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated terms")),
-    },
-  },
-
-  deleteTerm: {
-    summary: "Delete a term",
-    method: "DELETE",
-    path: `${basePath}/:termOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 

@@ -7,7 +7,6 @@ import { i18nContract } from "./i18n/contract";
 import { iataContract } from "./iata/iata.contract";
 import { productsContract } from "./products/contract";
 import { settingsContract } from "./settings/contract";
-import { termContract } from "./term/term-contract";
 
 
 export const apiContract = initContract().router({
@@ -16,7 +15,6 @@ export const apiContract = initContract().router({
   i18n: i18nContract,
   products: productsContract,
   settings: settingsContract,
-  term: termContract,
   document: documentContract,
   authorization: authorizationContract,
 });
