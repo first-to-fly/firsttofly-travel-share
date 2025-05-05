@@ -7,33 +7,19 @@ import { GroupTourPricingZ } from "../../entities/Products/GroupTourPricing";
 const basePath = "/api/products/group-tour-pricings";
 
 // Create/Update schemas
-const CreateGroupTourPricingZ = GroupTourPricingZ.pick({
-
-  groupTourProductOID: true,
-  tenantOID: true,
-
-  groupTourCostingOID: true,
-  name: true,
-  code: true,
-
-  remarks: true,
-  targetYieldPercentage: true,
-
-  validityStartDate: true,
-  validityEndDate: true,
-
-  isActive: true,
-
-  fullFare: true,
-  landFare: true,
-  airportTax: true,
-
-  groupTourPricingEntries: true,
+const CreateGroupTourPricingZ = GroupTourPricingZ.omit({
+  oid: true,
+  entityType: true,
+  createdBy: true,
+  updatedBy: true,
+  createdAt: true,
+  updatedAt: true,
+  deletedAt: true,
 });
 
 const UpdateGroupTourPricingZ = CreateGroupTourPricingZ.omit({
-  groupTourProductOID: true,
   tenantOID: true,
+  groupTourProductOID: true,
 }).partial();
 
 export type UpdateGroupTourPricing = z.infer<typeof UpdateGroupTourPricingZ>;
