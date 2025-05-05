@@ -1,0 +1,28 @@
+import { z } from "zod";
+
+import { EntityZ } from "../entity";
+import { EntityType } from "../entityType";
+
+
+export enum TransportGroupType {
+  FLIGHT = "flight",
+  BUS = "bus",
+  CRUISE = "cruise",
+  TRAIN = "train",
+  FERRY = "ferry",
+}
+
+export enum TransportGroupEvents {
+  TRANSPORT_GROUP_UPDATED = "TRANSPORT_GROUP_UPDATED",
+  TRANSPORT_GROUP_LIST_UPDATED = "TRANSPORT_GROUP_LIST_UPDATED",
+}
+
+export const TransportGroupZ = EntityZ.extend({
+  entityType: z.literal(EntityType.TRANSPORT_GROUP),
+  name: z.string(),
+  capacity: z.number(),
+  mainType: z.nativeEnum(TransportGroupType).nullable(),
+  description: z.string().nullable(),
+});
+
+export type TransportGroup = z.infer<typeof TransportGroupZ>;

@@ -25,6 +25,8 @@ import { StationCodePermissions } from "./entities/station-code.permission";
 import { TenantPermissions } from "./entities/tenant.permission";
 import { TermPermissions } from "./entities/term.permission";
 import { TermConditionPermissions } from "./entities/term-condition.permission";
+import { TransportGroupPermissions } from "./entities/transport-group.permission";
+import { TransportSegmentPermissions } from "./entities/transport-segment.permission";
 import { UsefulInfoPermissions } from "./entities/useful-info.permission";
 import { UserPermissions } from "./entities/user.permission";
 import type { PermissionDeclaration } from "./permissions.types";
@@ -69,6 +71,8 @@ const EntityPermissions = {
   GroupTourCosting: GroupTourCostingPermissions,
   GroupTourProduct: GroupTourProductPermissions,
   GroupTourPricing: GroupTourPricingPermissions,
+  TransportGroup: TransportGroupPermissions,
+  TransportSegment: TransportSegmentPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
