@@ -15,6 +15,7 @@ export const GroupTourCostingEntryZ = EntityZ.extend({
   groupTourCostingOID: z.string(),
 
   // Copy from CostingItem
+  name: z.string(),
   category: z.nativeEnum(CostingItemCategory),
   calculationBasis: z.nativeEnum(CalculationBasis),
   applyToPackageType: z.nativeEnum(PackageType),
