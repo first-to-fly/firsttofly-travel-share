@@ -1,8 +1,9 @@
 import { z } from "zod";
 
+import { DateISOStringZ } from "../../types/date";
 import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
-import { TransportGroupType } from "./transport-group";
+import { TransportGroupType } from "./TransportGroup";
 
 
 export enum TransportSegmentEvents {
@@ -11,14 +12,18 @@ export enum TransportSegmentEvents {
 }
 
 // Base TransportSegment entity with common fields
-export const TransportSegmentZ = EntityZ.extend({
+export const BaseTransportSegmentZ = EntityZ.extend({
   entityType: z.literal(EntityType.TRANSPORT_SEGMENT),
+
   transportGroupOID: z.string(),
   type: z.nativeEnum(TransportGroupType),
+
   originLocation: z.string(),
   destinationLocation: z.string(),
-  departureDateTime: z.date(),
-  arrivalDateTime: z.date(),
+
+  departureDateTime: DateISOStringZ,
+  arrivalDateTime: DateISOStringZ,
+
   capacity: z.number().nullable(),
 });
 
@@ -55,24 +60,24 @@ export const FerrySegmentDetailsZ = z.object({
 });
 
 // Combined transport segment with type-specific details
-export const TransportSegmentWithDetailsZ = z.discriminatedUnion("type", [
-  TransportSegmentZ.extend({
+export const TransportSegmentZ = z.discriminatedUnion("type", [
+  BaseTransportSegmentZ.extend({
     type: z.literal(TransportGroupType.FLIGHT),
     details: FlightSegmentDetailsZ,
   }),
-  TransportSegmentZ.extend({
+  BaseTransportSegmentZ.extend({
     type: z.literal(TransportGroupType.BUS),
     details: BusSegmentDetailsZ,
   }),
-  TransportSegmentZ.extend({
+  BaseTransportSegmentZ.extend({
     type: z.literal(TransportGroupType.CRUISE),
     details: CruiseSegmentDetailsZ,
   }),
-  TransportSegmentZ.extend({
+  BaseTransportSegmentZ.extend({
     type: z.literal(TransportGroupType.TRAIN),
     details: TrainSegmentDetailsZ,
   }),
-  TransportSegmentZ.extend({
+  BaseTransportSegmentZ.extend({
     type: z.literal(TransportGroupType.FERRY),
     details: FerrySegmentDetailsZ,
   }),
@@ -84,4 +89,3 @@ export type BusSegmentDetails = z.infer<typeof BusSegmentDetailsZ>;
 export type CruiseSegmentDetails = z.infer<typeof CruiseSegmentDetailsZ>;
 export type TrainSegmentDetails = z.infer<typeof TrainSegmentDetailsZ>;
 export type FerrySegmentDetails = z.infer<typeof FerrySegmentDetailsZ>;
-export type TransportSegmentWithDetails = z.infer<typeof TransportSegmentWithDetailsZ>;

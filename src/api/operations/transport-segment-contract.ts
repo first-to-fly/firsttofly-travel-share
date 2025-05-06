@@ -3,19 +3,19 @@ import { z } from "zod";
 
 import { TransportGroupType } from "../../entities/Operations/TransportGroup";
 import {
+  BaseTransportSegmentZ,
   BusSegmentDetailsZ,
   CruiseSegmentDetailsZ,
   FerrySegmentDetailsZ,
   FlightSegmentDetailsZ,
   TrainSegmentDetailsZ,
-  TransportSegmentZ,
 } from "../../entities/Operations/TransportSegment";
 
 
 const basePath = "/api/transport-segments";
 
 // Create a base transport segment schema
-const BaseCreateTransportSegmentZ = TransportSegmentZ.pick({
+const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   tenantOID: true,
   transportGroupOID: true,
   type: true,
@@ -64,58 +64,56 @@ const CreateTransportSegmentZ = z.discriminatedUnion("type", [
 // Update schemas
 const BaseUpdateTransportSegmentZ = BaseCreateTransportSegmentZ.omit({
   tenantOID: true,
-  type: true, // Type should not be updatable once set
+  transportGroupOID: true,
 }).partial();
 
 const UpdateFlightSegmentZ = BaseUpdateTransportSegmentZ.extend({
-  details: FlightSegmentDetailsZ.partial(),
-});
+  details: FlightSegmentDetailsZ,
+}).partial();
 
 const UpdateBusSegmentZ = BaseUpdateTransportSegmentZ.extend({
-  details: BusSegmentDetailsZ.partial(),
-});
+  details: BusSegmentDetailsZ,
+}).partial();
 
 const UpdateCruiseSegmentZ = BaseUpdateTransportSegmentZ.extend({
-  details: CruiseSegmentDetailsZ.partial(),
-});
+  details: CruiseSegmentDetailsZ,
+}).partial();
 
 const UpdateTrainSegmentZ = BaseUpdateTransportSegmentZ.extend({
-  details: TrainSegmentDetailsZ.partial(),
-});
+  details: TrainSegmentDetailsZ,
+}).partial();
 
 const UpdateFerrySegmentZ = BaseUpdateTransportSegmentZ.extend({
-  details: FerrySegmentDetailsZ.partial(),
-});
+  details: FerrySegmentDetailsZ,
+}).partial();
 
 // Create a map for update schemas based on segment type
-const UpdateTransportSegmentMapZ = {
-  [TransportGroupType.FLIGHT]: UpdateFlightSegmentZ,
-  [TransportGroupType.BUS]: UpdateBusSegmentZ,
-  [TransportGroupType.CRUISE]: UpdateCruiseSegmentZ,
-  [TransportGroupType.TRAIN]: UpdateTrainSegmentZ,
-  [TransportGroupType.FERRY]: UpdateFerrySegmentZ,
-};
+const UpdateTransportSegmentZ = z.discriminatedUnion("type", [
+  UpdateFlightSegmentZ,
+  UpdateBusSegmentZ,
+  UpdateCruiseSegmentZ,
+  UpdateTrainSegmentZ,
+  UpdateFerrySegmentZ,
+]);
 
 export type CreateTransportSegment = z.infer<typeof CreateTransportSegmentZ>;
-export type UpdateTransportSegmentMap = {
-  [K in TransportGroupType]: z.infer<typeof UpdateTransportSegmentMapZ[K]>
-};
+export type UpdateTransportSegment = z.infer<typeof UpdateTransportSegmentZ>;
 
 export const transportSegmentContract = initContract().router({
-  getTransportSegments: {
-    summary: "Get transport segments",
-    method: "GET",
-    path: basePath,
-    query: z.object({
-      tenantOID: z.string(),
-      transportGroupOID: z.string().optional(),
-    }).passthrough(),
-    responses: {
-      200: z.object({
-        oids: z.array(z.string()),
-      }),
-    },
-  },
+  // getTransportSegments: {
+  //   summary: "Get transport segments",
+  //   method: "GET",
+  //   path: basePath,
+  //   query: z.object({
+  //     tenantOID: z.string(),
+  //     transportGroupOID: z.string().optional(),
+  //   }).passthrough(),
+  //   responses: {
+  //     200: z.object({
+  //       oids: z.array(z.string()),
+  //     }),
+  //   },
+  // },
 
   createTransportSegment: {
     summary: "Create a new transport segment",
@@ -127,43 +125,16 @@ export const transportSegmentContract = initContract().router({
     },
   },
 
-  updateTransportSegment: {
-    summary: "Update an existing transport segment",
-    method: "PATCH",
-    path: `${basePath}/:transportSegmentOID`,
-    body: z.object({
-      // We'll determine the update schema based on the segment type at runtime
-      updates: z.any(),
-      type: z.nativeEnum(TransportGroupType),
-    }),
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateTransportSegments: {
     summary: "Update multiple existing transport segments",
     method: "POST",
     path: `${basePath}/batch-update`,
-    body: z.array(
-      z.object({
-        oid: z.string().describe("OID of transport segment to update"),
-        type: z.nativeEnum(TransportGroupType),
-        updates: z.any(),
-      }),
+    body: z.record(
+      z.string().describe("OID of transport segment to update"),
+      UpdateTransportSegmentZ,
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated transport segments")),
-    },
-  },
-
-  deleteTransportSegment: {
-    summary: "Delete a transport segment",
-    method: "DELETE",
-    path: `${basePath}/:transportSegmentOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 

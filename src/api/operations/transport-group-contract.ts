@@ -46,16 +46,6 @@ export const transportGroupContract = initContract().router({
     },
   },
 
-  updateTransportGroup: {
-    summary: "Update an existing transport group",
-    method: "PATCH",
-    path: `${basePath}/:transportGroupOID`,
-    body: UpdateTransportGroupZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateTransportGroups: {
     summary: "Update multiple existing transport groups",
     method: "POST",
@@ -66,16 +56,6 @@ export const transportGroupContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated transport groups")),
-    },
-  },
-
-  deleteTransportGroup: {
-    summary: "Delete a transport group",
-    method: "DELETE",
-    path: `${basePath}/:transportGroupOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 
