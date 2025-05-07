@@ -69,23 +69,33 @@ const BaseUpdateTransportSegmentZ = BaseCreateTransportSegmentZ.omit({
 
 const UpdateFlightSegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: FlightSegmentDetailsZ,
-}).partial();
+}).partial().extend({
+  type: z.literal(TransportGroupType.FLIGHT),
+});
 
 const UpdateBusSegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: BusSegmentDetailsZ,
-}).partial();
+}).partial().extend({
+  type: z.literal(TransportGroupType.BUS),
+});
 
 const UpdateCruiseSegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: CruiseSegmentDetailsZ,
-}).partial();
+}).partial().extend({
+  type: z.literal(TransportGroupType.CRUISE),
+});
 
 const UpdateTrainSegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: TrainSegmentDetailsZ,
-}).partial();
+}).partial().extend({
+  type: z.literal(TransportGroupType.TRAIN),
+});
 
 const UpdateFerrySegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: FerrySegmentDetailsZ,
-}).partial();
+}).partial().extend({
+  type: z.literal(TransportGroupType.FERRY),
+});
 
 // Create a map for update schemas based on segment type
 const UpdateTransportSegmentZ = z.discriminatedUnion("type", [
