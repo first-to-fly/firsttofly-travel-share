@@ -58,5 +58,8 @@ export enum EntityType {
   // USER SETTINGS
   ROLE = "role",
 
+  // TRANSPORT MANAGEMENT
+  TRANSPORT_GROUP = "transportGroup",
+  TRANSPORT_SEGMENT = "transportSegment",
 }
 export const EntityTypes = Object.values(EntityType);
