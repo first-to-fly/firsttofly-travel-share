@@ -1,22 +1,20 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { EntityOIDZ } from "../entities/entity";
-import { SupplierProfileZ } from "../entities/Settings/General/SupplierProfile";
+import { EntityOIDZ } from "../../../entities/entity";
+import { SupplierProfileZ } from "../../../entities/Settings/General/SupplierProfile";
 // Adjusted path
 
-const basePath = "/api/supplier-profiles";
+const basePath = "/api/settings/supplier-profiles";
 
 // Define Create/Update Schemas
 // For SupplierProfile, most fields can be updated.
 // 'tenantId' is required for creation and usually not updatable directly.
-// 'id', 'oid', 'entityType', 'createdAt', 'updatedAt', 'deletedAt', 'createdBy', 'updatedBy' are typically managed by the system.
 
 const UpdateSupplierProfileFieldsZ = SupplierProfileZ.omit({
   id: true, // Assuming 'id' is the internal UUID, 'oid' is the external one from EntityZ
   oid: true,
   entityType: true,
-  tenantId: true, // Usually not updatable post-creation
   createdAt: true,
   updatedAt: true,
   deletedAt: true,

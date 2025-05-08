@@ -1,18 +1,17 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { EntityOIDZ } from "../entities/entity";
-import { SupplierContractZ } from "../entities/Settings/General/SupplierContract";
+import { EntityOIDZ } from "../../../entities/entity";
+import { SupplierContractZ } from "../../../entities/Settings/General/SupplierContract";
 // Corrected path casing
 
-const basePath = "/api/supplier-contracts";
+const basePath = "/api/settings/supplier-contracts";
 
 // Define Create/Update Schemas
 const UpdateSupplierContractFieldsZ = SupplierContractZ.omit({
   id: true,
   oid: true,
   entityType: true,
-  tenantId: true, // tenantOID is from EntityZ, supplierProfileId is part of the entity
   createdAt: true,
   updatedAt: true,
   deletedAt: true,
