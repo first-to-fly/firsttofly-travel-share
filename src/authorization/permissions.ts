@@ -7,6 +7,7 @@ import { DesignationPermissions } from "./entities/designation.permission";
 import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
 import { GroupTourCostingPermissions } from "./entities/group-tour-costing.permission";
+import { GroupTourItineraryPermissions } from "./entities/group-tour-itinerary.permission";
 import { GroupTourPricingPermissions } from "./entities/group-tour-pricing.permission";
 import { GroupTourProductPermissions } from "./entities/group-tour-product.permission";
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
@@ -73,6 +74,7 @@ const EntityPermissions = {
   GroupTourCosting: GroupTourCostingPermissions,
   GroupTourProduct: GroupTourProductPermissions,
   GroupTourPricing: GroupTourPricingPermissions,
+  GroupTourItinerary: GroupTourItineraryPermissions,
   TransportGroup: TransportGroupPermissions,
   TransportSegment: TransportSegmentPermissions,
   SupplierProfile: SupplierProfilePermissions,
