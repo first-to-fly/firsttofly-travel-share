@@ -1,5 +1,7 @@
 import { initContract } from "@ts-rest/core";
 
+import { supplierContractContract } from "../../supplier-contract-contract";
+import { supplierProfileContract } from "../../supplier-profile-contract";
 import { locationContract } from "./location-contract";
 import { poiContract } from "./poi-contract";
 import { privacyPolicyContract } from "./privacy-policy-contract";
@@ -17,4 +19,6 @@ export const generalSettingContract = initContract().router({
   stationCode: stationCodeContract,
   tenant: tenantContract,
   term: termContract,
+  supplierProfile: supplierProfileContract,
+  supplierContract: supplierContractContract,
 });
