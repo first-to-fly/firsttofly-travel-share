@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { TransportGroupType } from "../../entities/Operations/TransportGroup";
+import { TransportType } from "../../entities/Operations/TransportGroup";
 import {
   BaseTransportSegmentZ,
   BusSegmentDetailsZ,
@@ -12,7 +12,7 @@ import {
 } from "../../entities/Operations/TransportSegment";
 
 
-const basePath = "/api/transport-segments";
+const basePath = "/api/operations/transport-segments";
 
 // Create a base transport segment schema
 const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
@@ -28,27 +28,27 @@ const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
 
 // Create specialized schemas based on segment type
 const CreateFlightSegmentZ = BaseCreateTransportSegmentZ.extend({
-  type: z.literal(TransportGroupType.FLIGHT),
+  type: z.literal(TransportType.FLIGHT),
   details: FlightSegmentDetailsZ,
 });
 
 const CreateBusSegmentZ = BaseCreateTransportSegmentZ.extend({
-  type: z.literal(TransportGroupType.BUS),
+  type: z.literal(TransportType.BUS),
   details: BusSegmentDetailsZ,
 });
 
 const CreateCruiseSegmentZ = BaseCreateTransportSegmentZ.extend({
-  type: z.literal(TransportGroupType.CRUISE),
+  type: z.literal(TransportType.CRUISE),
   details: CruiseSegmentDetailsZ,
 });
 
 const CreateTrainSegmentZ = BaseCreateTransportSegmentZ.extend({
-  type: z.literal(TransportGroupType.TRAIN),
+  type: z.literal(TransportType.TRAIN),
   details: TrainSegmentDetailsZ,
 });
 
 const CreateFerrySegmentZ = BaseCreateTransportSegmentZ.extend({
-  type: z.literal(TransportGroupType.FERRY),
+  type: z.literal(TransportType.FERRY),
   details: FerrySegmentDetailsZ,
 });
 
@@ -70,31 +70,31 @@ const BaseUpdateTransportSegmentZ = BaseCreateTransportSegmentZ.omit({
 const UpdateFlightSegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: FlightSegmentDetailsZ,
 }).partial().extend({
-  type: z.literal(TransportGroupType.FLIGHT),
+  type: z.literal(TransportType.FLIGHT),
 });
 
 const UpdateBusSegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: BusSegmentDetailsZ,
 }).partial().extend({
-  type: z.literal(TransportGroupType.BUS),
+  type: z.literal(TransportType.BUS),
 });
 
 const UpdateCruiseSegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: CruiseSegmentDetailsZ,
 }).partial().extend({
-  type: z.literal(TransportGroupType.CRUISE),
+  type: z.literal(TransportType.CRUISE),
 });
 
 const UpdateTrainSegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: TrainSegmentDetailsZ,
 }).partial().extend({
-  type: z.literal(TransportGroupType.TRAIN),
+  type: z.literal(TransportType.TRAIN),
 });
 
 const UpdateFerrySegmentZ = BaseUpdateTransportSegmentZ.extend({
   details: FerrySegmentDetailsZ,
 }).partial().extend({
-  type: z.literal(TransportGroupType.FERRY),
+  type: z.literal(TransportType.FERRY),
 });
 
 // Create a map for update schemas based on segment type

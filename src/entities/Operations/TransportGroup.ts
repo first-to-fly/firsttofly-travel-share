@@ -4,7 +4,7 @@ import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
 
-export enum TransportGroupType {
+export enum TransportType {
   FLIGHT = "flight",
   BUS = "bus",
   CRUISE = "cruise",
@@ -21,7 +21,7 @@ export const TransportGroupZ = EntityZ.extend({
   entityType: z.literal(EntityType.TRANSPORT_GROUP),
   name: z.string(),
   capacity: z.number(),
-  mainType: z.nativeEnum(TransportGroupType).nullable(),
+  mainType: z.nativeEnum(TransportType).nullable(),
   description: z.string().nullable(),
 });
 

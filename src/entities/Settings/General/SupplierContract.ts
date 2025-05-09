@@ -1,8 +1,9 @@
 import { z } from "zod";
 
 import { DateISOStringZ } from "../../../types/date";
+import { NamedURLZ } from "../../../types/url";
 import { EntityZ } from "../../entity";
-// Base entity schema
+
 
 export const SupplierContractTypeEnum = z.enum([
   "inventory",
@@ -16,23 +17,16 @@ export type SupplierContractType = z.infer<typeof SupplierContractTypeEnum>;
 export const SupplierContractStatusEnum = z.enum(["active", "inactive", "expired"]);
 export type SupplierContractStatus = z.infer<typeof SupplierContractStatusEnum>;
 
-export const ContractFileZ = z.object({
-  filename: z.string(),
-  url: z.string().url(),
-});
-export type ContractFile = z.infer<typeof ContractFileZ>;
 
 export const SupplierContractZ = EntityZ.extend({
-  // tenantOID is in EntityZ
-  supplierProfileId: z.string().uuid(), // Assuming OID of supplier profile
+  supplierProfileId: z.string().uuid(),
   name: z.string(),
   type: SupplierContractTypeEnum,
-  details: z.record(z.any()), // JSONB, schema varies by type
+  details: z.record(z.string(), z.unknown()),
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ,
   status: SupplierContractStatusEnum.default("active"),
-  contractFiles: z.array(ContractFileZ).nullable().optional(),
-  // createdBy, createdAt, updatedBy, updatedAt, deletedAt are in EntityZ
+  contractFiles: z.array(NamedURLZ).optional(),
 });
 
 export enum SupplierContractEvents {

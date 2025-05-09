@@ -4,7 +4,7 @@ import { z } from "zod";
 import { TransportGroupZ } from "../../entities/Operations/TransportGroup";
 
 
-const basePath = "/api/transport-groups";
+const basePath = "/api/operations/transport-groups";
 
 const CreateTransportGroupZ = TransportGroupZ.pick({
   tenantOID: true,

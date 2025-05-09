@@ -28,6 +28,7 @@ import { SupplierProfilePermissions } from "./entities/supplier-profile.permissi
 import { TenantPermissions } from "./entities/tenant.permission";
 import { TermPermissions } from "./entities/term.permission";
 import { TermConditionPermissions } from "./entities/term-condition.permission";
+import { TourDeparturePermissions } from "./entities/tour-departure.permission";
 import { TransportGroupPermissions } from "./entities/transport-group.permission";
 import { TransportSegmentPermissions } from "./entities/transport-segment.permission";
 import { UsefulInfoPermissions } from "./entities/useful-info.permission";
@@ -75,6 +76,7 @@ const EntityPermissions = {
   GroupTourProduct: GroupTourProductPermissions,
   GroupTourPricing: GroupTourPricingPermissions,
   GroupTourItinerary: GroupTourItineraryPermissions,
+  TourDeparture: TourDeparturePermissions,
   TransportGroup: TransportGroupPermissions,
   TransportSegment: TransportSegmentPermissions,
   SupplierProfile: SupplierProfilePermissions,

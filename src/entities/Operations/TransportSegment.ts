@@ -3,7 +3,7 @@ import { z } from "zod";
 import { DateISOStringZ } from "../../types/date";
 import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
-import { TransportGroupType } from "./TransportGroup";
+import { TransportType } from "./TransportGroup";
 
 
 export enum TransportSegmentEvents {
@@ -16,7 +16,7 @@ export const BaseTransportSegmentZ = EntityZ.extend({
   entityType: z.literal(EntityType.TRANSPORT_SEGMENT),
 
   transportGroupOID: z.string(),
-  type: z.nativeEnum(TransportGroupType),
+  type: z.nativeEnum(TransportType),
 
   originLocation: z.string(),
   destinationLocation: z.string(),
@@ -62,23 +62,23 @@ export const FerrySegmentDetailsZ = z.object({
 // Combined transport segment with type-specific details
 export const TransportSegmentZ = z.discriminatedUnion("type", [
   BaseTransportSegmentZ.extend({
-    type: z.literal(TransportGroupType.FLIGHT),
+    type: z.literal(TransportType.FLIGHT),
     details: FlightSegmentDetailsZ,
   }),
   BaseTransportSegmentZ.extend({
-    type: z.literal(TransportGroupType.BUS),
+    type: z.literal(TransportType.BUS),
     details: BusSegmentDetailsZ,
   }),
   BaseTransportSegmentZ.extend({
-    type: z.literal(TransportGroupType.CRUISE),
+    type: z.literal(TransportType.CRUISE),
     details: CruiseSegmentDetailsZ,
   }),
   BaseTransportSegmentZ.extend({
-    type: z.literal(TransportGroupType.TRAIN),
+    type: z.literal(TransportType.TRAIN),
     details: TrainSegmentDetailsZ,
   }),
   BaseTransportSegmentZ.extend({
-    type: z.literal(TransportGroupType.FERRY),
+    type: z.literal(TransportType.FERRY),
     details: FerrySegmentDetailsZ,
   }),
 ]);
