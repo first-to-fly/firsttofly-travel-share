@@ -20,6 +20,24 @@ export const GroupTourPricingEntryZ = z.object({
   }),
 });
 
+export const GroupTourPricingDiscountZ = z.object({
+  tierConfigs: z.array(z.object({
+    from: z.number(),
+    to: z.number(),
+  })).min(1),
+
+  groups: z.array(z.object({
+    name: z.string(),
+    tierData: z.record(
+      z.number().describe("Tier index"),
+      z.object({
+        adult: z.number(),
+        child: z.number(),
+      }),
+    ),
+  })).min(1),
+});
+
 
 export const GroupTourPricingZ = EntityZ.extend({
   groupTourProductOID: z.string(),
@@ -63,26 +81,11 @@ export const GroupTourPricingZ = EntityZ.extend({
     child: z.number(),
   }),
 
-  discount: z.object({
-    tierConfigs: z.array(z.object({
-      from: z.number(),
-      to: z.number(),
-    })).min(1),
-
-    groups: z.array(z.object({
-      name: z.string(),
-      tierData: z.record(
-        z.number().describe("Tier index"),
-        z.object({
-          adult: z.number(),
-          child: z.number(),
-        }),
-      ),
-    })).min(1),
-  }).optional(),
+  discount: GroupTourPricingDiscountZ.optional(),
 
   groupTourPricingEntries: z.array(GroupTourPricingEntryZ),
 });
 
 export type GroupTourPricing = z.infer<typeof GroupTourPricingZ>;
 export type GroupTourPricingEntry = z.infer<typeof GroupTourPricingEntryZ>;
+export type GroupTourPricingDiscount = z.infer<typeof GroupTourPricingDiscountZ>;

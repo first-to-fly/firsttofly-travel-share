@@ -2,6 +2,7 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { TourDepartureZ } from "../../entities/Operations/TourDeparture";
+import { GroupTourPricingDiscountZ } from "../../entities/Products/GroupTourPricing";
 
 
 const basePath = "/api/operations/tour-departures";
@@ -37,6 +38,8 @@ const UpdateTourDepartureZ = CreateTourDepartureZ.omit({
   productPricingOID: true,
   appliedItineraryOID: true,
   itineraryOID: true,
+}).extend({
+  discount: GroupTourPricingDiscountZ.optional(),
 }).partial();
 
 export type UpdateTourDeparture = z.infer<typeof UpdateTourDepartureZ>;
