@@ -20,7 +20,6 @@ export enum TransportGroupEvents {
 export const TransportGroupZ = EntityZ.extend({
   entityType: z.literal(EntityType.TRANSPORT_GROUP),
   name: z.string(),
-  capacity: z.number(),
   mainType: z.nativeEnum(TransportType).nullable(),
   description: z.string().nullable(),
 });

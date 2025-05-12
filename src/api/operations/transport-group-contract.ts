@@ -9,7 +9,6 @@ const basePath = "/api/operations/transport-groups";
 const CreateTransportGroupZ = TransportGroupZ.pick({
   tenantOID: true,
   name: true,
-  capacity: true,
   mainType: true,
   description: true,
 });
