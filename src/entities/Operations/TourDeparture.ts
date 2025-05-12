@@ -4,8 +4,8 @@ import { DateISOStringZ } from "../../types/date";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { EntityType } from "../entityType";
-import { TransportType } from "./TransportGroup";
 import { GroupTourPricingDiscountZ } from "../Products/GroupTourPricing";
+import { TransportType } from "./TransportGroup";
 
 /**
  * TourDeparture status enum
@@ -50,6 +50,8 @@ export const TourDepartureZ = EntityZ.extend({
 
   durationDays: z.number().int().positive(),
   durationNights: z.number().int().nonnegative(),
+  totalCapacity: z.number().int().positive(),
+  minimumPax: z.number().int().nonnegative(),
 
   departureDate: DateISOStringZ,
   finalizationDate: DateISOStringZ.optional(),
