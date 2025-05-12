@@ -109,20 +109,19 @@ export type CreateTransportSegment = z.infer<typeof CreateTransportSegmentZ>;
 export type UpdateTransportSegment = z.infer<typeof UpdateTransportSegmentZ>;
 
 export const transportSegmentContract = initContract().router({
-  // getTransportSegments: {
-  //   summary: "Get transport segments",
-  //   method: "GET",
-  //   path: basePath,
-  //   query: z.object({
-  //     tenantOID: z.string(),
-  //     transportGroupOID: z.string().optional(),
-  //   }).passthrough(),
-  //   responses: {
-  //     200: z.object({
-  //       oids: z.array(z.string()),
-  //     }),
-  //   },
-  // },
+  getTransportSegments: {
+    summary: "Get transport segments",
+    method: "GET",
+    path: basePath,
+    query: z.object({
+      tenantOID: z.string(),
+    }).passthrough(),
+    responses: {
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
+    },
+  },
 
   createTransportSegment: {
     summary: "Create a new transport segment",
