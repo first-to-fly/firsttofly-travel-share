@@ -18,6 +18,11 @@ export enum TourDepartureStatus {
   CANCELLED = "cancelled",
 }
 
+export enum TourDepartureEvents {
+  TOUR_DEPARTURE_UPDATED = "TOUR_DEPARTURE_UPDATED",
+  TOUR_DEPARTURE_LIST_UPDATED = "TOUR_DEPARTURE_LIST_UPDATED",
+}
+
 
 /**
  * Assembly details for tour departure
