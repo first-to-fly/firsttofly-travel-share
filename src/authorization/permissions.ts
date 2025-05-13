@@ -33,6 +33,9 @@ import { TransportGroupPermissions } from "./entities/transport-group.permission
 import { TransportSegmentPermissions } from "./entities/transport-segment.permission";
 import { UsefulInfoPermissions } from "./entities/useful-info.permission";
 import { UserPermissions } from "./entities/user.permission";
+import { TourTransactionPermissions } from "./entities/tour-transaction.permission";
+import { TourTransactionRoomPermissions } from "./entities/tour-transaction-room.permission";
+import { TourTransactionPaxPermissions } from "./entities/tour-transaction-pax.permission";
 import type { PermissionDeclaration } from "./permissions.types";
 
 
@@ -81,6 +84,9 @@ const EntityPermissions = {
   TransportSegment: TransportSegmentPermissions,
   SupplierProfile: SupplierProfilePermissions,
   SupplierContract: SupplierContractPermissions,
+  TourTransaction: TourTransactionPermissions,
+  TourTransactionRoom: TourTransactionRoomPermissions,
+  TourTransactionPax: TourTransactionPaxPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
