@@ -158,7 +158,19 @@ export const tourTransactionContract = initContract().router({
       200: z.boolean(),
     },
   },
-
+  confirmTourTransaction: {
+    method: "POST",
+    path: `${basePath}/:bookingOID/confirm`, // Matches the plan
+    summary: "Confirm a tour transaction, trigger validation and data snapshotting",
+    pathParams: z.object({ // Assuming bookingOID is a path parameter
+      bookingOID: EntityOIDZ, // Or z.string().uuid() if EntityOIDZ is not appropriate here
+    }),
+    body: z.object({}), // As per plan, body is empty or for final confirmation details
+    responses: {
+      200: z.boolean(), // Returns the confirmed and updated booking
+      // Consider other error responses, e.g., 404 if bookingOID not found, 400 for validation errors before workflow
+    },
+  },
   // == TourTransactionRoom Endpoints (nested under a transaction) ==
   getRoomsForTransaction: {
     summary: "Get all rooms for a specific tour transaction",
