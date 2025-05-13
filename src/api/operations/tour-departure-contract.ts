@@ -39,8 +39,6 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
 const UpdateTourDepartureZ = CreateTourDepartureZ.omit({
   tenantOID: true,
   productPricingOID: true,
-  appliedItineraryOID: true,
-  itineraryOID: true,
 }).extend({
   discount: GroupTourPricingDiscountZ.optional(),
 }).partial();
