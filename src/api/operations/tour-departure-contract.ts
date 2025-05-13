@@ -32,7 +32,8 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   paymentDueDate: true,
 
   transportType: true,
-  assemblyDetails: true,
+  assembleLocationAirlineOID: true,
+  assembleAirlineLocationTime: true,
 });
 
 const UpdateTourDepartureZ = CreateTourDepartureZ.omit({

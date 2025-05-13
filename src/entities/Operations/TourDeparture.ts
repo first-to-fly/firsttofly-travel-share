@@ -23,17 +23,6 @@ export enum TourDepartureEvents {
   TOUR_DEPARTURE_LIST_UPDATED = "TOUR_DEPARTURE_LIST_UPDATED",
 }
 
-
-/**
- * Assembly details for tour departure
- */
-export const AssemblyDetailZ = z.object({
-  location: z.string(),
-  time: DateISOStringZ,
-});
-
-export type AssemblyDetail = z.infer<typeof AssemblyDetailZ>;
-
 /**
  * Zod schema for TourDeparture
  */
@@ -63,7 +52,8 @@ export const TourDepartureZ = EntityZ.extend({
   paymentDueDate: DateISOStringZ.optional(),
   discount: GroupTourPricingDiscountZ.optional(),
 
-  assemblyDetails: AssemblyDetailZ.optional(),
+  assembleLocationAirlineOID: EntityOIDZ.optional(),
+  assembleAirlineLocationTime: z.string().max(5).regex(/^\d{2}:\d{2}$/).optional(),
 
   tourLeaderOIDs: z.array(EntityOIDZ).optional(),
   tourManagerOIDs: z.array(EntityOIDZ).optional(),
