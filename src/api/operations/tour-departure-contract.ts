@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { TourDepartureZ } from "../../entities/Operations/TourDeparture";
+import { TourDepartureStatus, TourDepartureZ } from "../../entities/Operations/TourDeparture";
 import { GroupTourPricingDiscountZ } from "../../entities/Products/GroupTourPricing";
 
 
@@ -19,7 +19,6 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   departureCode: true,
   description: true,
 
-  status: true,
   isArchived: true,
 
   durationDays: true,
@@ -103,6 +102,31 @@ export const tourDepartureContract = initContract().router({
     }),
     responses: {
       200: z.boolean(),
+    },
+  },
+
+  batchStatus: {
+    summary: "Update statuses of multiple tour departures",
+    method: "POST",
+    path: `${basePath}/batch-status`,
+    body: z.record(
+      z.string().describe("OID of tour departure to update"),
+      z.object({ status: z.nativeEnum(TourDepartureStatus) }),
+    ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of updated tour departures")),
+    },
+  },
+
+  batchCancel: {
+    summary: "Cancel multiple tour departures",
+    method: "POST",
+    path: `${basePath}/batch-cancel`,
+    body: z.object({
+      tourDepartureOIDs: z.array(z.string().describe("OIDs of tour departures to cancel")),
+    }),
+    responses: {
+      200: z.array(z.string().describe("OIDs of cancelled tour departures")),
     },
   },
 });
