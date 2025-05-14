@@ -6,6 +6,11 @@ import { EntityOIDZ } from "../../entities/entity";
 import { TourTransactionZ } from "../../entities/Operations/TourTransaction";
 import { TourTransactionPaxZ } from "../../entities/Operations/TourTransactionPax";
 import { TourTransactionRoomZ } from "../../entities/Operations/TourTransactionRoom";
+import {
+  PaymentMethodZ,
+  TourTransactionTransferTypeZ,
+  TourTransactionTransferZ,
+} from "../../entities/Operations/TourTransactionTransfer";
 
 
 const basePath = "/api/tour-transactions";
@@ -14,13 +19,11 @@ const basePath = "/api/tour-transactions";
 const CreateTourTransactionBodyZ = TourTransactionZ.pick({
   tenantOID: true,
   bookingReference: true,
-  // totalAmount: true, // Removed - Server-calculated
-  snapshot: true, // Snapshot is kept, server can use this to calculate totalAmount
+  snapshot: true,
   paymentStatus: true,
   bookingStatus: true,
-  // receivedAmount: true, // Server-managed
-  discounts: true, // Allowed via API
-  addOns: true, // Allowed via API
+  discounts: true,
+  addOns: true,
   transportType: true,
   metadata: true,
 }).extend({
@@ -49,7 +52,7 @@ const CreateTourTransactionRoomBodyZ = TourTransactionRoomZ.pick({
   isDbl: true,
   notes: true,
 }).extend({
-  bookingOID: EntityOIDZ, // To link to the parent transaction
+  bookingOID: EntityOIDZ,
   roomConfigurationRuleOID: EntityOIDZ,
 });
 export type CreateTourTransactionRoomBody = z.infer<typeof CreateTourTransactionRoomBodyZ>;
@@ -64,7 +67,6 @@ export type UpdateTourTransactionRoomBody = z.infer<typeof UpdateTourTransaction
 
 // --- TourTransactionPax Schemas ---
 const CreateTourTransactionPaxBodyZ = TourTransactionPaxZ.pick({
-  // bookingId: true, // Removed, link is via bookingRoomId
   bookingRoomId: true,
   type: true,
   isLandTourOnly: true,
@@ -72,21 +74,35 @@ const CreateTourTransactionPaxBodyZ = TourTransactionPaxZ.pick({
   mealPreference: true,
   transportRecordId: true,
 }).extend({
-  // bookingOID: EntityOIDZ, // Removed, parent transaction context comes from the endpoint path
-  bookingRoomOID: EntityOIDZ, // This should be mandatory to link to a specific room. Optionality removed.
+  bookingRoomOID: EntityOIDZ,
 });
 export type CreateTourTransactionPaxBody = z.infer<typeof CreateTourTransactionPaxBodyZ>;
 
 const UpdateTourTransactionPaxBodyZ = CreateTourTransactionPaxBodyZ.omit({
-  // bookingOID: true, // Removed
-  // bookingId: true, // Removed
-  // bookingRoomId cannot be omitted if it's the primary link and potentially updatable (e.g. moving pax)
-  // However, for a partial update, specific fields are updated.
-  // If bookingRoomId is part of the .pick(), it can be updated.
-  // Let's assume for now that if bookingRoomId is in the pick, it's fine.
-  // If it's not meant to be updatable here, it should be omitted from the pick in Update, or handled by a dedicated "move pax" endpoint.
-}).partial(); // .partial() makes all fields optional for update
+}).partial();
 export type UpdateTourTransactionPaxBody = z.infer<typeof UpdateTourTransactionPaxBodyZ>;
+
+// --- TourTransactionTransfer Schemas ---
+const CreateTourTransactionTransferBodyZ = TourTransactionTransferZ.pick({
+  tenantOID: true,
+  tourTransactionOID: true,
+  transferType: true,
+  amount: true,
+  currencyCode: true,
+  transactionReference: true,
+  transactionDate: true,
+  notes: true,
+  metadata: true,
+}).extend({
+  paymentMethod: z.enum(["cash", "voucher", "other"]).optional(),
+}).required({
+  transferType: true,
+  amount: true,
+  currencyCode: true,
+  tenantOID: true,
+  tourTransactionOID: true,
+});
+export type CreateTourTransactionTransferBody = z.infer<typeof CreateTourTransactionTransferBodyZ>;
 
 
 export const tourTransactionContract = initContract().router({
@@ -113,9 +129,9 @@ export const tourTransactionContract = initContract().router({
       201: EntityOIDZ,
     },
   },
-  updateTourTransactions: { // This was batch update, consider single update endpoint too
+  updateTourTransactions: {
     summary: "Update multiple existing tour transactions",
-    method: "POST", // Should probably be PUT for single or PATCH for partial batch
+    method: "POST",
     path: `${basePath}/batch-update`,
     body: z.record(
       EntityOIDZ.describe("OID of TourTransaction to update"),
@@ -125,7 +141,6 @@ export const tourTransactionContract = initContract().router({
       200: z.array(EntityOIDZ.describe("OIDs of updated TourTransactions")),
     },
   },
-  // Example for single update:
   updateTourTransaction: {
     summary: "Update a specific tour transaction",
     method: "PUT",
@@ -138,7 +153,7 @@ export const tourTransactionContract = initContract().router({
   },
   deleteTourTransactions: {
     summary: "Delete multiple tour transactions",
-    method: "POST", // Should be DELETE for single, or POST for batch with specific body
+    method: "POST",
     path: `${basePath}/batch-delete`,
     body: z.object({
       tourTransactionOIDs: z.array(EntityOIDZ.describe("OIDs of TourTransactions to delete")),
@@ -147,7 +162,6 @@ export const tourTransactionContract = initContract().router({
       200: z.boolean(),
     },
   },
-  // Example for single delete:
   deleteTourTransaction: {
     summary: "Delete a specific tour transaction",
     method: "DELETE",
@@ -160,15 +174,14 @@ export const tourTransactionContract = initContract().router({
   },
   confirmTourTransaction: {
     method: "POST",
-    path: `${basePath}/:bookingOID/confirm`, // Matches the plan
+    path: `${basePath}/:bookingOID/confirm`,
     summary: "Confirm a tour transaction, trigger validation and data snapshotting",
-    pathParams: z.object({ // Assuming bookingOID is a path parameter
-      bookingOID: EntityOIDZ, // Or z.string().uuid() if EntityOIDZ is not appropriate here
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
     }),
-    body: z.object({}), // As per plan, body is empty or for final confirmation details
+    body: z.object({}),
     responses: {
-      200: z.boolean(), // Returns the confirmed and updated booking
-      // Consider other error responses, e.g., 404 if bookingOID not found, 400 for validation errors before workflow
+      200: z.boolean(),
     },
   },
   // == TourTransactionRoom Endpoints (nested under a transaction) ==
@@ -222,8 +235,6 @@ export const tourTransactionContract = initContract().router({
   },
 
   // == TourTransactionPax Endpoints (nested under a transaction) ==
-  // getPaxForTransaction removed
-  // addPaxToTransaction removed as Pax should only be added to a Room.
   updatePaxInTransaction: {
     summary: "Update a specific passenger in a tour transaction",
     method: "PUT",
@@ -248,6 +259,48 @@ export const tourTransactionContract = initContract().router({
     body: z.object({}),
     responses: {
       200: z.boolean(),
+    },
+  },
+
+  // == TourTransactionTransfer Endpoints (nested under a transaction) ==
+  createTourTransactionTransfer: {
+    summary: "Record a completed financial transfer for a booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/transfers`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: CreateTourTransactionTransferBodyZ.omit({
+      tenantOID: true,
+      tourTransactionOID: true,
+    }),
+    responses: {
+      201: EntityOIDZ,
+    },
+  },
+  getTourTransactionTransfers: {
+    summary: "Get list of financial transfers for a booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/transfers`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    query: z.object({
+      limit: z.coerce.number().int().positive().optional(),
+      offset: z.coerce.number().int().nonnegative().optional(),
+      transferType: TourTransactionTransferTypeZ.optional(),
+      paymentMethod: PaymentMethodZ.optional(),
+    }).passthrough(),
+    responses: {
+      200: z.object({ oids: z.array(EntityOIDZ) }),
+    },
+  },
+  getTourTransactionTransferById: {
+    summary: "Get details of a specific financial transfer",
+    method: "GET",
+    path: `${basePath}/:bookingOID/transfers/:transferOID`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+      transferOID: EntityOIDZ,
+    }),
+    responses: {
+      200: EntityOIDZ,
     },
   },
 });

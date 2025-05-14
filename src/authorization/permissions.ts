@@ -29,13 +29,14 @@ import { TenantPermissions } from "./entities/tenant.permission";
 import { TermPermissions } from "./entities/term.permission";
 import { TermConditionPermissions } from "./entities/term-condition.permission";
 import { TourDeparturePermissions } from "./entities/tour-departure.permission";
+import { TourTransactionPermissions } from "./entities/tour-transaction.permission";
+import { TourTransactionPaxPermissions } from "./entities/tour-transaction-pax.permission";
+import { TourTransactionRoomPermissions } from "./entities/tour-transaction-room.permission";
+import { TourTransactionTransferPermissions } from "./entities/tour-transaction-transfer.permission";
 import { TransportGroupPermissions } from "./entities/transport-group.permission";
 import { TransportSegmentPermissions } from "./entities/transport-segment.permission";
 import { UsefulInfoPermissions } from "./entities/useful-info.permission";
 import { UserPermissions } from "./entities/user.permission";
-import { TourTransactionPermissions } from "./entities/tour-transaction.permission";
-import { TourTransactionRoomPermissions } from "./entities/tour-transaction-room.permission";
-import { TourTransactionPaxPermissions } from "./entities/tour-transaction-pax.permission";
 import type { PermissionDeclaration } from "./permissions.types";
 
 
@@ -87,6 +88,7 @@ const EntityPermissions = {
   TourTransaction: TourTransactionPermissions,
   TourTransactionRoom: TourTransactionRoomPermissions,
   TourTransactionPax: TourTransactionPaxPermissions,
+  TourTransactionTransfer: TourTransactionTransferPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
