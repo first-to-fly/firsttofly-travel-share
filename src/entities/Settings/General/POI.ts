@@ -45,7 +45,7 @@ export const POIZ = EntityZ.extend({
   country: z.string(),
   area: z.string(),
   category: z.nativeEnum(POICategory),
-  description: z.string(),
+  description: z.string().optional(),
   position: GeoPointZ,
   images: z.array(z.string()).optional(),
   additionalInfo: z.record(z.string(), z.any()).optional(),
