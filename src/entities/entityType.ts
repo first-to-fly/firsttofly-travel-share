@@ -66,5 +66,6 @@ export enum EntityType {
 
   // OPERATIONS
   TOUR_DEPARTURE = "tourDeparture",
+  BUDGET = "budget",
 }
 export const EntityTypes = Object.values(EntityType);

@@ -1,5 +1,6 @@
 import { AssembleLocationAirlinesPermissions } from "./entities/assemble-location-airlines.permission";
 import { BadgePermissions } from "./entities/badge.permission";
+import { BudgetPermissions } from "./entities/budget.permission";
 import { CostingItemPermissions } from "./entities/costing-item.permission";
 import { CostingTemplatePermissions } from "./entities/costing-template.permission";
 import { DepartmentPermissions } from "./entities/department.permission";
@@ -77,6 +78,7 @@ const EntityPermissions = {
   "Group Tour Pricing": GroupTourPricingPermissions,
   "Group Tour Itinerary": GroupTourItineraryPermissions,
   "Tour Departure": TourDeparturePermissions,
+  Budget: BudgetPermissions,
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,
   "Supplier Profile": SupplierProfilePermissions,
