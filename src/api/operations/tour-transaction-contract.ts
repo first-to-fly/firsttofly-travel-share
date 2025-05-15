@@ -73,6 +73,7 @@ const CreateTourTransactionPaxBodyZ = TourTransactionPaxZ.pick({
   personalDetails: true,
   mealPreference: true,
   transportRecordId: true,
+  files: true,
 }).extend({
   bookingRoomOID: EntityOIDZ,
 });
