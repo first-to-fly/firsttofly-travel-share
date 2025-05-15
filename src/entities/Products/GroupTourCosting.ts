@@ -84,6 +84,11 @@ export const GroupTourCostingZ = EntityZ.extend({
   isActive: z.boolean(),
 
   airlineOIDs: z.array(z.string()).optional(), // ???
+
+  // budget fields - start
+  budgetOID: z.string().optional(),
+  originalGroupTourCostingOID: z.string().optional(),
+  // budget fields - end
 });
 
 export type GroupTourCosting = z.infer<typeof GroupTourCostingZ>;
