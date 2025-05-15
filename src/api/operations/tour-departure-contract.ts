@@ -24,6 +24,7 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   durationDays: true,
   durationNights: true,
   totalCapacity: true,
+  blockedCapacity: true,
   minimumPax: true,
 
   departureDate: true,

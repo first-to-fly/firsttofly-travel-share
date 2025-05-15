@@ -45,6 +45,7 @@ export const TourDepartureZ = EntityZ.extend({
   durationDays: z.number().int().positive(),
   durationNights: z.number().int().nonnegative(),
   totalCapacity: z.number().int().positive(),
+  blockedCapacity: z.number().int().nonnegative(),
   minimumPax: z.number().int().nonnegative(),
 
   departureDate: DateISOStringZ,
