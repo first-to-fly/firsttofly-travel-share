@@ -10,6 +10,12 @@ export enum GroupTourCostingEvents {
   GROUP_TOUR_COSTING_LIST_UPDATED = "GROUP_TOUR_COSTING_LIST_UPDATED",
 }
 
+export enum PaymentStatus {
+  UNPAID = "unpaid",
+  PARTIALLY_PAID = "partially-paid",
+  PAID = "paid",
+}
+
 
 export const GroupTourCostingEntryZ = EntityZ.extend({
   groupTourCostingOID: z.string(),
@@ -33,6 +39,15 @@ export const GroupTourCostingEntryZ = EntityZ.extend({
     amount: z.number(),
     tax: z.number(),
   })).min(1),
+
+  // budget fields - start
+  originalEntryOID: z.string().optional(),
+  forexRate: z.number().optional(),
+  localCurrency: z.string().optional(),
+  localAmount: z.number().optional(),
+  paymentStatus: z.nativeEnum(PaymentStatus).optional(),
+  paidAmount: z.number().optional(),
+  // budget fields - end
 });
 
 
