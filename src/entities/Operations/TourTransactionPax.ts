@@ -1,8 +1,11 @@
 // simple-import-sort
 import { z } from "zod";
 
+import { NamedURLZ } from "../../types/url";
 import { EntityZ } from "../entity";
 // Corrected path
+
+export type NamedURL = z.infer<typeof NamedURLZ>;
 
 export const TourTransactionPaxTypeEnum = z.enum([
   "twin",
@@ -25,6 +28,7 @@ export const TourTransactionPaxZ = EntityZ.extend({
   personalDetails: z.record(z.unknown()).optional(), // JSONB
   mealPreference: z.string().optional(),
   transportRecordId: z.string().uuid().optional(),
+  files: z.array(NamedURLZ).optional(),
 });
 
 export type TourTransactionPax = z.infer<typeof TourTransactionPaxZ>;
