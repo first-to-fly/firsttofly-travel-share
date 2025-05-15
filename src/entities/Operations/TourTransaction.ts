@@ -38,6 +38,7 @@ export const TourTransactionZ = EntityZ.extend({
   tourDepartureId: z.string().uuid(),
   costingId: z.string().uuid(),
   productPricingId: z.string().uuid(),
+  departmentId: z.string().uuid().optional(), // Added departmentId as optional
   bookingReference: z.string().max(50),
   paymentStatus: TourTransactionPaymentStatusEnum.default("unpaid"),
   bookingStatus: TourTransactionBookingStatusEnum.default("unpaid"),
