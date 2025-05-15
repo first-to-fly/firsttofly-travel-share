@@ -15,7 +15,6 @@ export enum TourDepartureStatus {
   CONFIRMED = "confirmed",
   OPEN = "open",
   CLOSED = "closed",
-  CANCELLED = "cancelled",
 }
 
 export enum TourDepartureEvents {
@@ -38,6 +37,7 @@ export const TourDepartureZ = EntityZ.extend({
 
   status: z.nativeEnum(TourDepartureStatus),
   isArchived: z.boolean().default(false),
+  isCancelled: z.boolean().default(false),
 
   transportType: z.nativeEnum(TransportType).optional(),
   transportGroupOIDs: z.array(EntityOIDZ).optional(),
