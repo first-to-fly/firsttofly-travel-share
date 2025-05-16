@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { FTFSafeMaxNumberZ } from "../../../types/number";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -17,23 +18,23 @@ export enum RoomType {
 }
 
 const RoomOccupancyZ = z.object({
-  adultNum: z.number().int().nonnegative().optional(),
-  childWithBedNum: z.number().int().nonnegative().optional(),
-  childWithoutBedNum: z.number().int().nonnegative().optional(),
-  infantNum: z.number().int().nonnegative().optional(),
+  adultNum: FTFSafeMaxNumberZ({ name: "Room occupancy adult number" }).int().nonnegative().optional(),
+  childWithBedNum: FTFSafeMaxNumberZ({ name: "Room occupancy child with bed number" }).int().nonnegative().optional(),
+  childWithoutBedNum: FTFSafeMaxNumberZ({ name: "Room occupancy child without bed number" }).int().nonnegative().optional(),
+  infantNum: FTFSafeMaxNumberZ({ name: "Room occupancy infant number" }).int().nonnegative().optional(),
 });
 
 export type RoomOccupancy = z.infer<typeof RoomOccupancyZ>;
 
 const RoomPricingArrangementZ = z.object({
-  single: z.number().int().nonnegative().optional(),
-  twin: z.number().int().nonnegative().optional(),
-  triple: z.number().int().nonnegative().optional(),
-  quad: z.number().int().nonnegative().optional(),
-  childTwin: z.number().int().nonnegative().optional(),
-  childWithBed: z.number().int().nonnegative().optional(),
-  childNoBed: z.number().int().nonnegative().optional(),
-  infant: z.number().int().nonnegative().optional(),
+  single: FTFSafeMaxNumberZ({ name: "Room pricing arrangement single" }).int().nonnegative().optional(),
+  twin: FTFSafeMaxNumberZ({ name: "Room pricing arrangement twin" }).int().nonnegative().optional(),
+  triple: FTFSafeMaxNumberZ({ name: "Room pricing arrangement triple" }).int().nonnegative().optional(),
+  quad: FTFSafeMaxNumberZ({ name: "Room pricing arrangement quad" }).int().nonnegative().optional(),
+  childTwin: FTFSafeMaxNumberZ({ name: "Room pricing arrangement child twin" }).int().nonnegative().optional(),
+  childWithBed: FTFSafeMaxNumberZ({ name: "Room pricing arrangement child with bed" }).int().nonnegative().optional(),
+  childNoBed: FTFSafeMaxNumberZ({ name: "Room pricing arrangement child no bed" }).int().nonnegative().optional(),
+  infant: FTFSafeMaxNumberZ({ name: "Room pricing arrangement infant" }).int().nonnegative().optional(),
 });
 
 export type RoomPricingArrangement = z.infer<typeof RoomPricingArrangementZ>;
@@ -61,8 +62,14 @@ export const RoomConfigurationZ = EntityZ.extend({
   isActive: z.boolean().default(true),
   remarks: z.string().optional(),
 
-  childWithoutBedStartAge: z.number().int().nonnegative(),
-  childWithoutBedEndAge: z.number().int().nonnegative(),
+  childWithoutBedStartAge: FTFSafeMaxNumberZ({
+    max: 2,
+    name: "Room configuration child without bed start age",
+  }).int().nonnegative(),
+  childWithoutBedEndAge: FTFSafeMaxNumberZ({
+    max: 14,
+    name: "Room configuration child without bed end age",
+  }).int().nonnegative(),
 
   coveredEntityOIDs: z.array(z.string()).min(1),
   roomConfigurationRules: z.array(RoomConfigurationRuleZ),

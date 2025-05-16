@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { FTFSafeMaxNumberZ } from "../../../types/number";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -22,7 +23,7 @@ export const MealZ = EntityZ.extend({
   code: z.string(),
   description: z.string().optional(),
   type: z.nativeEnum(MealType),
-  seq: z.number().optional().default(0),
+  seq: FTFSafeMaxNumberZ({ name: "Sequence" }).int().nonnegative().optional(),
 
 });
 

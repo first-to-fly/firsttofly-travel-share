@@ -2,6 +2,7 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { PaymentStatus } from "../../entities/Products/GroupTourCosting";
+import { FTFSafeMaxNumberZ } from "../../types/number";
 import { CreateGroupTourCostingEntryZ } from "../products/group-tour-costing-contract";
 
 
@@ -9,11 +10,11 @@ const basePath = "/api/operations/budget-entries";
 
 const CreateBudgetCostingEntryZ = CreateGroupTourCostingEntryZ.extend({
   groupTourCostingOID: z.string(),
-  forexRate: z.number(),
+  forexRate: FTFSafeMaxNumberZ({ name: "Forex rate" }),
   localCurrency: z.string(),
-  localAmount: z.number(),
+  localAmount: FTFSafeMaxNumberZ({ name: "Local amount" }),
   paymentStatus: z.nativeEnum(PaymentStatus),
-  paidAmount: z.number(),
+  paidAmount: FTFSafeMaxNumberZ({ name: "Paid amount" }),
 });
 
 const UpdateBudgetCostingEntryZ = CreateBudgetCostingEntryZ.omit({

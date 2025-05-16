@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { FTFSafeMaxNumberZ } from "../../../types/number";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -146,7 +147,7 @@ export const ReferenceCodeZ = EntityZ.extend({
   moduleName: z.string(),
   counterType: z.nativeEnum(CounterType).default(CounterType.SEQUENTIAL),
   resetCounterType: z.nativeEnum(ResetCounterType).default(ResetCounterType.DISABLED),
-  counterWidth: z.number().default(5),
+  counterWidth: FTFSafeMaxNumberZ({ name: "Counter width" }).int().nonnegative().default(5),
   template: z.string(),
   machineCode: z.string(),
 

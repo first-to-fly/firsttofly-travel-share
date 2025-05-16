@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { FTFSafeMaxNumberZ } from "../../../types/number";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -15,7 +16,10 @@ export const StationCodeZ = EntityZ.extend({
 
   code: z.string().min(1, "Station code is required"),
   isActive: z.boolean().default(true),
-  seq: z.number().default(0),
+  seq: FTFSafeMaxNumberZ({
+    max: 99999999,
+    name: "Sequence",
+  }).int().nonnegative(),
 });
 
 export type StationCode = z.infer<typeof StationCodeZ>;

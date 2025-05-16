@@ -20,7 +20,6 @@ const UpdateBudgetZ = CreateBudgetZ.omit({
   tourDepartureOID: true,
 }).partial().extend({
   status: z.nativeEnum(BudgetStatus).optional(),
-  materializationRate: z.number().optional(),
   remarks: z.string().optional(),
   isArchived: z.boolean().optional(),
 });

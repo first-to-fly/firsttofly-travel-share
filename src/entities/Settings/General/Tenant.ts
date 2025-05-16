@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { CurrencyCodeZ } from "../../../types/currency";
 import { LanguageCodeZ } from "../../../types/multipleLanguage";
+import { FTFSafeMaxNumberZ } from "../../../types/number";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -23,7 +24,7 @@ export const TenantZ = EntityZ.extend({
     supportedCurrencies: z.array(
       z.object({
         currency: CurrencyCodeZ,
-        rate: z.number(),
+        rate: FTFSafeMaxNumberZ({ name: "Supported currency rate" }).nonnegative(),
       }),
     ),
   }).optional(),

@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
+import { FTFSafeMaxNumberZ } from "../../types/number";
 import { EntityZ } from "../entity";
 
 
@@ -49,7 +50,7 @@ export const GroupTourItineraryDayZ = EntityZ.omit({
 }).extend({
   groupTourItineraryOID: z.string(),
 
-  dayNumber: z.number(),
+  dayNumber: FTFSafeMaxNumberZ({ name: "Day number" }).int().nonnegative(),
   title: MultiLangRecordZ(z.string()),
   description: MultiLangRecordZ(z.string()),
 

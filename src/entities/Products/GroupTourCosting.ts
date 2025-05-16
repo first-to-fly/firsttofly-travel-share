@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
+import { FTFSafeMaxNumberZ } from "../../types/number";
 import { EntityZ } from "../entity";
 import { CalculationBasis, CostingItemCategory, OccupancyType, PackageType } from "../Settings/Product/CostingItem";
 
@@ -29,24 +30,24 @@ export const GroupTourCostingEntryZ = EntityZ.extend({
 
   remarks: z.string().optional(),
 
-  quantity: z.number(),
+  quantity: FTFSafeMaxNumberZ({ name: "Quantity" }),
 
   isTieredPrice: z.boolean(),
   currency: z.string(),
 
   prices: z.array(z.object({
-    tierIndex: z.number().optional(), // Optional for non-tiered prices
-    amount: z.number(),
-    tax: z.number(),
+    tierIndex: FTFSafeMaxNumberZ({ name: "Tier index" }).optional(), // Optional for non-tiered prices
+    amount: FTFSafeMaxNumberZ({ name: "Amount" }),
+    tax: FTFSafeMaxNumberZ({ name: "Tax" }),
   })).min(1),
 
   // budget fields - start
   originalEntryOID: z.string().optional(),
-  forexRate: z.number().optional(),
+  forexRate: FTFSafeMaxNumberZ({ name: "Forex rate" }).optional(),
   localCurrency: z.string().optional(),
-  localAmount: z.number().optional(),
+  localAmount: FTFSafeMaxNumberZ({ name: "Local amount" }).optional(),
   paymentStatus: z.nativeEnum(PaymentStatus).optional(),
-  paidAmount: z.number().optional(),
+  paidAmount: FTFSafeMaxNumberZ({ name: "Paid amount" }).optional(),
   // budget fields - end
 });
 
@@ -64,19 +65,19 @@ export const GroupTourCostingZ = EntityZ.extend({
   validityEndDate: DateISOStringZ,
 
   landTourGroupSizeTiers: z.array(z.object({
-    from: z.number(),
-    to: z.number(),
+    from: FTFSafeMaxNumberZ({ name: "Group Size from" }),
+    to: FTFSafeMaxNumberZ({ name: "Group Size to" }),
   })).min(1),
 
   freeOfChargeTiers: z.array(z.object({
-    pax: z.number(),
-    freePax: z.number(),
+    pax: FTFSafeMaxNumberZ({ name: "FOC Tier Pax" }),
+    freePax: FTFSafeMaxNumberZ({ name: "FOC Tier Free Pax" }),
   })).optional(),
 
   leadManagerCountTiers: z.array(z.object({
-    pax: z.number(),
-    leadCount: z.number(),
-    managerCount: z.number(),
+    pax: FTFSafeMaxNumberZ({ name: "Lead Manager Count per Pax" }),
+    leadCount: FTFSafeMaxNumberZ({ name: "Lead Count" }),
+    managerCount: FTFSafeMaxNumberZ({ name: "Manager Count" }),
   })).optional(),
 
   groupTourCostingEntries: z.array(GroupTourCostingEntryZ),

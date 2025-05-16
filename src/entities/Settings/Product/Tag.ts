@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { FTFSafeMaxNumberZ } from "../../../types/number";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -34,7 +35,7 @@ export const TagZ = EntityZ.extend({
 
   name: z.string(),
   isActive: z.boolean(),
-  sortOrder: z.number().int(),
+  sortOrder: FTFSafeMaxNumberZ({ name: "Sort order" }).int(),
   style: TagStyleZ,
 
   tagGroupOID: z.string(),
