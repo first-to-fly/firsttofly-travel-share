@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
+import { FTFSafeMaxNumberZ } from "../../types/number";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 import { GroupTourPricingDiscountZ } from "../Products/GroupTourPricing";
@@ -42,10 +43,26 @@ export const TourDepartureZ = EntityZ.extend({
   transportType: z.nativeEnum(TransportType).optional(),
   transportGroupOIDs: z.array(EntityOIDZ).optional(),
 
-  durationDays: z.number().int().positive(),
-  durationNights: z.number().int().nonnegative(),
-  totalCapacity: z.number().int().positive(),
-  minimumPax: z.number().int().nonnegative(),
+  durationDays: FTFSafeMaxNumberZ({
+    max: 999,
+    name: "Duration days",
+  }).int().positive(),
+  durationNights: FTFSafeMaxNumberZ({
+    max: 999,
+    name: "Duration nights",
+  }).int().nonnegative(),
+  totalCapacity: FTFSafeMaxNumberZ({
+    max: 9_999,
+    name: "Total capacity",
+  }).int().positive(),
+  blockedCapacity: FTFSafeMaxNumberZ({
+    max: 9_999,
+    name: "Blocked capacity",
+  }).int().nonnegative(),
+  minimumPax: FTFSafeMaxNumberZ({
+    max: 9_999,
+    name: "Minimum pax",
+  }).int().nonnegative(),
 
   departureDate: DateISOStringZ,
   finalizationDate: DateISOStringZ.optional(),

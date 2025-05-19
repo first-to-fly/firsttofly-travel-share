@@ -72,5 +72,8 @@ export enum EntityType {
   TOUR_TRANSACTION_ROOM = "tourTransactionRoom",
   TOUR_TRANSACTION_PAX = "tourTransactionPax",
   TOUR_TRANSACTION_TRANSFER = "tourTransactionTransfer",
+
+  // BUDGET
+  BUDGET = "budget",
 }
 export const EntityTypes = Object.values(EntityType);

@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { DateISOStringZ } from "../../../types/date";
 import { MultiLangRecordZ } from "../../../types/multipleLanguage";
+import { FTFSafeMaxNumberZ } from "../../../types/number";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -49,7 +50,10 @@ export const UserZ = EntityZ.extend({
   tourLeadingSkills: z.array(z.object({
     sectorOID: z.string(),
     termOID: z.string(),
-    startYear: z.number(),
+    startYear: FTFSafeMaxNumberZ({
+      name: "Tour leading skills start year",
+      max: new Date().getFullYear(),
+    }),
   })).optional(),
 
   languageSkills: z.array(z.object({

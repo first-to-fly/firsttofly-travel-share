@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
+import { FTFSafeMaxNumberZ } from "../../types/number";
 import { EntityZ } from "../entity";
 
 
@@ -15,24 +16,24 @@ export const GroupTourPricingEntryZ = z.object({
 
   priceValue: z.object({
     currency: z.string(),
-    amount: z.number(),
-    tax: z.number(),
+    amount: FTFSafeMaxNumberZ({ name: "Amount" }),
+    tax: FTFSafeMaxNumberZ({ name: "Tax" }),
   }),
 });
 
 export const GroupTourPricingDiscountZ = z.object({
   tierConfigs: z.array(z.object({
-    from: z.number(),
-    to: z.number(),
+    from: FTFSafeMaxNumberZ({ name: "Discount tier from" }),
+    to: FTFSafeMaxNumberZ({ name: "Discount tier to" }),
   })).min(1),
 
   groups: z.array(z.object({
     name: z.string(),
     tierData: z.record(
-      z.number().describe("Tier index"),
+      FTFSafeMaxNumberZ({ name: "Discount tier index" }),
       z.object({
-        adult: z.number(),
-        child: z.number(),
+        adult: FTFSafeMaxNumberZ({ name: "Adult discount" }),
+        child: FTFSafeMaxNumberZ({ name: "Child discount" }),
       }),
     ),
   })).min(1),
@@ -47,7 +48,7 @@ export const GroupTourPricingZ = EntityZ.extend({
   code: z.string(),
 
   remarks: z.string().nullable(),
-  targetYieldPercentage: z.number(),
+  targetYieldPercentage: FTFSafeMaxNumberZ({ name: "Target yield percentage" }),
 
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ,
@@ -55,30 +56,30 @@ export const GroupTourPricingZ = EntityZ.extend({
   isActive: z.boolean(),
 
   fullFare: z.object({
-    twin: z.number(),
-    single: z.number(),
-    triple: z.number(),
-    quad: z.number(),
-    childTwin: z.number(),
-    childWithBed: z.number(),
-    childNoBed: z.number(),
-    infant: z.number(),
+    twin: FTFSafeMaxNumberZ({ name: "Twin" }),
+    single: FTFSafeMaxNumberZ({ name: "Single" }),
+    triple: FTFSafeMaxNumberZ({ name: "Triple" }),
+    quad: FTFSafeMaxNumberZ({ name: "Quad" }),
+    childTwin: FTFSafeMaxNumberZ({ name: "Child twin" }),
+    childWithBed: FTFSafeMaxNumberZ({ name: "Child with bed" }),
+    childNoBed: FTFSafeMaxNumberZ({ name: "Child no bed" }),
+    infant: FTFSafeMaxNumberZ({ name: "Infant" }),
   }),
 
   landFare: z.object({
-    twin: z.number(),
-    single: z.number(),
-    triple: z.number(),
-    quad: z.number(),
-    childTwin: z.number(),
-    childWithBed: z.number(),
-    childNoBed: z.number(),
-    infant: z.number(),
+    twin: FTFSafeMaxNumberZ({ name: "Twin" }),
+    single: FTFSafeMaxNumberZ({ name: "Single" }),
+    triple: FTFSafeMaxNumberZ({ name: "Triple" }),
+    quad: FTFSafeMaxNumberZ({ name: "Quad" }),
+    childTwin: FTFSafeMaxNumberZ({ name: "Child twin" }),
+    childWithBed: FTFSafeMaxNumberZ({ name: "Child with bed" }),
+    childNoBed: FTFSafeMaxNumberZ({ name: "Child no bed" }),
+    infant: FTFSafeMaxNumberZ({ name: "Infant" }),
   }),
 
   airportTax: z.object({
-    adult: z.number(),
-    child: z.number(),
+    adult: FTFSafeMaxNumberZ({ name: "Airport tax adult" }),
+    child: FTFSafeMaxNumberZ({ name: "Airport tax child" }),
   }),
 
   discount: GroupTourPricingDiscountZ.optional(),

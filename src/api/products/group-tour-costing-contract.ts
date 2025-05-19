@@ -7,7 +7,7 @@ import { GroupTourCostingEntryZ, GroupTourCostingZ } from "../../entities/Produc
 const basePath = "/api/products/group-tour-costings";
 
 // Create/Update schemas
-const CreateGroupTourCostingEntryZ = GroupTourCostingEntryZ.pick({
+export const CreateGroupTourCostingEntryZ = GroupTourCostingEntryZ.pick({
   name: true,
   category: true,
   calculationBasis: true,

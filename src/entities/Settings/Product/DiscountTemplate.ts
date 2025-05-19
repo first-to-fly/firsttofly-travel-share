@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { DateISOStringZ } from "../../../types/date"; // Assuming path
+import { FTFSafeMaxNumberZ } from "../../../types/number";
 import { EntityZ } from "../../entity"; // Correct path
 import { EntityType } from "../../entityType"; // Correct path
 import { DiscountAmountType, DiscountBasePrice, DiscountBookingChannel, DiscountHowToApply, DiscountMechanics, DiscountMode, DiscountPaxType, DiscountSpecialDatesType, DiscountTimeslotType, DiscountType, DiscountWhichPax } from "./Discount";
@@ -30,13 +31,13 @@ export const DiscountTemplateZ = EntityZ.extend({
 
   whichPax: z.nativeEnum(DiscountWhichPax).default(DiscountWhichPax.NA),
   paxType: z.nativeEnum(DiscountPaxType).default(DiscountPaxType.NA),
-  minPax: z.number().int().min(0).default(0),
-  minSpending: z.number().min(0).default(0),
+  minPax: FTFSafeMaxNumberZ({ name: "Min pax" }).int().nonnegative().default(0),
+  minSpending: FTFSafeMaxNumberZ({ name: "Min spending" }).int().nonnegative().default(0),
 
   amountType: z.nativeEnum(DiscountAmountType).default(DiscountAmountType.UNLIMITED),
-  amountValue: z.number().int().nullable().optional(),
-  amountRangeStart: z.number().int().nullable().optional(),
-  amountRangeEnd: z.number().int().nullable().optional(),
+  amountValue: FTFSafeMaxNumberZ({ name: "Amount value" }).int().nullable().optional(),
+  amountRangeStart: FTFSafeMaxNumberZ({ name: "Amount range start" }).int().nullable().optional(),
+  amountRangeEnd: FTFSafeMaxNumberZ({ name: "Amount range end" }).int().nullable().optional(),
 
   specialDatesType: z.nativeEnum(DiscountSpecialDatesType).default(DiscountSpecialDatesType.NA),
   specialDatesStart: DateISOStringZ.nullable().optional(),
@@ -46,7 +47,7 @@ export const DiscountTemplateZ = EntityZ.extend({
   timeslotStart: z.string().nullable().optional(),
   timeslotEnd: z.string().nullable().optional(),
 
-  discountValue: z.number().default(0),
+  discountValue: FTFSafeMaxNumberZ({ name: "Discount value" }).int().nonnegative().default(0),
   howToApply: z.nativeEnum(DiscountHowToApply).default(DiscountHowToApply.AUTO),
   useDiscountCode: z.boolean().default(false),
 });

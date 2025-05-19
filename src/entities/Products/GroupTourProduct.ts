@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
+import { FTFSafeMaxNumberZ } from "../../types/number";
 import { EntityZ } from "../entity";
 
 
@@ -30,8 +31,8 @@ export const GroupTourProductZ = EntityZ.extend({
   inclusions: MultiLangRecordZ(z.string()).optional(),
   exclusions: MultiLangRecordZ(z.string()).optional(),
 
-  durationDays: z.number(),
-  durationNights: z.number(),
+  durationDays: FTFSafeMaxNumberZ({ name: "Duration days" }),
+  durationNights: FTFSafeMaxNumberZ({ name: "Duration nights" }),
 
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ.optional(), // end indefinitely
