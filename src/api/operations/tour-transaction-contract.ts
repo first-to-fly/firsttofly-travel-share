@@ -19,19 +19,19 @@ const basePath = "/api/tour-transactions";
 const CreateTourTransactionBodyZ = TourTransactionZ.pick({
   tenantOID: true,
   bookingReference: true,
-  snapshot: true,
   paymentStatus: true,
   bookingStatus: true,
   discounts: true,
   addOns: true,
   transportType: true,
   metadata: true,
-}).extend({
+})
+  .extend({
   productOID: EntityOIDZ,
   tourDepartureOID: EntityOIDZ,
-  costingOID: EntityOIDZ,
-  productPricingOID: EntityOIDZ,
-});
+    costingOID: EntityOIDZ,
+    productPricingOID: EntityOIDZ,
+  });
 export type CreateTourTransactionBody = z.infer<typeof CreateTourTransactionBodyZ>;
 
 const UpdateTourTransactionBodyZ = CreateTourTransactionBodyZ.omit({
