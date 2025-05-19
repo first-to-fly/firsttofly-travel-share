@@ -27,10 +27,9 @@ const CreateTourTransactionBodyZ = TourTransactionZ.pick({
   metadata: true,
 })
   .extend({
-  productOID: EntityOIDZ,
-  tourDepartureOID: EntityOIDZ,
+    productOID: EntityOIDZ,
+    tourDepartureOID: EntityOIDZ,
     costingOID: EntityOIDZ,
-    productPricingOID: EntityOIDZ,
   });
 export type CreateTourTransactionBody = z.infer<typeof CreateTourTransactionBodyZ>;
 
@@ -39,7 +38,6 @@ const UpdateTourTransactionBodyZ = CreateTourTransactionBodyZ.omit({
   productOID: true,
   tourDepartureOID: true,
   costingOID: true,
-  productPricingOID: true,
 }).partial();
 export type UpdateTourTransactionBody = z.infer<typeof UpdateTourTransactionBodyZ>;
 
