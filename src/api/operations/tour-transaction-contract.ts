@@ -21,15 +21,11 @@ const CreateTourTransactionBodyZ = TourTransactionZ.pick({
   bookingReference: true,
   paymentStatus: true,
   bookingStatus: true,
-  discounts: true,
-  addOns: true,
-  transportType: true,
   metadata: true,
 })
   .extend({
     productOID: EntityOIDZ,
     tourDepartureOID: EntityOIDZ,
-    costingOID: EntityOIDZ,
   });
 export type CreateTourTransactionBody = z.infer<typeof CreateTourTransactionBodyZ>;
 
@@ -37,7 +33,6 @@ const UpdateTourTransactionBodyZ = CreateTourTransactionBodyZ.omit({
   tenantOID: true,
   productOID: true,
   tourDepartureOID: true,
-  costingOID: true,
 }).partial();
 export type UpdateTourTransactionBody = z.infer<typeof UpdateTourTransactionBodyZ>;
 
