@@ -1,6 +1,6 @@
 import assert from "assert";
 
-import { deriveEntitiesCoveringTourDepartures } from "./deriveEntitiesCoveringTourDepartures";
+import { deriveEntitiesCoveringTourDepartures } from "../utils/deriveEntitiesCoveringTourDepartures";
 
 
 type TestEntity = { oid: string; coveredEntityOIDs: string[] };
