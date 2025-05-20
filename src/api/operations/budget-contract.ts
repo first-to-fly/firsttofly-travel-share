@@ -18,8 +18,8 @@ const CreateBudgetZ = BudgetZ.pick({
 const UpdateBudgetZ = CreateBudgetZ.omit({
   tenantOID: true,
   tourDepartureOID: true,
+  status: true,
 }).partial().extend({
-  status: z.nativeEnum(BudgetStatus).optional(),
   remarks: z.string().optional(),
   isArchived: z.boolean().optional(),
 });
@@ -44,22 +44,16 @@ export const budgetContract = initContract().router({
     responses: { 200: z.array(z.string()) },
   },
 
-  completeBudget: {
-    summary: "Complete a budget",
+  batchStatus: {
+    summary: "Update statuses of multiple budgets",
     method: "POST",
-    path: `${basePath}/complete`,
-    body: z.object({
-      budgetOID: z.string(),
-      remarks: z.string().optional(),
-    }),
-    responses: { 200: z.boolean() },
-  },
-
-  revertBudgetToDraft: {
-    summary: "Revert a budget to draft",
-    method: "POST",
-    path: `${basePath}/revert`,
-    body: z.object({ budgetOID: z.string() }),
-    responses: { 200: z.boolean() },
+    path: `${basePath}/batch-status`,
+    body: z.record(
+      z.string().describe("OID of budget to update"),
+      z.object({ status: z.nativeEnum(BudgetStatus) }),
+    ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of updated budgets")),
+    },
   },
 });
