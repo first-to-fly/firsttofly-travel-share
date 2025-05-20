@@ -1,4 +1,4 @@
-import { RoomOccupancy, RoomPricingArrangement } from "../entities/Settings/Product/RoomConfiguration";
+import { RoomOccupancy, RoomPricingArrangement } from "../../entities/Settings/Product/RoomConfiguration";
 
 
 export function defaultRoomConfigurationOccupantToPricing(occupancy: RoomOccupancy): RoomPricingArrangement {
