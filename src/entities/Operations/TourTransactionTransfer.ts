@@ -7,23 +7,25 @@ import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
 
-export const TourTransactionTransferTypeZ = z.enum([
-  "payment_received",
-  "refund_issued",
-  "booking_credit",
-  "booking_debit",
-]);
-export type TourTransactionTransferType = z.infer<typeof TourTransactionTransferTypeZ>;
+export enum TourTransactionTransferType {
+  PAYMENT_RECEIVED = "payment_received",
+  REFUND_ISSUED = "refund_issued",
+  BOOKING_CREDIT = "booking_credit",
+  BOOKING_DEBIT = "booking_debit",
+}
 
-export const PaymentMethodZ = z.enum([
-  "cash",
-  "credit_card",
-  "bank_transfer",
-  "online_gateway",
-  "voucher",
-  "other",
-]);
-export type PaymentMethod = z.infer<typeof PaymentMethodZ>;
+export const TourTransactionTransferTypeZ = z.nativeEnum(TourTransactionTransferType);
+
+export enum PaymentMethod {
+  CASH = "cash",
+  CREDIT_CARD = "credit_card",
+  BANK_TRANSFER = "bank_transfer",
+  ONLINE_GATEWAY = "online_gateway",
+  VOUCHER = "voucher",
+  OTHER = "other",
+}
+
+export const PaymentMethodZ = z.nativeEnum(PaymentMethod);
 
 export const TourTransactionTransferZ = EntityZ.extend({
   transferType: TourTransactionTransferTypeZ,
