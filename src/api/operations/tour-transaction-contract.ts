@@ -39,7 +39,6 @@ export type UpdateTourTransactionBody = z.infer<typeof UpdateTourTransactionBody
 // --- TourTransactionRoom Schemas ---
 const CreateTourTransactionRoomBodyZ = TourTransactionRoomZ.pick({
   bookingId: true,
-  roomConfigurationRuleId: true,
   status: true,
   roomNumber: true,
   isDbl: true,
@@ -52,9 +51,7 @@ export type CreateTourTransactionRoomBody = z.infer<typeof CreateTourTransaction
 
 const UpdateTourTransactionRoomBodyZ = CreateTourTransactionRoomBodyZ.omit({
   bookingOID: true,
-  roomConfigurationRuleOID: true,
   bookingId: true,
-  roomConfigurationRuleId: true,
 }).partial();
 export type UpdateTourTransactionRoomBody = z.infer<typeof UpdateTourTransactionRoomBodyZ>;
 
