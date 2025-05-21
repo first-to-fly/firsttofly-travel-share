@@ -30,6 +30,10 @@ import { TenantPermissions } from "./entities/tenant.permission";
 import { TermPermissions } from "./entities/term.permission";
 import { TermConditionPermissions } from "./entities/term-condition.permission";
 import { TourDeparturePermissions } from "./entities/tour-departure.permission";
+import { TourTransactionPermissions } from "./entities/tour-transaction.permission";
+import { TourTransactionPaxPermissions } from "./entities/tour-transaction-pax.permission";
+import { TourTransactionRoomPermissions } from "./entities/tour-transaction-room.permission";
+import { TourTransactionTransferPermissions } from "./entities/tour-transaction-transfer.permission";
 import { TransportGroupPermissions } from "./entities/transport-group.permission";
 import { TransportSegmentPermissions } from "./entities/transport-segment.permission";
 import { UsefulInfoPermissions } from "./entities/useful-info.permission";
@@ -72,6 +76,10 @@ const EntityPermissions = {
   "Assemble Location Airlines": AssembleLocationAirlinesPermissions,
   "Room Configuration": RoomConfigurationPermissions,
   Discount: DiscountPermissions,
+  TourTransaction: TourTransactionPermissions,
+  TourTransactionRoom: TourTransactionRoomPermissions,
+  TourTransactionPax: TourTransactionPaxPermissions,
+  TourTransactionTransfer: TourTransactionTransferPermissions,
   "Discount Template": DiscountTemplatePermissions,
   "Group Tour Costing": GroupTourCostingPermissions,
   "Group Tour Product": GroupTourProductPermissions,
