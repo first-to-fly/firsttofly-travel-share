@@ -84,8 +84,9 @@ const CreateTourTransactionTransferBodyZ = TourTransactionTransferZ.pick({
   transactionDate: true,
   notes: true,
   metadata: true,
+  files: true, // Added files
 }).extend({
-  paymentMethod: z.enum(["cash", "voucher", "other"]).optional(),
+  paymentMethod: z.enum(["cash", "voucher", "other"]).optional(), // This seems to override the broader enum from TourTransactionTransferZ. Keep as is for now.
 }).required({
   transferType: true,
   amount: true,

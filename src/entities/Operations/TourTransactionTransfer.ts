@@ -1,3 +1,5 @@
+// Attempting to use the alias again, assuming it might be resolvable now or configured at a higher level
+import { NamedURLZ } from "@firsttofly/content-delivery-share/src/types/url";
 import { z } from "zod";
 
 import { EntityZ } from "../entity";
@@ -31,6 +33,7 @@ export const TourTransactionTransferZ = EntityZ.extend({
   transactionDate: z.date().default(() => new Date()),
   notes: z.string().optional(),
   metadata: z.record(z.unknown()).optional(),
+  files: z.array(NamedURLZ).optional().default([]),
 
   tenantId: z.string().uuid(),
   bookingId: z.string().uuid(),
