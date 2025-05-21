@@ -41,14 +41,6 @@ export const GroupTourCostingEntryZ = EntityZ.extend({
     tax: FTFSafeMaxNumberZ({ name: "Tax" }),
   })).min(1),
 
-  // budget fields - start
-  originalEntryOID: z.string().optional(),
-  forexRate: FTFSafeMaxNumberZ({ name: "Forex rate" }).optional(),
-  localCurrency: z.string().optional(),
-  localAmount: FTFSafeMaxNumberZ({ name: "Local amount" }).optional(),
-  paymentStatus: z.nativeEnum(PaymentStatus).optional(),
-  paidAmount: FTFSafeMaxNumberZ({ name: "Paid amount" }).optional(),
-  // budget fields - end
 });
 
 
@@ -86,10 +78,6 @@ export const GroupTourCostingZ = EntityZ.extend({
 
   airlineOIDs: z.array(z.string()).optional(), // ???
 
-  // budget fields - start
-  budgetOID: z.string().optional(),
-  originalGroupTourCostingOID: z.string().optional(),
-  // budget fields - end
 });
 
 export type GroupTourCosting = z.infer<typeof GroupTourCostingZ>;

@@ -6,6 +6,11 @@ import { FTFSafeMaxNumberZ } from "../../types/number";
 import { CreateGroupTourCostingEntryZ } from "../products/group-tour-costing-contract";
 
 
+export const BudgetEntryEvents = {
+  BUDGET_ENTRY_UPDATED: "BUDGET_ENTRY_UPDATED",
+  BUDGET_ENTRY_LIST_UPDATED: "BUDGET_ENTRY_LIST_UPDATED",
+} as const;
+
 const basePath = "/api/operations/budget-entries";
 
 const CreateBudgetCostingEntryZ = CreateGroupTourCostingEntryZ.extend({
