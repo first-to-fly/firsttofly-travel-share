@@ -27,6 +27,7 @@ export enum PaymentMethod {
 
 export const PaymentMethodZ = z.nativeEnum(PaymentMethod);
 
+
 export const TourTransactionTransferZ = EntityZ.extend({
   transferType: TourTransactionTransferTypeZ,
   amount: z.number().positive(),
