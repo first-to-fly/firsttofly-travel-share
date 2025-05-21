@@ -1,7 +1,8 @@
 // Attempting to use the alias again, assuming it might be resolvable now or configured at a higher level
-import { NamedURLZ } from "@firsttofly/content-delivery-share/src/types/url";
+
 import { z } from "zod";
 
+import { NamedURLZ } from "../../types/url";
 import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
