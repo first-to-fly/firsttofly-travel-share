@@ -4,44 +4,43 @@ import { z } from "zod";
 import { EntityZ } from "../entity";
 // Corrected path
 
-export const TourTransactionPaymentStatusEnum = z.enum([
-  "unpaid",
-  "partial_deposit",
-  "deposit_paid",
-  "fully_paid",
-]);
-export type TourTransactionPaymentStatusEnum = z.infer<typeof TourTransactionPaymentStatusEnum>;
+export enum TourTransactionPaymentStatus {
+  UNPAID = "unpaid",
+  PARTIAL_DEPOSIT = "partial_deposit",
+  DEPOSIT_PAID = "deposit_paid",
+  FULLY_PAID = "fully_paid",
+}
 
-export const TourTransactionBookingStatusEnum = z.enum([
-  "in_progress",
-  "unpaid",
-  "deposit_paid",
-  "completed",
-  "cancelled",
-  "voided",
-]);
-export type TourTransactionBookingStatusEnum = z.infer<typeof TourTransactionBookingStatusEnum>;
+export const TourTransactionPaymentStatusZ = z.nativeEnum(TourTransactionPaymentStatus);
+
+export enum TourTransactionBookingStatus {
+  IN_PROGRESS = "in_progress",
+  UNPAID = "unpaid",
+  DEPOSIT_PAID = "deposit_paid",
+  COMPLETED = "completed",
+  CANCELLED = "cancelled",
+  VOIDED = "voided",
+}
+
+export const TourTransactionBookingStatusZ = z.nativeEnum(TourTransactionBookingStatus);
 
 export const TourTransactionZ = EntityZ.extend({
-  bookingId: z.string().uuid(),
-  tenantId: z.string().uuid(),
-  tourDepartureId: z.string().uuid(),
-  departmentId: z.string().uuid().optional(), // Added departmentId as optional
+
+  tourDepartureOID: z.string(),
+  departmentOID: z.string().optional(),
+
   bookingReference: z.string().max(50),
-  paymentStatus: TourTransactionPaymentStatusEnum.default("unpaid"),
-  bookingStatus: TourTransactionBookingStatusEnum.default("unpaid"),
-  totalAmount: z.number(), // Assuming decimal is represented as number in Zod
+  paymentStatus: TourTransactionPaymentStatusZ.default(TourTransactionPaymentStatus.UNPAID),
+  bookingStatus: TourTransactionBookingStatusZ.default(TourTransactionBookingStatus.IN_PROGRESS),
+  totalAmount: z.number(),
   receivedAmount: z.number().default(0),
-  snapshot: z.record(z.unknown()), // JSONB represented as record(z.unknown()) or a more specific schema if available
-  metadata: z.record(z.unknown()).optional(), // JSONB
+  snapshot: z.record(z.unknown()),
+  metadata: z.record(z.unknown()).optional(),
 });
 
 export type TourTransaction = z.infer<typeof TourTransactionZ>;
 
-export const TOUR_TRANSACTION_EVENT_PREFIX = "tour_transaction";
-export const TourTransactionEvents = {
-  CREATED: `${TOUR_TRANSACTION_EVENT_PREFIX}:created`,
-  UPDATED: `${TOUR_TRANSACTION_EVENT_PREFIX}:updated`,
-  DELETED: `${TOUR_TRANSACTION_EVENT_PREFIX}:deleted`,
-  // Add other specific events if needed, e.g., PAX_ADDED, ROOM_UPDATED_IN_TRANSACTION
-} as const;
+export enum TourTransactionEvents {
+  TOUR_TRANSACTION_UPDATED = "TOUR_TRANSACTION_UPDATED",
+  TOUR_TRANSACTION_LIST_UPDATED = "TOUR_TRANSACTION_LIST_UPDATED",
+}

@@ -5,29 +5,27 @@ import { EntityZ } from "../entity";
 // Corrected path
 
 
-export const TourTransactionRoomStatusEnum = z.enum([
-  "requested",
-  "confirmed",
-  "waitlisted",
-  "cancelled",
-]);
-export type TourTransactionRoomStatusEnum = z.infer<typeof TourTransactionRoomStatusEnum>;
+export enum TourTransactionRoomStatus {
+  REQUESTED = "requested",
+  CONFIRMED = "confirmed",
+  WAITLISTED = "waitlisted",
+  CANCELLED = "cancelled",
+}
+
+export const TourTransactionRoomStatusZ = z.nativeEnum(TourTransactionRoomStatus);
 
 export const TourTransactionRoomZ = EntityZ.extend({
-  bookingRoomId: z.string().uuid(),
-  bookingId: z.string().uuid(),
-  roomConfigurationRuleId: z.string().uuid(),
+  tourTransactionOID: z.string(),
+  roomConfigurationRuleOID: z.string(),
   roomNumber: z.string().max(20).optional(),
   isDbl: z.boolean().default(false),
-  status: TourTransactionRoomStatusEnum,
+  status: TourTransactionRoomStatusZ,
   notes: z.string().optional(),
 });
 
 export type TourTransactionRoom = z.infer<typeof TourTransactionRoomZ>;
 
-export const TOUR_TRANSACTION_ROOM_EVENT_PREFIX = "tour_transaction_room";
-export const TourTransactionRoomEvents = {
-  CREATED: `${TOUR_TRANSACTION_ROOM_EVENT_PREFIX}:created`,
-  UPDATED: `${TOUR_TRANSACTION_ROOM_EVENT_PREFIX}:updated`,
-  DELETED: `${TOUR_TRANSACTION_ROOM_EVENT_PREFIX}:deleted`,
-} as const;
+export enum TourTransactionRoomEvents {
+  TOUR_TRANSACTION_ROOM_UPDATED = "TOUR_TRANSACTION_ROOM_UPDATED",
+  TOUR_TRANSACTION_ROOM_LIST_UPDATED = "TOUR_TRANSACTION_ROOM_LIST_UPDATED",
+}

@@ -7,8 +7,6 @@ import { TourTransactionZ } from "../../entities/Operations/TourTransaction";
 import { TourTransactionPaxZ } from "../../entities/Operations/TourTransactionPax";
 import { TourTransactionRoomZ } from "../../entities/Operations/TourTransactionRoom";
 import {
-  PaymentMethodZ,
-  TourTransactionTransferTypeZ,
   TourTransactionTransferZ,
 } from "../../entities/Operations/TourTransactionTransfer";
 
@@ -18,54 +16,45 @@ const basePath = "/api/tour-transactions";
 // --- TourTransaction Schemas ---
 const CreateTourTransactionBodyZ = TourTransactionZ.pick({
   tenantOID: true,
+  tourDepartureOID: true,
   bookingReference: true,
   paymentStatus: true,
   bookingStatus: true,
   metadata: true,
-})
-  .extend({
-    productOID: EntityOIDZ,
-    tourDepartureOID: EntityOIDZ,
-  });
+});
 export type CreateTourTransactionBody = z.infer<typeof CreateTourTransactionBodyZ>;
 
 const UpdateTourTransactionBodyZ = CreateTourTransactionBodyZ.omit({
   tenantOID: true,
-  productOID: true,
   tourDepartureOID: true,
 }).partial();
 export type UpdateTourTransactionBody = z.infer<typeof UpdateTourTransactionBodyZ>;
 
 // --- TourTransactionRoom Schemas ---
 const CreateTourTransactionRoomBodyZ = TourTransactionRoomZ.pick({
-  bookingId: true,
+  tourTransactionOID: true,
   status: true,
   roomNumber: true,
   isDbl: true,
   notes: true,
-}).extend({
-  bookingOID: EntityOIDZ,
-  roomConfigurationRuleOID: EntityOIDZ,
+  roomConfigurationRuleOID: true,
 });
 export type CreateTourTransactionRoomBody = z.infer<typeof CreateTourTransactionRoomBodyZ>;
 
 const UpdateTourTransactionRoomBodyZ = CreateTourTransactionRoomBodyZ.omit({
-  bookingOID: true,
-  bookingId: true,
+  tourTransactionOID: true,
 }).partial();
 export type UpdateTourTransactionRoomBody = z.infer<typeof UpdateTourTransactionRoomBodyZ>;
 
 // --- TourTransactionPax Schemas ---
 const CreateTourTransactionPaxBodyZ = TourTransactionPaxZ.pick({
-  bookingRoomId: true,
+  tourTransactionRoomOID: true,
   type: true,
   isLandTourOnly: true,
   personalDetails: true,
   mealPreference: true,
   transportRecordId: true,
   files: true,
-}).extend({
-  bookingRoomOID: EntityOIDZ,
 });
 export type CreateTourTransactionPaxBody = z.infer<typeof CreateTourTransactionPaxBodyZ>;
 
@@ -86,18 +75,19 @@ const CreateTourTransactionTransferBodyZ = TourTransactionTransferZ.pick({
   metadata: true,
   files: true,
   paymentMethod: true,
-}).required({
-  transferType: true,
-  amount: true,
-  currencyCode: true,
-  tenantOID: true,
-  tourTransactionOID: true,
 });
 export type CreateTourTransactionTransferBody = z.infer<typeof CreateTourTransactionTransferBodyZ>;
 
+const UpdateTourTransactionTransferBodyZ = CreateTourTransactionTransferBodyZ.pick({
+  files: true,
+  notes: true,
+  metadata: true,
+}).partial();
+export type UpdateTourTransactionTransferBody = z.infer<typeof UpdateTourTransactionTransferBodyZ>;
+
 
 export const tourTransactionContract = initContract().router({
-  // == TourTransaction Endpoints ==
+  // #region TRANSACTION
   getTourTransactions: {
     summary: "Get tour transactions",
     method: "GET",
@@ -132,16 +122,6 @@ export const tourTransactionContract = initContract().router({
       200: z.array(EntityOIDZ.describe("OIDs of updated TourTransactions")),
     },
   },
-  updateTourTransaction: {
-    summary: "Update a specific tour transaction",
-    method: "PUT",
-    path: `${basePath}/:bookingOID`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: UpdateTourTransactionBodyZ,
-    responses: {
-      200: EntityOIDZ,
-    },
-  },
   deleteTourTransactions: {
     summary: "Delete multiple tour transactions",
     method: "POST",
@@ -153,145 +133,159 @@ export const tourTransactionContract = initContract().router({
       200: z.boolean(),
     },
   },
-  deleteTourTransaction: {
-    summary: "Delete a specific tour transaction",
-    method: "DELETE",
-    path: `${basePath}/:bookingOID`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
-    },
-  },
   confirmTourTransaction: {
     method: "POST",
-    path: `${basePath}/:bookingOID/confirm`,
+    path: `${basePath}/batch-confirm`,
     summary: "Confirm a tour transaction, trigger validation and data snapshotting",
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
+    body: z.object({
+      tourTransactionOIDs: z.array(EntityOIDZ.describe("OIDs of TourTransactions to confirm")),
     }),
-    body: z.object({}),
     responses: {
       200: z.boolean(),
     },
   },
-  // == TourTransactionRoom Endpoints (nested under a transaction) ==
+  // #endregion
+
+  // #region ROOM
   getRoomsForTransaction: {
     summary: "Get all rooms for a specific tour transaction",
     method: "GET",
-    path: `${basePath}/:bookingOID/rooms`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    path: `${basePath}/:tourTransactionOID/rooms`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
     responses: {
-      200: z.array(TourTransactionRoomZ),
+      200: z.array(EntityOIDZ.describe("OIDs of TourTransactionRooms")),
     },
   },
   addRoomToTransaction: {
     summary: "Add a new room to a tour transaction",
     method: "POST",
-    path: `${basePath}/:bookingOID/rooms`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    path: `${basePath}/:tourTransactionOID/rooms`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
     body: CreateTourTransactionRoomBodyZ.omit({
-      bookingOID: true,
-      bookingId: true,
-    }),
-    responses: {
-      201: EntityOIDZ,
-    },
-  },
-  updateRoomInTransaction: {
-    summary: "Update a specific room in a tour transaction",
-    method: "PUT",
-    path: `${basePath}/:bookingOID/rooms/:roomOID`,
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      roomOID: EntityOIDZ,
-    }),
-    body: UpdateTourTransactionRoomBodyZ,
-    responses: {
-      200: EntityOIDZ,
-    },
-  },
-  removeRoomFromTransaction: {
-    summary: "Remove a room from a tour transaction",
-    method: "DELETE",
-    path: `${basePath}/:bookingOID/rooms/:roomOID`,
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      roomOID: EntityOIDZ,
-    }),
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
-    },
-  },
-
-  // == TourTransactionPax Endpoints (nested under a transaction) ==
-  updatePaxInTransaction: {
-    summary: "Update a specific passenger in a tour transaction",
-    method: "PUT",
-    path: `${basePath}/:bookingOID/pax/:paxOID`,
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      paxOID: EntityOIDZ,
-    }),
-    body: UpdateTourTransactionPaxBodyZ,
-    responses: {
-      200: EntityOIDZ,
-    },
-  },
-  removePaxFromTransaction: {
-    summary: "Remove a passenger from a tour transaction",
-    method: "DELETE",
-    path: `${basePath}/:bookingOID/pax/:paxOID`,
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      paxOID: EntityOIDZ,
-    }),
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
-    },
-  },
-
-  // == TourTransactionTransfer Endpoints (nested under a transaction) ==
-  createTourTransactionTransfer: {
-    summary: "Record a completed financial transfer for a booking",
-    method: "POST",
-    path: `${basePath}/:bookingOID/transfers`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: CreateTourTransactionTransferBodyZ.omit({
-      tenantOID: true,
       tourTransactionOID: true,
     }),
     responses: {
       201: EntityOIDZ,
     },
   },
-  getTourTransactionTransfers: {
-    summary: "Get list of financial transfers for a booking",
-    method: "GET",
-    path: `${basePath}/:bookingOID/transfers`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    query: z.object({
-      limit: z.coerce.number().int().positive().optional(),
-      offset: z.coerce.number().int().nonnegative().optional(),
-      transferType: TourTransactionTransferTypeZ.optional(),
-      paymentMethod: PaymentMethodZ.optional(),
-    }).passthrough(),
+  updateRoomInTransactions: {
+    summary: "Update a specific room in a tour transaction",
+    method: "PUT",
+    path: `${basePath}/:tourTransactionOID/rooms/batch-update`,
+    pathParams: z.object({
+      tourTransactionOID: EntityOIDZ,
+    }),
+    body: z.record(
+      EntityOIDZ.describe("OID of TourTransactionRoom to update"),
+      UpdateTourTransactionRoomBodyZ,
+    ),
     responses: {
-      200: z.object({ oids: z.array(EntityOIDZ) }),
+      200: z.array(EntityOIDZ.describe("OIDs of updated TourTransactionRooms")),
     },
   },
-  getTourTransactionTransferById: {
-    summary: "Get details of a specific financial transfer",
-    method: "GET",
-    path: `${basePath}/:bookingOID/transfers/:transferOID`,
+  removeRoomFromTransactions: {
+    summary: "Remove a room from a tour transaction",
+    method: "DELETE",
+    path: `${basePath}/:tourTransactionOID/rooms/batch-delete`,
     pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      transferOID: EntityOIDZ,
+      tourTransactionOID: EntityOIDZ,
+    }),
+    body: z.object({
+      tourTransactionRoomOIDs: z.array(EntityOIDZ.describe("OIDs of TourTransactionRooms to remove")),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  // #endregion
+
+  // #region PAX
+  getPaxForTransaction: {
+    summary: "Get all passengers for a specific tour transaction",
+    method: "GET",
+    path: `${basePath}/:tourTransactionOID/pax`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of TourTransactionPax")),
+    },
+  },
+  updatePaxInTransactions: {
+    summary: "Update a specific passenger in a tour transaction",
+    method: "PUT",
+    path: `${basePath}/:tourTransactionOID/pax/batch-update`,
+    pathParams: z.object({
+      tourTransactionOID: EntityOIDZ,
+    }),
+    body: z.record(
+      EntityOIDZ.describe("OID of TourTransactionPax to update"),
+      UpdateTourTransactionPaxBodyZ,
+    ),
+    responses: {
+      200: EntityOIDZ,
+    },
+  },
+  removePaxFromTransactions: {
+    summary: "Remove a passenger from a tour transaction",
+    method: "DELETE",
+    path: `${basePath}/:tourTransactionOID/pax/batch-delete`,
+    pathParams: z.object({
+      tourTransactionOID: EntityOIDZ,
+    }),
+    body: z.object({
+      tourTransactionPaxOIDs: z.array(EntityOIDZ.describe("OIDs of TourTransactionPax to remove")),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  // #endregion
+
+  // #region TRANSFER
+  createTourTransactionTransfer: {
+    summary: "Record a completed financial transfer for a booking",
+    method: "POST",
+    path: `${basePath}/:tourTransactionOID/transfers`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    body: CreateTourTransactionTransferBodyZ.omit({
+      tourTransactionOID: true,
     }),
     responses: {
       200: EntityOIDZ,
     },
   },
+  updateTourTransactionTransfers: {
+    summary: "Update multiple financial transfers for a tour transaction",
+    method: "POST",
+    path: `${basePath}/:tourTransactionOID/transfers/batch-update`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    body: z.record(
+      EntityOIDZ.describe("OID of TourTransactionTransfer to update"),
+      UpdateTourTransactionTransferBodyZ,
+    ),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of updated TourTransactionTransfers")),
+    },
+  },
+  getAllTourTransactionTransfers: {
+    summary: "Get all financial transfers in tenants",
+    method: "GET",
+    path: `${basePath}/transfers`,
+    query: z.object({
+      tenantOID: z.string(),
+    }).passthrough(),
+    responses: {
+      200: z.object({ oids: z.array(EntityOIDZ) }),
+    },
+  },
+  getTourTransactionTransfers: {
+    summary: "Get list of financial transfers for a tour transaction",
+    method: "GET",
+    path: `${basePath}/:tourTransactionOID/transfers`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    responses: {
+      200: z.object({ oids: z.array(EntityOIDZ) }),
+    },
+  },
+  // #endregion
+
 });

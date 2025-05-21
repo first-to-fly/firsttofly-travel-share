@@ -2,9 +2,9 @@
 
 import { z } from "zod";
 
+import { DateISOStringZ } from "../../types/date";
 import { NamedURLZ } from "../../types/url";
 import { EntityZ } from "../entity";
-import { EntityType } from "../entityType";
 
 
 export enum TourTransactionTransferType {
@@ -29,29 +29,25 @@ export const PaymentMethodZ = z.nativeEnum(PaymentMethod);
 
 
 export const TourTransactionTransferZ = EntityZ.extend({
+
   transferType: TourTransactionTransferTypeZ,
+
   amount: z.number().positive(),
   currencyCode: z.string().length(3),
   paymentMethod: PaymentMethodZ.optional(),
   transactionReference: z.string().max(255).optional(),
-  transactionDate: z.date().default(() => new Date()),
+  transactionDate: DateISOStringZ,
   notes: z.string().optional(),
   metadata: z.record(z.unknown()).optional(),
   files: z.array(NamedURLZ).optional().default([]),
 
-  tenantId: z.string().uuid(),
-  bookingId: z.string().uuid(),
+  tourTransactionOID: z.string(),
 
-}).merge(z.object({
-  entityType: z.literal(EntityType.TOUR_TRANSACTION_TRANSFER).default(EntityType.TOUR_TRANSACTION_TRANSFER),
-  tourTransactionTransferOID: z.string().uuid(),
-  tenantOID: z.string().uuid(),
-  tourTransactionOID: z.string().uuid(),
-}));
+});
 
 export type TourTransactionTransfer = z.infer<typeof TourTransactionTransferZ>;
 
-export const TOUR_TRANSACTION_TRANSFER_EVENT_PREFIX = "tour_transaction_transfer";
-export const TourTransactionTransferEvents = {
-  CREATED: `${TOUR_TRANSACTION_TRANSFER_EVENT_PREFIX}:created`,
-} as const;
+export enum TourTransactionTransferEvents {
+  TOUR_TRANSACTION_TRANSFER_UPDATED = "TOUR_TRANSACTION_TRANSFER_UPDATED",
+  TOUR_TRANSACTION_TRANSFER_LIST_UPDATED = "TOUR_TRANSACTION_TRANSFER_LIST_UPDATED",
+}
