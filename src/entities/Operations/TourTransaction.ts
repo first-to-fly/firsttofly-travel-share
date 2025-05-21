@@ -25,7 +25,6 @@ export type TourTransactionBookingStatusEnum = z.infer<typeof TourTransactionBoo
 export const TourTransactionZ = EntityZ.extend({
   bookingId: z.string().uuid(),
   tenantId: z.string().uuid(),
-  productId: z.string().uuid(),
   tourDepartureId: z.string().uuid(),
   departmentId: z.string().uuid().optional(), // Added departmentId as optional
   bookingReference: z.string().max(50),
