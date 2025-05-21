@@ -29,7 +29,7 @@ export enum TourDepartureEvents {
 export const TourDepartureZ = EntityZ.extend({
   entityType: z.literal(EntityType.TOUR_DEPARTURE),
 
-  productPricingOID: EntityOIDZ,
+  groupTourPricingOID: EntityOIDZ,
   appliedItineraryOID: EntityOIDZ,
   itineraryOID: EntityOIDZ,
 

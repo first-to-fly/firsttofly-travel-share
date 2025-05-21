@@ -10,7 +10,7 @@ const basePath = "/api/operations/tour-departures";
 const CreateTourDepartureZ = TourDepartureZ.pick({
   tenantOID: true,
 
-  productPricingOID: true,
+  groupTourPricingOID: true,
   appliedItineraryOID: true,
 
   tourLeaderOIDs: true,
@@ -38,7 +38,7 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
 
 const UpdateTourDepartureZ = CreateTourDepartureZ.omit({
   tenantOID: true,
-  productPricingOID: true,
+  groupTourPricingOID: true,
 }).extend({
   discount: GroupTourPricingDiscountZ.optional(),
 }).partial();
