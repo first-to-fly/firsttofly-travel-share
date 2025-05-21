@@ -15,7 +15,7 @@ const CreateDiscountZ = DiscountZ.pick({
   validityStartDate: true,
   validityEndDate: true,
   isActive: true,
-  bookingChannel: true,
+  bookingChannels: true,
   discountMechanics: true,
   discountType: true,
   basePrice: true,

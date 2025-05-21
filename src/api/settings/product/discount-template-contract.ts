@@ -11,7 +11,7 @@ const CreateDiscountTemplateZ = DiscountTemplateZ.pick({
   tenantOID: true,
   templateName: true,
   description: true,
-  bookingChannel: true,
+  bookingChannels: true,
   discountMechanics: true,
   discountType: true,
   basePrice: true,

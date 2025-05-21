@@ -94,7 +94,7 @@ export const DiscountZ = EntityZ.extend({
 
   isActive: z.boolean(),
 
-  bookingChannel: z.nativeEnum(DiscountBookingChannel),
+  bookingChannels: z.array(z.nativeEnum(DiscountBookingChannel)),
   discountMechanics: z.nativeEnum(DiscountMechanics),
   discountType: z.nativeEnum(DiscountType),
   basePrice: z.nativeEnum(DiscountBasePrice),

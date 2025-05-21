@@ -20,7 +20,7 @@ export const DiscountTemplateZ = EntityZ.extend({
   templateName: z.string(),
   description: z.string().nullable().optional(),
 
-  bookingChannel: z.nativeEnum(DiscountBookingChannel),
+  bookingChannels: z.array(z.nativeEnum(DiscountBookingChannel)),
   discountMechanics: z.nativeEnum(DiscountMechanics),
   discountType: z.nativeEnum(DiscountType),
   basePrice: z.nativeEnum(DiscountBasePrice),
