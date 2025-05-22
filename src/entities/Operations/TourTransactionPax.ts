@@ -24,7 +24,7 @@ export const TourTransactionPaxZ = EntityZ.extend({
   isLandTourOnly: z.boolean().default(false),
   personalDetails: z.record(z.unknown()).optional(), // JSONB
   mealPreference: z.string().optional(),
-  transportRecordId: z.string().uuid().optional(),
+  transportRecordOID: z.string().optional(),
   files: z.array(NamedURLZ).optional(),
 });
 

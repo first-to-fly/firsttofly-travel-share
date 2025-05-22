@@ -135,10 +135,11 @@ export const tourTransactionContract = initContract().router({
   },
   confirmTourTransaction: {
     method: "POST",
-    path: `${basePath}/batch-confirm`,
+    path: `${basePath}/:tourTransactionOID/confirm`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
     summary: "Confirm a tour transaction, trigger validation and data snapshotting",
     body: z.object({
-      tourTransactionOIDs: z.array(EntityOIDZ.describe("OIDs of TourTransactions to confirm")),
+      tourTransactionOID: EntityOIDZ.describe("OID of TourTransaction to confirm"),
     }),
     responses: {
       200: z.boolean(),
