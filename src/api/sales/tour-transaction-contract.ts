@@ -3,15 +3,13 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
-import { TourTransactionZ } from "../../entities/Operations/TourTransaction";
-import { TourTransactionPaxZ } from "../../entities/Operations/TourTransactionPax";
-import { TourTransactionRoomZ } from "../../entities/Operations/TourTransactionRoom";
-import {
-  TourTransactionTransferZ,
-} from "../../entities/Operations/TourTransactionTransfer";
+import { TourTransactionZ } from "../../entities/Sales/TourTransaction";
+import { TourTransactionPaxZ } from "../../entities/Sales/TourTransactionPax";
+import { TourTransactionRoomZ } from "../../entities/Sales/TourTransactionRoom";
+import { TourTransactionTransferZ } from "../../entities/Sales/TourTransactionTransfer";
 
 
-const basePath = "/api/tour-transactions";
+const basePath = "/api/sales/tour-transactions";
 
 // --- TourTransaction Schemas ---
 const CreateTourTransactionBodyZ = TourTransactionZ.pick({
@@ -140,9 +138,7 @@ export const tourTransactionContract = initContract().router({
     path: `${basePath}/:tourTransactionOID/confirm`,
     pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
     summary: "Confirm a tour transaction, trigger validation and data snapshotting",
-    body: z.object({
-      tourTransactionOID: EntityOIDZ.describe("OID of TourTransaction to confirm"),
-    }),
+    body: z.undefined(),
     responses: {
       200: z.boolean(),
     },
