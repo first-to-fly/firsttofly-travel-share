@@ -17,6 +17,7 @@ const basePath = "/api/tour-transactions";
 const CreateTourTransactionBodyZ = TourTransactionZ.pick({
   tenantOID: true,
   tourDepartureOID: true,
+  departmentOID: true,
   bookingReference: true,
   paymentStatus: true,
   bookingStatus: true,
@@ -26,6 +27,7 @@ export type CreateTourTransactionBody = z.infer<typeof CreateTourTransactionBody
 
 const UpdateTourTransactionBodyZ = CreateTourTransactionBodyZ.omit({
   tenantOID: true,
+  departmentOID: true,
   tourDepartureOID: true,
 }).partial();
 export type UpdateTourTransactionBody = z.infer<typeof UpdateTourTransactionBodyZ>;
