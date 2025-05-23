@@ -30,7 +30,7 @@ export const GroupTourPricingDiscountZ = z.object({
   groups: z.array(z.object({
     name: z.string(),
     tierData: z.record(
-      FTFSafeMaxNumberZ({ name: "Discount tier index" }),
+      z.string().describe("Discount tier index"),
       z.object({
         adult: FTFSafeMaxNumberZ({ name: "Adult discount" }),
         child: FTFSafeMaxNumberZ({ name: "Child discount" }),
