@@ -76,10 +76,9 @@ const EntityPermissions = {
   "Assemble Location Airlines": AssembleLocationAirlinesPermissions,
   "Room Configuration": RoomConfigurationPermissions,
   Discount: DiscountPermissions,
-  TourTransaction: TourTransactionPermissions,
-  TourTransactionRoom: TourTransactionRoomPermissions,
-  TourTransactionPax: TourTransactionPaxPermissions,
-  TourTransactionTransfer: TourTransactionTransferPermissions,
+  "Tour Transaction Room": TourTransactionRoomPermissions,
+  "Tour Transaction Pax": TourTransactionPaxPermissions,
+  "Tour Transaction Transfer": TourTransactionTransferPermissions,
   "Discount Template": DiscountTemplatePermissions,
   "Group Tour Costing": GroupTourCostingPermissions,
   "Group Tour Product": GroupTourProductPermissions,
@@ -91,6 +90,7 @@ const EntityPermissions = {
   "Transport Segment": TransportSegmentPermissions,
   "Supplier Profile": SupplierProfilePermissions,
   "Supplier Contract": SupplierContractPermissions,
+  Booking: TourTransactionPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
