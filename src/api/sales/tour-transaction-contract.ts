@@ -3,7 +3,7 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
-import { TourTransactionZ } from "../../entities/Sales/TourTransaction";
+import { TourTransactionBookingStatus, TourTransactionZ } from "../../entities/Sales/TourTransaction";
 import { TourTransactionPaxZ } from "../../entities/Sales/TourTransactionPax";
 import { TourTransactionRoomZ } from "../../entities/Sales/TourTransactionRoom";
 import { TourTransactionTransferZ } from "../../entities/Sales/TourTransactionTransfer";
@@ -18,7 +18,6 @@ const CreateTourTransactionBodyZ = TourTransactionZ.pick({
   departmentOID: true,
   bookingReference: true,
   paymentStatus: true,
-  bookingStatus: true,
   metadata: true,
 });
 export type CreateTourTransactionBody = z.infer<typeof CreateTourTransactionBodyZ>;
@@ -141,6 +140,27 @@ export const tourTransactionContract = initContract().router({
     body: z.undefined(),
     responses: {
       200: z.boolean(),
+    },
+  },
+  cancelTourTransaction: {
+    method: "POST",
+    path: `${basePath}/:tourTransactionOID/cancel`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    summary: "Cancel a tour transaction",
+    body: z.undefined(),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  batchUpdateBookingStatus: {
+    method: "POST",
+    path: `${basePath}/batch-booking-status`,
+    body: z.record(
+      EntityOIDZ.describe("OID of TourTransaction to update"),
+      z.object({ status: z.nativeEnum(TourTransactionBookingStatus) }),
+    ),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of updated TourTransactions")),
     },
   },
   // #endregion
