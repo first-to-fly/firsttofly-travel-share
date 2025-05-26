@@ -10,7 +10,6 @@ const CreateBudgetZ = BudgetZ.pick({
   tenantOID: true,
   tourDepartureOID: true,
   status: true,
-  materializationRate: true,
   remarks: true,
   isArchived: true,
 });
@@ -28,6 +27,7 @@ export type CreateBudget = z.infer<typeof CreateBudgetZ>;
 export type UpdateBudget = z.infer<typeof UpdateBudgetZ>;
 
 export const budgetContract = initContract().router({
+
   getBudgets: {
     summary: "Get budgets",
     method: "GET",
@@ -56,4 +56,5 @@ export const budgetContract = initContract().router({
       200: z.array(z.string().describe("OIDs of updated budgets")),
     },
   },
+
 });
