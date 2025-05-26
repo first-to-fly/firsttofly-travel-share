@@ -50,6 +50,8 @@ export function startingPriceGivenRoomPaxConfigurations(data: {
     supportCurrencies,
   } = data;
 
+  console.log("paxConfigurations", paxConfigurations);
+
   // Initialize breakdown structure
   const breakdown: StartingPriceBreakdown = {
     total: 0,
