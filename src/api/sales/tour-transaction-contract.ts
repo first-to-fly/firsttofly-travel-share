@@ -5,7 +5,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../../entities/entity";
 import { TourTransactionBookingStatus, TourTransactionZ } from "../../entities/Sales/TourTransaction";
 import { TourTransactionAddonZ } from "../../entities/Sales/TourTransactionAddon";
-import { TourTransactionDiscountZ } from "../../entities/Sales/TourTransactionDiscount";
+import { TourTransactionDiscountType } from "../../entities/Sales/TourTransactionDiscount";
 import { TourTransactionPaxZ } from "../../entities/Sales/TourTransactionPax";
 import { TourTransactionRoomZ } from "../../entities/Sales/TourTransactionRoom";
 import { TourTransactionTransferZ } from "../../entities/Sales/TourTransactionTransfer";
@@ -87,14 +87,27 @@ const UpdateTourTransactionTransferBodyZ = CreateTourTransactionTransferBodyZ.pi
 export type UpdateTourTransactionTransferBody = z.infer<typeof UpdateTourTransactionTransferBodyZ>;
 
 // --- TourTransactionDiscount Schemas ---
-const ApplyDiscountBodyZ = TourTransactionDiscountZ.pick({
-  discountType: true,
-  discountOID: true,
-  appliedDiscountCode: true,
-  description: true,
-  appliedAmount: true,
-  metadata: true,
-});
+const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
+  // Code-based discount: requires discountOID (from validation API)
+  z.object({
+    discountType: z.literal(TourTransactionDiscountType.CODE_BASED),
+    discountOID: z.string(),
+    description: z.string().optional(),
+    metadata: z.record(z.unknown()).optional(),
+  }),
+  // Tour departure discount: no discountOID needed, amount calculated on backend
+  z.object({
+    discountType: z.literal(TourTransactionDiscountType.TOUR_DEPARTURE_DISCOUNT),
+    groupIndex: z.number(),
+  }),
+  // Special request discount: handled via approval workflow
+  z.object({
+    discountType: z.literal(TourTransactionDiscountType.SPECIAL_REQUEST),
+    description: z.string(),
+    appliedAmount: z.number(),
+    metadata: z.record(z.unknown()).optional(),
+  }),
+]);
 export type ApplyDiscountBody = z.infer<typeof ApplyDiscountBodyZ>;
 
 // --- TourTransactionAddon Schemas ---
