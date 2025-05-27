@@ -21,7 +21,7 @@ export const ApprovalRequestZ = z.object({
   requestId: z.string(),
   tenantOID: z.string(),
   type: ApprovalRequestTypeZ,
-  entityOid: z.string(),
+  entityOID: z.string(),
   payload: z.record(z.any()), // JSONB - flexible structure
   status: ApprovalRequestStatusZ,
   remarks: z.string().optional(),

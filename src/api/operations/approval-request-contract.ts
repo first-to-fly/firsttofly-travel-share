@@ -9,7 +9,7 @@ const basePath = "/api/operations/approval-requests";
 const CreateApprovalRequestZ = ApprovalRequestZ.pick({
   tenantOID: true,
   type: true,
-  entityOid: true,
+  entityOID: true,
   payload: true,
   remarks: true,
   assigneeOID: true,
