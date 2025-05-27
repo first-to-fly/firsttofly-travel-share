@@ -66,6 +66,7 @@ export enum EntityType {
 
   // OPERATIONS
   TOUR_DEPARTURE = "tourDeparture",
+  APPROVAL_REQUEST = "approvalRequest",
 
   // BOOKING
   TOUR_TRANSACTION = "tourTransaction",

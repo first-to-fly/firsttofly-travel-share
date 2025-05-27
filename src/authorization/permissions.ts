@@ -1,3 +1,4 @@
+import { ApprovalRequestPermissions } from "./entities/approval-request.permission";
 import { AssembleLocationAirlinesPermissions } from "./entities/assemble-location-airlines.permission";
 import { BadgePermissions } from "./entities/badge.permission";
 import { BudgetPermissions } from "./entities/budget.permission";
@@ -91,6 +92,7 @@ const EntityPermissions = {
   "Supplier Profile": SupplierProfilePermissions,
   "Supplier Contract": SupplierContractPermissions,
   Booking: TourTransactionPermissions,
+  "Approval Request": ApprovalRequestPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
