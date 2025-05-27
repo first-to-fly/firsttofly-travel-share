@@ -73,6 +73,8 @@ export enum EntityType {
   TOUR_TRANSACTION_ROOM = "tourTransactionRoom",
   TOUR_TRANSACTION_PAX = "tourTransactionPax",
   TOUR_TRANSACTION_TRANSFER = "tourTransactionTransfer",
+  TOUR_TRANSACTION_DISCOUNT = "tourTransactionDiscount",
+  TOUR_TRANSACTION_ADDON = "tourTransactionAddon",
 
   // BUDGET
   BUDGET = "budget",

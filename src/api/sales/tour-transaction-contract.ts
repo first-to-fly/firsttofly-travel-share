@@ -4,6 +4,8 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
 import { TourTransactionBookingStatus, TourTransactionZ } from "../../entities/Sales/TourTransaction";
+import { TourTransactionAddonZ } from "../../entities/Sales/TourTransactionAddon";
+import { TourTransactionDiscountType } from "../../entities/Sales/TourTransactionDiscount";
 import { TourTransactionPaxZ } from "../../entities/Sales/TourTransactionPax";
 import { TourTransactionRoomZ } from "../../entities/Sales/TourTransactionRoom";
 import { TourTransactionTransferZ } from "../../entities/Sales/TourTransactionTransfer";
@@ -83,6 +85,46 @@ const UpdateTourTransactionTransferBodyZ = CreateTourTransactionTransferBodyZ.pi
   metadata: true,
 }).partial();
 export type UpdateTourTransactionTransferBody = z.infer<typeof UpdateTourTransactionTransferBodyZ>;
+
+// --- TourTransactionDiscount Schemas ---
+const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
+  // Code-based discount: requires discountOID (from validation API)
+  z.object({
+    discountType: z.literal(TourTransactionDiscountType.CODE_BASED),
+    discountOID: z.string(),
+    description: z.string().optional(),
+    metadata: z.record(z.unknown()).optional(),
+  }),
+  // Tour departure discount: no discountOID needed, amount calculated on backend
+  z.object({
+    discountType: z.literal(TourTransactionDiscountType.TOUR_DEPARTURE_DISCOUNT),
+    groupIndex: z.number(),
+  }),
+  // Special request discount: handled via approval workflow
+  z.object({
+    discountType: z.literal(TourTransactionDiscountType.SPECIAL_REQUEST),
+    description: z.string(),
+    appliedAmount: z.number(),
+    metadata: z.record(z.unknown()).optional(),
+  }),
+]);
+export type ApplyDiscountBody = z.infer<typeof ApplyDiscountBodyZ>;
+
+// --- TourTransactionAddon Schemas ---
+const AddAddonBodyZ = TourTransactionAddonZ.pick({
+  type: true,
+  budgetItemOID: true,
+  name: true,
+  unitPrice: true,
+  quantity: true,
+  totalPrice: true,
+  supplierOID: true,
+  notes: true,
+});
+export type AddAddonBody = z.infer<typeof AddAddonBodyZ>;
+
+const UpdateAddonBodyZ = AddAddonBodyZ.partial();
+export type UpdateAddonBody = z.infer<typeof UpdateAddonBodyZ>;
 
 
 export const tourTransactionContract = initContract().router({
@@ -253,6 +295,89 @@ export const tourTransactionContract = initContract().router({
     body: z.object({
       tourTransactionPaxOIDs: z.array(EntityOIDZ.describe("OIDs of TourTransactionPax to remove")),
     }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  // #endregion
+
+  // #region DISCOUNT
+  getDiscountsForTransaction: {
+    summary: "List applied discounts for a transaction",
+    method: "GET",
+    path: `${basePath}/:tourTransactionOID/discounts`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of TourTransactionDiscounts")),
+    },
+  },
+  applyDiscountToTransaction: {
+    summary: "Apply a new discount to the transaction",
+    method: "POST",
+    path: `${basePath}/:tourTransactionOID/discounts`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    body: ApplyDiscountBodyZ,
+    responses: {
+      201: EntityOIDZ,
+    },
+  },
+  removeDiscountFromTransaction: {
+    summary: "Remove a discount from the transaction",
+    method: "DELETE",
+    path: `${basePath}/:tourTransactionOID/discounts/:transactionDiscountOID`,
+    pathParams: z.object({
+      tourTransactionOID: EntityOIDZ,
+      transactionDiscountOID: EntityOIDZ,
+    }),
+    body: z.undefined(),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  // #endregion
+
+  // #region ADDON
+  getAddonsForTransaction: {
+    summary: "List add-ons for a transaction",
+    method: "GET",
+    path: `${basePath}/:tourTransactionOID/addons`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of TourTransactionAddons")),
+    },
+  },
+  addAddonToTransaction: {
+    summary: "Add a new add-on to the transaction",
+    method: "POST",
+    path: `${basePath}/:tourTransactionOID/addons`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    body: AddAddonBodyZ,
+    responses: {
+      201: EntityOIDZ,
+    },
+  },
+  updateAddonInTransaction: {
+    summary: "Update an existing add-on in the transaction",
+    method: "PUT",
+    path: `${basePath}/:tourTransactionOID/addons/:transactionAddonOID`,
+    pathParams: z.object({
+      tourTransactionOID: EntityOIDZ,
+      transactionAddonOID: EntityOIDZ,
+    }),
+    body: UpdateAddonBodyZ,
+    responses: {
+      200: EntityOIDZ,
+    },
+  },
+  removeAddonFromTransaction: {
+    summary: "Remove an add-on from the transaction",
+    method: "DELETE",
+    path: `${basePath}/:tourTransactionOID/addons/:transactionAddonOID`,
+    pathParams: z.object({
+      tourTransactionOID: EntityOIDZ,
+      transactionAddonOID: EntityOIDZ,
+    }),
+    body: z.undefined(),
     responses: {
       200: z.boolean(),
     },
