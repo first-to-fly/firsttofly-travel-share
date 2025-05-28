@@ -36,6 +36,7 @@ export const TourTransactionZ = EntityZ.extend({
   receivedAmount: z.number().default(0),
   snapshot: z.record(z.unknown()),
   metadata: z.record(z.unknown()).optional(),
+  specialInstructions: z.array(z.string()).optional(),
 });
 
 export type TourTransaction = z.infer<typeof TourTransactionZ>;

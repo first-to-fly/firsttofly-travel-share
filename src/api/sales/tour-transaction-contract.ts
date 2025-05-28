@@ -21,6 +21,7 @@ const CreateTourTransactionBodyZ = TourTransactionZ.pick({
   bookingReference: true,
   paymentStatus: true,
   metadata: true,
+  specialInstructions: true,
 });
 export type CreateTourTransactionBody = z.infer<typeof CreateTourTransactionBodyZ>;
 
