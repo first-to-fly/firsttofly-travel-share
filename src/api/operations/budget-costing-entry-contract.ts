@@ -13,7 +13,7 @@ export const BudgetEntryEvents = {
 
 const basePath = "/api/operations/budget-entries";
 
-const CreateBudgetCostingEntryZ = CreateGroupTourCostingEntryZ.extend({
+const CreateBudgetEntryZ = CreateGroupTourCostingEntryZ.extend({
   forexRate: FTFSafeMaxNumberZ({ name: "Forex rate" }),
   localCurrency: z.string(),
   localAmount: FTFSafeMaxNumberZ({ name: "Local amount" }),
@@ -21,12 +21,12 @@ const CreateBudgetCostingEntryZ = CreateGroupTourCostingEntryZ.extend({
   paidAmount: FTFSafeMaxNumberZ({ name: "Paid amount" }),
 });
 
-const UpdateBudgetCostingEntryZ = CreateBudgetCostingEntryZ.partial();
+const UpdateBudgetEntryZ = CreateBudgetEntryZ.partial();
 
-export type CreateBudgetCostingEntry = z.infer<typeof CreateBudgetCostingEntryZ>;
-export type UpdateBudgetCostingEntry = z.infer<typeof UpdateBudgetCostingEntryZ>;
+export type CreateBudgetEntry = z.infer<typeof CreateBudgetEntryZ>;
+export type UpdateBudgetEntry = z.infer<typeof UpdateBudgetEntryZ>;
 
-export const budgetCostingEntryContract = initContract().router({
+export const budgetEntryContract = initContract().router({
   getBudgetEntries: {
     summary: "Get budget entries",
     method: "GET",
@@ -35,27 +35,27 @@ export const budgetCostingEntryContract = initContract().router({
     responses: { 200: z.object({ oids: z.array(z.string()) }) },
   },
 
-  createBudgetCostingEntry: {
-    summary: "Create a budget costing entry",
+  createBudgetEntry: {
+    summary: "Create a budget entry",
     method: "POST",
     path: `${basePath}`,
-    body: CreateBudgetCostingEntryZ,
+    body: CreateBudgetEntryZ,
     responses: { 200: z.string() },
   },
 
-  updateBudgetCostingEntries: {
-    summary: "Update multiple budget costing entries",
+  updateBudgetEntries: {
+    summary: "Update multiple budget entries",
     method: "POST",
     path: `${basePath}/batch-update`,
-    body: z.record(z.string(), UpdateBudgetCostingEntryZ),
+    body: z.record(z.string(), UpdateBudgetEntryZ),
     responses: { 200: z.array(z.string()) },
   },
 
-  deleteBudgetCostingEntries: {
-    summary: "Delete multiple budget costing entries",
+  deleteBudgetEntries: {
+    summary: "Delete multiple budget entries",
     method: "POST",
     path: `${basePath}/batch-delete`,
-    body: z.object({ budgetCostingEntryOIDs: z.array(z.string()) }),
+    body: z.object({ budgetEntryOIDs: z.array(z.string()) }),
     responses: { 200: z.boolean() },
   },
 });
