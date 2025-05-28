@@ -14,6 +14,7 @@ export const BudgetEntryEvents = {
 const basePath = "/api/operations/budget-entries";
 
 const CreateBudgetEntryZ = CreateGroupTourCostingEntryZ.extend({
+  budgetOID: z.string(),
   forexRate: FTFSafeMaxNumberZ({ name: "Forex rate" }),
   localCurrency: z.string(),
   localAmount: FTFSafeMaxNumberZ({ name: "Local amount" }),
@@ -21,7 +22,9 @@ const CreateBudgetEntryZ = CreateGroupTourCostingEntryZ.extend({
   paidAmount: FTFSafeMaxNumberZ({ name: "Paid amount" }),
 });
 
-const UpdateBudgetEntryZ = CreateBudgetEntryZ.partial();
+const UpdateBudgetEntryZ = CreateBudgetEntryZ.omit({
+  budgetOID: true,
+}).partial();
 
 export type CreateBudgetEntry = z.infer<typeof CreateBudgetEntryZ>;
 export type UpdateBudgetEntry = z.infer<typeof UpdateBudgetEntryZ>;
