@@ -93,7 +93,6 @@ const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
     discountType: z.literal(TourTransactionDiscountType.CODE_BASED),
     discountOID: z.string(),
     description: z.string().optional(),
-    metadata: z.record(z.unknown()).optional(),
   }),
   // Tour departure discount: no discountOID needed, amount calculated on backend
   z.object({
@@ -103,9 +102,6 @@ const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
   // Special request discount: handled via approval workflow
   z.object({
     discountType: z.literal(TourTransactionDiscountType.SPECIAL_REQUEST),
-    description: z.string(),
-    appliedAmount: z.number(),
-    metadata: z.record(z.unknown()).optional(),
   }),
 ]);
 export type ApplyDiscountBody = z.infer<typeof ApplyDiscountBodyZ>;
