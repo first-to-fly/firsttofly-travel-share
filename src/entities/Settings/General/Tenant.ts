@@ -18,7 +18,7 @@ export const TenantZ = EntityZ.extend({
   logo: z.string().optional(),
   description: z.string(),
   domain: z.string(),
-  languages: z.array(LanguageCodeZ),
+  localizationSupportLanguages: z.array(LanguageCodeZ),
   homeCurrency: CurrencyCodeZ,
   currencyExtra: z.object({
     supportedCurrencies: z.array(

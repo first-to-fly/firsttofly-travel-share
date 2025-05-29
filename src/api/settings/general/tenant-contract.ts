@@ -11,7 +11,7 @@ const CreateTenantZ = TenantZ.pick({
   logo: true,
   description: true,
   domain: true,
-  languages: true,
+  localizationSupportLanguages: true,
   homeCurrency: true,
   currencyExtra: true,
 });
