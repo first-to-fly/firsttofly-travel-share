@@ -40,8 +40,8 @@ const CreateDiscountZ = DiscountZ.pick({
   howToApply: true,
   useDiscountCode: true,
   sectorOIDs: true,
-  productOIDs: true,
-  tourOIDs: true,
+  groupTourProductOIDs: true,
+  tourDepartureOIDs: true,
 });
 
 const UpdateDiscountZ = CreateDiscountZ.omit({

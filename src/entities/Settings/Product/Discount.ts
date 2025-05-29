@@ -126,8 +126,8 @@ export const DiscountZ = EntityZ.extend({
   useDiscountCode: z.boolean().default(false),
 
   sectorOIDs: z.array(z.string()).optional(),
-  productOIDs: z.array(z.string()).optional(),
-  tourOIDs: z.array(z.string()).optional(),
+  groupTourProductOIDs: z.array(z.string()).optional(),
+  tourDepartureOIDs: z.array(z.string()).optional(),
 });
 
 export type Discount = z.infer<typeof DiscountZ>;

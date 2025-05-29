@@ -13,7 +13,6 @@ export enum EntityType {
   GROUP_TOUR_PNL_SIMULATION = "groupTourPNLSimulation",
 
   PRODUCT_TYPE = "productType",
-  TOUR = "tour",
 
   TERM = "term",
 
