@@ -87,7 +87,7 @@ export const DiscountZ = EntityZ.extend({
 
   discountCode: z.string().max(20),
   discountName: z.string(),
-  description: z.string().nullable().optional(),
+  description: z.string().optional(),
 
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ,
