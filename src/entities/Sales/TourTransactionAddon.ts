@@ -23,3 +23,8 @@ export const TourTransactionAddonZ = EntityZ.extend({
 });
 
 export type TourTransactionAddon = z.infer<typeof TourTransactionAddonZ>;
+
+export enum TourTransactionAddonEvents {
+  TOUR_TRANSACTION_ADDON_UPDATED = "TOUR_TRANSACTION_ADDON_UPDATED",
+  TOUR_TRANSACTION_ADDON_LIST_UPDATED = "TOUR_TRANSACTION_ADDON_LIST_UPDATED",
+}
