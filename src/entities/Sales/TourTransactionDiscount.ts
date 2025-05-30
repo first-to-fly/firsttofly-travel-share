@@ -25,3 +25,8 @@ export const TourTransactionDiscountZ = EntityZ.extend({
 });
 
 export type TourTransactionDiscount = z.infer<typeof TourTransactionDiscountZ>;
+
+export enum TourTransactionDiscountEvents {
+  TOUR_TRANSACTION_DISCOUNT_UPDATED = "TOUR_TRANSACTION_DISCOUNT_UPDATED",
+  TOUR_TRANSACTION_DISCOUNT_LIST_UPDATED = "TOUR_TRANSACTION_DISCOUNT_LIST_UPDATED",
+}

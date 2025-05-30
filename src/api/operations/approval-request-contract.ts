@@ -102,3 +102,8 @@ export const approvalRequestContract = initContract().router({
     },
   },
 });
+
+export enum ApprovalRequestEvents {
+  APPROVAL_REQUEST_UPDATED = "APPROVAL_REQUEST_UPDATED",
+  APPROVAL_REQUEST_LIST_UPDATED = "APPROVAL_REQUEST_LIST_UPDATED",
+}
