@@ -110,7 +110,10 @@ export type ApplyDiscountBody = z.infer<typeof ApplyDiscountBodyZ>;
 // --- TourTransactionAddon Schemas ---
 const AddAddonBodyZ = TourTransactionAddonZ.pick({
   type: true,
-  budgetItemOID: true,
+  // these two goes together to pinpoint the pricing entry - start
+  groupTourPricingOID: true,
+  groupTourCostingEntryOID: true,
+  // these two goes together to pinpoint the pricing item - end
   name: true,
   unitPrice: true,
   quantity: true,

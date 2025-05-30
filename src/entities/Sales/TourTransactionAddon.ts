@@ -4,7 +4,7 @@ import { EntityZ } from "../entity";
 
 
 export enum TourTransactionAddonType {
-  BUDGET_ENTRY = "budget_entry",
+  PRICING_ENTRY = "pricing_entry",
   MANUAL = "manual",
 }
 
@@ -13,7 +13,8 @@ export const TourTransactionAddonTypeZ = z.nativeEnum(TourTransactionAddonType);
 export const TourTransactionAddonZ = EntityZ.extend({
   tourTransactionOID: z.string(),
   type: TourTransactionAddonTypeZ,
-  budgetItemOID: z.string().optional(),
+  groupTourPricingOID: z.string().optional(),
+  groupTourCostingEntryOID: z.string().optional(),
   name: z.string(),
   unitPrice: z.number(),
   quantity: z.number(),
