@@ -5,6 +5,39 @@ import { NamedURLZ } from "../../types/url";
 import { EntityZ } from "../entity";
 
 
+export const TourTransactionPaxPersonalDetailsZ = z.object({
+  title: z.string(),
+  gender: z.string(),
+  firstName: z.string(),
+  lastName: z.string(),
+  dateOfBirth: z.string().optional(),
+  nationality: z.string().optional(),
+  email: z.string().optional(),
+  phone: z.string().optional(),
+  alternativeMobile: z.string().optional(),
+  address: z.string().optional(),
+  postalCode: z.string().optional(),
+  emergencyContact: z.object({
+    name: z.string(),
+    phone: z.string(),
+    relationship: z.string(),
+  }).optional(),
+  travelDocuments: z.object({
+    visaApplicationRequired: z.boolean(),
+    passportNumber: z.string().optional(),
+    passportIssueDate: z.string().optional(),
+    passportExpiry: z.string().optional(),
+  }).optional(),
+  specialNeeds: z.object({
+    mealRequest: z.string().optional(),
+    healthDeclaration: z.string().optional(),
+    wheelchairRequired: z.boolean(),
+  }).optional(),
+  isLeadPassenger: z.boolean().optional(),
+});
+
+export type TourTransactionPaxPersonalDetails = z.infer<typeof TourTransactionPaxPersonalDetailsZ>;
+
 export enum TourTransactionPaxType {
   TWIN = "twin",
   SINGLE = "single",
@@ -22,7 +55,7 @@ export const TourTransactionPaxZ = EntityZ.extend({
   tourTransactionRoomOID: z.string(),
   type: TourTransactionPaxTypeZ,
   isLandTourOnly: z.boolean().default(false),
-  personalDetails: z.record(z.unknown()).optional(), // JSONB
+  personalDetails: TourTransactionPaxPersonalDetailsZ.optional(),
   mealPreference: z.string().optional(),
   transportRecordOID: z.string().optional(),
   files: z.array(NamedURLZ).optional(),
