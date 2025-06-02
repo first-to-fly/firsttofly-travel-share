@@ -30,9 +30,9 @@ export const approvalRequestContract = initContract().router({
     path: basePath,
     query: z.object({
       tenantOID: z.string(),
-      status: ApprovalRequestStatusZ.optional(),
-      type: ApprovalRequestTypeZ.optional(),
-      assigneeOID: z.string().optional(),
+      statuses: z.array(ApprovalRequestStatusZ).optional(),
+      types: z.array(ApprovalRequestTypeZ).optional(),
+      assigneeOIDs: z.array(z.string()).optional(),
     }).passthrough(),
     responses: {
       200: z.object({
