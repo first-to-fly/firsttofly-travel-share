@@ -282,7 +282,7 @@ export const tourTransactionContract = initContract().router({
       UpdateTourTransactionPaxBodyZ,
     ),
     responses: {
-      200: EntityOIDZ,
+      200: z.array(EntityOIDZ),
     },
   },
   removePaxFromTransactions: {
