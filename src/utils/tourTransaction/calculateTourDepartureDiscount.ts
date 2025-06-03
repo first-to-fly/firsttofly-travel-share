@@ -1,5 +1,7 @@
+import { z } from "zod";
+
 import { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
-import { TourTransactionPaxType } from "../../entities/Sales/TourTransactionPax";
+import { TourTransactionPaxType, TourTransactionPaxTypeZ } from "../../entities/Sales/TourTransactionPax";
 
 
 /**
@@ -22,27 +24,34 @@ export interface PaxDiscountInput {
   isAdult: boolean;
 }
 
-export interface PaxDiscountBreakdown {
-  paxOID: string;
-  paxType: TourTransactionPaxType;
-  isAdult: boolean;
-  positionInSequence: number; // 1-based position in the overall booking sequence
-  tierIndex: number; // which tier this pax fell into (0-based)
-  tierRange: { from: number; to: number }; // the actual tier range from config
-  discountAmount: number; // actual discount applied to this pax
-}
+export const PaxDiscountBreakdownZ = z.object({
+  paxOID: z.string(),
+  paxType: TourTransactionPaxTypeZ,
+  isAdult: z.boolean(),
+  positionInSequence: z.number(),
+  tierIndex: z.number(),
+  tierRange: z.object({
+    from: z.number(),
+    to: z.number(),
+  }),
+  discountAmount: z.number(),
+});
 
-export interface TourDepartureDiscountResult {
-  totalDiscount: number;
-  groupIndex: number;
-  groupName: string;
-  paxBreakdown: PaxDiscountBreakdown[];
-  // Additional metadata for future reference
-  tourDepartureOID: string;
-  transactionOID: string;
-  basePaxCount: number; // total pax count excluding current transaction
-  calculatedAt: string; // ISO timestamp when calculation was performed
-}
+export type PaxDiscountBreakdown = z.infer<typeof PaxDiscountBreakdownZ>;
+
+export const TourDepartureDiscountResultZ = z.object({
+  totalDiscount: z.number(),
+  groupIndex: z.number(),
+  groupName: z.string(),
+  paxBreakdown: z.array(PaxDiscountBreakdownZ),
+  tourDepartureOID: z.string(),
+  transactionOID: z.string(),
+  basePaxCount: z.number(),
+  calculatedAt: z.string(),
+});
+
+export type TourDepartureDiscountResult = z.infer<typeof TourDepartureDiscountResultZ>;
+
 
 /**
  * Calculates tour departure discount for a transaction based on group tier configuration

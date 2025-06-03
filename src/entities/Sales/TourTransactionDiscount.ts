@@ -1,6 +1,9 @@
 import { z } from "zod";
 
+import { TourDepartureDiscountResultZ } from "../../utils/tourTransaction/calculateTourDepartureDiscount";
 import { EntityZ } from "../entity";
+import { TourTransactionSpecialDiscountPayloadZ } from "../Operations/ApprovalRequest";
+import { DiscountZ } from "../Settings/Product/Discount";
 
 
 export enum TourTransactionDiscountType {
@@ -9,7 +12,45 @@ export enum TourTransactionDiscountType {
   SPECIAL_REQUEST = "special_request",
 }
 
-export const TourTransactionDiscountTypeZ = z.nativeEnum(TourTransactionDiscountType);
+const TourTransactionDiscountTypeZ = z.nativeEnum(TourTransactionDiscountType);
+
+// Metadata type definitions for different discount types
+const CodeBasedDiscountMetadataZ = z.object({
+  type: z.literal(TourTransactionDiscountType.CODE_BASED),
+  discountCodeItem: DiscountZ,
+});
+
+const TourDepartureDiscountMetadataZ = z.object({
+  type: z.literal(TourTransactionDiscountType.TOUR_DEPARTURE_DISCOUNT),
+  groupIndex: z.number(),
+  discountBreakdown: TourDepartureDiscountResultZ,
+});
+
+
+const SpecialRequestDiscountMetadataZ = z.object({
+  type: z.literal(TourTransactionDiscountType.SPECIAL_REQUEST),
+  approvalRequestOID: z.string().optional(),
+  approvalRequestPayload: TourTransactionSpecialDiscountPayloadZ,
+  approvalNote: z.string().optional(),
+});
+
+
+export type CodeBasedDiscountMetadata = z.infer<typeof CodeBasedDiscountMetadataZ>;
+
+export type TourDepartureDiscountMetadata = z.infer<typeof TourDepartureDiscountMetadataZ>;
+
+export type SpecialRequestDiscountMetadata = z.infer<typeof SpecialRequestDiscountMetadataZ>;
+
+export type TourTransactionDiscountMetadata =
+  | CodeBasedDiscountMetadata
+  | TourDepartureDiscountMetadata
+  | SpecialRequestDiscountMetadata;
+
+export const TourTransactionDiscountMetadataZ = z.discriminatedUnion("type", [
+  CodeBasedDiscountMetadataZ,
+  TourDepartureDiscountMetadataZ,
+  SpecialRequestDiscountMetadataZ,
+]);
 
 export const TourTransactionDiscountZ = EntityZ.extend({
   tourTransactionOID: z.string(),
@@ -21,7 +62,7 @@ export const TourTransactionDiscountZ = EntityZ.extend({
 
   description: z.string(),
   appliedAmount: z.number(),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: TourTransactionDiscountMetadataZ.optional(),
 });
 
 export type TourTransactionDiscount = z.infer<typeof TourTransactionDiscountZ>;
