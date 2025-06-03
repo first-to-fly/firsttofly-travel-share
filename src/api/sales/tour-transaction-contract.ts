@@ -116,6 +116,7 @@ const AddAddonBodyZ = TourTransactionAddonZ.pick({
   // these two goes together to pinpoint the pricing item - end
   name: true,
   unitPrice: true,
+  tax: true,
   quantity: true,
   totalPrice: true,
   supplierOID: true,

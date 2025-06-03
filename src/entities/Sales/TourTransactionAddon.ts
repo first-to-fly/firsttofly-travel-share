@@ -17,6 +17,7 @@ export const TourTransactionAddonZ = EntityZ.extend({
   groupTourCostingEntryOID: z.string().optional(),
   name: z.string(),
   unitPrice: z.number(),
+  tax: z.number().optional(),
   quantity: z.number(),
   totalPrice: z.number(),
   supplierOID: z.string().optional(),
