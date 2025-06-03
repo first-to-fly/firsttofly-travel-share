@@ -1,5 +1,9 @@
 import { z } from "zod";
 
+import { EntityZ } from "../entity";
+import { EntityType } from "../entityType";
+import { DiscountMode } from "../Settings/Product/Discount";
+
 
 export enum ApprovalRequestStatus {
   PENDING = "pending",
@@ -20,8 +24,8 @@ export const ApprovalRequestTypeZ = z.nativeEnum(ApprovalRequestType);
 export const TourTransactionSpecialDiscountPayloadZ = z.object({
   type: z.literal(ApprovalRequestType.TOUR_TRANSACTION_SPECIAL_DISCOUNT),
   discountName: z.string(),
-  discountAmount: z.number(),
-  isPercentage: z.boolean(),
+  discountValue: z.number(),
+  discountMode: z.nativeEnum(DiscountMode),
   reason: z.string().optional(),
 });
 
@@ -41,22 +45,24 @@ export const ApprovalRequestPayloadZ = z.discriminatedUnion("type", [
 
 export type ApprovalRequestPayload = z.infer<typeof ApprovalRequestPayloadZ>;
 
+// Socket Events
+export enum ApprovalRequestEvents {
+  APPROVAL_REQUEST_LIST_UPDATED = "APPROVAL_REQUEST_LIST_UPDATED",
+  APPROVAL_REQUEST_UPDATED = "APPROVAL_REQUEST_UPDATED",
+}
 
-export const ApprovalRequestZ = z.object({
-  requestId: z.string(),
-  tenantOID: z.string(),
-  type: ApprovalRequestTypeZ,
+export const ApprovalRequestZ = EntityZ.extend({
+  entityType: z.literal(EntityType.APPROVAL_REQUEST),
+
+  type: z.nativeEnum(ApprovalRequestType),
+  status: z.nativeEnum(ApprovalRequestStatus),
+
   entityOID: z.string(),
   payload: ApprovalRequestPayloadZ,
-  status: ApprovalRequestStatusZ,
   remarks: z.string().optional(),
+
   assigneeOID: z.string(),
   assigneeNote: z.string().optional(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  createdBy: z.string(),
-  updatedBy: z.string(),
-  deletedAt: z.string().optional(),
 });
 
 export type ApprovalRequest = z.infer<typeof ApprovalRequestZ>;
