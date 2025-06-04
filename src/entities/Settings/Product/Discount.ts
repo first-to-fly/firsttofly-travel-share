@@ -109,17 +109,17 @@ export const DiscountZ = EntityZ.extend({
   minSpending: FTFSafeMaxNumberZ({ name: "Min spending" }).int().nonnegative().default(0),
 
   amountType: z.nativeEnum(DiscountAmountType).default(DiscountAmountType.UNLIMITED),
-  amountValue: FTFSafeMaxNumberZ({ name: "Amount value" }).int().nullable().optional(),
-  amountRangeStart: FTFSafeMaxNumberZ({ name: "Amount range start" }).int().nullable().optional(),
-  amountRangeEnd: FTFSafeMaxNumberZ({ name: "Amount range end" }).int().nullable().optional(),
+  amountValue: FTFSafeMaxNumberZ({ name: "Amount value" }).int().optional(),
+  amountRangeStart: FTFSafeMaxNumberZ({ name: "Amount range start" }).int().optional(),
+  amountRangeEnd: FTFSafeMaxNumberZ({ name: "Amount range end" }).int().optional(),
 
   specialDatesType: z.nativeEnum(DiscountSpecialDatesType).default(DiscountSpecialDatesType.NA),
-  specialDatesStart: DateISOStringZ.nullable().optional(),
-  specialDatesEnd: DateISOStringZ.nullable().optional(),
+  specialDatesStart: DateISOStringZ.optional(),
+  specialDatesEnd: DateISOStringZ.optional(),
 
   timeslotType: z.nativeEnum(DiscountTimeslotType).default(DiscountTimeslotType.NA),
-  timeslotStart: DateISOStringZ.nullable().optional(),
-  timeslotEnd: DateISOStringZ.nullable().optional(),
+  timeslotStart: DateISOStringZ.optional(),
+  timeslotEnd: DateISOStringZ.optional(),
 
   discountValue: FTFSafeMaxNumberZ({ name: "Discount value" }).int().nonnegative().default(0),
   howToApply: z.nativeEnum(DiscountHowToApply).default(DiscountHowToApply.AUTO),
