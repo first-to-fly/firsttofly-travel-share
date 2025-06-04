@@ -21,7 +21,7 @@ export enum ApprovalRequestType {
 export const ApprovalRequestStatusZ = z.nativeEnum(ApprovalRequestStatus);
 export const ApprovalRequestTypeZ = z.nativeEnum(ApprovalRequestType);
 
-export const TourTransactionSpecialDiscountPayloadZ = z.object({
+export const ApprovalRequestTourTransactionSpecialDiscountPayloadZ = z.object({
   type: z.literal(ApprovalRequestType.TOUR_TRANSACTION_SPECIAL_DISCOUNT),
   discountName: z.string(),
   discountValue: z.number(),
@@ -29,18 +29,19 @@ export const TourTransactionSpecialDiscountPayloadZ = z.object({
   reason: z.string().optional(),
 });
 
-export type TourTransactionSpecialDiscountPayload = z.infer<typeof TourTransactionSpecialDiscountPayloadZ>;
+export type ApprovalRequestTourTransactionSpecialDiscountPayload =
+  z.infer<typeof ApprovalRequestTourTransactionSpecialDiscountPayloadZ>;
 
-export const BudgetApprovalPayloadZ = z.object({
+export const ApprovalRequestBudgetApprovalPayloadZ = z.object({
   type: z.literal(ApprovalRequestType.BUDGET_APPROVAL),
   // empty payload
 });
 
-export type BudgetApprovalPayload = z.infer<typeof BudgetApprovalPayloadZ>;
+export type ApprovalRequestBudgetApprovalPayload = z.infer<typeof ApprovalRequestBudgetApprovalPayloadZ>;
 
 export const ApprovalRequestPayloadZ = z.discriminatedUnion("type", [
-  TourTransactionSpecialDiscountPayloadZ,
-  BudgetApprovalPayloadZ,
+  ApprovalRequestTourTransactionSpecialDiscountPayloadZ,
+  ApprovalRequestBudgetApprovalPayloadZ,
 ]);
 
 export type ApprovalRequestPayload = z.infer<typeof ApprovalRequestPayloadZ>;
