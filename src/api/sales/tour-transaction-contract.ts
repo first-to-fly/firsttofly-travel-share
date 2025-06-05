@@ -136,6 +136,7 @@ export const tourTransactionContract = initContract().router({
     path: basePath,
     query: z.object({
       tenantOID: EntityOIDZ,
+      tourDepartureOID: EntityOIDZ.optional(),
     }).passthrough(),
     responses: {
       200: z.object({
