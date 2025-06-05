@@ -34,7 +34,7 @@ export const TourTransactionZ = EntityZ.extend({
   bookingStatus: TourTransactionBookingStatusZ.default(TourTransactionBookingStatus.IN_PROGRESS),
   totalAmount: z.number(),
   receivedAmount: z.number().default(0),
-  metadata: z.record(z.unknown()).optional(),
+  metadata: z.unknown().optional(),
   specialInstructions: z.array(z.string()).optional(),
 });
 
