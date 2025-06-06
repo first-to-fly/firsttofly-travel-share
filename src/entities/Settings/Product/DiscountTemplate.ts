@@ -18,7 +18,7 @@ export const DiscountTemplateZ = EntityZ.extend({
   entityType: z.literal(EntityType.DISCOUNT_TEMPLATE),
 
   templateName: z.string(),
-  description: z.string().nullable().optional(),
+  description: z.string().optional(),
 
   bookingChannels: z.array(z.nativeEnum(DiscountBookingChannel)),
   discountMechanics: z.nativeEnum(DiscountMechanics),
@@ -35,17 +35,17 @@ export const DiscountTemplateZ = EntityZ.extend({
   minSpending: FTFSafeMaxNumberZ({ name: "Min spending" }).int().nonnegative().default(0),
 
   amountType: z.nativeEnum(DiscountAmountType).default(DiscountAmountType.UNLIMITED),
-  amountValue: FTFSafeMaxNumberZ({ name: "Amount value" }).int().nullable().optional(),
-  amountRangeStart: FTFSafeMaxNumberZ({ name: "Amount range start" }).int().nullable().optional(),
-  amountRangeEnd: FTFSafeMaxNumberZ({ name: "Amount range end" }).int().nullable().optional(),
+  amountValue: FTFSafeMaxNumberZ({ name: "Amount value" }).int().optional(),
+  amountRangeStart: FTFSafeMaxNumberZ({ name: "Amount range start" }).int().optional(),
+  amountRangeEnd: FTFSafeMaxNumberZ({ name: "Amount range end" }).int().optional(),
 
   specialDatesType: z.nativeEnum(DiscountSpecialDatesType).default(DiscountSpecialDatesType.NA),
-  specialDatesStart: DateISOStringZ.nullable().optional(),
-  specialDatesEnd: DateISOStringZ.nullable().optional(),
+  specialDatesStart: DateISOStringZ.optional(),
+  specialDatesEnd: DateISOStringZ.optional(),
 
   timeslotType: z.nativeEnum(DiscountTimeslotType).default(DiscountTimeslotType.NA),
-  timeslotStart: z.string().nullable().optional(),
-  timeslotEnd: z.string().nullable().optional(),
+  timeslotStart: z.string().optional(),
+  timeslotEnd: z.string().optional(),
 
   discountValue: FTFSafeMaxNumberZ({ name: "Discount value" }).int().nonnegative().default(0),
   howToApply: z.nativeEnum(DiscountHowToApply).default(DiscountHowToApply.AUTO),
