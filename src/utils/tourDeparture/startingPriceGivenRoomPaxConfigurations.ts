@@ -17,9 +17,6 @@ export interface StartingPriceBreakdown {
   tourFare: (LineItemPrice & {
     paxType: TourTransactionPaxType;
   })[];
-  optionalServices: (LineItemPrice & {
-    costingEntryOID: string;
-  })[];
   miscellaneous: (LineItemPrice & {
     costingEntryOID: string;
   })[];
@@ -54,7 +51,6 @@ export function startingPriceGivenRoomPaxConfigurations(data: {
   const breakdown: StartingPriceBreakdown = {
     total: 0,
     tourFare: [],
-    optionalServices: [],
     miscellaneous: [],
     taxes: [],
   };
@@ -160,10 +156,6 @@ export function startingPriceGivenRoomPaxConfigurations(data: {
     // Categorize based on costing entry category
     switch (costingEntry.category) {
 
-      case CostingItemCategory.OPTIONAL_SERVICE:
-        breakdown.optionalServices.push(lineItem);
-        breakdown.total += subTotal;
-        break;
       case CostingItemCategory.MISCELLANEOUS:
         breakdown.miscellaneous.push(lineItem);
         breakdown.total += subTotal;
