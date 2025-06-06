@@ -127,12 +127,16 @@ export function startingPriceGivenRoomPaxConfigurations(data: {
   costingEntries.forEach((entry) => {
     costingEntryMap.set(entry.oid, entry);
   });
-
   pricing.groupTourPricingEntries.forEach((entry) => {
     const costingEntry = costingEntryMap.get(entry.groupTourCostingEntryOID);
     if (!costingEntry) return;
 
-    const supportCurrency = supportCurrencies.find((currency) => currency.currency === entry.priceValue.currency);
+    const supportCurrency = entry.priceValue.currency === homeCurrency ?
+      {
+        currency: homeCurrency,
+        rate: 1,
+      } :
+      supportCurrencies.find((currency) => currency.currency === entry.priceValue.currency);
     if (!supportCurrency) return;
 
     const priceInHomeCurrency = {
@@ -141,12 +145,13 @@ export function startingPriceGivenRoomPaxConfigurations(data: {
     };
 
     const unitPrice = priceInHomeCurrency.amount + priceInHomeCurrency.tax;
-    const subTotal = costingEntry.quantity * unitPrice;
+    const quantity = costingEntry.calculationBasis !== CalculationBasis.PER_PAX ?
+      costingEntry.quantity :
+      paxConfigurations.length;
+    const subTotal = quantity * unitPrice;
 
     const lineItem: LineItemPrice & { costingEntryOID: string } = {
-      quantity: costingEntry.calculationBasis !== CalculationBasis.PER_PAX ?
-        costingEntry.quantity :
-        paxConfigurations.length,
+      quantity: quantity,
       currency: homeCurrency,
       unitPrice: unitPrice,
       subTotal: subTotal,
