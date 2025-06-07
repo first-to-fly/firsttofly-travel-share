@@ -11,7 +11,7 @@ export interface PaymentDiscount {
 export interface PaymentInput {
   baseAmount: number;
   discounts: PaymentDiscount[];
-  taxRate?: number; // Default 0.1 (10%)
+  taxRate?: number;
 }
 
 export interface PaymentResult {
@@ -28,7 +28,7 @@ export interface PaymentResult {
  * @returns Complete payment with breakdown
  */
 export function calculateDiscountedPayment(input: PaymentInput): PaymentResult {
-  const { baseAmount, discounts, taxRate = 0.1 } = input;
+  const { baseAmount, discounts, taxRate = 0.0 } = input;
 
   // IMPORTANT: Discount application order
   // 1. Apply all fixed discounts (FIXED_AMOUNT, FIXED_PRICE, FREE_GIFT) to base amount first

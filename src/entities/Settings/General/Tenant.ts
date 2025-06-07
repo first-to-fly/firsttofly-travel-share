@@ -28,6 +28,10 @@ export const TenantZ = EntityZ.extend({
       }),
     ),
   }).optional(),
+  defaultTaxConfig: z.object({
+    scheme: z.string(),
+    rate: FTFSafeMaxNumberZ({ name: "Default tax rate" }).nonnegative(),
+  }).optional(),
 });
 
 export type Tenant = z.infer<typeof TenantZ>;

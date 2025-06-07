@@ -14,6 +14,7 @@ const CreateTenantZ = TenantZ.pick({
   localizationSupportLanguages: true,
   homeCurrency: true,
   currencyExtra: true,
+  defaultTaxConfig: true,
 });
 
 const UpdateTenantZ = CreateTenantZ.partial();
