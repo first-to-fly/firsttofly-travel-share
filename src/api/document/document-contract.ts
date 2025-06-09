@@ -11,7 +11,7 @@ const UpdateDocumentZ = DocumentZ.pick({
   name: true,
   entityOID: true,
   docIdentification: true,
-  issueDate: true,
+  issuedDate: true,
   expiryDate: true,
   files: true,
 });

@@ -33,7 +33,7 @@ export const DocumentZ = EntityZ.extend({
   name: z.string(),
   docIdentification: z.string(),
 
-  issueDate: DateISOStringZ,
+  issuedDate: DateISOStringZ,
   expiryDate: DateISOStringZ,
 
   files: z.array(NamedURLZ).nullable(),
