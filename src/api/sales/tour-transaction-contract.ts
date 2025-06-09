@@ -56,7 +56,7 @@ const CreateTourTransactionPaxBodyZ = TourTransactionPaxZ.pick({
   personalDetails: true,
   mealPreference: true,
   transportRecordId: true,
-  files: true,
+  documentOIDs: true,
 });
 export type CreateTourTransactionPaxBody = z.infer<typeof CreateTourTransactionPaxBodyZ>;
 

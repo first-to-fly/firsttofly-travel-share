@@ -1,7 +1,6 @@
 // simple-import-sort
 import { z } from "zod";
 
-import { NamedURLZ } from "../../types/url";
 import { EntityZ } from "../entity";
 
 
@@ -58,7 +57,7 @@ export const TourTransactionPaxZ = EntityZ.extend({
   personalDetails: TourTransactionPaxPersonalDetailsZ.optional(),
   mealPreference: z.string().optional(),
   transportRecordOID: z.string().optional(),
-  files: z.array(NamedURLZ).optional(),
+  documentOIDs: z.array(z.string()).optional(),
 });
 
 export type TourTransactionPax = z.infer<typeof TourTransactionPaxZ>;
