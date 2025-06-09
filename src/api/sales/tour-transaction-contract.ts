@@ -127,6 +127,20 @@ export type AddAddonBody = z.infer<typeof AddAddonBodyZ>;
 const UpdateAddonBodyZ = AddAddonBodyZ.partial();
 export type UpdateAddonBody = z.infer<typeof UpdateAddonBodyZ>;
 
+// --- AirWallex Payment Link Schemas ---
+const CreateAirWallexPaymentLinkBodyZ = z.object({
+  amount: z.number().positive().describe("Payment amount"),
+  currency: z.string().length(3).describe("Currency code (e.g., USD, EUR)"),
+  customerEmail: z.string().email().describe("Customer email address"),
+});
+export type CreateAirWallexPaymentLinkBody = z.infer<typeof CreateAirWallexPaymentLinkBodyZ>;
+
+const AirWallexPaymentLinkResponseZ = z.object({
+  paymentLinkUrl: z.string().url().describe("Secure payment link URL"),
+  paymentLinkId: z.string().describe("AirWallex payment link ID"),
+});
+export type AirWallexPaymentLinkResponse = z.infer<typeof AirWallexPaymentLinkResponseZ>;
+
 
 export const tourTransactionContract = initContract().router({
   // #region TRANSACTION
@@ -430,6 +444,19 @@ export const tourTransactionContract = initContract().router({
     pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
     responses: {
       200: z.object({ oids: z.array(EntityOIDZ) }),
+    },
+  },
+  // #endregion
+
+  // #region PAYMENT
+  createAirWallexPaymentLink: {
+    summary: "Create AirWallex payment link and send email to customer",
+    method: "POST",
+    path: `${basePath}/:tourTransactionOID/airwallex-payment-link`,
+    pathParams: z.object({ tourTransactionOID: EntityOIDZ }),
+    body: CreateAirWallexPaymentLinkBodyZ,
+    responses: {
+      201: AirWallexPaymentLinkResponseZ,
     },
   },
   // #endregion
