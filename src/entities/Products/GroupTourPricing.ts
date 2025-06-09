@@ -39,6 +39,19 @@ export const GroupTourPricingDiscountZ = z.object({
   })),
 });
 
+export const GroupTourPricingFareStructureZ = z.object({
+  twin: FTFSafeMaxNumberZ({ name: "Twin" }),
+  single: FTFSafeMaxNumberZ({ name: "Single" }),
+  triple: FTFSafeMaxNumberZ({ name: "Triple" }),
+  quad: FTFSafeMaxNumberZ({ name: "Quad" }),
+  childTwin: FTFSafeMaxNumberZ({ name: "Child twin" }),
+  childWithBed: FTFSafeMaxNumberZ({ name: "Child with bed" }),
+  childNoBed: FTFSafeMaxNumberZ({ name: "Child no bed" }),
+  infant: FTFSafeMaxNumberZ({ name: "Infant" }),
+});
+
+export type GroupTourPricingFareStructure = z.infer<typeof GroupTourPricingFareStructureZ>;
+
 
 export const GroupTourPricingZ = EntityZ.extend({
   groupTourProductOID: z.string(),
@@ -55,27 +68,9 @@ export const GroupTourPricingZ = EntityZ.extend({
 
   isActive: z.boolean(),
 
-  fullFare: z.object({
-    twin: FTFSafeMaxNumberZ({ name: "Twin" }),
-    single: FTFSafeMaxNumberZ({ name: "Single" }),
-    triple: FTFSafeMaxNumberZ({ name: "Triple" }),
-    quad: FTFSafeMaxNumberZ({ name: "Quad" }),
-    childTwin: FTFSafeMaxNumberZ({ name: "Child twin" }),
-    childWithBed: FTFSafeMaxNumberZ({ name: "Child with bed" }),
-    childNoBed: FTFSafeMaxNumberZ({ name: "Child no bed" }),
-    infant: FTFSafeMaxNumberZ({ name: "Infant" }),
-  }),
+  fullFare: GroupTourPricingFareStructureZ,
 
-  landFare: z.object({
-    twin: FTFSafeMaxNumberZ({ name: "Twin" }),
-    single: FTFSafeMaxNumberZ({ name: "Single" }),
-    triple: FTFSafeMaxNumberZ({ name: "Triple" }),
-    quad: FTFSafeMaxNumberZ({ name: "Quad" }),
-    childTwin: FTFSafeMaxNumberZ({ name: "Child twin" }),
-    childWithBed: FTFSafeMaxNumberZ({ name: "Child with bed" }),
-    childNoBed: FTFSafeMaxNumberZ({ name: "Child no bed" }),
-    infant: FTFSafeMaxNumberZ({ name: "Infant" }),
-  }),
+  landFare: GroupTourPricingFareStructureZ,
 
   airportTax: z.object({
     adult: FTFSafeMaxNumberZ({ name: "Airport tax adult" }),
