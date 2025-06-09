@@ -11,7 +11,7 @@ export enum DocumentEvents {
   DOCUMENT_LIST_UPDATED = "DOCUMENT_LIST_UPDATED",
 }
 
-export enum DocumentType {
+export enum FTFDocumentType {
   PASSPORT = "passport",
   NATIONAL_ID = "national_id",
   DRIVING_LICENSE = "driving_license",
@@ -22,14 +22,14 @@ export enum DocumentType {
   OTHER = "other",
 }
 
-export const DocumentTypeZ = z.nativeEnum(DocumentType);
+export const FTFDocumentTypeZ = z.nativeEnum(FTFDocumentType);
 
 export const DocumentZ = EntityZ.extend({
   entityType: z.literal(EntityType.DOCUMENT),
 
   entityOID: z.string(), // linkage to the entity that owns this document
 
-  type: DocumentTypeZ,
+  type: FTFDocumentTypeZ,
   name: z.string(),
   docIdentification: z.string(),
 
