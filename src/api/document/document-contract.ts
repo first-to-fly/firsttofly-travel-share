@@ -42,7 +42,10 @@ export const documentContract = initContract().router({
     path: `${basePath}/batch-create`,
     body: z.array(CreateDocumentZ),
     responses: {
-      200: z.array(z.string().describe("OIDs of created documents")),
+      200: z.array(z.object({
+        oid: z.string(),
+        entityOID: z.string(),
+      })),
     },
   },
 
