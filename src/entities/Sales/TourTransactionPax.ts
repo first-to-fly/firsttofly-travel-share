@@ -58,6 +58,8 @@ export const TourTransactionPaxZ = EntityZ.extend({
   mealPreference: z.string().optional(),
   transportRecordOID: z.string().optional(),
   documentOIDs: z.array(z.string()).optional(),
+}).omit({
+  tenantOID: true,
 });
 
 export type TourTransactionPax = z.infer<typeof TourTransactionPaxZ>;
