@@ -30,8 +30,8 @@ export const DocumentZ = EntityZ.extend({
   entityOID: z.string(), // linkage to the entity that owns this document
 
   type: FTFDocumentTypeZ,
-  name: z.string(),
-  docIdentification: z.string(),
+  name: z.string().optional(),
+  docIdentification: z.string().optional(),
 
   issuedDate: DateISOStringZ,
   expiryDate: DateISOStringZ,
