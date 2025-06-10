@@ -328,6 +328,15 @@ export const tourTransactionContract = initContract().router({
       200: z.array(EntityOIDZ.describe("OIDs of TourTransactionDiscounts")),
     },
   },
+  getDiscountsForTourDeparture: {
+    summary: "List applied discounts for a tour departure",
+    method: "GET",
+    path: "/api/sales/tour-departures/:tourDepartureOID/discounts",
+    pathParams: z.object({ tourDepartureOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of TourTransactionDiscounts")),
+    },
+  },
   applyDiscountToTransaction: {
     summary: "Apply a new discount to the transaction",
     method: "POST",
