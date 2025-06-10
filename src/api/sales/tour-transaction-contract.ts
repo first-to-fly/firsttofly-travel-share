@@ -22,6 +22,7 @@ const CreateTourTransactionBodyZ = TourTransactionZ.pick({
   paymentStatus: true,
   metadata: true,
   specialInstructions: true,
+  overwriteTax: true,
 });
 export type CreateTourTransactionBody = z.infer<typeof CreateTourTransactionBodyZ>;
 
