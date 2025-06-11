@@ -19,6 +19,9 @@ const CreateDepartmentZ = DepartmentZ.pick({
 
 const UpdateDepartmentZ = CreateDepartmentZ.omit({
   tenantOID: true,
+  parentDepartmentOID: true,
+}).extend({
+  parentDepartmentOID: z.string().nullable(),
 }).partial();
 
 export type UpdateDepartment = z.infer<typeof UpdateDepartmentZ>;
