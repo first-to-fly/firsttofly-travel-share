@@ -16,18 +16,6 @@ export const uploadContract = c.router({
       200: z.object({
         size: z.number().describe("Object size in bytes"),
       }),
-      400: z.object({
-        message: z.string(),
-        error: z.string().optional(),
-      }),
-      404: z.object({
-        message: z.string(),
-        error: z.string().optional(),
-      }),
-      500: z.object({
-        message: z.string(),
-        error: z.string().optional(),
-      }),
     },
     summary: "Get S3 object size",
     description: "Retrieves the size of an S3 object using its key and bucket name",
