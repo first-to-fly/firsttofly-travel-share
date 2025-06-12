@@ -9,6 +9,7 @@ import { operationsContract } from "./operations/contract";
 import { productsContract } from "./products/contract";
 import { salesContract } from "./sales/contract";
 import { settingsContract } from "./settings/contract";
+import { uploadContract } from "./upload/upload.contract";
 
 
 export const apiContract = initContract().router({
@@ -21,4 +22,5 @@ export const apiContract = initContract().router({
   settings: settingsContract,
   document: documentContract,
   authorization: authorizationContract,
+  upload: uploadContract,
 });
