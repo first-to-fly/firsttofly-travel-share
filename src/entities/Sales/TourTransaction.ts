@@ -20,6 +20,7 @@ export enum TourTransactionBookingStatus {
   COMPLETED = "completed",
   CANCELLED = "cancelled",
   VOIDED = "voided",
+  TRANSFERRED = "transferred",
 }
 
 export const TourTransactionBookingStatusZ = z.nativeEnum(TourTransactionBookingStatus);
