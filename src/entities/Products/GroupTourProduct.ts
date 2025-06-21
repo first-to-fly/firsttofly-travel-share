@@ -34,6 +34,8 @@ export const GroupTourProductZ = EntityZ.extend({
   durationDays: FTFSafeMaxNumberZ({ name: "Duration days" }),
   durationNights: FTFSafeMaxNumberZ({ name: "Duration nights" }),
 
+  departureDates: z.array(DateISOStringZ).optional(),
+
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ.optional(), // end indefinitely
 

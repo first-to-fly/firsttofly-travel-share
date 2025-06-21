@@ -34,6 +34,8 @@ const CreateGroupTourProductZ = GroupTourProductZ.pick({
   durationDays: true,
   durationNights: true,
 
+  departureDates: true,
+
   validityStartDate: true,
   validityEndDate: true,
 
