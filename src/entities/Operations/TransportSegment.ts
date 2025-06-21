@@ -23,6 +23,8 @@ export const BaseTransportSegmentZ = EntityZ.extend({
 
   departureDateTime: DateISOStringZ,
   arrivalDateTime: DateISOStringZ,
+
+  seatCapacity: z.number().int().positive().optional(),
 });
 
 // Flight specific details
