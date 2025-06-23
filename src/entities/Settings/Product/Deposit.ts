@@ -22,3 +22,8 @@ export const DepositZ = EntityZ.extend({
 });
 
 export type Deposit = z.infer<typeof DepositZ>;
+
+export enum DepositEvents {
+  DEPOSIT_UPDATED = "DEPOSIT_UPDATED",
+  DEPOSIT_LIST_UPDATED = "DEPOSIT_LIST_UPDATED",
+}
