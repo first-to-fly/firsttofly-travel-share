@@ -40,6 +40,7 @@ export enum EntityType {
   ASSEMBLE_LOCATION_AIRLINES = "assembleLocationAirlines",
   DISCOUNT = "discount",
   DISCOUNT_TEMPLATE = "discountTemplate",
+  DEPOSIT = "deposit",
 
   // GENERAL SETTINGS
   DESIGNATION = "designation",

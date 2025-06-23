@@ -1,0 +1,38 @@
+export const DepositPermissions = {
+
+  // Department level permissions
+  "department:deposit:view": {
+    name: "View Department Deposits",
+    description: "Can view all deposits within the department",
+  },
+  "department:deposit:create": {
+    name: "Create Department Deposits",
+    description: "Can create deposits within the department",
+  },
+  "department:deposit:update": {
+    name: "Update Department Deposits",
+    description: "Can update deposits within the department",
+  },
+  "department:deposit:delete": {
+    name: "Delete Department Deposits",
+    description: "Can delete deposits within the department",
+  },
+
+  // Tenant level permissions
+  "tenant:deposit:view": {
+    name: "View Tenant Deposits",
+    description: "Can view all deposits within the tenant",
+  },
+  "tenant:deposit:create": {
+    name: "Create Tenant Deposits",
+    description: "Can create deposits within the tenant",
+  },
+  "tenant:deposit:update": {
+    name: "Update Tenant Deposits",
+    description: "Can update deposits within the tenant",
+  },
+  "tenant:deposit:delete": {
+    name: "Delete Tenant Deposits",
+    description: "Can delete deposits within the tenant",
+  },
+};

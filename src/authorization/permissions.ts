@@ -5,6 +5,7 @@ import { BudgetPermissions } from "./entities/budget.permission";
 import { CostingItemPermissions } from "./entities/costing-item.permission";
 import { CostingTemplatePermissions } from "./entities/costing-template.permission";
 import { DepartmentPermissions } from "./entities/department.permission";
+import { DepositPermissions } from "./entities/deposit.permission";
 import { DesignationPermissions } from "./entities/designation.permission";
 import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
@@ -53,6 +54,7 @@ keyof typeof EntityPermissions | keyof PermissionDeclaration
 const EntityPermissions = {
   User: UserPermissions,
   Department: DepartmentPermissions,
+  Deposit: DepositPermissions,
   Document: DocumentPermissions,
   Product: ProductPermissions,
   Badge: BadgePermissions,
