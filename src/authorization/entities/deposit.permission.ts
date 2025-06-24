@@ -1,19 +1,19 @@
 export const DepositPermissions = {
 
   // Department level permissions
-  "department:deposit:view": {
+  "dept:deposit:view": {
     name: "View Department Deposits",
     description: "Can view all deposits within the department",
   },
-  "department:deposit:create": {
+  "dept:deposit:create": {
     name: "Create Department Deposits",
     description: "Can create deposits within the department",
   },
-  "department:deposit:update": {
+  "dept:deposit:update": {
     name: "Update Department Deposits",
     description: "Can update deposits within the department",
   },
-  "department:deposit:delete": {
+  "dept:deposit:delete": {
     name: "Delete Department Deposits",
     description: "Can delete deposits within the department",
   },
