@@ -54,6 +54,7 @@ export const tourDepartureContract = initContract().router({
     path: basePath,
     query: z.object({
       tenantOID: z.string(),
+      groupTourProductOID: z.string().optional(),
     }).passthrough(),
     responses: {
       200: z.object({
