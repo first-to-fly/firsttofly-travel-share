@@ -2,9 +2,8 @@ import { z } from "zod";
 
 import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
+import { TourTransactionPaxPersonalDetailsZ, TourTransactionPaxType } from "../Sales/TourTransactionPax";
 import { DiscountMode } from "../Settings/Product/Discount";
-import { TourTransactionPaxType, TourTransactionPaxPersonalDetailsZ } from "../Sales/TourTransactionPax";
-
 
 
 export enum ApprovalRequestStatus {
@@ -31,15 +30,6 @@ export const ApprovalRequestTourTransactionSpecialDiscountPayloadZ = z.object({
   discountValue: z.number(),
   discountMode: z.nativeEnum(DiscountMode),
   reason: z.string().optional(),
-  // Additional discount context fields
-  discountType: z.string(), // TourTransactionDiscountType as string to avoid circular dependency
-  code: z.string().optional(),
-  discountCodeOID: z.string().optional(),
-  tourDepartureDiscountGroupIndex: z.number().optional(),
-  // Additional context for approvers
-  tourDepartureOID: z.string(),
-  originalAmount: z.number(),
-  finalAmount: z.number(),
 });
 
 export type ApprovalRequestTourTransactionSpecialDiscountPayload =
@@ -77,9 +67,32 @@ export const ApprovalRequestTourTransactionBookingTransferPayloadZ = z.object({
       })),
     })),
     addons: z.array(z.object({
-      addonOID: z.string(),
+      oid: z.string().optional(),
+      name: z.string(),
+      price: z.number(),
       quantity: z.number(),
-      passengerOIDs: z.array(z.string()),
+      tax: z.number().optional(),
+      totalPrice: z.number(),
+      type: z.string().optional(), // TourTransactionAddonType as string
+      groupTourPricingOID: z.string().optional(),
+      groupTourCostingEntryOID: z.string().optional(),
+      tourTransactionAddonOID: z.string().optional(),
+      toBeRemoved: z.boolean().optional(),
+    })),
+    discounts: z.array(z.object({
+      oid: z.string().optional(),
+      name: z.string(),
+      type: z.string(), // TourTransactionDiscountType as string
+      amount: z.number(),
+      discountMode: z.nativeEnum(DiscountMode),
+      code: z.string().optional(),
+      discountCodeOID: z.string().optional(),
+      reason: z.string().optional(),
+      assigneeOID: z.string().optional(),
+      tourDepartureDiscountGroupIndex: z.number().optional(),
+      tourTransactionDiscountOID: z.string().optional(),
+      approvalRequestOID: z.string().optional(),
+      toBeRemoved: z.boolean().optional(),
     })),
     specialInstructions: z.array(z.string()).optional(),
   })),
@@ -95,7 +108,7 @@ export const ApprovalRequestTourTransactionBookingTransferPayloadZ = z.object({
   }),
 });
 
-export type ApprovalRequestTourTransactionBookingTransferPayload = 
+export type ApprovalRequestTourTransactionBookingTransferPayload =
   z.infer<typeof ApprovalRequestTourTransactionBookingTransferPayloadZ>;
 
 export const ApprovalRequestPayloadZ = z.discriminatedUnion("type", [

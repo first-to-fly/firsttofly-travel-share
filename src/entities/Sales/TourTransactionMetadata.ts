@@ -23,9 +23,6 @@ export const TransferMetadataZ = z.object({
   transferDate: z.string().optional(),
   transferApprovedBy: z.string().optional(),
   passengerMapping: z.record(z.string(), z.string()).optional(),
-
-  // NOTE: Payment transfer data is stored in TourTransactionTransfer entities
-  // and can be queried by tourTransactionOID - no need to duplicate references here
 }).partial();
 
 export type TransferMetadata = z.infer<typeof TransferMetadataZ>;
@@ -35,7 +32,7 @@ export type TransferMetadata = z.infer<typeof TransferMetadataZ>;
  */
 export const BaseTourTransactionMetadataZ = z.object({
   customer: TourTransactionPaxPersonalDetailsZ,
-}).catchall(z.unknown()); // Allow additional custom fields
+});
 
 export type BaseTourTransactionMetadata = z.infer<typeof BaseTourTransactionMetadataZ>;
 
