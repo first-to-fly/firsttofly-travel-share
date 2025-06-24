@@ -15,7 +15,6 @@ export enum TransportSegmentEvents {
 export const BaseTransportSegmentZ = EntityZ.extend({
   entityType: z.literal(EntityType.TRANSPORT_SEGMENT),
 
-  transportGroupOID: z.string(),
   type: z.nativeEnum(TransportType),
 
   originLocation: z.string(),

@@ -69,4 +69,17 @@ export const transportGroupContract = initContract().router({
       200: z.boolean(),
     },
   },
+
+  updateGroupSegments: {
+    summary: "Update transport segments assigned to a group",
+    method: "POST",
+    path: `${basePath}/update-segments`,
+    body: z.object({
+      transportGroupOID: z.string().describe("OID of transport group to update"),
+      transportSegmentOIDs: z.array(z.string().describe("OIDs of transport segments to assign to the group")),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
 });
