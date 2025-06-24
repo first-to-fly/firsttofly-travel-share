@@ -63,7 +63,6 @@ const CreateTransportSegmentZ = z.discriminatedUnion("type", [
 // Update schemas
 const BaseUpdateTransportSegmentZ = BaseCreateTransportSegmentZ.omit({
   tenantOID: true,
-  transportGroupOID: true,
 }).partial();
 
 const UpdateFlightSegmentZ = BaseUpdateTransportSegmentZ.extend({
