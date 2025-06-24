@@ -23,7 +23,6 @@ const PaginationQueryZ = z.object({
 
 // Airport schemas
 const AirportResponseZ = z.object({
-  airportId: z.string(),
   airportName: z.string(),
   iataCode: z.string(),
   icaoCode: z.string(),
@@ -42,7 +41,6 @@ const AirportResponseZ = z.object({
 
 // Airline schemas
 const AirlineResponseZ = z.object({
-  airlineId: z.string(),
   airlineName: z.string(),
   iataCode: z.string(),
   icaoCode: z.string(),
@@ -62,10 +60,9 @@ const AirlineResponseZ = z.object({
 
 // Airplane schemas
 const AirplaneResponseZ = z.object({
-  airplaneId: z.string(),
   registrationNumber: z.string(),
   productionLine: z.string().nullable(),
-  iataType: z.string().nullable(),
+  iataType: z.string(),
   modelName: z.string().nullable(),
   modelCode: z.string().nullable(),
   icaoCodeHex: z.string().nullable(),
@@ -199,9 +196,9 @@ export const aviationstackContract = initContract().router({
   },
 
   getAirportById: {
-    summary: "Get airport by ID",
+    summary: "Get airport by IATA code",
     method: "GET",
-    path: `${basePath}/airports/:airportId`,
+    path: `${basePath}/airports/:iataCode`,
     responses: {
       200: AirportResponseZ,
       404: z.object({ message: z.string() }),
@@ -218,9 +215,9 @@ export const aviationstackContract = initContract().router({
   },
 
   getAirlineById: {
-    summary: "Get airline by ID",
+    summary: "Get airline by IATA code",
     method: "GET",
-    path: `${basePath}/airlines/:airlineId`,
+    path: `${basePath}/airlines/:iataCode`,
     responses: {
       200: AirlineResponseZ,
       404: z.object({ message: z.string() }),
@@ -237,9 +234,9 @@ export const aviationstackContract = initContract().router({
   },
 
   getAirplaneById: {
-    summary: "Get airplane by ID",
+    summary: "Get airplane by IATA type",
     method: "GET",
-    path: `${basePath}/airplanes/:airplaneId`,
+    path: `${basePath}/airplanes/:iataType`,
     responses: {
       200: AirplaneResponseZ,
       404: z.object({ message: z.string() }),
