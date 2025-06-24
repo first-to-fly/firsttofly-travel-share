@@ -17,7 +17,6 @@ const basePath = "/api/operations/transport-segments";
 // Create a base transport segment schema
 const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   tenantOID: true,
-  transportGroupOID: true,
   type: true,
   originLocation: true,
   destinationLocation: true,
@@ -153,6 +152,19 @@ export const transportSegmentContract = initContract().router({
     path: `${basePath}/batch-delete`,
     body: z.object({
       transportSegmentOIDs: z.array(z.string().describe("OIDs of transport segments to delete")),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
+  assignSegmentToGroups: {
+    summary: "Assign transport segment to multiple groups",
+    method: "POST",
+    path: `${basePath}/assign-to-groups`,
+    body: z.object({
+      transportSegmentOID: z.string().describe("OID of transport segment to assign"),
+      transportGroupOIDs: z.array(z.string().describe("OIDs of transport groups to assign to")),
     }),
     responses: {
       200: z.boolean(),
