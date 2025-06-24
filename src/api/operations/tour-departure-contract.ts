@@ -30,6 +30,7 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   departureDate: true,
   finalizationDate: true,
   paymentDueDate: true,
+  transportGroupOIDs: true,
 
   transportType: true,
   assembleLocationAirlineOID: true,
