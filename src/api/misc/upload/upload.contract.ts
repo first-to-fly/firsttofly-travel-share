@@ -7,7 +7,7 @@ const c = initContract();
 export const uploadContract = c.router({
   getObjectSize: {
     method: "GET",
-    path: "/upload/object-size",
+    path: "/api/misc/upload/object-size",
     query: z.object({
       s3Key: z.string().describe("S3 object key"),
       s3Bucket: z.string().describe("S3 bucket name"),

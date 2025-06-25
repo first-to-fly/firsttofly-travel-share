@@ -37,6 +37,7 @@ import { TourTransactionPaxPermissions } from "./entities/tour-transaction-pax.p
 import { TourTransactionRoomPermissions } from "./entities/tour-transaction-room.permission";
 import { TourTransactionTransferPermissions } from "./entities/tour-transaction-transfer.permission";
 import { TransportGroupPermissions } from "./entities/transport-group.permission";
+import { TransportPlanPermissions } from "./entities/transport-plan.permission";
 import { TransportSegmentPermissions } from "./entities/transport-segment.permission";
 import { UsefulInfoPermissions } from "./entities/useful-info.permission";
 import { UserPermissions } from "./entities/user.permission";
@@ -91,6 +92,7 @@ const EntityPermissions = {
   Budget: BudgetPermissions,
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,
+  "Transport Plan": TransportPlanPermissions,
   "Supplier Profile": SupplierProfilePermissions,
   "Supplier Contract": SupplierContractPermissions,
   Booking: TourTransactionPermissions,

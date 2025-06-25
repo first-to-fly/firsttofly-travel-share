@@ -5,6 +5,7 @@ import { groupTourItineraryContract } from "./group-tour-itinerary-contract";
 import { groupTourPNLSimulationContract } from "./group-tour-pnl-simulation-contract";
 import { groupTourPricingContract } from "./group-tour-pricing-contract";
 import { groupTourProductContract } from "./group-tour-product-contract";
+import { transportPlanContract } from "./transport-plan-contract";
 
 
 export const productsContract = initContract().router({
@@ -16,4 +17,6 @@ export const productsContract = initContract().router({
     pricing: groupTourPricingContract,
     pnlSimulation: groupTourPNLSimulationContract,
   },
+
+  transportPlan: transportPlanContract,
 });

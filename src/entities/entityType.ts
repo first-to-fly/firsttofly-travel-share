@@ -63,6 +63,7 @@ export enum EntityType {
   // TRANSPORT MANAGEMENT
   TRANSPORT_GROUP = "transportGroup",
   TRANSPORT_SEGMENT = "transportSegment",
+  TRANSPORT_PLAN = "transportPlan",
 
   // OPERATIONS
   TOUR_DEPARTURE = "tourDeparture",
