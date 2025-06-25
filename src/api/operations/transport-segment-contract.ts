@@ -22,9 +22,16 @@ const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   destinationLocation: true,
   originTimezone: true,
   destinationTimezone: true,
+
+  // Actual mode fields
   departureDateTime: true,
   arrivalDateTime: true,
   seatCapacity: true,
+
+  // Planning mode fields
+  isPlanning: true,
+  plannedDepartureTime: true,
+  plannedArrivalTime: true,
 });
 
 // Create specialized schemas based on segment type
@@ -63,18 +70,9 @@ const CreateTransportSegmentZ = z.discriminatedUnion("type", [
 ]);
 
 // Update schemas - include planning fields here
-const BaseUpdateTransportSegmentZ = BaseTransportSegmentZ.pick({
-  type: true,
-  originLocation: true,
-  destinationLocation: true,
-  originTimezone: true,
-  destinationTimezone: true,
-  departureDateTime: true,
-  arrivalDateTime: true,
-  seatCapacity: true,
+const BaseUpdateTransportSegmentZ = BaseCreateTransportSegmentZ.omit({
+  tenantOID: true,
   isPlanning: true,
-  plannedDepartureTime: true,
-  plannedArrivalTime: true,
 }).partial();
 
 const UpdateFlightSegmentZ = BaseUpdateTransportSegmentZ.extend({

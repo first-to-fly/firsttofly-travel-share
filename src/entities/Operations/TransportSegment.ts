@@ -99,13 +99,13 @@ export const BaseTransportSegmentZ = EntityZ.extend({
   originTimezone: z.string(),
   destinationTimezone: z.string(),
 
-  departureDateTime: DateISOStringZ,
-  arrivalDateTime: DateISOStringZ,
-
+  // Actual mode fields
+  departureDateTime: DateISOStringZ.optional(),
+  arrivalDateTime: DateISOStringZ.optional(),
   seatCapacity: z.number().int().positive().optional(),
 
   // Planning mode fields
-  isPlanning: z.boolean().optional().default(false),
+  isPlanning: z.boolean().default(false).optional(),
   plannedDepartureTime: z.string().optional().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
     message: "Planned departure time must be in 'HH:MM' format",
   }),
