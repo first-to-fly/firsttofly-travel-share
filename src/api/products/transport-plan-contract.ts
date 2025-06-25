@@ -9,6 +9,7 @@ const basePath = "/api/pr/transport-plans";
 const CreateTransportPlanZ = TransportPlanZ.pick({
   name: true,
   description: true,
+  transportSegmentOIDs: true,
 }).extend({
   tenantOID: z.string(),
 });
@@ -70,39 +71,4 @@ export const transportPlanContract = initContract().router({
     },
   },
 
-  // Transport Plan Segments operations
-  getTransportPlanSegments: {
-    summary: "Get transport segments for a transport plan",
-    method: "GET",
-    path: `${basePath}/:transportPlanOID/segments`,
-    pathParams: z.object({
-      transportPlanOID: z.string(),
-    }),
-    responses: {
-      200: z.object({
-        segments: z.array(z.object({
-          transportSegmentOID: z.string(),
-          sequenceOrder: z.number(),
-        })),
-      }),
-    },
-  },
-
-  updateTransportPlanSegments: {
-    summary: "Update transport segments for a transport plan",
-    method: "POST",
-    path: `${basePath}/:transportPlanOID/segments`,
-    pathParams: z.object({
-      transportPlanOID: z.string(),
-    }),
-    body: z.object({
-      segments: z.array(z.object({
-        transportSegmentOID: z.string(),
-        sequenceOrder: z.number(),
-      })),
-    }),
-    responses: {
-      200: z.boolean(),
-    },
-  },
 });
