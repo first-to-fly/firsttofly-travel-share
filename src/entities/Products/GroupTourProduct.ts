@@ -35,6 +35,7 @@ export const GroupTourProductZ = EntityZ.extend({
   durationNights: FTFSafeMaxNumberZ({ name: "Duration nights" }),
 
   proposedDepartureDates: z.array(DateISOStringZ).optional(),
+  transportPlanOIDs: z.array(z.string()).optional(),
 
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ.optional(), // end indefinitely
