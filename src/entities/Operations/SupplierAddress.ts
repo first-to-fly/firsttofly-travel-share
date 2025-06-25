@@ -1,5 +1,9 @@
-import { BaseEntityColumns } from "../base";
-
+interface BaseEntityColumns {
+  createdAt: string;
+  updatedAt?: string;
+  createdBy: string;
+  updatedBy?: string;
+}
 
 export interface SupplierAddress extends BaseEntityColumns {
   id: string;
