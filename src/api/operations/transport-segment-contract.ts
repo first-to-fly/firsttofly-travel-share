@@ -20,6 +20,8 @@ const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   type: true,
   originLocation: true,
   destinationLocation: true,
+  originTimezone: true,
+  destinationTimezone: true,
   departureDateTime: true,
   arrivalDateTime: true,
   seatCapacity: true,

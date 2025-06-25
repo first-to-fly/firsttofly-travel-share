@@ -1,6 +1,8 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
+import { FlightInfoZ } from "../../entities/Operations/TransportSegment";
+
 
 export enum FlightStatus {
   SCHEDULED = "scheduled",
@@ -109,79 +111,12 @@ const GetFlightsQueryZ = PaginationQueryZ.extend({
   arrScheduledTimeDep: z.string().optional(),
 });
 
-const FlightResponseZ = z.object({
-  flightDate: z.string(),
-  flightStatus: z.nativeEnum(FlightStatus),
-  departure: z.object({
-    airport: z.string(),
-    timezone: z.string(),
-    iata: z.string(),
-    icao: z.string(),
-    terminal: z.string().nullable(),
-    gate: z.string().nullable(),
-    delay: z.number().nullable(),
-    scheduled: z.string(),
-    estimated: z.string(),
-    actual: z.string().nullable(),
-    estimatedRunway: z.string().nullable(),
-    actualRunway: z.string().nullable(),
-  }),
-  arrival: z.object({
-    airport: z.string(),
-    timezone: z.string(),
-    iata: z.string(),
-    icao: z.string(),
-    terminal: z.string().nullable(),
-    gate: z.string().nullable(),
-    baggage: z.string().nullable(),
-    delay: z.number().nullable(),
-    scheduled: z.string(),
-    estimated: z.string(),
-    actual: z.string().nullable(),
-    estimatedRunway: z.string().nullable(),
-    actualRunway: z.string().nullable(),
-  }),
-  airline: z.object({
-    name: z.string(),
-    iata: z.string(),
-    icao: z.string(),
-  }),
-  flight: z.object({
-    number: z.string(),
-    iata: z.string(),
-    icao: z.string(),
-    codeshared: z.object({
-      airlineName: z.string(),
-      airlineIata: z.string(),
-      airlineIcao: z.string(),
-      flightNumber: z.string(),
-      flightIata: z.string(),
-      flightIcao: z.string(),
-    }).nullable(),
-  }),
-  aircraft: z.object({
-    registration: z.string().nullable(),
-    iata: z.string().nullable(),
-    icao: z.string().nullable(),
-    icao24: z.string().nullable(),
-  }).nullable(),
-  live: z.object({
-    updated: z.string().nullable(),
-    latitude: z.number().nullable(),
-    longitude: z.number().nullable(),
-    altitude: z.number().nullable(),
-    direction: z.number().nullable(),
-    speedHorizontal: z.number().nullable(),
-    speedVertical: z.number().nullable(),
-    isGround: z.boolean().nullable(),
-  }).nullable(),
-});
 
 const GetFlightsResponseZ = z.object({
   total: z.number(),
   limit: z.number(),
   offset: z.number(),
-  data: z.array(FlightResponseZ),
+  data: z.array(FlightInfoZ),
 });
 
 // Export the contract
