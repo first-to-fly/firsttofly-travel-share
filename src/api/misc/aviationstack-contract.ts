@@ -12,7 +12,7 @@ export enum FlightStatus {
 }
 
 
-const basePath = "/api/aviationstack";
+const basePath = "/api/misc/aviationstack";
 
 // Base pagination schema
 const PaginationQueryZ = z.object({
@@ -185,7 +185,7 @@ const GetFlightsResponseZ = z.object({
 });
 
 // Export the contract
-export const aviationstackContract = initContract().router({
+export const aviationStackContract = initContract().router({
   getAirports: {
     summary: "Get all airports from database",
     method: "GET",
