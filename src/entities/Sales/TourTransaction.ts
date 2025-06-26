@@ -2,7 +2,8 @@
 import { z } from "zod";
 
 import { EntityZ } from "../entity";
-// Corrected path
+import { TourTransactionMetadataZ } from "./TourTransactionMetadata";
+
 
 export enum TourTransactionPaymentStatus {
   UNPAID = "unpaid",
@@ -35,7 +36,7 @@ export const TourTransactionZ = EntityZ.extend({
   bookingStatus: TourTransactionBookingStatusZ.default(TourTransactionBookingStatus.IN_PROGRESS),
   totalAmount: z.number(),
   receivedAmount: z.number().default(0),
-  metadata: z.unknown().optional(),
+  metadata: TourTransactionMetadataZ.optional(),
   specialInstructions: z.array(z.string()).optional(),
   overwriteTax: z.object({
     scheme: z.string(),
