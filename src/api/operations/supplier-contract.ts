@@ -1,6 +1,8 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
+import { SupplierCategory, SupplierStatus, SupplierType } from "../../entities/Operations/Supplier";
+
 
 const basePath = "/api/operations/suppliers";
 
@@ -10,6 +12,9 @@ export const supplierContract = initContract().router({
     path: `${basePath}`,
     query: z.object({
       tenantOID: z.string(),
+      types: z.array(z.nativeEnum(SupplierType)).optional(),
+      categories: z.array(z.nativeEnum(SupplierCategory)).optional(),
+      status: z.array(z.nativeEnum(SupplierStatus)).optional(),
     }),
     responses: {
       200: z.object({
@@ -19,7 +24,7 @@ export const supplierContract = initContract().router({
         }),
       }),
     },
-    summary: "Get all suppliers for a tenant",
+    summary: "Get all suppliers for a tenant with optional filters",
   },
 
   createSupplier: {
