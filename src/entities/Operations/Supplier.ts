@@ -65,3 +65,4 @@ export enum SupplierEvents {
 }
 
 export type Supplier = z.infer<typeof SupplierZ>;
+

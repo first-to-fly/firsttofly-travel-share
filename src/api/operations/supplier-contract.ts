@@ -1,15 +1,51 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { SupplierCategory, SupplierStatus, SupplierType } from "../../entities/Operations/Supplier";
+import { SupplierCategory, SupplierStatus, SupplierType, SupplierZ } from "../../entities/Operations/Supplier";
 
 
 const basePath = "/api/operations/suppliers";
 
+const CreateSupplierZ = SupplierZ.pick({
+  tenantOID: true,
+  name: true,
+  code: true,
+  shortName: true,
+  type: true,
+  category: true,
+  status: true,
+  partnerType: true,
+  countries: true,
+  supplierInfo: true,
+  personInChargeOID: true,
+  parentOID: true,
+  newOID: true,
+  remarks: true,
+  inactiveRemarks: true,
+  mainSupplierPaymentOID: true,
+  mainSupplierAddressOID: true,
+  paymentTerms: true,
+  paymentCreditLimit: true,
+}).extend({
+  relatedSupplierIds: z.array(z.string()).optional(),
+});
+
+const UpdateSupplierZ = CreateSupplierZ.omit({
+  tenantOID: true,
+}).partial().extend({
+  oid: z.string(),
+  // Override status to only allow Active or Inactive for updates
+  status: z.enum([SupplierStatus.ACTIVE, SupplierStatus.INACTIVE]).optional(),
+});
+
+export type CreateSupplier = z.infer<typeof CreateSupplierZ>;
+export type UpdateSupplier = z.infer<typeof UpdateSupplierZ>;
+
 export const supplierContract = initContract().router({
   getSuppliers: {
+    summary: "Get all suppliers for a tenant with optional filters",
     method: "GET",
-    path: `${basePath}`,
+    path: basePath,
     query: z.object({
       tenantOID: z.string(),
       types: z.array(z.nativeEnum(SupplierType)).optional(),
@@ -24,34 +60,13 @@ export const supplierContract = initContract().router({
         }),
       }),
     },
-    summary: "Get all suppliers for a tenant with optional filters",
   },
 
   createSupplier: {
+    summary: "Create a new supplier",
     method: "POST",
-    path: `${basePath}`,
-    body: z.object({
-      tenantOID: z.string(),
-      name: z.string(),
-      code: z.string(),
-      shortName: z.string(),
-      type: z.string().optional(),
-      category: z.string().optional(),
-      status: z.string(),
-      partnerType: z.string().optional(),
-      countries: z.array(z.string()).optional(),
-      supplierInfo: z.any().optional(),
-      personInChargeOID: z.string().optional(),
-      parentOID: z.string().optional(),
-      newOID: z.string().optional(),
-      remarks: z.string().optional(),
-      inactiveRemarks: z.string().optional(),
-      mainSupplierPaymentOID: z.string().optional(),
-      mainSupplierAddressOID: z.string().optional(),
-      paymentTerms: z.number(),
-      paymentCreditLimit: z.number(),
-      relatedSupplierIds: z.array(z.string()).optional(),
-    }),
+    path: basePath,
+    body: CreateSupplierZ,
     responses: {
       200: z.object({
         success: z.literal(true),
@@ -60,34 +75,13 @@ export const supplierContract = initContract().router({
         }),
       }),
     },
-    summary: "Create a new supplier",
   },
 
   updateSuppliers: {
+    summary: "Update multiple suppliers",
     method: "PUT",
-    path: `${basePath}`,
-    body: z.array(z.object({
-      oid: z.string(),
-      name: z.string().optional(),
-      code: z.string().optional(),
-      shortName: z.string().optional(),
-      type: z.string().optional(),
-      category: z.string().optional(),
-      status: z.string().optional(),
-      partnerType: z.string().optional(),
-      countries: z.array(z.string()).optional(),
-      supplierInfo: z.any().optional(),
-      personInChargeOID: z.string().optional(),
-      parentOID: z.string().optional(),
-      newOID: z.string().optional(),
-      remarks: z.string().optional(),
-      inactiveRemarks: z.string().optional(),
-      mainSupplierPaymentOID: z.string().optional(),
-      mainSupplierAddressOID: z.string().optional(),
-      paymentTerms: z.number().optional(),
-      paymentCreditLimit: z.number().optional(),
-      relatedSupplierIds: z.array(z.string()).optional(),
-    })),
+    path: basePath,
+    body: z.array(UpdateSupplierZ),
     responses: {
       200: z.object({
         success: z.literal(true),
@@ -96,12 +90,12 @@ export const supplierContract = initContract().router({
         }),
       }),
     },
-    summary: "Update multiple suppliers",
   },
 
   deleteSuppliers: {
+    summary: "Delete multiple suppliers",
     method: "DELETE",
-    path: `${basePath}`,
+    path: basePath,
     body: z.object({
       oids: z.array(z.string()),
     }),
@@ -113,6 +107,6 @@ export const supplierContract = initContract().router({
         }),
       }),
     },
-    summary: "Delete multiple suppliers",
   },
 });
+

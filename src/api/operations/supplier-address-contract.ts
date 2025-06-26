@@ -1,13 +1,42 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
+import { SupplierAddressZ } from "../../entities/Operations/SupplierAddress";
+
 
 const basePath = "/api/operations/supplier-addresses";
 
+const CreateSupplierAddressZ = SupplierAddressZ.pick({
+  tenantOID: true,
+  supplierOID: true,
+  addressType: true,
+  addressLine1: true,
+  addressLine2: true,
+  city: true,
+  state: true,
+  postalCode: true,
+  country: true,
+  phone: true,
+  fax: true,
+  email: true,
+  contactPerson: true,
+  isActive: true,
+});
+
+const UpdateSupplierAddressZ = CreateSupplierAddressZ.omit({
+  tenantOID: true,
+}).partial().extend({
+  oid: z.string(),
+});
+
+export type CreateSupplierAddress = z.infer<typeof CreateSupplierAddressZ>;
+export type UpdateSupplierAddress = z.infer<typeof UpdateSupplierAddressZ>;
+
 export const supplierAddressContract = initContract().router({
   getSupplierAddresses: {
+    summary: "Get all supplier addresses for a tenant",
     method: "GET",
-    path: `${basePath}`,
+    path: basePath,
     query: z.object({
       tenantOID: z.string(),
       supplierOID: z.string().optional(),
@@ -20,29 +49,13 @@ export const supplierAddressContract = initContract().router({
         }),
       }),
     },
-    summary: "Get all supplier addresses for a tenant",
   },
 
   createSupplierAddress: {
+    summary: "Create a new supplier address",
     method: "POST",
-    path: `${basePath}`,
-    body: z.object({
-      tenantOID: z.string(),
-      supplierOID: z.string(),
-      addressType: z.string(),
-      addressLine1: z.string(),
-      addressLine2: z.string().optional(),
-      city: z.string(),
-      state: z.string().optional(),
-      postalCode: z.string().optional(),
-      country: z.string(),
-      phone: z.string().optional(),
-      fax: z.string().optional(),
-      email: z.string().optional(),
-      contactPerson: z.string().optional(),
-      isDefault: z.boolean().optional(),
-      isActive: z.boolean().optional(),
-    }),
+    path: basePath,
+    body: CreateSupplierAddressZ,
     responses: {
       200: z.object({
         success: z.literal(true),
@@ -51,29 +64,13 @@ export const supplierAddressContract = initContract().router({
         }),
       }),
     },
-    summary: "Create a new supplier address",
   },
 
   updateSupplierAddresses: {
+    summary: "Update multiple supplier addresses",
     method: "PUT",
-    path: `${basePath}`,
-    body: z.array(z.object({
-      oid: z.string(),
-      supplierOID: z.string().optional(),
-      addressType: z.string().optional(),
-      addressLine1: z.string().optional(),
-      addressLine2: z.string().optional(),
-      city: z.string().optional(),
-      state: z.string().optional(),
-      postalCode: z.string().optional(),
-      country: z.string().optional(),
-      phone: z.string().optional(),
-      fax: z.string().optional(),
-      email: z.string().optional(),
-      contactPerson: z.string().optional(),
-      isDefault: z.boolean().optional(),
-      isActive: z.boolean().optional(),
-    })),
+    path: basePath,
+    body: z.array(UpdateSupplierAddressZ),
     responses: {
       200: z.object({
         success: z.literal(true),
@@ -82,12 +79,12 @@ export const supplierAddressContract = initContract().router({
         }),
       }),
     },
-    summary: "Update multiple supplier addresses",
   },
 
   deleteSupplierAddresses: {
+    summary: "Delete multiple supplier addresses",
     method: "DELETE",
-    path: `${basePath}`,
+    path: basePath,
     body: z.object({
       oids: z.array(z.string()),
     }),
@@ -99,6 +96,6 @@ export const supplierAddressContract = initContract().router({
         }),
       }),
     },
-    summary: "Delete multiple supplier addresses",
   },
 });
+

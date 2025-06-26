@@ -37,3 +37,4 @@ export enum SupplierContractEvents {
 }
 
 export type SupplierContract = z.infer<typeof SupplierContractZ>;
+

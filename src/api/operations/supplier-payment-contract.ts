@@ -1,13 +1,43 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
+import { SupplierPaymentZ } from "../../entities/Operations/SupplierPayment";
+
 
 const basePath = "/api/operations/supplier-payments";
 
+const CreateSupplierPaymentZ = SupplierPaymentZ.pick({
+  tenantOID: true,
+  supplierOID: true,
+  paymentType: true,
+  bankName: true,
+  accountNumber: true,
+  accountName: true,
+  bankCode: true,
+  routingNumber: true,
+  swiftCode: true,
+  iban: true,
+  currency: true,
+  paymentTerms: true,
+  creditLimit: true,
+  isActive: true,
+  paymentInfo: true,
+});
+
+const UpdateSupplierPaymentZ = CreateSupplierPaymentZ.omit({
+  tenantOID: true,
+}).partial().extend({
+  oid: z.string(),
+});
+
+export type CreateSupplierPayment = z.infer<typeof CreateSupplierPaymentZ>;
+export type UpdateSupplierPayment = z.infer<typeof UpdateSupplierPaymentZ>;
+
 export const supplierPaymentContract = initContract().router({
   getSupplierPayments: {
+    summary: "Get all supplier payments for a tenant",
     method: "GET",
-    path: `${basePath}`,
+    path: basePath,
     query: z.object({
       tenantOID: z.string(),
       supplierOID: z.string().optional(),
@@ -20,29 +50,13 @@ export const supplierPaymentContract = initContract().router({
         }),
       }),
     },
-    summary: "Get all supplier payments for a tenant",
   },
 
   createSupplierPayment: {
+    summary: "Create a new supplier payment",
     method: "POST",
-    path: `${basePath}`,
-    body: z.object({
-      tenantOID: z.string(),
-      supplierOID: z.string(),
-      paymentType: z.string(),
-      bankName: z.string().optional(),
-      accountNumber: z.string().optional(),
-      accountName: z.string().optional(),
-      routingNumber: z.string().optional(),
-      swiftCode: z.string().optional(),
-      iban: z.string().optional(),
-      currency: z.string().optional(),
-      paymentTerms: z.string().optional(),
-      creditLimit: z.number().optional(),
-      isDefault: z.boolean().optional(),
-      isActive: z.boolean().optional(),
-      paymentInfo: z.any().optional(),
-    }),
+    path: basePath,
+    body: CreateSupplierPaymentZ,
     responses: {
       200: z.object({
         success: z.literal(true),
@@ -51,29 +65,13 @@ export const supplierPaymentContract = initContract().router({
         }),
       }),
     },
-    summary: "Create a new supplier payment",
   },
 
   updateSupplierPayments: {
+    summary: "Update multiple supplier payments",
     method: "PUT",
-    path: `${basePath}`,
-    body: z.array(z.object({
-      oid: z.string(),
-      supplierOID: z.string().optional(),
-      paymentType: z.string().optional(),
-      bankName: z.string().optional(),
-      accountNumber: z.string().optional(),
-      accountName: z.string().optional(),
-      routingNumber: z.string().optional(),
-      swiftCode: z.string().optional(),
-      iban: z.string().optional(),
-      currency: z.string().optional(),
-      paymentTerms: z.string().optional(),
-      creditLimit: z.number().optional(),
-      isDefault: z.boolean().optional(),
-      isActive: z.boolean().optional(),
-      paymentInfo: z.any().optional(),
-    })),
+    path: basePath,
+    body: z.array(UpdateSupplierPaymentZ),
     responses: {
       200: z.object({
         success: z.literal(true),
@@ -82,12 +80,12 @@ export const supplierPaymentContract = initContract().router({
         }),
       }),
     },
-    summary: "Update multiple supplier payments",
   },
 
   deleteSupplierPayments: {
+    summary: "Delete multiple supplier payments",
     method: "DELETE",
-    path: `${basePath}`,
+    path: basePath,
     body: z.object({
       oids: z.array(z.string()),
     }),
@@ -99,6 +97,6 @@ export const supplierPaymentContract = initContract().router({
         }),
       }),
     },
-    summary: "Delete multiple supplier payments",
   },
 });
+

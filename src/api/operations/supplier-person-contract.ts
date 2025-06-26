@@ -1,13 +1,42 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
+import { SupplierPersonZ } from "../../entities/Operations/SupplierPerson";
+
 
 const basePath = "/api/operations/supplier-persons";
 
+const CreateSupplierPersonZ = SupplierPersonZ.pick({
+  tenantOID: true,
+  supplierOID: true,
+  firstName: true,
+  lastName: true,
+  title: true,
+  department: true,
+  email: true,
+  phone: true,
+  mobile: true,
+  fax: true,
+  position: true,
+  isMainContact: true,
+  isActive: true,
+  contactInfo: true,
+});
+
+const UpdateSupplierPersonZ = CreateSupplierPersonZ.omit({
+  tenantOID: true,
+}).partial().extend({
+  oid: z.string(),
+});
+
+export type CreateSupplierPerson = z.infer<typeof CreateSupplierPersonZ>;
+export type UpdateSupplierPerson = z.infer<typeof UpdateSupplierPersonZ>;
+
 export const supplierPersonContract = initContract().router({
   getSupplierPersons: {
+    summary: "Get all supplier persons for a tenant",
     method: "GET",
-    path: `${basePath}`,
+    path: basePath,
     query: z.object({
       tenantOID: z.string(),
       supplierOID: z.string().optional(),
@@ -20,28 +49,13 @@ export const supplierPersonContract = initContract().router({
         }),
       }),
     },
-    summary: "Get all supplier persons for a tenant",
   },
 
   createSupplierPerson: {
+    summary: "Create a new supplier person",
     method: "POST",
-    path: `${basePath}`,
-    body: z.object({
-      tenantOID: z.string(),
-      supplierOID: z.string(),
-      firstName: z.string(),
-      lastName: z.string(),
-      title: z.string().optional(),
-      department: z.string().optional(),
-      email: z.string().optional(),
-      phone: z.string().optional(),
-      mobile: z.string().optional(),
-      fax: z.string().optional(),
-      position: z.string().optional(),
-      isMainContact: z.boolean().optional(),
-      isActive: z.boolean().optional(),
-      contactInfo: z.any().optional(),
-    }),
+    path: basePath,
+    body: CreateSupplierPersonZ,
     responses: {
       200: z.object({
         success: z.literal(true),
@@ -50,28 +64,13 @@ export const supplierPersonContract = initContract().router({
         }),
       }),
     },
-    summary: "Create a new supplier person",
   },
 
   updateSupplierPersons: {
+    summary: "Update multiple supplier persons",
     method: "PUT",
-    path: `${basePath}`,
-    body: z.array(z.object({
-      oid: z.string(),
-      supplierOID: z.string().optional(),
-      firstName: z.string().optional(),
-      lastName: z.string().optional(),
-      title: z.string().optional(),
-      department: z.string().optional(),
-      email: z.string().optional(),
-      phone: z.string().optional(),
-      mobile: z.string().optional(),
-      fax: z.string().optional(),
-      position: z.string().optional(),
-      isMainContact: z.boolean().optional(),
-      isActive: z.boolean().optional(),
-      contactInfo: z.any().optional(),
-    })),
+    path: basePath,
+    body: z.array(UpdateSupplierPersonZ),
     responses: {
       200: z.object({
         success: z.literal(true),
@@ -80,12 +79,12 @@ export const supplierPersonContract = initContract().router({
         }),
       }),
     },
-    summary: "Update multiple supplier persons",
   },
 
   deleteSupplierPersons: {
+    summary: "Delete multiple supplier persons",
     method: "DELETE",
-    path: `${basePath}`,
+    path: basePath,
     body: z.object({
       oids: z.array(z.string()),
     }),
@@ -97,6 +96,6 @@ export const supplierPersonContract = initContract().router({
         }),
       }),
     },
-    summary: "Delete multiple supplier persons",
   },
 });
+

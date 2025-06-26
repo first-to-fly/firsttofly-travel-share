@@ -1,3 +1,43 @@
+import { z } from "zod";
+
+import { EntityZ } from "../entity";
+
+
+export enum PaymentType {
+  BANK_TRANSFER = "bank_transfer",
+  CREDIT_CARD = "credit_card",
+  PAYPAL = "paypal",
+  CHECK = "check",
+  CASH = "cash",
+  OTHER = "other",
+}
+
+export const PaymentInfoZ = z.object({
+  notes: z.string().optional(),
+  referenceNumber: z.string().optional(),
+}).optional();
+
+export const SupplierPaymentZ = EntityZ.extend({
+  supplierOID: z.string(),
+  paymentType: z.nativeEnum(PaymentType),
+  bankName: z.string().optional(),
+  accountNumber: z.string().optional(),
+  accountName: z.string().optional(),
+  bankCode: z.string().nullable().optional(),
+  routingNumber: z.string().nullable().optional(),
+  swiftCode: z.string().optional(),
+  iban: z.string().optional(),
+  currency: z.string().optional(),
+  paymentTerms: z.string().optional(),
+  creditLimit: z.number().default(0),
+  isActive: z.boolean().default(true),
+  paymentInfo: PaymentInfoZ,
+});
+
+export type SupplierPayment = z.infer<typeof SupplierPaymentZ>;
+export type PaymentInfo = z.infer<typeof PaymentInfoZ>;
+
+// Legacy interface for backward compatibility
 interface BaseEntityColumns {
   createdAt: string;
   updatedAt?: string;
@@ -5,7 +45,7 @@ interface BaseEntityColumns {
   updatedBy?: string;
 }
 
-export interface SupplierPayment extends BaseEntityColumns {
+export interface LegacySupplierPayment extends BaseEntityColumns {
   id: string;
   supplierId: string;
   paymentType: string;
@@ -17,3 +57,4 @@ export interface SupplierPayment extends BaseEntityColumns {
   routingNumber?: string;
   isDefault: boolean;
 }
+
