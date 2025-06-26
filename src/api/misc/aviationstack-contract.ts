@@ -337,3 +337,7 @@ export const aviationStackContract = initContract().router({
 export type GetFlightsQuery = z.infer<typeof GetFlightsQueryZ>;
 export type GetFlightSchedulesQuery = z.infer<typeof GetFlightSchedulesQueryZ>;
 export type GetFlightFutureSchedulesQuery = z.infer<typeof GetFlightFutureSchedulesQueryZ>;
+export type FlightSchedule = z.infer<typeof FlightScheduleZ>;
+export type GetFlightSchedulesResponse = z.infer<typeof GetFlightSchedulesResponseZ>;
+export type FlightFutureSchedule = z.infer<typeof FlightFutureScheduleZ>;
+export type GetFlightFutureSchedulesResponse = z.infer<typeof GetFlightFutureSchedulesResponseZ>;

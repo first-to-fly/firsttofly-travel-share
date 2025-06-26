@@ -173,6 +173,7 @@ export const TransportSegmentZ = z.discriminatedUnion("type", [
 ]);
 
 export type TransportSegment = z.infer<typeof TransportSegmentZ>;
+export type FlightInfo = z.infer<typeof FlightInfoZ>;
 export type FlightSegmentDetails = z.infer<typeof FlightSegmentDetailsZ>;
 export type BusSegmentDetails = z.infer<typeof BusSegmentDetailsZ>;
 export type CruiseSegmentDetails = z.infer<typeof CruiseSegmentDetailsZ>;
