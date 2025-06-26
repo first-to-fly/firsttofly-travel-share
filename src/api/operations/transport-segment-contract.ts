@@ -14,7 +14,7 @@ import {
 
 const basePath = "/api/operations/transport-segments";
 
-// Create a base transport segment schema
+// Create a base transport segment schema for creation (without planning fields)
 const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   tenantOID: true,
   type: true,
@@ -25,10 +25,6 @@ const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   departureDateTime: true,
   arrivalDateTime: true,
   seatCapacity: true,
-
-  isPlanning: true,
-  plannedDepartureTime: true,
-  plannedArrivalTime: true,
 });
 
 // Create specialized schemas based on segment type
@@ -66,9 +62,19 @@ const CreateTransportSegmentZ = z.discriminatedUnion("type", [
   CreateFerrySegmentZ,
 ]);
 
-// Update schemas
-const BaseUpdateTransportSegmentZ = BaseCreateTransportSegmentZ.omit({
-  tenantOID: true,
+// Update schemas - include planning fields here
+const BaseUpdateTransportSegmentZ = BaseTransportSegmentZ.pick({
+  type: true,
+  originLocation: true,
+  destinationLocation: true,
+  originTimezone: true,
+  destinationTimezone: true,
+  departureDateTime: true,
+  arrivalDateTime: true,
+  seatCapacity: true,
+  isPlanning: true,
+  plannedDepartureTime: true,
+  plannedArrivalTime: true,
 }).partial();
 
 const UpdateFlightSegmentZ = BaseUpdateTransportSegmentZ.extend({
