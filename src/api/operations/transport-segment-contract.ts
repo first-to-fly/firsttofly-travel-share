@@ -124,6 +124,7 @@ export const transportSegmentContract = initContract().router({
     path: basePath,
     query: z.object({
       tenantOID: z.string(),
+      isPlanning: z.boolean(),
     }).passthrough(),
     responses: {
       200: z.object({
