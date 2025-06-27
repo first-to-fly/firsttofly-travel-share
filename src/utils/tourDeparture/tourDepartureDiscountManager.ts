@@ -108,23 +108,23 @@ export function convertPaxToDiscountInput(paxData: Array<{
  */
 export function determineDiscountAction(
   discountResult: TourDepartureDiscountResult,
-  existingDiscounts: Array<{ tourTransactionDiscountId: string; appliedAmount: number }>,
+  existingDiscount?: { tourTransactionDiscountId: string; appliedAmount: number },
 ): "apply" | "update" | "remove" | "none" {
-  const hasExistingDiscounts = existingDiscounts.length > 0;
+  const hasExistingDiscount = !!existingDiscount;
   const shouldHaveDiscount = discountResult.totalDiscount > 0;
 
-  if (!hasExistingDiscounts && shouldHaveDiscount) {
+  if (!hasExistingDiscount && shouldHaveDiscount) {
     return "apply";
   }
 
-  if (hasExistingDiscounts && !shouldHaveDiscount) {
+  if (hasExistingDiscount && !shouldHaveDiscount) {
     return "remove";
   }
 
-  if (hasExistingDiscounts && shouldHaveDiscount) {
+  if (hasExistingDiscount && shouldHaveDiscount) {
     // Check if amount changed
-    const currentAmount = existingDiscounts[0]?.appliedAmount ?? 0;
-    if (Math.abs(currentAmount - discountResult.totalDiscount) > 0.01) {
+    const currentAmount = existingDiscount.appliedAmount ?? 0;
+    if (Math.abs(currentAmount - discountResult.totalDiscount) > 0.001) {
       return "update";
     }
   }

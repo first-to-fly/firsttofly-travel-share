@@ -42,6 +42,7 @@ export const TourTransactionDiscountMetadataZ = z.discriminatedUnion("type", [
 export type CodeBasedDiscountMetadata = z.infer<typeof CodeBasedDiscountMetadataZ>;
 export type TourDepartureDiscountMetadata = z.infer<typeof TourDepartureDiscountMetadataZ>;
 export type SpecialRequestDiscountMetadata = z.infer<typeof SpecialRequestDiscountMetadataZ>;
+
 export type TourTransactionDiscountMetadata = z.infer<typeof TourTransactionDiscountMetadataZ>;
 
 export const TourTransactionDiscountZ = EntityZ.extend({
