@@ -4,7 +4,6 @@ import { TourDepartureDiscountMetadata, TourTransactionDiscountType } from "../.
 import { TourTransactionPaxType } from "../../entities/Sales/TourTransactionPax";
 import { DiscountMode } from "../../entities/Settings/Product/Discount";
 import {
-  calculateTourDepartureDiscount as calculateTourDepartureDiscountUtil,
   isPaxTypeAdult,
   type PaxDiscountInput,
   type TourDepartureDiscountResult,
@@ -27,13 +26,6 @@ export interface TourDepartureDiscountApplicationResult {
   description: string;
   appliedAmount: number;
   discountMode: DiscountMode;
-}
-
-/**
- * Calculates tour departure discount based on provided inputs
- */
-export function calculateTourDepartureDiscount(input: TourDepartureDiscountInput): TourDepartureDiscountResult {
-  return calculateTourDepartureDiscountUtil(input);
 }
 
 /**
