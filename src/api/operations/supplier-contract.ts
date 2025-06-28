@@ -54,10 +54,7 @@ export const supplierContract = initContract().router({
     }),
     responses: {
       200: z.object({
-        success: z.literal(true),
-        data: z.object({
-          oids: z.array(z.string()),
-        }),
+        oids: z.array(z.string()),
       }),
     },
   },
@@ -68,12 +65,7 @@ export const supplierContract = initContract().router({
     path: basePath,
     body: CreateSupplierZ,
     responses: {
-      200: z.object({
-        success: z.literal(true),
-        data: z.object({
-          oid: z.string(),
-        }),
-      }),
+      200: z.string(),
     },
   },
 
@@ -81,14 +73,12 @@ export const supplierContract = initContract().router({
     summary: "Update multiple suppliers",
     method: "PUT",
     path: basePath,
-    body: z.array(UpdateSupplierZ),
+    body: z.record(
+      z.string().describe("OID of supplier to update"),
+      UpdateSupplierZ,
+    ),
     responses: {
-      200: z.object({
-        success: z.literal(true),
-        data: z.object({
-          oids: z.array(z.string()),
-        }),
-      }),
+      200: z.array(z.string()),
     },
   },
 
@@ -100,13 +90,7 @@ export const supplierContract = initContract().router({
       oids: z.array(z.string()),
     }),
     responses: {
-      200: z.object({
-        success: z.literal(true),
-        data: z.object({
-          oids: z.array(z.string()),
-        }),
-      }),
+      200: z.boolean(),
     },
   },
 });
-
