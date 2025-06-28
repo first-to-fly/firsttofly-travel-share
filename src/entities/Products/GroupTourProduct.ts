@@ -3,7 +3,7 @@ import { z } from "zod";
 import { DateISOStringZ } from "../../types/date";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { FTFSafeMaxNumberZ } from "../../types/number";
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export enum GroupTourProductEvents {
@@ -18,11 +18,11 @@ export const GroupTourProductZ = EntityZ.extend({
   name: MultiLangRecordZ(z.string()),
   description: z.record(z.string(), z.string()),
 
-  departmentOID: z.string(),
-  sectorOIDs: z.array(z.string()),
-  displaySectorOIDs: z.array(z.string()),
+  departmentOID: EntityOIDZ,
+  sectorOIDs: z.array(EntityOIDZ),
+  displaySectorOIDs: z.array(EntityOIDZ),
 
-  sectorGroupOID: z.string().optional(),
+  sectorGroupOID: EntityOIDZ.optional(),
 
   shoutout: MultiLangRecordZ(z.string()).optional(),
   highlights: MultiLangRecordZ(z.string()).optional(),
@@ -35,7 +35,7 @@ export const GroupTourProductZ = EntityZ.extend({
   durationNights: FTFSafeMaxNumberZ({ name: "Duration nights" }),
 
   proposedDepartureDates: z.array(DateISOStringZ).optional(),
-  transportPlanOIDs: z.array(z.string()).optional(),
+  transportPlanOIDs: z.array(EntityOIDZ).optional(),
 
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ.optional(), // end indefinitely

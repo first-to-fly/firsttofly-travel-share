@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
 
@@ -14,7 +14,7 @@ export const TransportPlanZ = EntityZ.extend({
   name: z.string(),
   description: z.string().optional(),
 
-  transportSegmentOIDs: z.array(z.string()).optional(),
+  transportSegmentOIDs: z.array(EntityOIDZ).optional(),
 });
 
 export type TransportPlan = z.infer<typeof TransportPlanZ>;

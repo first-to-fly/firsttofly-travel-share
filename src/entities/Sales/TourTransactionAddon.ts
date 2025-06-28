@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export enum TourTransactionAddonType {
@@ -11,16 +11,16 @@ export enum TourTransactionAddonType {
 export const TourTransactionAddonTypeZ = z.nativeEnum(TourTransactionAddonType);
 
 export const TourTransactionAddonZ = EntityZ.extend({
-  tourTransactionOID: z.string(),
+  tourTransactionOID: EntityOIDZ,
   type: TourTransactionAddonTypeZ,
-  groupTourPricingOID: z.string().optional(),
-  groupTourCostingEntryOID: z.string().optional(),
+  groupTourPricingOID: EntityOIDZ.optional(),
+  groupTourCostingEntryOID: EntityOIDZ.optional(),
   name: z.string(),
   unitPrice: z.number(),
   tax: z.number().optional(),
   quantity: z.number(),
   totalPrice: z.number(),
-  supplierOID: z.string().optional(),
+  supplierOID: EntityOIDZ.optional(),
   notes: z.string().optional(),
 });
 

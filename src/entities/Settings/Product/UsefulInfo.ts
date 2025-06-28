@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../../entity";
+import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
@@ -12,7 +12,7 @@ export enum UsefulInfoEvents {
 export const UsefulInfoZ = EntityZ.extend({
   entityType: z.literal(EntityType.USEFUL_INFO),
 
-  productTypeOIDs: z.array(z.string()).optional(),
+  productTypeOIDs: z.array(EntityOIDZ).optional(),
 
   name: z.string(),
   isActive: z.boolean().default(true),
@@ -25,7 +25,7 @@ export const UsefulInfoZ = EntityZ.extend({
     optionalTours: z.string().optional(),
   }).optional(),
 
-  applyToEntityOIDs: z.array(z.string()).optional(),
+  applyToEntityOIDs: z.array(EntityOIDZ).optional(),
 });
 
 export type UsefulInfo = z.infer<typeof UsefulInfoZ>;

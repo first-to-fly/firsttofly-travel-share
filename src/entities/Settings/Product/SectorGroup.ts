@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../../entity";
+import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
@@ -16,7 +16,7 @@ export const SectorGroupZ = EntityZ.extend({
   name: z.string(),
   isActive: z.boolean().default(true),
 
-  sectorOIDs: z.array(z.string()),
+  sectorOIDs: z.array(EntityOIDZ),
 });
 
 export type SectorGroup = z.infer<typeof SectorGroupZ>;

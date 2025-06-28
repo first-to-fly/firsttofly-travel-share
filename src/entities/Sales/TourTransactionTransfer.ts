@@ -4,7 +4,7 @@ import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
 import { NamedURLZ } from "../../types/url";
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export enum TourTransactionTransferType {
@@ -42,7 +42,7 @@ export const TourTransactionTransferZ = EntityZ.extend({
   metadata: z.record(z.unknown()).optional(),
   files: z.array(NamedURLZ).optional().default([]),
 
-  tourTransactionOID: z.string(),
+  tourTransactionOID: EntityOIDZ,
 
 });
 

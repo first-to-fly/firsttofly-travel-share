@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entity";
 import { TourTransactionPaxPersonalDetailsZ } from "./TourTransactionPax";
 
 /**
@@ -8,13 +9,13 @@ import { TourTransactionPaxPersonalDetailsZ } from "./TourTransactionPax";
 export const TransferMetadataZ = z.object({
   // === Original Transaction (being transferred FROM) ===
   transferredTo: z.array(z.string()).optional(),
-  transferringOIDs: z.array(z.string()).optional(),
+  transferringOIDs: z.array(EntityOIDZ).optional(),
   transferStartDate: z.string().optional(),
   transferredBy: z.string().optional(),
   transferPassengers: z.array(z.object({
     oid: z.string().optional(),
     name: z.string(),
-    targetTourDepartureOID: z.string(),
+    targetTourDepartureOID: EntityOIDZ,
   })).optional(),
 
   // === New Transaction (created FROM transfer) ===

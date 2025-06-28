@@ -1,7 +1,7 @@
 // simple-import-sort
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export const TourTransactionPaxPersonalDetailsZ = z.object({
@@ -51,13 +51,13 @@ export enum TourTransactionPaxType {
 export const TourTransactionPaxTypeZ = z.nativeEnum(TourTransactionPaxType);
 
 export const TourTransactionPaxZ = EntityZ.extend({
-  tourTransactionRoomOID: z.string(),
+  tourTransactionRoomOID: EntityOIDZ,
   type: TourTransactionPaxTypeZ,
   isLandTourOnly: z.boolean().default(false),
   personalDetails: TourTransactionPaxPersonalDetailsZ.optional(),
   mealPreference: z.string().optional(),
-  transportRecordOID: z.string().optional(),
-  documentOIDs: z.array(z.string()).optional(),
+  transportRecordOID: EntityOIDZ.optional(),
+  documentOIDs: z.array(EntityOIDZ).optional(),
 }).omit({
   tenantOID: true,
 });

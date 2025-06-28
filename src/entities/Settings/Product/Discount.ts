@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { DateISOStringZ } from "../../../types/date"; // Assuming path
 import { FTFSafeMaxNumberZ } from "../../../types/number";
-import { EntityZ } from "../../entity"; // Correct import name and path
+import { EntityOIDZ, EntityZ } from "../../entity"; // Correct import name and path
 import { EntityType } from "../../entityType"; // Correct path
 
 // Socket Events
@@ -125,9 +125,9 @@ export const DiscountZ = EntityZ.extend({
   howToApply: z.nativeEnum(DiscountHowToApply).default(DiscountHowToApply.AUTO),
   useDiscountCode: z.boolean().default(false),
 
-  sectorOIDs: z.array(z.string()).optional(),
-  groupTourProductOIDs: z.array(z.string()).optional(),
-  tourDepartureOIDs: z.array(z.string()).optional(),
+  sectorOIDs: z.array(EntityOIDZ).optional(),
+  groupTourProductOIDs: z.array(EntityOIDZ).optional(),
+  tourDepartureOIDs: z.array(EntityOIDZ).optional(),
 });
 
 export type Discount = z.infer<typeof DiscountZ>;

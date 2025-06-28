@@ -1,7 +1,7 @@
 // simple-import-sort
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 // Corrected path
 
 
@@ -15,8 +15,8 @@ export enum TourTransactionRoomStatus {
 export const TourTransactionRoomStatusZ = z.nativeEnum(TourTransactionRoomStatus);
 
 export const TourTransactionRoomZ = EntityZ.extend({
-  tourTransactionOID: z.string(),
-  roomConfigurationRuleOID: z.string(),
+  tourTransactionOID: EntityOIDZ,
+  roomConfigurationRuleOID: EntityOIDZ,
   roomNumber: z.string().max(20).optional(),
   isDbl: z.boolean().default(false),
   status: TourTransactionRoomStatusZ,
