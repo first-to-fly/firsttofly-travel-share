@@ -19,7 +19,6 @@ const CreateSupplierPaymentZ = SupplierPaymentZ.pick({
   iban: true,
   currency: true,
   paymentTerms: true,
-  creditLimit: true,
   isActive: true,
   paymentInfo: true,
 });

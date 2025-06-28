@@ -29,7 +29,6 @@ export const SupplierPaymentZ = EntityZ.extend({
   iban: z.string().optional(),
   currency: z.string().optional(),
   paymentTerms: z.string().optional(),
-  creditLimit: z.number().default(0),
   isActive: z.boolean().default(true),
   paymentInfo: PaymentInfoZ,
 });
