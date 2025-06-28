@@ -23,8 +23,8 @@ export const SupplierPaymentZ = EntityZ.extend({
   bankName: z.string().optional(),
   accountNumber: z.string().optional(),
   accountName: z.string().optional(),
-  bankCode: z.string().nullable().optional(),
-  routingNumber: z.string().nullable().optional(),
+  bankCode: z.string().optional(),
+  routingNumber: z.string().optional(),
   swiftCode: z.string().optional(),
   iban: z.string().optional(),
   currency: z.string().optional(),
@@ -56,4 +56,3 @@ export interface LegacySupplierPayment extends BaseEntityColumns {
   routingNumber?: string;
   isDefault: boolean;
 }
-
