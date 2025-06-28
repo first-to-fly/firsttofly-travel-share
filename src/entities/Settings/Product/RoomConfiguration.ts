@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { FTFSafeMaxNumberZ } from "../../../types/number";
-import { EntityZ } from "../../entity";
+import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
@@ -42,7 +42,7 @@ export type RoomPricingArrangement = z.infer<typeof RoomPricingArrangementZ>;
 export const RoomConfigurationRuleZ = EntityZ.extend({
   entityType: z.literal(EntityType.ROOM_CONFIG_RULE),
 
-  roomConfigurationOID: z.string(),
+  roomConfigurationOID: EntityOIDZ,
 
   roomType: z.nativeEnum(RoomType),
 
@@ -71,7 +71,7 @@ export const RoomConfigurationZ = EntityZ.extend({
     name: "Room configuration child without bed end age",
   }).int().nonnegative(),
 
-  coveredEntityOIDs: z.array(z.string()).min(1),
+  coveredEntityOIDs: z.array(EntityOIDZ).min(1),
   roomConfigurationRules: z.array(RoomConfigurationRuleZ),
 });
 

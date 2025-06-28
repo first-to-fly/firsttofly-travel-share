@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
 import { FTFSafeMaxNumberZ } from "../../types/number";
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export enum GroupTourPricingEvents {
@@ -12,7 +12,7 @@ export enum GroupTourPricingEvents {
 
 
 export const GroupTourPricingEntryZ = z.object({
-  groupTourCostingEntryOID: z.string(), // oid of GroupTourCostingEntryZ
+  groupTourCostingEntryOID: EntityOIDZ, // oid of GroupTourCostingEntryZ
 
   priceValue: z.object({
     currency: z.string(),
@@ -54,8 +54,8 @@ export type GroupTourPricingFareStructure = z.infer<typeof GroupTourPricingFareS
 
 
 export const GroupTourPricingZ = EntityZ.extend({
-  groupTourProductOID: z.string(),
-  groupTourCostingOID: z.string(),
+  groupTourProductOID: EntityOIDZ,
+  groupTourCostingOID: EntityOIDZ,
 
   name: z.string(),
   code: z.string(),

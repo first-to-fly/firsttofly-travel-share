@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export enum GroupTourPNLEvents {
@@ -12,7 +12,7 @@ export enum GroupTourPNLEvents {
 export const GroupTourPNLSimulationZ = EntityZ.omit({
   tenantOID: true,
 }).extend({
-  groupTourPricingOID: z.string(),
+  groupTourPricingOID: EntityOIDZ,
   groupVolumes: z.array(z.number()),
 });
 

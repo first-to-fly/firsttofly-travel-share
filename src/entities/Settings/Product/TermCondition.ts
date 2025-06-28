@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { NamedURLZ } from "../../../types/url";
-import { EntityZ } from "../../entity";
+import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
@@ -33,9 +33,9 @@ export const TermConditionZ = EntityZ.extend({
   description: z.string().optional(),
   remarks: z.string().optional(),
 
-  coveredEntityOIDs: z.array(z.string()), // OIDs of Sectors / SectorGroups / GroupTourProducts
+  coveredEntityOIDs: z.array(EntityOIDZ), // OIDs of Sectors / SectorGroups / GroupTourProducts
 
-  productTypeOIDs: z.array(z.string()),
+  productTypeOIDs: z.array(EntityOIDZ),
 });
 
 export type TermCondition = z.infer<typeof TermConditionZ>;

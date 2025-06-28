@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../../entity";
+import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
@@ -12,7 +12,7 @@ export enum AssembleLocationAirlinesEvents {
 export const AssembleLocationAirlinesZ = EntityZ.extend({
   entityType: z.literal(EntityType.ASSEMBLE_LOCATION_AIRLINES),
 
-  tenantOID: z.string(),
+  tenantOID: EntityOIDZ,
 
   airlineCode: z.string(),
   airportCode: z.string(),

@@ -3,7 +3,7 @@ import { z } from "zod";
 import { DateISOStringZ } from "../../types/date";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { FTFSafeMaxNumberZ } from "../../types/number";
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export enum GroupTourItineraryEvents {
@@ -22,7 +22,7 @@ export enum MealType {
 export const GroupTourItineraryMealZ = EntityZ.omit({
   tenantOID: true,
 }).extend({
-  groupTourItineraryDayOID: z.string(),
+  groupTourItineraryDayOID: EntityOIDZ,
 
   type: z.nativeEnum(MealType),
   title: MultiLangRecordZ(z.string()),
@@ -30,25 +30,25 @@ export const GroupTourItineraryMealZ = EntityZ.omit({
 
   provided: z.boolean(),
   onBoard: z.boolean(),
-  poiOID: z.string().optional(),
+  poiOID: EntityOIDZ.optional(),
 });
 
 
 export const GroupTourItineraryEventZ = EntityZ.omit({
   tenantOID: true,
 }).extend({
-  groupTourItineraryDayOID: z.string(),
+  groupTourItineraryDayOID: EntityOIDZ,
 
   title: MultiLangRecordZ(z.string()),
   description: MultiLangRecordZ(z.string()),
 
-  poiOID: z.string().optional(),
+  poiOID: EntityOIDZ.optional(),
 });
 
 export const GroupTourItineraryDayZ = EntityZ.omit({
   tenantOID: true,
 }).extend({
-  groupTourItineraryOID: z.string(),
+  groupTourItineraryOID: EntityOIDZ,
 
   dayNumber: FTFSafeMaxNumberZ({ name: "Day number" }).int().nonnegative(),
   title: MultiLangRecordZ(z.string()),
@@ -60,7 +60,7 @@ export const GroupTourItineraryDayZ = EntityZ.omit({
 
 
 export const GroupTourItineraryZ = EntityZ.extend({
-  groupTourProductOID: z.string(),
+  groupTourProductOID: EntityOIDZ,
 
   name: z.string(),
 

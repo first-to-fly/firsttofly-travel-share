@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../../entity";
+import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
@@ -21,8 +21,8 @@ export const SpecialInstructionZ = EntityZ.extend({
   isCustomized: z.boolean().optional(),
 
   // Relationships
-  coveredEntityOIDs: z.array(z.string()), // OIDs of Sectors / SectorGroups / GroupTourProducts
-  productTypeOIDs: z.array(z.string()),
+  coveredEntityOIDs: z.array(EntityOIDZ), // OIDs of Sectors / SectorGroups / GroupTourProducts
+  productTypeOIDs: z.array(EntityOIDZ),
 });
 
 export type SpecialInstruction = z.infer<typeof SpecialInstructionZ>;

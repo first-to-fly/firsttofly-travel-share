@@ -26,8 +26,7 @@ import { SectorPermissions } from "./entities/sector.permission";
 import { SectorGroupPermissions } from "./entities/sector-group.permission";
 import { SpecialInstructionPermissions } from "./entities/special-instruction.permission";
 import { StationCodePermissions } from "./entities/station-code.permission";
-import { SupplierContractPermissions } from "./entities/supplier-contract.permission";
-import { SupplierProfilePermissions } from "./entities/supplier-profile.permission";
+import { SupplierPermissions } from "./entities/supplier.permission";
 import { TenantPermissions } from "./entities/tenant.permission";
 import { TermPermissions } from "./entities/term.permission";
 import { TermConditionPermissions } from "./entities/term-condition.permission";
@@ -93,8 +92,7 @@ const EntityPermissions = {
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,
   "Transport Plan": TransportPlanPermissions,
-  "Supplier Profile": SupplierProfilePermissions,
-  "Supplier Contract": SupplierContractPermissions,
+  Supplier: SupplierPermissions,
   Booking: TourTransactionPermissions,
   "Approval Request": ApprovalRequestPermissions,
 } as const;

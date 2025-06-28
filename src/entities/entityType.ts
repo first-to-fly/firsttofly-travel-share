@@ -47,8 +47,12 @@ export enum EntityType {
   LOCATION = "location",
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
-  SUPPLIER_PROFILE = "supplierProfile",
-  SUPPLIER_CONTRACT = "supplierContract",
+
+  // SUPPLIER MANAGEMENT
+  SUPPLIER = "supplier",
+  SUPPLIER_ADDRESS = "supplierAddress",
+  SUPPLIER_PAYMENT = "supplierPayment",
+  SUPPLIER_PERSON = "supplierPerson",
 
   // REFERENCE CODE
   MENU = "menu",
