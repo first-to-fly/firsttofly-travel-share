@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export enum AddressType {
@@ -10,7 +10,7 @@ export enum AddressType {
 }
 
 export const SupplierAddressZ = EntityZ.extend({
-  supplierOID: z.string(),
+  supplierOID: EntityOIDZ,
   addressType: z.nativeEnum(AddressType),
   addressLine1: z.string(),
   addressLine2: z.string().optional(),

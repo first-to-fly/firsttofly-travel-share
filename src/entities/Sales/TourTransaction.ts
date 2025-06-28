@@ -1,7 +1,7 @@
 // simple-import-sort
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 import { TourTransactionMetadataZ } from "./TourTransactionMetadata";
 
 
@@ -28,8 +28,8 @@ export const TourTransactionBookingStatusZ = z.nativeEnum(TourTransactionBooking
 
 export const TourTransactionZ = EntityZ.extend({
 
-  tourDepartureOID: z.string(),
-  departmentOID: z.string().optional(),
+  tourDepartureOID: EntityOIDZ,
+  departmentOID: EntityOIDZ.optional(),
 
   bookingReference: z.string().max(50),
   paymentStatus: TourTransactionPaymentStatusZ.default(TourTransactionPaymentStatus.UNPAID),

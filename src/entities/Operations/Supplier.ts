@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export enum SupplierPartnerType {
@@ -48,13 +48,13 @@ export const SupplierZ = EntityZ.extend({
   partnerType: z.nativeEnum(SupplierPartnerType).optional(),
   countries: z.array(z.string()).optional(),
   supplierInfo: SupplierInfoZ.optional(),
-  personInChargeOID: z.string().optional(),
-  parentOID: z.string().optional(),
-  newOID: z.string().optional(),
+  personInChargeOID: EntityOIDZ.optional(),
+  parentOID: EntityOIDZ.optional(),
+  newOID: EntityOIDZ.optional(),
   remarks: z.string().optional(),
   inactiveRemarks: z.string().optional(),
-  mainSupplierPaymentOID: z.string().optional(),
-  mainSupplierAddressOID: z.string().optional(),
+  mainSupplierPaymentOID: EntityOIDZ.optional(),
+  mainSupplierAddressOID: EntityOIDZ.optional(),
   paymentTerms: z.number().default(0),
   paymentCreditLimit: z.number().default(0),
 });

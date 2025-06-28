@@ -3,7 +3,7 @@ import { z } from "zod";
 import { DateISOStringZ } from "../../../types/date";
 import { MultiLangRecordZ } from "../../../types/multipleLanguage";
 import { FTFSafeMaxNumberZ } from "../../../types/number";
-import { EntityZ } from "../../entity";
+import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
@@ -39,17 +39,17 @@ export const UserZ = EntityZ.extend({
   salutation: z.string(),
 
   // Tenant specific properties
-  designationOIDs: z.array(z.string()),
-  departmentOIDs: z.array(z.string()).optional(),
-  roleOIDs: z.array(z.string()).optional(),
+  designationOIDs: z.array(EntityOIDZ),
+  departmentOIDs: z.array(EntityOIDZ).optional(),
+  roleOIDs: z.array(EntityOIDZ).optional(),
 
   isActive: z.boolean().default(true),
   staffType: z.string().default("permanent"),
-  buddyOID: z.string().optional(),
+  buddyOID: EntityOIDZ.optional(),
 
   tourLeadingSkills: z.array(z.object({
-    sectorOID: z.string(),
-    termOID: z.string(),
+    sectorOID: EntityOIDZ,
+    termOID: EntityOIDZ,
     startYear: FTFSafeMaxNumberZ({
       name: "Tour leading skills start year",
       max: new Date().getFullYear(),
@@ -57,10 +57,10 @@ export const UserZ = EntityZ.extend({
   })).optional(),
 
   languageSkills: z.array(z.object({
-    termOID: z.string(),
+    termOID: EntityOIDZ,
   })).optional(),
 
-  documentOIDs: z.array(z.string()).optional(),
+  documentOIDs: z.array(EntityOIDZ).optional(),
 });
 
 

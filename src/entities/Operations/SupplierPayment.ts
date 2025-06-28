@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export enum PaymentType {
@@ -18,7 +18,7 @@ export const PaymentInfoZ = z.object({
 }).optional();
 
 export const SupplierPaymentZ = EntityZ.extend({
-  supplierOID: z.string(),
+  supplierOID: EntityOIDZ,
   paymentType: z.nativeEnum(PaymentType),
   bankName: z.string().optional(),
   accountNumber: z.string().optional(),

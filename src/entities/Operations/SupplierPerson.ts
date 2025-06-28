@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export const ContactInfoZ = z.object({
@@ -11,7 +11,7 @@ export const ContactInfoZ = z.object({
 }).optional();
 
 export const SupplierPersonZ = EntityZ.extend({
-  supplierOID: z.string(),
+  supplierOID: EntityOIDZ,
   firstName: z.string(),
   lastName: z.string(),
   title: z.string().optional(),

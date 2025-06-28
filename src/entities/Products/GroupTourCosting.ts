@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
 import { FTFSafeMaxNumberZ } from "../../types/number";
-import { EntityZ } from "../entity";
+import { EntityOIDZ, EntityZ } from "../entity";
 import { CalculationBasis, CostingItemCategory, OccupancyType, PackageType } from "../Settings/Product/CostingItem";
 
 
@@ -19,7 +19,7 @@ export enum PaymentStatus {
 
 
 export const GroupTourCostingEntryZ = EntityZ.extend({
-  groupTourCostingOID: z.string(),
+  groupTourCostingOID: EntityOIDZ,
 
   // Copy from CostingItem
   name: z.string(),
@@ -45,9 +45,9 @@ export const GroupTourCostingEntryZ = EntityZ.extend({
 
 
 export const GroupTourCostingZ = EntityZ.extend({
-  groupTourProductOID: z.string(),
+  groupTourProductOID: EntityOIDZ,
 
-  templateOID: z.string(),
+  templateOID: EntityOIDZ,
   name: z.string(),
   code: z.string(),
 
@@ -76,7 +76,7 @@ export const GroupTourCostingZ = EntityZ.extend({
 
   isActive: z.boolean(),
 
-  airlineOIDs: z.array(z.string()).optional(), // ???
+  airlineOIDs: z.array(EntityOIDZ).optional(), // ???
 
 });
 

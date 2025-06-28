@@ -1,6 +1,6 @@
 import { z } from "zod";
 
-import { EntityZ } from "../../entity";
+import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
 
@@ -16,13 +16,13 @@ export const SectorZ = EntityZ.extend({
   name: z.string(),
   isActive: z.boolean().default(true),
   images: z.array(z.string().url()).optional(),
-  parentOID: z.string().optional(),
+  parentOID: EntityOIDZ.optional(),
 
   isPopular: z.boolean().default(false),
 
-  productTypeOIDs: z.array(z.string()).optional(),
+  productTypeOIDs: z.array(EntityOIDZ).optional(),
 
-  departmentOID: z.string().optional(),
+  departmentOID: EntityOIDZ.optional(),
 });
 
 export type Sector = z.infer<typeof SectorZ>;
