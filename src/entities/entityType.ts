@@ -74,12 +74,12 @@ export enum EntityType {
   APPROVAL_REQUEST = "approvalRequest",
 
   // BOOKING
-  TOUR_TRANSACTION = "tourTransaction",
-  TOUR_TRANSACTION_ROOM = "tourTransactionRoom",
-  TOUR_TRANSACTION_PAX = "tourTransactionPax",
-  TOUR_TRANSACTION_TRANSFER = "tourTransactionTransfer",
-  TOUR_TRANSACTION_DISCOUNT = "tourTransactionDiscount",
-  TOUR_TRANSACTION_ADDON = "tourTransactionAddon",
+  BOOKING = "booking",
+  BOOKING_ROOM = "bookingRoom",
+  BOOKING_PAX = "bookingPax",
+  BOOKING_TRANSFER = "bookingTransfer",
+  BOOKING_DISCOUNT = "bookingDiscount",
+  BOOKING_ADDON = "bookingAddon",
 
   // BUDGET
   BUDGET = "budget",

@@ -1,5 +1,5 @@
 import { GroupTourPricingEntry, GroupTourPricingFareStructure } from "../../entities/Products/GroupTourPricing";
-import { TourTransactionPaxType } from "../../entities/Sales/TourTransactionPax";
+import { BookingPaxType } from "../../entities/Sales/BookingPax";
 import { CalculationBasis, CostingItemCategory } from "../../entities/Settings/Product/CostingItem";
 import { AirportTaxStructure, calculateAirportTax } from "../pricing/airportTaxCalculator";
 import { convertPriceToHomeCurrency } from "../pricing/currencyConverter";
@@ -10,7 +10,7 @@ import type { LineItemPrice, PaxConfiguration } from "../pricing/types";
 export interface StartingPriceBreakdown {
   total: number;
   tourFare: (LineItemPrice & {
-    paxType: TourTransactionPaxType;
+    paxType: BookingPaxType;
   })[];
   miscellaneous: (LineItemPrice & {
     costingEntryOID: string;

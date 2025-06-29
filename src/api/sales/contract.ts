@@ -1,8 +1,8 @@
 import { initContract } from "@ts-rest/core";
 
-import { tourTransactionContract } from "./tour-transaction-contract";
+import { bookingContract } from "./booking-contract";
 
 
 export const salesContract = initContract().router({
-  tourTransaction: tourTransactionContract,
+  booking: bookingContract,
 });
