@@ -3,18 +3,18 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
-import { BookingBookingStatus, BookingZ } from "../../entities/Sales/Booking";
-import { BookingAddonZ } from "../../entities/Sales/BookingAddon";
-import { BookingDiscountType } from "../../entities/Sales/BookingDiscount";
-import { BookingPaxZ } from "../../entities/Sales/BookingPax";
-import { BookingRoomZ } from "../../entities/Sales/BookingRoom";
-import { BookingTransferZ } from "../../entities/Sales/BookingTransfer";
+import { GroupTourBookingBookingStatus, GroupTourBookingZ } from "../../entities/Sales/GroupTourBooking";
+import { GroupTourBookingAddonZ } from "../../entities/Sales/GroupTourBookingAddon";
+import { GroupTourBookingDiscountType } from "../../entities/Sales/GroupTourBookingDiscount";
+import { GroupTourBookingPaxZ } from "../../entities/Sales/GroupTourBookingPax";
+import { GroupTourBookingRoomZ } from "../../entities/Sales/GroupTourBookingRoom";
+import { GroupTourBookingTransferZ } from "../../entities/Sales/GroupTourBookingTransfer";
 
 
-const basePath = "/api/sales/bookings";
+const basePath = "/api/sales/group-tour-bookings";
 
-// --- Booking Schemas ---
-const CreateBookingBodyZ = BookingZ.pick({
+// --- GroupTourBooking Schemas ---
+const CreateGroupTourBookingBodyZ = GroupTourBookingZ.pick({
   tenantOID: true,
   tourDepartureOID: true,
   departmentOID: true,
@@ -24,17 +24,17 @@ const CreateBookingBodyZ = BookingZ.pick({
   specialInstructions: true,
   overwriteTax: true,
 });
-export type CreateBookingBody = z.infer<typeof CreateBookingBodyZ>;
+export type CreateGroupTourBookingBody = z.infer<typeof CreateGroupTourBookingBodyZ>;
 
-const UpdateBookingBodyZ = CreateBookingBodyZ.omit({
+const UpdateGroupTourBookingBodyZ = CreateGroupTourBookingBodyZ.omit({
   tenantOID: true,
   departmentOID: true,
   tourDepartureOID: true,
 }).partial();
-export type UpdateBookingBody = z.infer<typeof UpdateBookingBodyZ>;
+export type UpdateGroupTourBookingBody = z.infer<typeof UpdateGroupTourBookingBodyZ>;
 
-// --- BookingRoom Schemas ---
-const CreateBookingRoomBodyZ = BookingRoomZ.pick({
+// --- GroupTourBookingRoom Schemas ---
+const CreateGroupTourBookingRoomBodyZ = GroupTourBookingRoomZ.pick({
   bookingOID: true,
   status: true,
   roomNumber: true,
@@ -42,15 +42,15 @@ const CreateBookingRoomBodyZ = BookingRoomZ.pick({
   notes: true,
   roomConfigurationRuleOID: true,
 });
-export type CreateBookingRoomBody = z.infer<typeof CreateBookingRoomBodyZ>;
+export type CreateGroupTourBookingRoomBody = z.infer<typeof CreateGroupTourBookingRoomBodyZ>;
 
-const UpdateBookingRoomBodyZ = CreateBookingRoomBodyZ.omit({
+const UpdateGroupTourBookingRoomBodyZ = CreateGroupTourBookingRoomBodyZ.omit({
   bookingOID: true,
 }).partial();
-export type UpdateBookingRoomBody = z.infer<typeof UpdateBookingRoomBodyZ>;
+export type UpdateGroupTourBookingRoomBody = z.infer<typeof UpdateGroupTourBookingRoomBodyZ>;
 
-// --- BookingPax Schemas ---
-const CreateBookingPaxBodyZ = BookingPaxZ.pick({
+// --- GroupTourBookingPax Schemas ---
+const CreateGroupTourBookingPaxBodyZ = GroupTourBookingPaxZ.pick({
   bookingRoomOID: true,
   type: true,
   isLandTourOnly: true,
@@ -59,14 +59,14 @@ const CreateBookingPaxBodyZ = BookingPaxZ.pick({
   transportRecordId: true,
   documentOIDs: true,
 });
-export type CreateBookingPaxBody = z.infer<typeof CreateBookingPaxBodyZ>;
+export type CreateGroupTourBookingPaxBody = z.infer<typeof CreateGroupTourBookingPaxBodyZ>;
 
-const UpdateBookingPaxBodyZ = CreateBookingPaxBodyZ.omit({
+const UpdateGroupTourBookingPaxBodyZ = CreateGroupTourBookingPaxBodyZ.omit({
 }).partial();
-export type UpdateBookingPaxBody = z.infer<typeof UpdateBookingPaxBodyZ>;
+export type UpdateGroupTourBookingPaxBody = z.infer<typeof UpdateGroupTourBookingPaxBodyZ>;
 
-// --- BookingTransfer Schemas ---
-const CreateBookingTransferBodyZ = BookingTransferZ.pick({
+// --- GroupTourBookingTransfer Schemas ---
+const CreateGroupTourBookingTransferBodyZ = GroupTourBookingTransferZ.pick({
   tenantOID: true,
   bookingOID: true,
   transferType: true,
@@ -79,37 +79,37 @@ const CreateBookingTransferBodyZ = BookingTransferZ.pick({
   files: true,
   paymentMethod: true,
 });
-export type CreateBookingTransferBody = z.infer<typeof CreateBookingTransferBodyZ>;
+export type CreateGroupTourBookingTransferBody = z.infer<typeof CreateGroupTourBookingTransferBodyZ>;
 
-const UpdateBookingTransferBodyZ = CreateBookingTransferBodyZ.pick({
+const UpdateGroupTourBookingTransferBodyZ = CreateGroupTourBookingTransferBodyZ.pick({
   files: true,
   notes: true,
   metadata: true,
 }).partial();
-export type UpdateBookingTransferBody = z.infer<typeof UpdateBookingTransferBodyZ>;
+export type UpdateGroupTourBookingTransferBody = z.infer<typeof UpdateGroupTourBookingTransferBodyZ>;
 
-// --- BookingDiscount Schemas ---
+// --- GroupTourBookingDiscount Schemas ---
 const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
   // Code-based discount: requires discountOID (from validation API)
   z.object({
-    discountType: z.literal(BookingDiscountType.CODE_BASED),
+    discountType: z.literal(GroupTourBookingDiscountType.CODE_BASED),
     discountOID: z.string(),
     description: z.string().optional(),
   }),
   // Tour departure discount: no discountOID needed, amount calculated on backend
   z.object({
-    discountType: z.literal(BookingDiscountType.TOUR_DEPARTURE_DISCOUNT),
+    discountType: z.literal(GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT),
     groupIndex: z.number(),
   }),
   // Special request discount: handled via approval workflow
   z.object({
-    discountType: z.literal(BookingDiscountType.SPECIAL_REQUEST),
+    discountType: z.literal(GroupTourBookingDiscountType.SPECIAL_REQUEST),
   }),
 ]);
 export type ApplyDiscountBody = z.infer<typeof ApplyDiscountBodyZ>;
 
-// --- BookingAddon Schemas ---
-const AddAddonBodyZ = BookingAddonZ.pick({
+// --- GroupTourBookingAddon Schemas ---
+const AddAddonBodyZ = GroupTourBookingAddonZ.pick({
   type: true,
   // these two goes together to pinpoint the pricing entry - start
   groupTourPricingOID: true,
@@ -143,10 +143,10 @@ const AirWallexPaymentLinkResponseZ = z.object({
 export type AirWallexPaymentLinkResponse = z.infer<typeof AirWallexPaymentLinkResponseZ>;
 
 
-export const bookingContract = initContract().router({
-  // #region BOOKING
-  getBookings: {
-    summary: "Get bookings",
+export const groupTourBookingContract = initContract().router({
+  // #region GROUP TOUR BOOKING
+  getGroupTourBookings: {
+    summary: "Get group tour bookings",
     method: "GET",
     path: basePath,
     query: z.object({
@@ -159,117 +159,117 @@ export const bookingContract = initContract().router({
       }),
     },
   },
-  createBooking: {
-    summary: "Create a new booking",
+  createGroupTourBooking: {
+    summary: "Create a new group tour booking",
     method: "POST",
     path: basePath,
-    body: CreateBookingBodyZ,
+    body: CreateGroupTourBookingBodyZ,
     responses: {
       201: EntityOIDZ,
     },
   },
-  updateBookings: {
-    summary: "Update multiple existing bookings",
+  updateGroupTourBookings: {
+    summary: "Update multiple existing group tour bookings",
     method: "POST",
     path: `${basePath}/batch-update`,
     body: z.record(
-      EntityOIDZ.describe("OID of Booking to update"),
-      UpdateBookingBodyZ,
+      EntityOIDZ.describe("OID of GroupTourBooking to update"),
+      UpdateGroupTourBookingBodyZ,
     ),
     responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of updated Bookings")),
+      200: z.array(EntityOIDZ.describe("OIDs of updated GroupTourBookings")),
     },
   },
-  deleteBookings: {
-    summary: "Delete multiple bookings",
+  deleteGroupTourBookings: {
+    summary: "Delete multiple group tour bookings",
     method: "POST",
     path: `${basePath}/batch-delete`,
     body: z.object({
-      bookingOIDs: z.array(EntityOIDZ.describe("OIDs of Bookings to delete")),
+      bookingOIDs: z.array(EntityOIDZ.describe("OIDs of GroupTourBookings to delete")),
     }),
     responses: {
       200: z.boolean(),
     },
   },
-  confirmBooking: {
+  confirmGroupTourBooking: {
     method: "POST",
     path: `${basePath}/:bookingOID/confirm`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
-    summary: "Confirm a booking, trigger validation and data snapshotting",
+    summary: "Confirm a group tour booking, trigger validation and data snapshotting",
     body: z.undefined(),
     responses: {
       200: z.boolean(),
     },
   },
-  cancelBooking: {
+  cancelGroupTourBooking: {
     method: "POST",
     path: `${basePath}/:bookingOID/cancel`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
-    summary: "Cancel a booking",
+    summary: "Cancel a group tour booking",
     body: z.undefined(),
     responses: {
       200: z.boolean(),
     },
   },
-  batchUpdateBookingStatus: {
+  batchUpdateGroupTourBookingStatus: {
     method: "POST",
     path: `${basePath}/batch-booking-status`,
     body: z.record(
-      EntityOIDZ.describe("OID of Booking to update"),
-      z.object({ status: z.nativeEnum(BookingBookingStatus) }),
+      EntityOIDZ.describe("OID of GroupTourBooking to update"),
+      z.object({ status: z.nativeEnum(GroupTourBookingBookingStatus) }),
     ),
     responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of updated Bookings")),
+      200: z.array(EntityOIDZ.describe("OIDs of updated GroupTourBookings")),
     },
   },
   // #endregion
 
   // #region ROOM
-  getRoomsForBooking: {
-    summary: "Get all rooms for a specific booking",
+  getRoomsForGroupTourBooking: {
+    summary: "Get all rooms for a specific group tour booking",
     method: "GET",
     path: `${basePath}/:bookingOID/rooms`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of BookingRooms")),
+      200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingRooms")),
     },
   },
-  addRoomToBooking: {
-    summary: "Add a new room to a booking",
+  addRoomToGroupTourBooking: {
+    summary: "Add a new room to a group tour booking",
     method: "POST",
     path: `${basePath}/:bookingOID/rooms`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: CreateBookingRoomBodyZ.omit({
+    body: CreateGroupTourBookingRoomBodyZ.omit({
       bookingOID: true,
     }),
     responses: {
       201: EntityOIDZ,
     },
   },
-  updateRoomInBookings: {
-    summary: "Update a specific room in a booking",
+  updateRoomInGroupTourBookings: {
+    summary: "Update a specific room in a group tour booking",
     method: "PUT",
     path: `${basePath}/:bookingOID/rooms/batch-update`,
     pathParams: z.object({
       bookingOID: EntityOIDZ,
     }),
     body: z.record(
-      EntityOIDZ.describe("OID of BookingRoom to update"),
-      UpdateBookingRoomBodyZ,
+      EntityOIDZ.describe("OID of GroupTourBookingRoom to update"),
+      UpdateGroupTourBookingRoomBodyZ,
     ),
     responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of updated BookingRooms")),
+      200: z.array(EntityOIDZ.describe("OIDs of updated GroupTourBookingRooms")),
     },
   },
-  removeRoomFromBookings: {
-    summary: "Remove a room from a booking",
+  removeRoomFromGroupTourBookings: {
+    summary: "Remove a room from a group tour booking",
     method: "DELETE",
     path: `${basePath}/:bookingOID/rooms/batch-delete`,
     pathParams: z.object({
       bookingOID: EntityOIDZ,
     }),
     body: z.object({
-      bookingRoomOIDs: z.array(EntityOIDZ.describe("OIDs of BookingRooms to remove")),
+      bookingRoomOIDs: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingRooms to remove")),
     }),
     responses: {
       200: z.boolean(),
@@ -278,39 +278,39 @@ export const bookingContract = initContract().router({
   // #endregion
 
   // #region PAX
-  getPaxForBooking: {
-    summary: "Get all passengers for a specific booking",
+  getPaxForGroupTourBooking: {
+    summary: "Get all passengers for a specific group tour booking",
     method: "GET",
     path: `${basePath}/:bookingOID/pax`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of BookingPax")),
+      200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingPax")),
     },
   },
-  updatePaxInBookings: {
-    summary: "Update a specific passenger in a booking",
+  updatePaxInGroupTourBookings: {
+    summary: "Update a specific passenger in a group tour booking",
     method: "PUT",
     path: `${basePath}/:bookingOID/pax/batch-update`,
     pathParams: z.object({
       bookingOID: EntityOIDZ,
     }),
     body: z.record(
-      EntityOIDZ.describe("OID of BookingPax to update"),
-      UpdateBookingPaxBodyZ,
+      EntityOIDZ.describe("OID of GroupTourBookingPax to update"),
+      UpdateGroupTourBookingPaxBodyZ,
     ),
     responses: {
       200: z.array(EntityOIDZ),
     },
   },
-  removePaxFromBookings: {
-    summary: "Remove a passenger from a booking",
+  removePaxFromGroupTourBookings: {
+    summary: "Remove a passenger from a group tour booking",
     method: "DELETE",
     path: `${basePath}/:bookingOID/pax/batch-delete`,
     pathParams: z.object({
       bookingOID: EntityOIDZ,
     }),
     body: z.object({
-      bookingPaxOIDs: z.array(EntityOIDZ.describe("OIDs of BookingPax to remove")),
+      bookingPaxOIDs: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingPax to remove")),
     }),
     responses: {
       200: z.boolean(),
@@ -319,13 +319,13 @@ export const bookingContract = initContract().router({
   // #endregion
 
   // #region DISCOUNT
-  getDiscountsForBooking: {
-    summary: "List applied discounts for a booking",
+  getDiscountsForGroupTourBooking: {
+    summary: "List applied discounts for a group tour booking",
     method: "GET",
     path: `${basePath}/:bookingOID/discounts`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of BookingDiscounts")),
+      200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingDiscounts")),
     },
   },
   getDiscountsForTourDeparture: {
@@ -334,11 +334,11 @@ export const bookingContract = initContract().router({
     path: "/api/sales/tour-departures/:tourDepartureOID/discounts",
     pathParams: z.object({ tourDepartureOID: EntityOIDZ }),
     responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of BookingDiscounts")),
+      200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingDiscounts")),
     },
   },
-  applyDiscountToBooking: {
-    summary: "Apply a new discount to the booking",
+  applyDiscountToGroupTourBooking: {
+    summary: "Apply a new discount to the group tour booking",
     method: "POST",
     path: `${basePath}/:bookingOID/discounts`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
@@ -347,8 +347,8 @@ export const bookingContract = initContract().router({
       201: EntityOIDZ,
     },
   },
-  removeDiscountFromBooking: {
-    summary: "Remove a discount from the booking",
+  removeDiscountFromGroupTourBooking: {
+    summary: "Remove a discount from the group tour booking",
     method: "DELETE",
     path: `${basePath}/:bookingOID/discounts/:bookingDiscountOID`,
     pathParams: z.object({
@@ -363,17 +363,17 @@ export const bookingContract = initContract().router({
   // #endregion
 
   // #region ADDON
-  getAddonsForBooking: {
-    summary: "List add-ons for a booking",
+  getAddonsForGroupTourBooking: {
+    summary: "List add-ons for a group tour booking",
     method: "GET",
     path: `${basePath}/:bookingOID/addons`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of BookingAddons")),
+      200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingAddons")),
     },
   },
-  addAddonToBooking: {
-    summary: "Add a new add-on to the booking",
+  addAddonToGroupTourBooking: {
+    summary: "Add a new add-on to the group tour booking",
     method: "POST",
     path: `${basePath}/:bookingOID/addons`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
@@ -382,8 +382,8 @@ export const bookingContract = initContract().router({
       201: EntityOIDZ,
     },
   },
-  updateAddonInBooking: {
-    summary: "Update an existing add-on in the booking",
+  updateAddonInGroupTourBooking: {
+    summary: "Update an existing add-on in the group tour booking",
     method: "PUT",
     path: `${basePath}/:bookingOID/addons/:bookingAddonOID`,
     pathParams: z.object({
@@ -395,8 +395,8 @@ export const bookingContract = initContract().router({
       200: EntityOIDZ,
     },
   },
-  removeAddonFromBooking: {
-    summary: "Remove an add-on from the booking",
+  removeAddonFromGroupTourBooking: {
+    summary: "Remove an add-on from the group tour booking",
     method: "DELETE",
     path: `${basePath}/:bookingOID/addons/:bookingAddonOID`,
     pathParams: z.object({
@@ -411,32 +411,32 @@ export const bookingContract = initContract().router({
   // #endregion
 
   // #region TRANSFER
-  createBookingTransfer: {
-    summary: "Record a completed financial transfer for a booking",
+  createGroupTourBookingTransfer: {
+    summary: "Record a completed financial transfer for a group tour booking",
     method: "POST",
     path: `${basePath}/:bookingOID/transfers`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: CreateBookingTransferBodyZ.omit({
+    body: CreateGroupTourBookingTransferBodyZ.omit({
       bookingOID: true,
     }),
     responses: {
       200: EntityOIDZ,
     },
   },
-  updateBookingTransfers: {
-    summary: "Update multiple financial transfers for a booking",
+  updateGroupTourBookingTransfers: {
+    summary: "Update multiple financial transfers for a group tour booking",
     method: "POST",
     path: `${basePath}/:bookingOID/transfers/batch-update`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     body: z.record(
-      EntityOIDZ.describe("OID of BookingTransfer to update"),
-      UpdateBookingTransferBodyZ,
+      EntityOIDZ.describe("OID of GroupTourBookingTransfer to update"),
+      UpdateGroupTourBookingTransferBodyZ,
     ),
     responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of updated BookingTransfers")),
+      200: z.array(EntityOIDZ.describe("OIDs of updated GroupTourBookingTransfers")),
     },
   },
-  getAllBookingTransfers: {
+  getAllGroupTourBookingTransfers: {
     summary: "Get all financial transfers in tenants",
     method: "GET",
     path: `${basePath}/transfers`,
@@ -447,8 +447,8 @@ export const bookingContract = initContract().router({
       200: z.object({ oids: z.array(EntityOIDZ) }),
     },
   },
-  getBookingTransfers: {
-    summary: "Get list of financial transfers for a booking",
+  getGroupTourBookingTransfers: {
+    summary: "Get list of financial transfers for a group tour booking",
     method: "GET",
     path: `${basePath}/:bookingOID/transfers`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),

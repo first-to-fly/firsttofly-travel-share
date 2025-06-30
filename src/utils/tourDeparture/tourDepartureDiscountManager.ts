@@ -1,13 +1,13 @@
 import { EntityType } from "../../entities/entityType";
 import { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
-import { TourDepartureDiscountMetadata, BookingDiscountType } from "../../entities/Sales/BookingDiscount";
-import { BookingPaxType } from "../../entities/Sales/BookingPax";
+import { GroupTourBookingDiscountType, TourDepartureDiscountMetadata } from "../../entities/Sales/GroupTourBookingDiscount";
+import { GroupTourBookingPaxType } from "../../entities/Sales/GroupTourBookingPax";
 import { DiscountMode } from "../../entities/Settings/Product/Discount";
 import {
   isPaxTypeAdult,
   type PaxDiscountInput,
   type TourDepartureDiscountResult,
-} from "../booking/calculateTourDepartureDiscount";
+} from "../group-tour-booking/calculateTourDepartureDiscount";
 
 
 export interface TourDepartureDiscountInput {
@@ -48,7 +48,7 @@ export function prepareDiscountApplication(
   }
 
   const metadata: TourDepartureDiscountMetadata = {
-    type: BookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
+    type: GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
     groupIndex: groupIndex,
     discountBreakdown: discountResult,
   };
@@ -84,7 +84,7 @@ export function createDiscountInput(
     currentTransactionPax: currentTransactionPax,
     basePaxCount: basePaxCount,
     tourDepartureOID: `${EntityType.TOUR_DEPARTURE}:${tourDepartureId}`,
-    transactionOID: `${EntityType.BOOKING}:${transactionId}`,
+    transactionOID: `${EntityType.GROUP_TOUR_BOOKING}:${transactionId}`,
   };
 }
 
@@ -94,10 +94,10 @@ export function createDiscountInput(
  */
 export function convertPaxToDiscountInput(paxData: Array<{
   paxId: string;
-  type: BookingPaxType;
+  type: GroupTourBookingPaxType;
 }>): PaxDiscountInput[] {
   return paxData.map((pax) => ({
-    paxOID: `${EntityType.BOOKING_PAX}:${pax.paxId}`,
+    paxOID: `${EntityType.GROUP_TOUR_BOOKING_PAX}:${pax.paxId}`,
     paxType: pax.type,
     isAdult: isPaxTypeAdult(pax.type),
   }));
@@ -108,7 +108,7 @@ export function convertPaxToDiscountInput(paxData: Array<{
  */
 export function determineDiscountAction(
   discountResult: TourDepartureDiscountResult,
-  existingDiscount?: { bookingDiscountId: string; appliedAmount: number }
+  existingDiscount?: { bookingDiscountId: string; appliedAmount: number },
 ): "apply" | "update" | "remove" | "none" {
   const hasExistingDiscount = !!existingDiscount;
   const shouldHaveDiscount = discountResult.totalDiscount > 0;
@@ -142,7 +142,7 @@ export function createDiscountUpdateData(
   groupIndex: number = 0,
 ) {
   const metadata: TourDepartureDiscountMetadata = {
-    type: BookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
+    type: GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
     groupIndex: groupIndex,
     discountBreakdown: discountResult,
   };

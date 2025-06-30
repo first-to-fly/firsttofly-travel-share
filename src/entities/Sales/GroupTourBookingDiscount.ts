@@ -1,39 +1,39 @@
 import { z } from "zod";
 
-import { TourDepartureDiscountResultZ } from "../../utils/booking/calculateTourDepartureDiscount";
+import { TourDepartureDiscountResultZ } from "../../utils/group-tour-booking/calculateTourDepartureDiscount";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { ApprovalRequestBookingSpecialDiscountPayloadZ } from "../Operations/ApprovalRequest";
+import { ApprovalRequestGroupTourBookingSpecialDiscountPayloadZ } from "../Operations/ApprovalRequest";
 import { DiscountMode, DiscountZ } from "../Settings/Product/Discount";
 
 
-export enum BookingDiscountType {
+export enum GroupTourBookingDiscountType {
   CODE_BASED = "code_based",
   TOUR_DEPARTURE_DISCOUNT = "tour_departure_discount",
   SPECIAL_REQUEST = "special_request",
 }
 
-export const BookingDiscountTypeZ = z.nativeEnum(BookingDiscountType);
+export const GroupTourBookingDiscountTypeZ = z.nativeEnum(GroupTourBookingDiscountType);
 
 // Metadata type definitions for different discount types
 export const CodeBasedDiscountMetadataZ = z.object({
-  type: z.literal(BookingDiscountType.CODE_BASED),
+  type: z.literal(GroupTourBookingDiscountType.CODE_BASED),
   discountCodeItem: DiscountZ,
 });
 
 export const TourDepartureDiscountMetadataZ = z.object({
-  type: z.literal(BookingDiscountType.TOUR_DEPARTURE_DISCOUNT),
+  type: z.literal(GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT),
   groupIndex: z.number(),
   discountBreakdown: TourDepartureDiscountResultZ,
 });
 
 export const SpecialRequestDiscountMetadataZ = z.object({
-  type: z.literal(BookingDiscountType.SPECIAL_REQUEST),
+  type: z.literal(GroupTourBookingDiscountType.SPECIAL_REQUEST),
   approvalRequestOID: EntityOIDZ,
-  approvalRequestPayload: ApprovalRequestBookingSpecialDiscountPayloadZ,
+  approvalRequestPayload: ApprovalRequestGroupTourBookingSpecialDiscountPayloadZ,
   approvalNote: z.string().optional(),
 });
 
-export const BookingDiscountMetadataZ = z.discriminatedUnion("type", [
+export const GroupTourBookingDiscountMetadataZ = z.discriminatedUnion("type", [
   CodeBasedDiscountMetadataZ,
   TourDepartureDiscountMetadataZ,
   SpecialRequestDiscountMetadataZ,
@@ -43,12 +43,12 @@ export type CodeBasedDiscountMetadata = z.infer<typeof CodeBasedDiscountMetadata
 export type TourDepartureDiscountMetadata = z.infer<typeof TourDepartureDiscountMetadataZ>;
 export type SpecialRequestDiscountMetadata = z.infer<typeof SpecialRequestDiscountMetadataZ>;
 
-export type BookingDiscountMetadata = z.infer<typeof BookingDiscountMetadataZ>;
+export type GroupTourBookingDiscountMetadata = z.infer<typeof GroupTourBookingDiscountMetadataZ>;
 
-export const BookingDiscountZ = EntityZ.extend({
+export const GroupTourBookingDiscountZ = EntityZ.extend({
   bookingOID: EntityOIDZ,
 
-  discountType: BookingDiscountTypeZ,
+  discountType: GroupTourBookingDiscountTypeZ,
   discountOID: EntityOIDZ.optional(),
 
   appliedDiscountCode: z.string().optional(),
@@ -57,12 +57,12 @@ export const BookingDiscountZ = EntityZ.extend({
   appliedAmount: z.number(),
   discountMode: z.nativeEnum(DiscountMode),
 
-  metadata: BookingDiscountMetadataZ.optional(),
+  metadata: GroupTourBookingDiscountMetadataZ.optional(),
 });
 
-export type BookingDiscount = z.infer<typeof BookingDiscountZ>;
+export type GroupTourBookingDiscount = z.infer<typeof GroupTourBookingDiscountZ>;
 
-export enum BookingDiscountEvents {
-  BOOKING_DISCOUNT_UPDATED = "BOOKING_DISCOUNT_UPDATED",
-  BOOKING_DISCOUNT_LIST_UPDATED = "BOOKING_DISCOUNT_LIST_UPDATED",
+export enum GroupTourBookingDiscountEvents {
+  GROUP_TOUR_BOOKING_DISCOUNT_UPDATED = "GROUP_TOUR_BOOKING_DISCOUNT_UPDATED",
+  GROUP_TOUR_BOOKING_DISCOUNT_LIST_UPDATED = "GROUP_TOUR_BOOKING_DISCOUNT_LIST_UPDATED",
 }

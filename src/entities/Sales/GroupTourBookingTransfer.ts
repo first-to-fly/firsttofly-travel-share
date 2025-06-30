@@ -5,14 +5,14 @@ import { NamedURLZ } from "../../types/url";
 import { EntityOIDZ, EntityZ } from "../entity";
 
 
-export enum BookingTransferType {
+export enum GroupTourBookingTransferType {
   PAYMENT_RECEIVED = "payment_received",
   REFUND_ISSUED = "refund_issued",
   BOOKING_CREDIT = "booking_credit",
   BOOKING_DEBIT = "booking_debit",
 }
 
-export const BookingTransferTypeZ = z.nativeEnum(BookingTransferType);
+export const GroupTourBookingTransferTypeZ = z.nativeEnum(GroupTourBookingTransferType);
 
 export enum PaymentMethod {
   CASH = "cash",
@@ -27,9 +27,9 @@ export enum PaymentMethod {
 export const PaymentMethodZ = z.nativeEnum(PaymentMethod);
 
 
-export const BookingTransferZ = EntityZ.extend({
+export const GroupTourBookingTransferZ = EntityZ.extend({
 
-  transferType: BookingTransferTypeZ,
+  transferType: GroupTourBookingTransferTypeZ,
 
   amount: z.number().positive(),
   currencyCode: z.string().length(3),
@@ -44,9 +44,9 @@ export const BookingTransferZ = EntityZ.extend({
 
 });
 
-export type BookingTransfer = z.infer<typeof BookingTransferZ>;
+export type GroupTourBookingTransfer = z.infer<typeof GroupTourBookingTransferZ>;
 
-export enum BookingTransferEvents {
-  BOOKING_TRANSFER_UPDATED = "BOOKING_TRANSFER_UPDATED",
-  BOOKING_TRANSFER_LIST_UPDATED = "BOOKING_TRANSFER_LIST_UPDATED",
+export enum GroupTourBookingTransferEvents {
+  GROUP_TOUR_BOOKING_TRANSFER_UPDATED = "GROUP_TOUR_BOOKING_TRANSFER_UPDATED",
+  GROUP_TOUR_BOOKING_TRANSFER_LIST_UPDATED = "GROUP_TOUR_BOOKING_TRANSFER_LIST_UPDATED",
 }

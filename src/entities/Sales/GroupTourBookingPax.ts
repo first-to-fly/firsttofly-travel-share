@@ -4,7 +4,7 @@ import { z } from "zod";
 import { EntityOIDZ, EntityZ } from "../entity";
 
 
-export const BookingPaxPersonalDetailsZ = z.object({
+export const GroupTourBookingPaxPersonalDetailsZ = z.object({
   title: z.string(),
   gender: z.string(),
   firstName: z.string(),
@@ -35,9 +35,9 @@ export const BookingPaxPersonalDetailsZ = z.object({
   isLeadPassenger: z.boolean().optional(),
 });
 
-export type BookingPaxPersonalDetails = z.infer<typeof BookingPaxPersonalDetailsZ>;
+export type GroupTourBookingPaxPersonalDetails = z.infer<typeof GroupTourBookingPaxPersonalDetailsZ>;
 
-export enum BookingPaxType {
+export enum GroupTourBookingPaxType {
   TWIN = "twin",
   SINGLE = "single",
   TRIPLE = "triple",
@@ -48,13 +48,13 @@ export enum BookingPaxType {
   INFANT = "infant",
 }
 
-export const BookingPaxTypeZ = z.nativeEnum(BookingPaxType);
+export const GroupTourBookingPaxTypeZ = z.nativeEnum(GroupTourBookingPaxType);
 
-export const BookingPaxZ = EntityZ.extend({
+export const GroupTourBookingPaxZ = EntityZ.extend({
   bookingRoomOID: EntityOIDZ,
-  type: BookingPaxTypeZ,
+  type: GroupTourBookingPaxTypeZ,
   isLandTourOnly: z.boolean().default(false),
-  personalDetails: BookingPaxPersonalDetailsZ.optional(),
+  personalDetails: GroupTourBookingPaxPersonalDetailsZ.optional(),
   mealPreference: z.string().optional(),
   transportRecordOID: EntityOIDZ.optional(),
   documentOIDs: z.array(EntityOIDZ).optional(),
@@ -62,9 +62,9 @@ export const BookingPaxZ = EntityZ.extend({
   tenantOID: true,
 });
 
-export type BookingPax = z.infer<typeof BookingPaxZ>;
+export type GroupTourBookingPax = z.infer<typeof GroupTourBookingPaxZ>;
 
-export enum BookingPaxEvents {
-  BOOKING_PAX_UPDATED = "BOOKING_PAX_UPDATED",
-  BOOKING_PAX_LIST_UPDATED = "BOOKING_PAX_LIST_UPDATED",
+export enum GroupTourBookingPaxEvents {
+  GROUP_TOUR_BOOKING_PAX_UPDATED = "GROUP_TOUR_BOOKING_PAX_UPDATED",
+  GROUP_TOUR_BOOKING_PAX_LIST_UPDATED = "GROUP_TOUR_BOOKING_PAX_LIST_UPDATED",
 }

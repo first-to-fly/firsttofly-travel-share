@@ -73,13 +73,13 @@ export enum EntityType {
   TOUR_DEPARTURE = "tourDeparture",
   APPROVAL_REQUEST = "approvalRequest",
 
-  // BOOKING
-  BOOKING = "booking",
-  BOOKING_ROOM = "bookingRoom",
-  BOOKING_PAX = "bookingPax",
-  BOOKING_TRANSFER = "bookingTransfer",
-  BOOKING_DISCOUNT = "bookingDiscount",
-  BOOKING_ADDON = "bookingAddon",
+  // GROUP TOUR BOOKING
+  GROUP_TOUR_BOOKING = "groupTourBooking",
+  GROUP_TOUR_BOOKING_ROOM = "groupTourBookingRoom",
+  GROUP_TOUR_BOOKING_PAX = "groupTourBookingPax",
+  GROUP_TOUR_BOOKING_TRANSFER = "groupTourBookingTransfer",
+  GROUP_TOUR_BOOKING_DISCOUNT = "groupTourBookingDiscount",
+  GROUP_TOUR_BOOKING_ADDON = "groupTourBookingAddon",
 
   // BUDGET
   BUDGET = "budget",

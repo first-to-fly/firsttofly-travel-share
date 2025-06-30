@@ -1,5 +1,5 @@
 import { GroupTourPricingFareStructure } from "../../entities/Products/GroupTourPricing";
-import { BookingPaxType } from "../../entities/Sales/BookingPax";
+import { GroupTourBookingPaxType } from "../../entities/Sales/GroupTourBookingPax";
 import type { LineItemPrice, PaxConfiguration } from "./types";
 
 
@@ -11,12 +11,12 @@ export function calculateTourFare(
   fullFare: GroupTourPricingFareStructure,
   landFare: GroupTourPricingFareStructure,
   homeCurrency: string,
-): { tourFare: (LineItemPrice & { paxType: BookingPaxType })[], total: number } {
-  const tourFare: (LineItemPrice & { paxType: BookingPaxType })[] = [];
+): { tourFare: (LineItemPrice & { paxType: GroupTourBookingPaxType })[], total: number } {
+  const tourFare: (LineItemPrice & { paxType: GroupTourBookingPaxType })[] = [];
   let total = 0;
 
   // Group passengers by type and fare type for efficiency
-  const tourFareMap = new Map<string, { quantity: number; unitPrice: number; paxType: BookingPaxType }>();
+  const tourFareMap = new Map<string, { quantity: number; unitPrice: number; paxType: GroupTourBookingPaxType }>();
 
   paxConfigurations.forEach(({ type, fareType }) => {
     const key = `${type}-${fareType}`;
@@ -60,24 +60,24 @@ export function calculateTourFare(
 /**
  * Get fare price for a specific passenger type from fare structure
  */
-function getPaxTypeFare(paxType: BookingPaxType, fareStructure: GroupTourPricingFareStructure): number {
+function getPaxTypeFare(paxType: GroupTourBookingPaxType, fareStructure: GroupTourPricingFareStructure): number {
   switch (paxType) {
 
-    case BookingPaxType.TWIN:
+    case GroupTourBookingPaxType.TWIN:
       return fareStructure.twin;
-    case BookingPaxType.SINGLE:
+    case GroupTourBookingPaxType.SINGLE:
       return fareStructure.single;
-    case BookingPaxType.TRIPLE:
+    case GroupTourBookingPaxType.TRIPLE:
       return fareStructure.triple;
-    case BookingPaxType.QUAD:
+    case GroupTourBookingPaxType.QUAD:
       return fareStructure.quad;
-    case BookingPaxType.CHILD_TWIN:
+    case GroupTourBookingPaxType.CHILD_TWIN:
       return fareStructure.childTwin;
-    case BookingPaxType.CHILD_WITH_BED:
+    case GroupTourBookingPaxType.CHILD_WITH_BED:
       return fareStructure.childWithBed;
-    case BookingPaxType.CHILD_NO_BED:
+    case GroupTourBookingPaxType.CHILD_NO_BED:
       return fareStructure.childNoBed;
-    case BookingPaxType.INFANT:
+    case GroupTourBookingPaxType.INFANT:
       return fareStructure.infant;
     default:
       return 0;

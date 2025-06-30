@@ -1,10 +1,6 @@
 import { ApprovalRequestPermissions } from "./entities/approval-request.permission";
 import { AssembleLocationAirlinesPermissions } from "./entities/assemble-location-airlines.permission";
 import { BadgePermissions } from "./entities/badge.permission";
-import { BookingPermissions } from "./entities/booking.permission";
-import { BookingPaxPermissions } from "./entities/booking-pax.permission";
-import { BookingRoomPermissions } from "./entities/booking-room.permission";
-import { BookingTransferPermissions } from "./entities/booking-transfer.permission";
 import { BudgetPermissions } from "./entities/budget.permission";
 import { CostingItemPermissions } from "./entities/costing-item.permission";
 import { CostingTemplatePermissions } from "./entities/costing-template.permission";
@@ -13,6 +9,10 @@ import { DepositPermissions } from "./entities/deposit.permission";
 import { DesignationPermissions } from "./entities/designation.permission";
 import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
+import { GroupTourBookingPermissions } from "./entities/group-tour-booking.permission";
+import { GroupTourBookingPaxPermissions } from "./entities/group-tour-booking-pax.permission";
+import { GroupTourBookingRoomPermissions } from "./entities/group-tour-booking-room.permission";
+import { GroupTourBookingTransferPermissions } from "./entities/group-tour-booking-transfer.permission";
 import { GroupTourCostingPermissions } from "./entities/group-tour-costing.permission";
 import { GroupTourItineraryPermissions } from "./entities/group-tour-itinerary.permission";
 import { GroupTourPricingPermissions } from "./entities/group-tour-pricing.permission";
@@ -79,9 +79,9 @@ const EntityPermissions = {
   "Assemble Location Airlines": AssembleLocationAirlinesPermissions,
   "Room Configuration": RoomConfigurationPermissions,
   Discount: DiscountPermissions,
-  "Booking Room": BookingRoomPermissions,
-  "Booking Pax": BookingPaxPermissions,
-  "Booking Transfer": BookingTransferPermissions,
+  "Group Tour Booking Room": GroupTourBookingRoomPermissions,
+  "Group Tour Booking Pax": GroupTourBookingPaxPermissions,
+  "Group Tour Booking Transfer": GroupTourBookingTransferPermissions,
   "Discount Template": DiscountTemplatePermissions,
   "Group Tour Costing": GroupTourCostingPermissions,
   "Group Tour Product": GroupTourProductPermissions,
@@ -93,7 +93,7 @@ const EntityPermissions = {
   "Transport Segment": TransportSegmentPermissions,
   "Transport Plan": TransportPlanPermissions,
   Supplier: SupplierPermissions,
-  Booking: BookingPermissions,
+  "Group Tour Booking": GroupTourBookingPermissions,
   "Approval Request": ApprovalRequestPermissions,
 } as const;
 
