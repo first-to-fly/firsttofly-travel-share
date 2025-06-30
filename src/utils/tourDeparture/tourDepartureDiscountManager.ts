@@ -64,7 +64,7 @@ export function prepareDiscountApplication(
 }
 
 /**
- * Creates discount input from tour departure and transaction data
+ * Creates discount input from tour departure and booking data
  * Note: OIDs will be set to placeholder values and should be overridden by the caller
  */
 export function createDiscountInput(
