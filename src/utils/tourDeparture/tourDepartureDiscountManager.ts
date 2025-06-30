@@ -13,10 +13,10 @@ import {
 export interface TourDepartureDiscountInput {
   discountConfig: GroupTourPricingDiscount;
   groupIndex: number;
-  currentTransactionPax: PaxDiscountInput[];
+  currentBookingPax: PaxDiscountInput[];
   basePaxCount: number;
   tourDepartureOID: string;
-  transactionOID: string;
+  bookingOID: string;
 }
 
 export interface TourDepartureDiscountApplicationResult {
@@ -70,10 +70,10 @@ export function prepareDiscountApplication(
 export function createDiscountInput(
   discountConfig: GroupTourPricingDiscount,
   groupIndex: number,
-  currentTransactionPax: PaxDiscountInput[],
+  currentBookingPax: PaxDiscountInput[],
   basePaxCount: number,
   tourDepartureId: string,
-  transactionId: string,
+  bookingId: string,
 ): TourDepartureDiscountInput {
   return {
     discountConfig: discountConfig || {
@@ -81,10 +81,10 @@ export function createDiscountInput(
       groups: [],
     },
     groupIndex: groupIndex,
-    currentTransactionPax: currentTransactionPax,
+    currentBookingPax: currentBookingPax,
     basePaxCount: basePaxCount,
     tourDepartureOID: `${EntityType.TOUR_DEPARTURE}:${tourDepartureId}`,
-    transactionOID: `${EntityType.GROUP_TOUR_BOOKING}:${transactionId}`,
+    bookingOID: `${EntityType.GROUP_TOUR_BOOKING}:${bookingId}`,
   };
 }
 
@@ -108,7 +108,7 @@ export function convertPaxToDiscountInput(paxData: Array<{
  */
 export function determineDiscountAction(
   discountResult: TourDepartureDiscountResult,
-  existingDiscount?: { bookingDiscountId: string; appliedAmount: number },
+  existingDiscount?: { groupTourBookingDiscountId: string; appliedAmount: number },
 ): "apply" | "update" | "remove" | "none" {
   const hasExistingDiscount = !!existingDiscount;
   const shouldHaveDiscount = discountResult.totalDiscount > 0;
@@ -148,7 +148,7 @@ export function createDiscountUpdateData(
   };
 
   return {
-    bookingDiscountId: existingDiscountId,
+    groupTourBookingDiscountId: existingDiscountId,
     description: discountResult.groupName ?? "Tour departure discount",
     appliedAmount: discountResult.totalDiscount,
     metadata: metadata,
