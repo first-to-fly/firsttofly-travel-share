@@ -9,6 +9,7 @@ const basePath = "/api/pr/transport-plans";
 const CreateTransportPlanZ = TransportPlanZ.pick({
   name: true,
   description: true,
+  groupTourProductOID: true,
   transportSegmentOIDs: true,
 }).extend({
   tenantOID: z.string(),
@@ -16,6 +17,7 @@ const CreateTransportPlanZ = TransportPlanZ.pick({
 
 const UpdateTransportPlanZ = CreateTransportPlanZ.omit({
   tenantOID: true,
+  groupTourProductOID: true,
 }).partial();
 
 export type CreateTransportPlan = z.infer<typeof CreateTransportPlanZ>;

@@ -14,6 +14,8 @@ export const TransportPlanZ = EntityZ.extend({
   name: z.string(),
   description: z.string().optional(),
 
+  groupTourProductOID: EntityOIDZ,
+
   transportSegmentOIDs: z.array(EntityOIDZ).optional(),
 });
 
