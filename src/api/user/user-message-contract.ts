@@ -1,11 +1,11 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { EntityOIDZ } from "../../../entities/entity";
-import { UserMessageType } from "../../../entities/Settings/User/UserMessage";
+import { EntityOIDZ } from "../../entities/entity";
+import { UserMessageType } from "../../entities/Settings/User/UserMessage";
 
 
-const base = "/api/settings/user/user-messages" as const;
+const base = "/api/user-messages" as const;
 
 export const GetUserMessagesParams = z.object({
   userOID: EntityOIDZ.optional(),
