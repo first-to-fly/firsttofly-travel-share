@@ -12,7 +12,8 @@ import { DocumentPermissions } from "./entities/document.permission";
 import { GroupTourBookingPermissions } from "./entities/group-tour-booking.permission";
 import { GroupTourBookingPaxPermissions } from "./entities/group-tour-booking-pax.permission";
 import { GroupTourBookingRoomPermissions } from "./entities/group-tour-booking-room.permission";
-import { GroupTourBookingTransferPermissions } from "./entities/group-tour-booking-transfer.permission";
+import { PaymentOrderPermissions } from "./entities/payment-order.permission";
+import { TransactionPermissions } from "./entities/transaction.permission";
 import { GroupTourCostingPermissions } from "./entities/group-tour-costing.permission";
 import { GroupTourItineraryPermissions } from "./entities/group-tour-itinerary.permission";
 import { GroupTourPricingPermissions } from "./entities/group-tour-pricing.permission";
@@ -81,7 +82,6 @@ const EntityPermissions = {
   Discount: DiscountPermissions,
   "Group Tour Booking Room": GroupTourBookingRoomPermissions,
   "Group Tour Booking Pax": GroupTourBookingPaxPermissions,
-  "Group Tour Booking Transfer": GroupTourBookingTransferPermissions,
   "Discount Template": DiscountTemplatePermissions,
   "Group Tour Costing": GroupTourCostingPermissions,
   "Group Tour Product": GroupTourProductPermissions,
@@ -95,6 +95,8 @@ const EntityPermissions = {
   Supplier: SupplierPermissions,
   "Group Tour Booking": GroupTourBookingPermissions,
   "Approval Request": ApprovalRequestPermissions,
+  "Payment Order": PaymentOrderPermissions,
+  Transaction: TransactionPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;

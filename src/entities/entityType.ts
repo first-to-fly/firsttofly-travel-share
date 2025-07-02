@@ -77,9 +77,12 @@ export enum EntityType {
   GROUP_TOUR_BOOKING = "groupTourBooking",
   GROUP_TOUR_BOOKING_ROOM = "groupTourBookingRoom",
   GROUP_TOUR_BOOKING_PAX = "groupTourBookingPax",
-  GROUP_TOUR_BOOKING_TRANSFER = "groupTourBookingTransfer",
   GROUP_TOUR_BOOKING_DISCOUNT = "groupTourBookingDiscount",
   GROUP_TOUR_BOOKING_ADDON = "groupTourBookingAddon",
+
+  // PAYMENT AND TRANSACTION
+  PAYMENT_ORDER = "paymentOrder",
+  TRANSACTION = "transaction",
 
   // BUDGET
   BUDGET = "budget",

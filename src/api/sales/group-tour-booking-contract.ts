@@ -8,7 +8,6 @@ import { GroupTourBookingAddonZ } from "../../entities/Sales/GroupTourBookingAdd
 import { GroupTourBookingDiscountType } from "../../entities/Sales/GroupTourBookingDiscount";
 import { GroupTourBookingPaxZ } from "../../entities/Sales/GroupTourBookingPax";
 import { GroupTourBookingRoomZ } from "../../entities/Sales/GroupTourBookingRoom";
-import { GroupTourBookingTransferZ } from "../../entities/Sales/GroupTourBookingTransfer";
 
 
 const basePath = "/api/sales/group-tour-bookings";
@@ -65,28 +64,6 @@ const UpdateGroupTourBookingPaxBodyZ = CreateGroupTourBookingPaxBodyZ.omit({
 }).partial();
 export type UpdateGroupTourBookingPaxBody = z.infer<typeof UpdateGroupTourBookingPaxBodyZ>;
 
-// --- GroupTourBookingTransfer Schemas ---
-const CreateGroupTourBookingTransferBodyZ = GroupTourBookingTransferZ.pick({
-  tenantOID: true,
-  bookingOID: true,
-  transferType: true,
-  amount: true,
-  currencyCode: true,
-  transactionReference: true,
-  transactionDate: true,
-  notes: true,
-  metadata: true,
-  files: true,
-  paymentMethod: true,
-});
-export type CreateGroupTourBookingTransferBody = z.infer<typeof CreateGroupTourBookingTransferBodyZ>;
-
-const UpdateGroupTourBookingTransferBodyZ = CreateGroupTourBookingTransferBodyZ.pick({
-  files: true,
-  notes: true,
-  metadata: true,
-}).partial();
-export type UpdateGroupTourBookingTransferBody = z.infer<typeof UpdateGroupTourBookingTransferBodyZ>;
 
 // --- GroupTourBookingDiscount Schemas ---
 const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
@@ -410,53 +387,6 @@ export const groupTourBookingContract = initContract().router({
   },
   // #endregion
 
-  // #region TRANSFER
-  createGroupTourBookingTransfer: {
-    summary: "Record a completed financial transfer for a group tour booking",
-    method: "POST",
-    path: `${basePath}/:bookingOID/transfers`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: CreateGroupTourBookingTransferBodyZ.omit({
-      bookingOID: true,
-    }),
-    responses: {
-      200: EntityOIDZ,
-    },
-  },
-  updateGroupTourBookingTransfers: {
-    summary: "Update multiple financial transfers for a group tour booking",
-    method: "POST",
-    path: `${basePath}/:bookingOID/transfers/batch-update`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: z.record(
-      EntityOIDZ.describe("OID of GroupTourBookingTransfer to update"),
-      UpdateGroupTourBookingTransferBodyZ,
-    ),
-    responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of updated GroupTourBookingTransfers")),
-    },
-  },
-  getAllGroupTourBookingTransfers: {
-    summary: "Get all financial transfers in tenants",
-    method: "GET",
-    path: `${basePath}/transfers`,
-    query: z.object({
-      tenantOID: z.string(),
-    }).passthrough(),
-    responses: {
-      200: z.object({ oids: z.array(EntityOIDZ) }),
-    },
-  },
-  getGroupTourBookingTransfers: {
-    summary: "Get list of financial transfers for a group tour booking",
-    method: "GET",
-    path: `${basePath}/:bookingOID/transfers`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    responses: {
-      200: z.object({ oids: z.array(EntityOIDZ) }),
-    },
-  },
-  // #endregion
 
   // #region PAYMENT
   createAirWallexPaymentLink: {
