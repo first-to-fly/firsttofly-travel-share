@@ -4,7 +4,7 @@ import { z } from "zod";
 import { EntityOIDZ, EntityZ } from "../entity";
 
 
-export const TourTransactionPaxPersonalDetailsZ = z.object({
+export const GroupTourBookingPaxPersonalDetailsZ = z.object({
   title: z.string(),
   gender: z.string(),
   firstName: z.string(),
@@ -35,9 +35,9 @@ export const TourTransactionPaxPersonalDetailsZ = z.object({
   isLeadPassenger: z.boolean().optional(),
 });
 
-export type TourTransactionPaxPersonalDetails = z.infer<typeof TourTransactionPaxPersonalDetailsZ>;
+export type GroupTourBookingPaxPersonalDetails = z.infer<typeof GroupTourBookingPaxPersonalDetailsZ>;
 
-export enum TourTransactionPaxType {
+export enum GroupTourBookingPaxType {
   TWIN = "twin",
   SINGLE = "single",
   TRIPLE = "triple",
@@ -48,13 +48,13 @@ export enum TourTransactionPaxType {
   INFANT = "infant",
 }
 
-export const TourTransactionPaxTypeZ = z.nativeEnum(TourTransactionPaxType);
+export const GroupTourBookingPaxTypeZ = z.nativeEnum(GroupTourBookingPaxType);
 
-export const TourTransactionPaxZ = EntityZ.extend({
-  tourTransactionRoomOID: EntityOIDZ,
-  type: TourTransactionPaxTypeZ,
+export const GroupTourBookingPaxZ = EntityZ.extend({
+  bookingRoomOID: EntityOIDZ,
+  type: GroupTourBookingPaxTypeZ,
   isLandTourOnly: z.boolean().default(false),
-  personalDetails: TourTransactionPaxPersonalDetailsZ.optional(),
+  personalDetails: GroupTourBookingPaxPersonalDetailsZ.optional(),
   mealPreference: z.string().optional(),
   transportRecordOID: EntityOIDZ.optional(),
   documentOIDs: z.array(EntityOIDZ).optional(),
@@ -62,9 +62,9 @@ export const TourTransactionPaxZ = EntityZ.extend({
   tenantOID: true,
 });
 
-export type TourTransactionPax = z.infer<typeof TourTransactionPaxZ>;
+export type GroupTourBookingPax = z.infer<typeof GroupTourBookingPaxZ>;
 
-export enum TourTransactionPaxEvents {
-  TOUR_TRANSACTION_PAX_UPDATED = "TOUR_TRANSACTION_PAX_UPDATED",
-  TOUR_TRANSACTION_PAX_LIST_UPDATED = "TOUR_TRANSACTION_PAX_LIST_UPDATED",
+export enum GroupTourBookingPaxEvents {
+  GROUP_TOUR_BOOKING_PAX_UPDATED = "GROUP_TOUR_BOOKING_PAX_UPDATED",
+  GROUP_TOUR_BOOKING_PAX_LIST_UPDATED = "GROUP_TOUR_BOOKING_PAX_LIST_UPDATED",
 }

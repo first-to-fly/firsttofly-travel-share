@@ -1,18 +1,18 @@
 import { z } from "zod";
 
 import { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
-import { TourTransactionPaxType, TourTransactionPaxTypeZ } from "../../entities/Sales/TourTransactionPax";
+import { GroupTourBookingPaxType, GroupTourBookingPaxTypeZ } from "../../entities/Sales/GroupTourBookingPax";
 
 
 /**
  * Determines if a pax type represents an adult passenger
  */
-export function isPaxTypeAdult(paxType: TourTransactionPaxType): boolean {
+export function isPaxTypeAdult(paxType: GroupTourBookingPaxType): boolean {
   const childTypes = [
-    TourTransactionPaxType.CHILD_TWIN,
-    TourTransactionPaxType.CHILD_WITH_BED,
-    TourTransactionPaxType.CHILD_NO_BED,
-    TourTransactionPaxType.INFANT,
+    GroupTourBookingPaxType.CHILD_TWIN,
+    GroupTourBookingPaxType.CHILD_WITH_BED,
+    GroupTourBookingPaxType.CHILD_NO_BED,
+    GroupTourBookingPaxType.INFANT,
   ];
   return !childTypes.includes(paxType);
 }
@@ -20,13 +20,13 @@ export function isPaxTypeAdult(paxType: TourTransactionPaxType): boolean {
 // Types for tour departure discount calculation
 export interface PaxDiscountInput {
   paxOID: string;
-  paxType: TourTransactionPaxType;
+  paxType: GroupTourBookingPaxType;
   isAdult: boolean;
 }
 
 export const PaxDiscountBreakdownZ = z.object({
   paxOID: z.string(),
-  paxType: TourTransactionPaxTypeZ,
+  paxType: GroupTourBookingPaxTypeZ,
   isAdult: z.boolean(),
   positionInSequence: z.number(),
   tierIndex: z.number(),
@@ -45,7 +45,7 @@ export const TourDepartureDiscountResultZ = z.object({
   groupName: z.string(),
   paxBreakdown: z.array(PaxDiscountBreakdownZ),
   tourDepartureOID: z.string(),
-  transactionOID: z.string(),
+  bookingOID: z.string(),
   basePaxCount: z.number(),
   calculatedAt: z.string(),
 });
@@ -54,24 +54,24 @@ export type TourDepartureDiscountResult = z.infer<typeof TourDepartureDiscountRe
 
 
 /**
- * Calculates tour departure discount for a transaction based on group tier configuration
+ * Calculates tour departure discount for a group tour booking based on group tier configuration
  * This is a stateless function that can be used on both client and server
  */
 export function calculateTourDepartureDiscount(data: {
   discountConfig: GroupTourPricingDiscount;
   groupIndex: number;
-  currentTransactionPax: PaxDiscountInput[];
-  basePaxCount: number; // total pax count excluding current transaction
+  currentBookingPax: PaxDiscountInput[];
+  basePaxCount: number; // total pax count excluding current booking
   tourDepartureOID: string;
-  transactionOID: string;
+  bookingOID: string;
 }): TourDepartureDiscountResult {
   const {
     discountConfig,
     groupIndex,
-    currentTransactionPax,
+    currentBookingPax,
     basePaxCount,
     tourDepartureOID,
-    transactionOID,
+    bookingOID,
   } = data;
 
   // 1. Validate group index
@@ -83,7 +83,7 @@ export function calculateTourDepartureDiscount(data: {
       groupName: "",
       paxBreakdown: [],
       tourDepartureOID: tourDepartureOID,
-      transactionOID: transactionOID,
+      bookingOID: bookingOID,
       basePaxCount: basePaxCount,
       calculatedAt: new Date().toISOString(),
     };
@@ -92,15 +92,15 @@ export function calculateTourDepartureDiscount(data: {
   const discountGroup = discountConfig.groups[groupIndex];
 
   // 2. Handle empty pax list
-  if (currentTransactionPax.length === 0) {
-    // No pax in current transaction - return empty result
+  if (currentBookingPax.length === 0) {
+    // No pax in current booking - return empty result
     return {
       totalDiscount: 0,
       groupIndex: groupIndex,
       groupName: discountGroup.name,
       paxBreakdown: [],
       tourDepartureOID: tourDepartureOID,
-      transactionOID: transactionOID,
+      bookingOID: bookingOID,
       basePaxCount: basePaxCount,
       calculatedAt: new Date().toISOString(),
     };
@@ -110,8 +110,8 @@ export function calculateTourDepartureDiscount(data: {
   let totalDiscount = 0;
   const paxBreakdown: PaxDiscountBreakdown[] = [];
 
-  for (let i = 0; i < currentTransactionPax.length; i++) {
-    const pax = currentTransactionPax[i];
+  for (let i = 0; i < currentBookingPax.length; i++) {
+    const pax = currentBookingPax[i];
 
     // Each pax's position in the overall booking sequence (1-based for tier comparison)
     const paxPositionInSequence = basePaxCount + i + 1;
@@ -169,7 +169,7 @@ export function calculateTourDepartureDiscount(data: {
     groupName: discountGroup.name,
     paxBreakdown: paxBreakdown,
     tourDepartureOID: tourDepartureOID,
-    transactionOID: transactionOID,
+    bookingOID: bookingOID,
     basePaxCount: basePaxCount,
     calculatedAt: new Date().toISOString(),
   };
