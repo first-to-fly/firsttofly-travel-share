@@ -84,5 +84,8 @@ export enum EntityType {
   // BUDGET
   BUDGET = "budget",
   BUDGET_ENTRY = "budgetEntry",
+
+  // USER MESSAGES
+  USER_MESSAGE = "userMessage",
 }
 export const EntityTypes = Object.values(EntityType);

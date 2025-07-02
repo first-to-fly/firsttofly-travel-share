@@ -40,6 +40,7 @@ import { TransportPlanPermissions } from "./entities/transport-plan.permission";
 import { TransportSegmentPermissions } from "./entities/transport-segment.permission";
 import { UsefulInfoPermissions } from "./entities/useful-info.permission";
 import { UserPermissions } from "./entities/user.permission";
+import { UserMessagePermissions } from "./entities/user-message.permission";
 import type { PermissionDeclaration } from "./permissions.types";
 
 
@@ -95,6 +96,7 @@ const EntityPermissions = {
   Supplier: SupplierPermissions,
   Booking: TourTransactionPermissions,
   "Approval Request": ApprovalRequestPermissions,
+  "User Message": UserMessagePermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
