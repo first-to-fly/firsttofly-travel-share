@@ -73,6 +73,10 @@ export enum EntityType {
   TOUR_DEPARTURE = "tourDeparture",
   APPROVAL_REQUEST = "approvalRequest",
 
+  // APPROVAL MANAGEMENT
+  APPROVAL = "approval",
+  APPROVAL_REQUEST_V2 = "approvalRequestV2",
+
   // GROUP TOUR BOOKING
   GROUP_TOUR_BOOKING = "groupTourBooking",
   GROUP_TOUR_BOOKING_ROOM = "groupTourBookingRoom",
