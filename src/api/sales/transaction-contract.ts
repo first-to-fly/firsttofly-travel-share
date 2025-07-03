@@ -54,15 +54,4 @@ export const transactionContract = initContract().router({
     },
   },
 
-  deleteTransactions: {
-    summary: "Delete multiple transactions",
-    method: "POST",
-    path: `${basePath}/batch-delete`,
-    body: z.object({
-      transactionOIDs: z.array(z.string().describe("OIDs of transactions to delete")),
-    }),
-    responses: {
-      200: z.boolean(),
-    },
-  },
 });
