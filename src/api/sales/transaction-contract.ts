@@ -26,13 +26,7 @@ const CreateTransactionZ = TransactionZ.pick({
   files: true,
 });
 
-const UpdateTransactionZ = CreateTransactionZ.omit({
-  tenantOID: true,
-  paymentOrderOID: true,
-}).partial();
-
 export type CreateTransaction = z.infer<typeof CreateTransactionZ>;
-export type UpdateTransaction = z.infer<typeof UpdateTransactionZ>;
 
 export const transactionContract = initContract().router({
   getTransactions: {
@@ -57,19 +51,6 @@ export const transactionContract = initContract().router({
     body: CreateTransactionZ,
     responses: {
       200: z.string(),
-    },
-  },
-
-  updateTransactions: {
-    summary: "Update multiple existing transactions",
-    method: "POST",
-    path: `${basePath}/batch-update`,
-    body: z.record(
-      z.string().describe("OID of transaction to update"),
-      UpdateTransactionZ,
-    ),
-    responses: {
-      200: z.array(z.string().describe("OIDs of updated transactions")),
     },
   },
 
