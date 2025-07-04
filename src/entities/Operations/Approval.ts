@@ -1,7 +1,7 @@
 import { z } from "zod";
 
+import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
-import { EntityZ, EntityOIDZ } from "../entity";
 
 
 /**
@@ -61,28 +61,9 @@ export enum ApprovalType {
   LEAVE_REQUEST = "leave-request-approval",
 }
 
-export enum ApprovalRequestStatus {
-  IN_PROGRESS = "IN_PROGRESS",
-  APPROVED = "APPROVED", 
-  REJECTED = "REJECTED",
-  CANCELLED = "CANCELLED",
-}
-
-export enum ApprovalRequestApproverStatus {
-  PENDING = "PENDING",
-  APPROVED = "APPROVED",
-  REJECTED = "REJECTED", 
-  SKIPPED = "SKIPPED",
-}
-
 export enum ApprovalLevelApproverType {
   DEPARTMENT = "DEPARTMENT",
   USER = "USER",
-}
-
-export enum ApprovalAction {
-  APPROVE = "APPROVE",
-  REJECT = "REJECT",
 }
 
 export const ApprovalLevelApproverZ = z.object({
@@ -117,22 +98,7 @@ export const ApprovalZ = EntityZ.extend({
   isEnabled: z.boolean().default(true),
 });
 
-export const ApprovalRequestV2Z = EntityZ.extend({
-  entityType: z.literal(EntityType.APPROVAL_REQUEST_V2),
-  approvalOID: EntityOIDZ,
-  targetEntityOid: z.string(),
-  submitterOID: EntityOIDZ,
-  departmentOID: EntityOIDZ.optional(),
-  status: z.nativeEnum(ApprovalRequestStatus),
-  rejectionReason: z.string().optional(),
-  completedAt: z.string().datetime().optional(),
-  metadata: z.unknown().optional(),
-});
-
-
-
 export type Approval = z.infer<typeof ApprovalZ>;
-export type ApprovalRequestV2 = z.infer<typeof ApprovalRequestV2Z>;
 export type ApprovalLevel = z.infer<typeof ApprovalLevelZ>;
 export type ApprovalLevelApprover = z.infer<typeof ApprovalLevelApproverZ>;
 export type TemporalWorkflowContext = z.infer<typeof TemporalWorkflowContextZ>;

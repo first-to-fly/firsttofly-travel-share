@@ -1,7 +1,8 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { ApprovalZ, ApprovalRequestV2Z } from "../../entities/Operations/Approval";
+import { ApprovalZ } from "../../entities/Operations/Approval";
+import { ApprovalRequestV2Z } from "../../entities/Operations/ApprovalRequestV2";
 
 
 const basePath = "/api/approvals";
@@ -188,7 +189,6 @@ export const approvalRequestV2Contract = initContract().router({
       200: z.boolean(),
     },
   },
-
 
 
   getApprovalRequestV2: {

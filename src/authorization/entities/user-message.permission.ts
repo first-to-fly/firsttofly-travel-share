@@ -9,7 +9,7 @@ export const UserMessagePermissions = {
     description: "Can update own user messages (mark as read, resolved)",
   },
   "user:user-message:delete": {
-    name: "Delete Own Messages", 
+    name: "Delete Own Messages",
     description: "Can delete own user messages",
   },
 };
