@@ -9,6 +9,11 @@ import { DepositPermissions } from "./entities/deposit.permission";
 import { DesignationPermissions } from "./entities/designation.permission";
 import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
+import { GroupTourBookingPermissions } from "./entities/group-tour-booking.permission";
+import { GroupTourBookingPaxPermissions } from "./entities/group-tour-booking-pax.permission";
+import { GroupTourBookingRoomPermissions } from "./entities/group-tour-booking-room.permission";
+import { PaymentOrderPermissions } from "./entities/payment-order.permission";
+import { TransactionPermissions } from "./entities/transaction.permission";
 import { GroupTourCostingPermissions } from "./entities/group-tour-costing.permission";
 import { GroupTourItineraryPermissions } from "./entities/group-tour-itinerary.permission";
 import { GroupTourPricingPermissions } from "./entities/group-tour-pricing.permission";
@@ -31,10 +36,6 @@ import { TenantPermissions } from "./entities/tenant.permission";
 import { TermPermissions } from "./entities/term.permission";
 import { TermConditionPermissions } from "./entities/term-condition.permission";
 import { TourDeparturePermissions } from "./entities/tour-departure.permission";
-import { TourTransactionPermissions } from "./entities/tour-transaction.permission";
-import { TourTransactionPaxPermissions } from "./entities/tour-transaction-pax.permission";
-import { TourTransactionRoomPermissions } from "./entities/tour-transaction-room.permission";
-import { TourTransactionTransferPermissions } from "./entities/tour-transaction-transfer.permission";
 import { TransportGroupPermissions } from "./entities/transport-group.permission";
 import { TransportPlanPermissions } from "./entities/transport-plan.permission";
 import { TransportSegmentPermissions } from "./entities/transport-segment.permission";
@@ -79,9 +80,8 @@ const EntityPermissions = {
   "Assemble Location Airlines": AssembleLocationAirlinesPermissions,
   "Room Configuration": RoomConfigurationPermissions,
   Discount: DiscountPermissions,
-  "Tour Transaction Room": TourTransactionRoomPermissions,
-  "Tour Transaction Pax": TourTransactionPaxPermissions,
-  "Tour Transaction Transfer": TourTransactionTransferPermissions,
+  "Group Tour Booking Room": GroupTourBookingRoomPermissions,
+  "Group Tour Booking Pax": GroupTourBookingPaxPermissions,
   "Discount Template": DiscountTemplatePermissions,
   "Group Tour Costing": GroupTourCostingPermissions,
   "Group Tour Product": GroupTourProductPermissions,
@@ -93,8 +93,10 @@ const EntityPermissions = {
   "Transport Segment": TransportSegmentPermissions,
   "Transport Plan": TransportPlanPermissions,
   Supplier: SupplierPermissions,
-  Booking: TourTransactionPermissions,
+  "Group Tour Booking": GroupTourBookingPermissions,
   "Approval Request": ApprovalRequestPermissions,
+  "Payment Order": PaymentOrderPermissions,
+  Transaction: TransactionPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;

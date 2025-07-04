@@ -1,4 +1,4 @@
-import { TourTransactionPaxType } from "../../entities/Sales/TourTransactionPax";
+import { GroupTourBookingPaxType } from "../../entities/Sales/GroupTourBookingPax";
 
 
 export interface LineItemPrice {
@@ -10,7 +10,7 @@ export interface LineItemPrice {
 
 
 export interface PaxConfiguration {
-  type: TourTransactionPaxType;
+  type: GroupTourBookingPaxType;
   fareType: "full" | "land";
 }
 

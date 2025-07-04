@@ -1,13 +1,13 @@
 import { z } from "zod";
 
 import { EntityOIDZ } from "../entity";
-import { TourTransactionPaxPersonalDetailsZ } from "./TourTransactionPax";
+import { GroupTourBookingPaxPersonalDetailsZ } from "./GroupTourBookingPax";
 
 /**
  * Transfer-specific metadata fields schema
  */
 export const TransferMetadataZ = z.object({
-  // === Original Transaction (being transferred FROM) ===
+  // === Original GroupTourBooking (being transferred FROM) ===
   transferredTo: z.array(z.string()).optional(),
   transferringOIDs: z.array(EntityOIDZ).optional(),
   transferStartDate: z.string().optional(),
@@ -18,7 +18,7 @@ export const TransferMetadataZ = z.object({
     targetTourDepartureOID: EntityOIDZ,
   })).optional(),
 
-  // === New Transaction (created FROM transfer) ===
+  // === New GroupTourBooking (created FROM transfer) ===
   transferredFrom: z.string().optional(),
   transferredFromBookingNumber: z.string().optional(),
   transferDate: z.string().optional(),
@@ -29,18 +29,18 @@ export const TransferMetadataZ = z.object({
 export type TransferMetadata = z.infer<typeof TransferMetadataZ>;
 
 /**
- * Base metadata schema for TourTransaction
+ * Base metadata schema for GroupTourBooking
  */
-export const BaseTourTransactionMetadataZ = z.object({
-  customer: TourTransactionPaxPersonalDetailsZ,
+export const BaseGroupTourBookingMetadataZ = z.object({
+  customer: GroupTourBookingPaxPersonalDetailsZ,
 });
 
-export type BaseTourTransactionMetadata = z.infer<typeof BaseTourTransactionMetadataZ>;
+export type BaseGroupTourBookingMetadata = z.infer<typeof BaseGroupTourBookingMetadataZ>;
 
 /**
- * Complete TourTransaction metadata schema
+ * Complete GroupTourBooking metadata schema
  * Combines base metadata with optional transfer metadata
  */
-export const TourTransactionMetadataZ = BaseTourTransactionMetadataZ.merge(TransferMetadataZ);
+export const GroupTourBookingMetadataZ = BaseGroupTourBookingMetadataZ.merge(TransferMetadataZ);
 
-export type TourTransactionMetadata = z.infer<typeof TourTransactionMetadataZ>;
+export type GroupTourBookingMetadata = z.infer<typeof GroupTourBookingMetadataZ>;

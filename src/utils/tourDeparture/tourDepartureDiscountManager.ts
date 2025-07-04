@@ -1,22 +1,22 @@
 import { EntityType } from "../../entities/entityType";
 import { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
-import { TourDepartureDiscountMetadata, TourTransactionDiscountType } from "../../entities/Sales/TourTransactionDiscount";
-import { TourTransactionPaxType } from "../../entities/Sales/TourTransactionPax";
+import { GroupTourBookingDiscountType, TourDepartureDiscountMetadata } from "../../entities/Sales/GroupTourBookingDiscount";
+import { GroupTourBookingPaxType } from "../../entities/Sales/GroupTourBookingPax";
 import { DiscountMode } from "../../entities/Settings/Product/Discount";
 import {
   isPaxTypeAdult,
   type PaxDiscountInput,
   type TourDepartureDiscountResult,
-} from "../tourTransaction/calculateTourDepartureDiscount";
+} from "../group-tour-booking/calculateTourDepartureDiscount";
 
 
 export interface TourDepartureDiscountInput {
   discountConfig: GroupTourPricingDiscount;
   groupIndex: number;
-  currentTransactionPax: PaxDiscountInput[];
+  currentBookingPax: PaxDiscountInput[];
   basePaxCount: number;
   tourDepartureOID: string;
-  transactionOID: string;
+  bookingOID: string;
 }
 
 export interface TourDepartureDiscountApplicationResult {
@@ -48,7 +48,7 @@ export function prepareDiscountApplication(
   }
 
   const metadata: TourDepartureDiscountMetadata = {
-    type: TourTransactionDiscountType.TOUR_DEPARTURE_DISCOUNT,
+    type: GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
     groupIndex: groupIndex,
     discountBreakdown: discountResult,
   };
@@ -64,16 +64,16 @@ export function prepareDiscountApplication(
 }
 
 /**
- * Creates discount input from tour departure and transaction data
+ * Creates discount input from tour departure and booking data
  * Note: OIDs will be set to placeholder values and should be overridden by the caller
  */
 export function createDiscountInput(
   discountConfig: GroupTourPricingDiscount,
   groupIndex: number,
-  currentTransactionPax: PaxDiscountInput[],
+  currentBookingPax: PaxDiscountInput[],
   basePaxCount: number,
   tourDepartureId: string,
-  transactionId: string,
+  bookingId: string,
 ): TourDepartureDiscountInput {
   return {
     discountConfig: discountConfig || {
@@ -81,10 +81,10 @@ export function createDiscountInput(
       groups: [],
     },
     groupIndex: groupIndex,
-    currentTransactionPax: currentTransactionPax,
+    currentBookingPax: currentBookingPax,
     basePaxCount: basePaxCount,
     tourDepartureOID: `${EntityType.TOUR_DEPARTURE}:${tourDepartureId}`,
-    transactionOID: `${EntityType.TOUR_TRANSACTION}:${transactionId}`,
+    bookingOID: `${EntityType.GROUP_TOUR_BOOKING}:${bookingId}`,
   };
 }
 
@@ -94,10 +94,10 @@ export function createDiscountInput(
  */
 export function convertPaxToDiscountInput(paxData: Array<{
   paxId: string;
-  type: TourTransactionPaxType;
+  type: GroupTourBookingPaxType;
 }>): PaxDiscountInput[] {
   return paxData.map((pax) => ({
-    paxOID: `${EntityType.TOUR_TRANSACTION_PAX}:${pax.paxId}`,
+    paxOID: `${EntityType.GROUP_TOUR_BOOKING_PAX}:${pax.paxId}`,
     paxType: pax.type,
     isAdult: isPaxTypeAdult(pax.type),
   }));
@@ -108,7 +108,7 @@ export function convertPaxToDiscountInput(paxData: Array<{
  */
 export function determineDiscountAction(
   discountResult: TourDepartureDiscountResult,
-  existingDiscount?: { tourTransactionDiscountId: string; appliedAmount: number },
+  existingDiscount?: { groupTourBookingDiscountId: string; appliedAmount: number },
 ): "apply" | "update" | "remove" | "none" {
   const hasExistingDiscount = !!existingDiscount;
   const shouldHaveDiscount = discountResult.totalDiscount > 0;
@@ -142,13 +142,13 @@ export function createDiscountUpdateData(
   groupIndex: number = 0,
 ) {
   const metadata: TourDepartureDiscountMetadata = {
-    type: TourTransactionDiscountType.TOUR_DEPARTURE_DISCOUNT,
+    type: GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
     groupIndex: groupIndex,
     discountBreakdown: discountResult,
   };
 
   return {
-    tourTransactionDiscountId: existingDiscountId,
+    groupTourBookingDiscountId: existingDiscountId,
     description: discountResult.groupName ?? "Tour departure discount",
     appliedAmount: discountResult.totalDiscount,
     metadata: metadata,
