@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { EntityType } from "../entityType";
 import { EntityZ, EntityOIDZ } from "../entity";
+import { ApprovalType } from "./ApprovalType";
 
 
 export enum ApprovalRequestStatus {
@@ -51,7 +52,7 @@ export const TemporalWorkflowContextZ = z.object({
 export const ApprovalZ = EntityZ.extend({
   entityType: z.literal(EntityType.APPROVAL),
   name: z.string().min(1).max(255),
-  approvalType: z.string().min(1).max(100),
+  approvalType: z.nativeEnum(ApprovalType),
   targetEntityType: z.string(),
   groups: z.array(z.string()).optional(),
   sendEmail: z.boolean().default(true),
@@ -79,3 +80,6 @@ export type ApprovalRequestV2 = z.infer<typeof ApprovalRequestV2Z>;
 export type ApprovalLevel = z.infer<typeof ApprovalLevelZ>;
 export type ApprovalLevelApprover = z.infer<typeof ApprovalLevelApproverZ>;
 export type TemporalWorkflowContext = z.infer<typeof TemporalWorkflowContextZ>;
+
+// Re-export ApprovalType and helper functions
+export { ApprovalType, getAllApprovalTypes, isValidApprovalType, getApprovalTypeDisplayName } from "./ApprovalType";
