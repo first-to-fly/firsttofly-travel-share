@@ -58,6 +58,33 @@ export const approvalContract = initContract().router({
     },
   },
 
+  getApprovalsByType: {
+    summary: "Get approvals by approval type",
+    method: "GET",
+    path: `${basePath}/by-type/:approvalType`,
+    pathParams: z.object({
+      approvalType: z.string().describe("Approval type to filter by"),
+    }),
+    query: z.object({
+      tenantOID: z.string(),
+    }).passthrough(),
+    responses: {
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
+    },
+  },
+
+  createApproval: {
+    summary: "Create a new approval",
+    method: "POST",
+    path: basePath,
+    body: CreateApprovalZ,
+    responses: {
+      200: z.string().describe("OID of created approval"),
+    },
+  },
+
 
   updateApprovals: {
     summary: "Update multiple existing approvals",
@@ -95,6 +122,19 @@ export const approvalContract = initContract().router({
     body: UpdateApprovalZ,
     responses: {
       200: z.string().describe("OID of updated approval"),
+    },
+  },
+
+  deleteApproval: {
+    summary: "Delete a single approval",
+    method: "DELETE",
+    path: `${basePath}/:approvalId`,
+    pathParams: z.object({
+      approvalId: z.string().describe("OID of approval to delete"),
+    }),
+    body: z.null(),
+    responses: {
+      200: z.boolean(),
     },
   },
 });
