@@ -9,7 +9,7 @@ const basePath = "/api/approvals";
 const CreateApprovalZ = ApprovalZ.pick({
   tenantOID: true,
   name: true,
-  key: true,
+  approvalType: true,
   targetEntityType: true,
   groups: true,
   sendEmail: true,
@@ -29,6 +29,7 @@ const CreateApprovalRequestV2Z = ApprovalRequestV2Z.pick({
   targetEntityOid: true,
   submitterOID: true,
   departmentOID: true,
+  metadata: true,
 });
 
 const UpdateApprovalRequestV2Z = CreateApprovalRequestV2Z.omit({

@@ -51,7 +51,7 @@ export const TemporalWorkflowContextZ = z.object({
 export const ApprovalZ = EntityZ.extend({
   entityType: z.literal(EntityType.APPROVAL),
   name: z.string().min(1).max(255),
-  key: z.string().min(1).max(100),
+  approvalType: z.string().min(1).max(100),
   targetEntityType: z.string(),
   groups: z.array(z.string()).optional(),
   sendEmail: z.boolean().default(true),
@@ -69,6 +69,7 @@ export const ApprovalRequestV2Z = EntityZ.extend({
   status: z.nativeEnum(ApprovalRequestStatus),
   rejectionReason: z.string().optional(),
   completedAt: z.string().datetime().optional(),
+  metadata: z.unknown().optional(),
 });
 
 
