@@ -102,37 +102,3 @@ export type Approval = z.infer<typeof ApprovalZ>;
 export type ApprovalLevel = z.infer<typeof ApprovalLevelZ>;
 export type ApprovalLevelApprover = z.infer<typeof ApprovalLevelApproverZ>;
 export type TemporalWorkflowContext = z.infer<typeof TemporalWorkflowContextZ>;
-
-/**
- * Helper function to get all approval types as an array of strings
- */
-export function getAllApprovalTypes(): string[] {
-  return Object.values(ApprovalType);
-}
-
-/**
- * Helper function to check if a string is a valid approval type
- */
-export function isValidApprovalType(type: string): type is ApprovalType {
-  return Object.values(ApprovalType).includes(type as ApprovalType);
-}
-
-/**
- * Helper function to get the display name for an approval type
- */
-export function getApprovalTypeDisplayName(type: ApprovalType): string {
-  const displayNames: Record<ApprovalType, string> = {
-    [ApprovalType.GROUP_TOUR_BOOKING]: "Group Tour Booking Approval",
-    [ApprovalType.BUDGET_APPROVAL]: "Budget Approval",
-    [ApprovalType.TRAVEL_REQUEST]: "Travel Request Approval",
-    [ApprovalType.EXPENSE_REPORT]: "Expense Report Approval",
-    [ApprovalType.PURCHASE_ORDER]: "Purchase Order Approval",
-    [ApprovalType.CONTRACT_APPROVAL]: "Contract Approval",
-    [ApprovalType.VENDOR_APPROVAL]: "Vendor Approval",
-    [ApprovalType.POLICY_EXCEPTION]: "Policy Exception Approval",
-    [ApprovalType.EQUIPMENT_REQUEST]: "Equipment Request Approval",
-    [ApprovalType.LEAVE_REQUEST]: "Leave Request Approval",
-  };
-
-  return displayNames[type] || type;
-}
