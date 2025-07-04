@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { ApprovalZ, ApprovalRequestV2Z } from "../entities/approval/Approval";
+import { ApprovalZ, ApprovalRequestV2Z } from "../entities/Operations/Approval";
 
 
 const basePath = "/api/approvals";
