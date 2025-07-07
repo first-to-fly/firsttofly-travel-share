@@ -59,6 +59,7 @@ export enum ApprovalType {
    * Leave request approval workflow
    */
   LEAVE_REQUEST = "leave-request-approval",
+  EO_REQUEST = "eo-approval",
 }
 
 export enum ApprovalLevelApproverType {
