@@ -34,8 +34,8 @@ export const GroupTourBookingZ = EntityZ.extend({
   bookingReference: z.string().max(50),
   paymentStatus: GroupTourBookingPaymentStatusZ.default(GroupTourBookingPaymentStatus.UNPAID),
   bookingStatus: GroupTourBookingBookingStatusZ.default(GroupTourBookingBookingStatus.IN_PROGRESS),
-  totalAmount: z.number(),
-  receivedAmount: z.number().default(0),
+  totalAmount: z.number().optional(),
+  receivedAmount: z.number().optional(),
   metadata: GroupTourBookingMetadataZ.optional(),
   specialInstructions: z.array(z.string()).optional(),
   overwriteTax: z.object({
