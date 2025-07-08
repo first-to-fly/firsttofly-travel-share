@@ -3,6 +3,7 @@ import { z } from "zod";
 import { DateISOStringZ } from "../../types/date";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { EntityType } from "../entityType";
+import { ApprovalRequestMetadataZ } from "./ApprovalRequestV2Metadata";
 
 
 export enum ApprovalRequestV2Status {
@@ -27,13 +28,13 @@ export enum ApprovalAction {
 export const ApprovalRequestV2Z = EntityZ.extend({
   entityType: z.literal(EntityType.APPROVAL_REQUEST_V2),
   approvalOID: EntityOIDZ,
-  targetEntityOid: EntityOIDZ,
+  targetEntityOID: EntityOIDZ,
   submitterOID: EntityOIDZ,
   departmentOID: EntityOIDZ.optional(),
   status: z.nativeEnum(ApprovalRequestV2Status),
   rejectionReason: z.string().optional(),
   completedAt: DateISOStringZ.optional(),
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  metadata: ApprovalRequestMetadataZ,
 });
 
 export type ApprovalRequestV2 = z.infer<typeof ApprovalRequestV2Z>;

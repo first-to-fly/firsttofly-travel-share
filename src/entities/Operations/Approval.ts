@@ -16,6 +16,21 @@ export enum ApprovalType {
   GROUP_TOUR_BOOKING = "group-tour-booking-approval",
 
   /**
+   * Group tour booking special discount approval workflow
+   */
+  GROUP_TOUR_BOOKING_SPECIAL_DISCOUNT = "group-tour-booking-special-discount-approval",
+
+  /**
+   * Group tour booking transfer approval workflow
+   */
+  GROUP_TOUR_BOOKING_TRANSFER = "group-tour-booking-transfer-approval",
+
+  /**
+   * Group tour booking amendment approval workflow
+   */
+  GROUP_TOUR_BOOKING_AMENDMENT = "group-tour-booking-amendment-approval",
+
+  /**
    * Budget approval workflow
    */
   BUDGET_APPROVAL = "budget-approval",
