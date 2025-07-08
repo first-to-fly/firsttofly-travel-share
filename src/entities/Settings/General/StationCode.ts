@@ -14,7 +14,7 @@ export enum StationCodeEvents {
 export const StationCodeZ = EntityZ.extend({
   entityType: z.literal(EntityType.STATION_CODE),
 
-  code: z.string().min(1, "Station code is required"),
+  code: z.string().min(1, "Station code is required").max(50, "Station code must be 50 characters or less"),
   isActive: z.boolean().default(true),
   seq: FTFSafeMaxNumberZ({
     max: 99999999,
