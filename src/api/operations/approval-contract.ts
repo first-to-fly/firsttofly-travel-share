@@ -121,4 +121,16 @@ export const approvalContract = initContract().router({
       200: z.boolean(),
     },
   },
+
+  deleteApprovals: {
+    summary: "Delete multiple approvals",
+    method: "POST",
+    path: `${basePath}/batch-delete`,
+    body: z.object({
+      approvalOIDs: z.array(z.string().describe("OIDs of approvals to delete")),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
 });

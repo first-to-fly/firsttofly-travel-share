@@ -85,19 +85,6 @@ export const approvalRequestV2Contract = initContract().router({
     },
   },
 
-  getApprovalRequestV2: {
-    summary: "Get a single approval request",
-    method: "GET",
-    path: `${basePath}/:requestId`,
-    pathParams: z.object({
-      requestId: z.string().describe("OID of approval request to get"),
-    }),
-    responses: {
-      200: ApprovalRequestV2Z,
-    },
-  },
-
-
   approveRequest: {
     summary: "Approve a single approval request",
     method: "POST",
