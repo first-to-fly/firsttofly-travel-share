@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { TourDepartureDiscountResultZ } from "../../utils/group-tour-booking/calculateTourDepartureDiscount";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { ApprovalRequestGroupTourBookingSpecialDiscountPayloadZ } from "../Operations/ApprovalRequest";
+import { ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ } from "../Operations/ApprovalRequestV2Metadata";
 import { DiscountMode, DiscountZ } from "../Settings/Product/Discount";
 
 
@@ -29,7 +29,7 @@ export const TourDepartureDiscountMetadataZ = z.object({
 export const SpecialRequestDiscountMetadataZ = z.object({
   type: z.literal(GroupTourBookingDiscountType.SPECIAL_REQUEST),
   approvalRequestOID: EntityOIDZ,
-  approvalRequestPayload: ApprovalRequestGroupTourBookingSpecialDiscountPayloadZ,
+  approvalRequestPayload: ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ,
   approvalNote: z.string().optional(),
 });
 
