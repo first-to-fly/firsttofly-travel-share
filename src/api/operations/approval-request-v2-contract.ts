@@ -74,6 +74,16 @@ export const approvalRequestV2Contract = initContract().router({
     },
   },
 
+  getApprovalRequestsMe: {
+    summary: "Get pending approval requests for current user",
+    method: "GET",
+    path: `${basePath}/me`,
+    responses: {
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
+    },
+  },
 
   getApprovalRequestV2: {
     summary: "Get a single approval request",
@@ -87,16 +97,6 @@ export const approvalRequestV2Contract = initContract().router({
     },
   },
 
-  getApprovalRequestsMe: {
-    summary: "Get pending approval requests for current user",
-    method: "GET",
-    path: `${basePath}/me`,
-    responses: {
-      200: z.object({
-        oids: z.array(z.string()),
-      }),
-    },
-  },
 
   approveRequest: {
     summary: "Approve a single approval request",
