@@ -116,7 +116,7 @@ export type ApprovalRequestGroupTourBookingTransferPayload =
 export const ApprovalRequestGroupTourBookingAmendmentPayloadZ = z.object({
   type: z.literal(ApprovalRequestType.GROUP_TOUR_BOOKING_AMENDMENT),
   originalBookingOID: EntityOIDZ,
-  
+
   // Complete amended form values for execution
   amendedFormValues: z.object({
     groupTourBookingOID: z.string().optional(),
@@ -212,7 +212,7 @@ export const ApprovalRequestGroupTourBookingAmendmentPayloadZ = z.object({
       isLeadPassenger: z.boolean().optional(),
     }),
   }),
-  
+
   // Calculated breakdown for amended booking (for comparison UI)
   amendedBreakdown: z.object({
     tourFare: z.array(z.object({
@@ -246,17 +246,20 @@ export const ApprovalRequestGroupTourBookingAmendmentPayloadZ = z.object({
     })),
     total: z.number(),
   }),
-  
+
   // Financial summary for the amended booking
   financialSummary: z.object({
     amendedTotal: z.number(),
     totalDifference: z.number(),
+    originalOutstanding: z.number(),
+    amendedOutstanding: z.number(),
+    receivedAmount: z.number(),
     refundRequired: z.boolean(),
     refundAmount: z.number(),
     additionalPaymentRequired: z.boolean(),
     additionalPaymentAmount: z.number(),
   }),
-  
+
   // Amendment metadata
   amendmentReason: z.string(),
   changedFields: z.array(z.string()),
