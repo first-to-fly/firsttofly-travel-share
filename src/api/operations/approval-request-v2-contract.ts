@@ -1,7 +1,8 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { ApprovalRequestV2Z } from "../../entities/Operations/ApprovalRequestV2";
+import { ApprovalType } from "../../entities/Operations/Approval";
+import { ApprovalRequestV2Status, ApprovalRequestV2Z } from "../../entities/Operations/ApprovalRequestV2";
 
 
 const basePath = "/api/operations/approval-requests-v2";
@@ -31,6 +32,10 @@ export const approvalRequestV2Contract = initContract().router({
     path: basePath,
     query: z.object({
       tenantOID: z.string(),
+      targetEntityOID: z.string().optional(),
+      statuses: z.array(z.nativeEnum(ApprovalRequestV2Status)).optional(),
+      types: z.array(z.nativeEnum(ApprovalType)).optional(),
+      assigneeOIDs: z.array(z.string()).optional(),
     }).passthrough(),
     responses: {
       200: z.object({
