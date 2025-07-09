@@ -13,7 +13,7 @@ import { transportSegmentContract } from "./transport-segment-contract";
 
 
 export const operationsContract = initContract().router({
-  approvalRequestV2: approvalRequestContract,
+  approvalRequest: approvalRequestContract,
   budget: budgetContract,
   budgetEntry: budgetEntryContract,
   supplier: supplierContract,
