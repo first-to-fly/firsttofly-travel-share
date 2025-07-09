@@ -93,9 +93,9 @@ export const approvalRequestV2Contract = initContract().router({
   approveRequest: {
     summary: "Approve a single approval request",
     method: "POST",
-    path: `${basePath}/:approverId/approve`,
+    path: `${basePath}/:requestOID/approve`,
     pathParams: z.object({
-      approverId: z.string().describe("ID of the approver"),
+      requestOID: z.string().describe("OID of the request"),
     }),
     body: z.object({
       comments: z.string().optional(),
@@ -108,9 +108,9 @@ export const approvalRequestV2Contract = initContract().router({
   rejectRequest: {
     summary: "Reject a single approval request",
     method: "POST",
-    path: `${basePath}/:approverId/reject`,
+    path: `${basePath}/:requestOID/reject`,
     pathParams: z.object({
-      approverId: z.string().describe("ID of the approver"),
+      requestOID: z.string().describe("OID of the request"),
     }),
     body: z.object({
       comments: z.string().optional(),
