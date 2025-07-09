@@ -34,7 +34,7 @@ export const ApprovalRequestGroupTourBookingTransferMetadataZ = z.object({
   type: z.literal(ApprovalType.GROUP_TOUR_BOOKING_TRANSFER),
   originalBookingOID: EntityOIDZ,
   transferItems: z.array(z.object({
-    targetTourDepartureOID: EntityOIDZ,
+    targetBookingOID: EntityOIDZ,
     passengers: z.array(z.object({
       oid: z.string(),
       firstName: z.string(),
