@@ -1,6 +1,5 @@
 import { initContract } from "@ts-rest/core";
 
-import { approvalContract } from "./approval-contract";
 import { approvalRequestV2Contract } from "./approval-request-v2-contract";
 import { budgetContract } from "./budget-contract";
 import { budgetEntryContract } from "./budget-entry-contract";
@@ -14,7 +13,6 @@ import { transportSegmentContract } from "./transport-segment-contract";
 
 
 export const operationsContract = initContract().router({
-  approval: approvalContract,
   approvalRequestV2: approvalRequestV2Contract,
   budget: budgetContract,
   budgetEntry: budgetEntryContract,

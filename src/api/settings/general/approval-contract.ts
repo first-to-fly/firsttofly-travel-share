@@ -1,10 +1,10 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { ApprovalZ } from "../../entities/Operations/Approval";
+import { ApprovalZ } from "../../../entities/Settings/General/Approval";
 
 
-const basePath = "/api/operations/approvals";
+const basePath = "/api/settings/approvals";
 
 const CreateApprovalZ = ApprovalZ.pick({
   tenantOID: true,

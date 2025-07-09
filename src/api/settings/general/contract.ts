@@ -1,6 +1,7 @@
 import { initContract } from "@ts-rest/core";
 
 import { aviationStackContract } from "../../misc/aviationstack-contract";
+import { approvalContract } from "./approval-contract";
 import { locationContract } from "./location-contract";
 import { poiContract } from "./poi-contract";
 import { privacyPolicyContract } from "./privacy-policy-contract";
@@ -11,6 +12,7 @@ import { termContract } from "./term-contract";
 
 
 export const generalSettingContract = initContract().router({
+  approval: approvalContract,
   aviationstack: aviationStackContract,
   location: locationContract,
   poi: poiContract,

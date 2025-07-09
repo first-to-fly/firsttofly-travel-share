@@ -3,8 +3,8 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entity";
 import { GroupTourBookingAddonTypeZ } from "../Sales/GroupTourBookingAddon";
 import { GroupTourBookingPaxPersonalDetailsZ, GroupTourBookingPaxType } from "../Sales/GroupTourBookingPax";
+import { ApprovalType } from "../Settings/General/Approval";
 import { DiscountMode } from "../Settings/Product/Discount";
-import { ApprovalType } from "./Approval";
 
 
 /**

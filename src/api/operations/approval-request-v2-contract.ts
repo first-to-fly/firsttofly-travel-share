@@ -1,7 +1,7 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { ApprovalType } from "../../entities/Operations/Approval";
+import { ApprovalType } from "../../entities/Settings/General/Approval";
 import { ApprovalRequestV2Status, ApprovalRequestV2Z } from "../../entities/Operations/ApprovalRequestV2";
 
 
