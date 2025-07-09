@@ -1,13 +1,13 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
+import { ApprovalRequestStatus, ApprovalRequestZ } from "../../entities/Operations/ApprovalRequest";
 import { ApprovalType } from "../../entities/Settings/General/Approval";
-import { ApprovalRequestV2Status, ApprovalRequestV2Z } from "../../entities/Operations/ApprovalRequestV2";
 
 
-const basePath = "/api/operations/approval-requests-v2";
+const basePath = "/api/operations/approval-requests";
 
-const CreateApprovalRequestV2Z = ApprovalRequestV2Z.pick({
+const CreateApprovalRequestZ = ApprovalRequestZ.pick({
   tenantOID: true,
   approvalOID: true,
   targetEntityOID: true,
@@ -16,24 +16,24 @@ const CreateApprovalRequestV2Z = ApprovalRequestV2Z.pick({
   metadata: true,
 });
 
-const UpdateApprovalRequestV2Z = CreateApprovalRequestV2Z.omit({
+const UpdateApprovalRequestZ = CreateApprovalRequestZ.omit({
   tenantOID: true,
   approvalOID: true,
 }).partial();
 
 
-export type CreateApprovalRequestV2 = z.infer<typeof CreateApprovalRequestV2Z>;
-export type UpdateApprovalRequestV2 = z.infer<typeof UpdateApprovalRequestV2Z>;
+export type CreateApprovalRequest = z.infer<typeof CreateApprovalRequestZ>;
+export type UpdateApprovalRequest = z.infer<typeof UpdateApprovalRequestZ>;
 
-export const approvalRequestV2Contract = initContract().router({
-  getApprovalRequestsV2: {
+export const approvalRequestContract = initContract().router({
+  getApprovalRequests: {
     summary: "Get approval requests",
     method: "GET",
     path: basePath,
     query: z.object({
       tenantOID: z.string(),
       targetEntityOID: z.string().optional(),
-      statuses: z.array(z.nativeEnum(ApprovalRequestV2Status)).optional(),
+      statuses: z.array(z.nativeEnum(ApprovalRequestStatus)).optional(),
       types: z.array(z.nativeEnum(ApprovalType)).optional(),
       assigneeOIDs: z.array(z.string()).optional(),
     }).passthrough(),
@@ -44,30 +44,30 @@ export const approvalRequestV2Contract = initContract().router({
     },
   },
 
-  createApprovalRequestV2: {
+  createApprovalRequest: {
     summary: "Create a new approval request",
     method: "POST",
     path: basePath,
-    body: CreateApprovalRequestV2Z,
+    body: CreateApprovalRequestZ,
     responses: {
       200: z.string(),
     },
   },
 
-  updateApprovalRequestsV2: {
+  updateApprovalRequests: {
     summary: "Update multiple existing approval requests",
     method: "POST",
     path: `${basePath}/batch-update`,
     body: z.record(
       z.string().describe("OID of approval request to update"),
-      UpdateApprovalRequestV2Z,
+      UpdateApprovalRequestZ,
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated approval requests")),
     },
   },
 
-  deleteApprovalRequestsV2: {
+  deleteApprovalRequests: {
     summary: "Delete multiple approval requests",
     method: "POST",
     path: `${basePath}/batch-delete`,

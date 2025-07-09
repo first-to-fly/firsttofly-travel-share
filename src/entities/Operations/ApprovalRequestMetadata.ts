@@ -9,7 +9,7 @@ import { DiscountMode } from "../Settings/Product/Discount";
 
 /**
  * Metadata types for approval requests - migrated from legacy ApprovalRequest module
- * These are used in the metadata field of ApprovalRequestV2 to preserve type safety
+ * These are used in the metadata field of ApprovalRequest to preserve type safety
  */
 
 export const ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ = z.object({

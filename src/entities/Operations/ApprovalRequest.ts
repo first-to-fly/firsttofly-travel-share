@@ -3,10 +3,10 @@ import { z } from "zod";
 import { DateISOStringZ } from "../../types/date";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { EntityType } from "../entityType";
-import { ApprovalRequestMetadataZ } from "./ApprovalRequestV2Metadata";
+import { ApprovalRequestMetadataZ } from "./ApprovalRequestMetadata";
 
 
-export enum ApprovalRequestV2Status {
+export enum ApprovalRequestStatus {
   IN_PROGRESS = "IN_PROGRESS",
   APPROVED = "APPROVED",
   REJECTED = "REJECTED",
@@ -25,16 +25,16 @@ export enum ApprovalAction {
   REJECT = "REJECT",
 }
 
-export const ApprovalRequestV2Z = EntityZ.extend({
-  entityType: z.literal(EntityType.APPROVAL_REQUEST_V2),
+export const ApprovalRequestZ = EntityZ.extend({
+  entityType: z.literal(EntityType.APPROVAL_REQUEST),
   approvalOID: EntityOIDZ,
   targetEntityOID: EntityOIDZ,
   submitterOID: EntityOIDZ,
   departmentOID: EntityOIDZ.optional(),
-  status: z.nativeEnum(ApprovalRequestV2Status),
+  status: z.nativeEnum(ApprovalRequestStatus),
   rejectionReason: z.string().optional(),
   completedAt: DateISOStringZ.optional(),
   metadata: ApprovalRequestMetadataZ,
 });
 
-export type ApprovalRequestV2 = z.infer<typeof ApprovalRequestV2Z>;
+export type ApprovalRequest = z.infer<typeof ApprovalRequestZ>;

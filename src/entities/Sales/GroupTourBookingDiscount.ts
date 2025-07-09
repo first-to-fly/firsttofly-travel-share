@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { TourDepartureDiscountResultZ } from "../../utils/group-tour-booking/calculateTourDepartureDiscount";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ } from "../Operations/ApprovalRequestV2Metadata";
+import { ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ } from "../Operations/ApprovalRequestMetadata";
 import { DiscountMode, DiscountZ } from "../Settings/Product/Discount";
 
 
