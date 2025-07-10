@@ -14,6 +14,8 @@ const CreateUserMessageZ = UserMessageZ.pick({
   key: true,
   bodyFormat: true,
   bodyParams: true,
+  isRead: true,
+  isResolved: true,
   metadata: true,
   expiresAt: true,
 });
