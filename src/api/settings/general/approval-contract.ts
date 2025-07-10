@@ -10,7 +10,6 @@ const CreateApprovalZ = ApprovalZ.pick({
   tenantOID: true,
   name: true,
   approvalType: true,
-  targetEntityType: true,
   groups: true,
   sendEmail: true,
   notifySubmitterOnFinalOutcome: true,

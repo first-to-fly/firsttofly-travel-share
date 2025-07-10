@@ -84,7 +84,7 @@ export enum ApprovalLevelApproverType {
 
 export const ApprovalLevelApproverZ = z.object({
   type: z.nativeEnum(ApprovalLevelApproverType),
-  id: z.string().uuid(),
+  id: z.string(),
 });
 
 export const ApprovalLevelZ = z.object({
@@ -106,7 +106,6 @@ export const ApprovalZ = EntityZ.extend({
   entityType: z.literal(EntityType.APPROVAL),
   name: z.string().min(1).max(255),
   approvalType: z.nativeEnum(ApprovalType),
-  targetEntityType: z.string(),
   groups: z.array(z.string()).optional(),
   sendEmail: z.boolean().default(true),
   notifySubmitterOnFinalOutcome: z.boolean().default(true),
