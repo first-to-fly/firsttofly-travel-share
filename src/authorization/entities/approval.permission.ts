@@ -82,22 +82,5 @@ export const ApprovalPermissions = {
     name: "Cancel User Approval Requests",
     description: "Can cancel their own approval requests",
   },
-  "user:approval-request:action": {
-    name: "Action on Approval Requests",
-    description: "Can approve or reject approval requests where assigned as approver",
-  },
 
-  // Approval Request Approver permissions
-  "tenant:approval-request-approver:view": {
-    name: "View Tenant Approval Request Approvers",
-    description: "Can view all approval request approvers within the tenant",
-  },
-  "user:approval-request-approver:view": {
-    name: "View User Approval Request Approvers",
-    description: "Can view approval request approvers where the user is involved",
-  },
-  "user:approval-request-approver:action": {
-    name: "Action on Approval Request Approvers",
-    description: "Can approve or reject when assigned as an approver",
-  },
 };
