@@ -99,6 +99,40 @@ export const ApprovalRequestGroupTourBookingTransferMetadataZ = z.object({
 export type ApprovalRequestGroupTourBookingTransferMetadata =
   z.infer<typeof ApprovalRequestGroupTourBookingTransferMetadataZ>;
 
+// Common booking breakdown schema used for both original and amended breakdowns
+const BookingBreakdownZ = z.object({
+  tourFare: z.array(z.object({
+    paxType: z.string(),
+    quantity: z.number(),
+    unitPrice: z.number(),
+    subTotal: z.number(),
+  })),
+  miscellaneous: z.array(z.object({
+    name: z.string(),
+    quantity: z.number(),
+    unitPrice: z.number(),
+    subTotal: z.number(),
+  })),
+  addons: z.array(z.object({
+    name: z.string(),
+    quantity: z.number(),
+    unitPrice: z.number(),
+    subTotal: z.number(),
+  })),
+  discounts: z.array(z.object({
+    discountOID: z.string(),
+    description: z.string().optional(),
+    appliedAmount: z.number(),
+  })),
+  taxes: z.array(z.object({
+    name: z.string(),
+    quantity: z.number(),
+    unitPrice: z.number(),
+    subTotal: z.number(),
+  })),
+  total: z.number(),
+});
+
 export const ApprovalRequestGroupTourBookingAmendmentMetadataZ = z.object({
   type: z.literal(ApprovalType.GROUP_TOUR_BOOKING_AMENDMENT),
   originalBookingOID: EntityOIDZ,
@@ -199,39 +233,11 @@ export const ApprovalRequestGroupTourBookingAmendmentMetadataZ = z.object({
     }),
   }),
 
+  // Calculated breakdown for original booking (before amendment)
+  originalBookingBreakdown: BookingBreakdownZ,
+
   // Calculated breakdown for amended booking (for comparison UI)
-  amendedBreakdown: z.object({
-    tourFare: z.array(z.object({
-      paxType: z.string(),
-      quantity: z.number(),
-      unitPrice: z.number(),
-      subTotal: z.number(),
-    })),
-    miscellaneous: z.array(z.object({
-      name: z.string(),
-      quantity: z.number(),
-      unitPrice: z.number(),
-      subTotal: z.number(),
-    })),
-    addons: z.array(z.object({
-      name: z.string(),
-      quantity: z.number(),
-      unitPrice: z.number(),
-      subTotal: z.number(),
-    })),
-    discounts: z.array(z.object({
-      discountOID: z.string(),
-      description: z.string().optional(),
-      appliedAmount: z.number(),
-    })),
-    taxes: z.array(z.object({
-      name: z.string(),
-      quantity: z.number(),
-      unitPrice: z.number(),
-      subTotal: z.number(),
-    })),
-    total: z.number(),
-  }),
+  amendedBreakdown: BookingBreakdownZ,
 
   // Financial summary for the amended booking
   financialSummary: z.object({
