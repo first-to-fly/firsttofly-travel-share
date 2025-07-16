@@ -6,8 +6,9 @@ import { EntityOIDZ } from "../../entities/entity";
 import { GroupTourBookingBookingStatus, GroupTourBookingZ } from "../../entities/Sales/GroupTourBooking";
 import { GroupTourBookingAddonZ } from "../../entities/Sales/GroupTourBookingAddon";
 import { GroupTourBookingDiscountType } from "../../entities/Sales/GroupTourBookingDiscount";
-import { GroupTourBookingPaxZ } from "../../entities/Sales/GroupTourBookingPax";
+import { GroupTourBookingPaxTypeZ, GroupTourBookingPaxZ } from "../../entities/Sales/GroupTourBookingPax";
 import { GroupTourBookingRoomZ } from "../../entities/Sales/GroupTourBookingRoom";
+import { DiscountBookingChannel, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
 
 
 const basePath = "/api/sales/group-tour-bookings";
@@ -72,6 +73,7 @@ const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
     discountType: z.literal(GroupTourBookingDiscountType.CODE_BASED),
     discountOID: z.string(),
     description: z.string().optional(),
+    bookingChannel: z.nativeEnum(DiscountBookingChannel).default(DiscountBookingChannel.WEB),
   }),
   // Tour departure discount: no discountOID needed, amount calculated on backend
   z.object({
@@ -84,6 +86,28 @@ const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
   }),
 ]);
 export type ApplyDiscountBody = z.infer<typeof ApplyDiscountBodyZ>;
+
+// --- Shared Validation Types ---
+const PassengerCompositionZ = z.object({
+  adults: z.number().min(0),
+  children: z.number().min(0),
+  childrenWithBed: z.number().min(0),
+  childrenNoBed: z.number().min(0),
+  totalPax: z.number().min(0),
+  passengerTypes: z.array(GroupTourBookingPaxTypeZ),
+});
+export type PassengerComposition = z.infer<typeof PassengerCompositionZ>;
+
+const BookingValidationContextZ = z.object({
+  bookingChannel: z.nativeEnum(DiscountBookingChannel).default(DiscountBookingChannel.WEB),
+  passengerComposition: PassengerCompositionZ,
+  totalAmount: z.number().min(0),
+  netPrice: z.number().min(0),
+  grossPrice: z.number().min(0),
+  roomCount: z.number().min(0),
+  bookingTimestamp: z.string().datetime().optional(),
+});
+export type BookingValidationContext = z.infer<typeof BookingValidationContextZ>;
 
 // --- GroupTourBookingAddon Schemas ---
 const AddAddonBodyZ = GroupTourBookingAddonZ.pick({
@@ -387,6 +411,30 @@ export const groupTourBookingContract = initContract().router({
   },
   // #endregion
 
+  // #region DISCOUNT VALIDATION
+  validateDiscountCode: {
+    summary: "Validate a discount code for group tour booking",
+    method: "POST",
+    path: `${basePath}/validate-discount-code`,
+    body: z.object({
+      tenantOID: z.string(),
+      discountCode: z.string(),
+      bookingOID: z.string(),
+      bookingContext: BookingValidationContextZ,
+    }),
+    responses: {
+      200: z.object({
+        valid: z.boolean(),
+        discountOID: z.string().optional(),
+        discountName: z.string().optional(),
+        discountValue: z.number().optional(),
+        calculatedAmount: z.number().optional(),
+        errorCode: z.nativeEnum(DiscountValidationErrorCode).optional(),
+        errorMessage: z.string().optional(),
+      }),
+    },
+  },
+  // #endregion
 
   // #region PAYMENT
   createAirWallexPaymentLink: {

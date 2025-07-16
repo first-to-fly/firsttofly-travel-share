@@ -102,22 +102,4 @@ export const discountContract = c.router({
     },
   },
 
-  validateDiscountCode: {
-    summary: "Validate a discount code for group tour booking",
-    method: "POST",
-    path: `${basePath}/validate-code`,
-    body: z.object({
-      tenantOID: z.string(),
-      discountCode: z.string(),
-      tourDepartureOID: z.string(),
-    }),
-    responses: {
-      200: z.object({
-        valid: z.boolean(),
-        discountOID: z.string().optional(),
-        discountName: z.string().optional(),
-        discountValue: z.number().optional(),
-      }),
-    },
-  },
 });
