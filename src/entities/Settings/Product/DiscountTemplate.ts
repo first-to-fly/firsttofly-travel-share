@@ -44,8 +44,13 @@ export const DiscountTemplateZ = EntityZ.extend({
   specialDatesEnd: DateISOStringZ.optional(),
 
   timeslotType: z.nativeEnum(DiscountTimeslotType).default(DiscountTimeslotType.NA),
-  timeslotStart: z.string().optional(),
-  timeslotEnd: z.string().optional(),
+  timeslotStart: z.string().optional().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
+    message: "Timeslot must be in 'HH:MM' format",
+  }),
+  timeslotEnd: z.string().optional().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
+    message: "Timeslot must be in 'HH:MM' format",
+  }),
+  timeslotTimezone: z.string().optional(),
 
   discountValue: FTFSafeMaxNumberZ({ name: "Discount value" }).int().nonnegative().default(0),
   howToApply: z.nativeEnum(DiscountHowToApply).default(DiscountHowToApply.AUTO),

@@ -32,6 +32,7 @@ const CreateDiscountTemplateZ = DiscountTemplateZ.pick({
   timeslotType: true,
   timeslotStart: true,
   timeslotEnd: true,
+  timeslotTimezone: true,
   discountValue: true,
   howToApply: true,
   useDiscountCode: true,
