@@ -24,15 +24,8 @@ const CreateExchangeOrderZ = ExchangeOrderZ.pick({
 const UpdateExchangeOrderZ = CreateExchangeOrderZ.omit({
   tenantOID: true,
   exchangeOrderNo: true,
-}).partial().extend({
-  status: z.string().optional(),
-  issueDate: z.string().optional(),
-  dueDate: z.string().optional(),
-  totalAmount: z.number().optional(),
-  currency: z.string().optional(),
-  remarks: z.string().optional(),
-  isArchived: z.boolean().optional(),
-});
+  status: true,
+}).partial();
 
 export type CreateExchangeOrder = z.infer<typeof CreateExchangeOrderZ>;
 export type UpdateExchangeOrder = z.infer<typeof UpdateExchangeOrderZ>;
