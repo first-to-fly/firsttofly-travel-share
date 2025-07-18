@@ -45,6 +45,8 @@ export const GroupTourProductZ = EntityZ.extend({
 
   isActive: z.boolean(),
   published: z.boolean(),
+
+  ownerOIDs: z.array(z.string()).optional(),
 });
 
 export type GroupTourProduct = z.infer<typeof GroupTourProductZ>;

@@ -44,6 +44,8 @@ const CreateGroupTourProductZ = GroupTourProductZ.pick({
 
   isActive: true,
   published: true,
+
+  ownerOIDs: true,
 });
 
 const UpdateGroupTourProductZ = CreateGroupTourProductZ.omit({
