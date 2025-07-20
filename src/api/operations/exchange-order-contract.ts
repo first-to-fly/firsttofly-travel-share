@@ -27,8 +27,15 @@ const UpdateExchangeOrderZ = CreateExchangeOrderZ.omit({
   status: true,
 }).partial();
 
+const ExchangeOrderListParamsZ = z.object({
+  tenantOID: z.string(),
+  tourDepartureOID: z.string().optional(),
+  parentExchangeOrderOID: z.string().optional(),
+}).passthrough();
+
 export type CreateExchangeOrder = z.infer<typeof CreateExchangeOrderZ>;
 export type UpdateExchangeOrder = z.infer<typeof UpdateExchangeOrderZ>;
+export type ExchangeOrderListParams = z.infer<typeof ExchangeOrderListParamsZ>;
 
 export const exchangeOrderContract = initContract().router({
 
@@ -36,7 +43,7 @@ export const exchangeOrderContract = initContract().router({
     summary: "Get exchange orders",
     method: "GET",
     path: basePath,
-    query: z.object({ tenantOID: z.string() }).passthrough(),
+    query: ExchangeOrderListParamsZ,
     responses: { 200: z.object({ oids: z.array(z.string()) }) },
   },
 
