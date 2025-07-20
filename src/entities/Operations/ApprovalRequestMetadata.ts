@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 import { EntityOIDZ } from "../entity";
-import { ExchangeOrderStatus } from "./ExchangeOrder";
 import { GroupTourBookingAddonTypeZ } from "../Sales/GroupTourBookingAddon";
 import { GroupTourBookingPaxPersonalDetailsZ, GroupTourBookingPaxType } from "../Sales/GroupTourBookingPax";
 import { ApprovalType } from "../Settings/General/Approval";
@@ -263,26 +262,12 @@ export const ApprovalRequestGroupTourBookingAmendmentMetadataZ = z.object({
 export type ApprovalRequestGroupTourBookingAmendmentMetadata =
   z.infer<typeof ApprovalRequestGroupTourBookingAmendmentMetadataZ>;
 
-export const ApprovalRequestExchangeOrderStatusChangeMetadataZ = z.object({
-  type: z.literal(ApprovalType.EXCHANGE_ORDER_STATUS_CHANGE),
-  exchangeOrderOID: EntityOIDZ,
-  fromStatus: z.nativeEnum(ExchangeOrderStatus),
-  toStatus: z.nativeEnum(ExchangeOrderStatus),
-  requestedBy: EntityOIDZ,
-  requestedAt: z.string(),
-  businessJustification: z.string().optional(),
-});
-
-export type ApprovalRequestExchangeOrderStatusChangeMetadata =
-  z.infer<typeof ApprovalRequestExchangeOrderStatusChangeMetadataZ>;
-
 // Union type for all metadata
 export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ,
   ApprovalRequestBudgetApprovalMetadataZ,
   ApprovalRequestGroupTourBookingTransferMetadataZ,
   ApprovalRequestGroupTourBookingAmendmentMetadataZ,
-  ApprovalRequestExchangeOrderStatusChangeMetadataZ,
 ]);
 
 export type ApprovalRequestMetadata = z.infer<typeof ApprovalRequestMetadataZ>;
