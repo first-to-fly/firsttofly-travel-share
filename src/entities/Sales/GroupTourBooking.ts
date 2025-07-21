@@ -42,6 +42,9 @@ export const GroupTourBookingZ = EntityZ.extend({
     scheme: z.string(),
     rate: z.number().nonnegative(),
   }).optional(),
+
+  // Owner information
+  ownerOIDs: z.array(EntityOIDZ).optional(),
 });
 
 export type GroupTourBooking = z.infer<typeof GroupTourBookingZ>;

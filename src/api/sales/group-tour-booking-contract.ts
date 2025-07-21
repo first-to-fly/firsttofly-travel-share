@@ -23,6 +23,7 @@ const CreateGroupTourBookingBodyZ = GroupTourBookingZ.pick({
   metadata: true,
   specialInstructions: true,
   overwriteTax: true,
+  ownerOIDs: true,
 });
 export type CreateGroupTourBookingBody = z.infer<typeof CreateGroupTourBookingBodyZ>;
 
