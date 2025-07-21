@@ -74,7 +74,11 @@ export enum ApprovalType {
    * Leave request approval workflow
    */
   LEAVE_REQUEST = "leave-request-approval",
-  EO_REQUEST = "eo-approval",
+
+  /**
+   * Exchange order DRAFT to WFA status change approval workflow
+   */
+  EXCHANGE_ORDER_DRAFT_TO_WFA = "exchange-order-draft-to-wfa-approval",
 }
 
 export enum ApprovalLevelApproverType {
