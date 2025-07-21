@@ -263,8 +263,8 @@ export const ApprovalRequestGroupTourBookingAmendmentMetadataZ = z.object({
 export type ApprovalRequestGroupTourBookingAmendmentMetadata =
   z.infer<typeof ApprovalRequestGroupTourBookingAmendmentMetadataZ>;
 
-export const ApprovalRequestExchangeOrderStatusChangeMetadataZ = z.object({
-  type: z.literal(ApprovalType.EXCHANGE_ORDER_STATUS_CHANGE),
+export const ApprovalRequestExchangeOrderDraftToWfaMetadataZ = z.object({
+  type: z.literal(ApprovalType.EXCHANGE_ORDER_DRAFT_TO_WFA),
   exchangeOrderOID: EntityOIDZ,
   fromStatus: z.nativeEnum(ExchangeOrderStatus),
   toStatus: z.nativeEnum(ExchangeOrderStatus),
@@ -273,8 +273,8 @@ export const ApprovalRequestExchangeOrderStatusChangeMetadataZ = z.object({
   businessJustification: z.string().optional(),
 });
 
-export type ApprovalRequestExchangeOrderStatusChangeMetadata =
-  z.infer<typeof ApprovalRequestExchangeOrderStatusChangeMetadataZ>;
+export type ApprovalRequestExchangeOrderDraftToWfaMetadata =
+  z.infer<typeof ApprovalRequestExchangeOrderDraftToWfaMetadataZ>;
 
 // Union type for all metadata
 export const ApprovalRequestMetadataZ = z.union([
@@ -282,7 +282,7 @@ export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestBudgetApprovalMetadataZ,
   ApprovalRequestGroupTourBookingTransferMetadataZ,
   ApprovalRequestGroupTourBookingAmendmentMetadataZ,
-  ApprovalRequestExchangeOrderStatusChangeMetadataZ,
+  ApprovalRequestExchangeOrderDraftToWfaMetadataZ,
 ]);
 
 export type ApprovalRequestMetadata = z.infer<typeof ApprovalRequestMetadataZ>;

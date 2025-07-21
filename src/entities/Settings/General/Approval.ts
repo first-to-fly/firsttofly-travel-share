@@ -77,9 +77,9 @@ export enum ApprovalType {
   EO_REQUEST = "eo-approval",
 
   /**
-   * Exchange order status change approval workflow
+   * Exchange order DRAFT to WFA status change approval workflow
    */
-  EXCHANGE_ORDER_STATUS_CHANGE = "exchange-order-status-change-approval",
+  EXCHANGE_ORDER_DRAFT_TO_WFA = "exchange-order-draft-to-wfa-approval",
 }
 
 export enum ApprovalLevelApproverType {
