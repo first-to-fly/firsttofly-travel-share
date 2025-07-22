@@ -13,6 +13,7 @@ export const CreateGroupTourCostingEntryZ = GroupTourCostingEntryZ.pick({
   calculationBasis: true,
   applyToPackageType: true,
   applyToOccupancyType: true,
+  supplierOID: true,
   remarks: true,
   quantity: true,
   isTieredPrice: true,

@@ -21,6 +21,8 @@ export enum PaymentStatus {
 export const GroupTourCostingEntryZ = EntityZ.extend({
   groupTourCostingOID: EntityOIDZ,
 
+  supplierOID: EntityOIDZ.optional(),
+
   // Copy from CostingItem
   name: z.string(),
   category: z.nativeEnum(CostingItemCategory),
