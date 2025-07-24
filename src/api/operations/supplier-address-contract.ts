@@ -9,9 +9,7 @@ const basePath = "/api/operations/supplier-addresses";
 const CreateSupplierAddressZ = SupplierAddressZ.pick({
   tenantOID: true,
   supplierOID: true,
-  addressType: true,
-  addressLine1: true,
-  addressLine2: true,
+  addressLines: true,
   city: true,
   state: true,
   postalCode: true,
