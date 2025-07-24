@@ -19,8 +19,8 @@ const CreateSupplierPaymentZ = SupplierPaymentZ.pick({
   iban: true,
   currency: true,
   paymentTerms: true,
-  isActive: true,
-  paymentInfo: true,
+  isDefault: true,
+  remarks: true,
 });
 
 const UpdateSupplierPaymentZ = CreateSupplierPaymentZ.omit({

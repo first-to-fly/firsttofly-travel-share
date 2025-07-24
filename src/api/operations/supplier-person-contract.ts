@@ -11,16 +11,11 @@ const CreateSupplierPersonZ = SupplierPersonZ.pick({
   supplierOID: true,
   firstName: true,
   lastName: true,
-  title: true,
   department: true,
-  email: true,
-  phone: true,
-  mobile: true,
-  fax: true,
   position: true,
-  isMainContact: true,
-  isActive: true,
   contactInfo: true,
+}).extend({
+  isMainContact: z.boolean().optional(),
 });
 
 const UpdateSupplierPersonZ = CreateSupplierPersonZ.omit({
