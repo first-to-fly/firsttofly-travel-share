@@ -18,8 +18,11 @@ const CreateSupplierPaymentZ = SupplierPaymentZ.pick({
   swiftCode: true,
   iban: true,
   currency: true,
-  paymentTerms: true,
-  isDefault: true,
+  cnapCode: true,
+  bicCode: true,
+  branchNo: true,
+  branch: true,
+  beneficiary: true,
   remarks: true,
 });
 
