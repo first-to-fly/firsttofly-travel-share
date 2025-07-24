@@ -18,11 +18,6 @@ export const SupplierAddressZ = EntityZ.extend({
   state: z.string().optional(),
   postalCode: z.string().optional(),
   country: z.string(),
-  phone: z.string().optional(),
-  fax: z.string().optional(),
-  email: z.string().email().optional(),
-  contactPerson: z.string().optional(),
-  isActive: z.boolean().default(true),
 });
 
 export type SupplierAddress = z.infer<typeof SupplierAddressZ>;

@@ -16,11 +16,8 @@ const CreateSupplierAddressZ = SupplierAddressZ.pick({
   state: true,
   postalCode: true,
   country: true,
-  phone: true,
-  fax: true,
-  email: true,
-  contactPerson: true,
-  isActive: true,
+}).extend({
+  isDefaultAddress: z.boolean().optional(),
 });
 
 const UpdateSupplierAddressZ = CreateSupplierAddressZ.omit({
