@@ -28,31 +28,13 @@ export const SupplierPaymentZ = EntityZ.extend({
   swiftCode: z.string().optional(),
   iban: z.string().optional(),
   currency: z.string().optional(),
-  paymentTerms: z.string().optional(),
-  isActive: z.boolean().default(true),
-  paymentInfo: PaymentInfoZ,
+  cnapCode: z.string().optional(),
+  bicCode: z.string().optional(),
+  branchNo: z.string().optional(),
+  branch: z.string().optional(),
+  beneficiary: z.string().optional(),
+  remarks: z.string().optional(),
 });
 
 export type SupplierPayment = z.infer<typeof SupplierPaymentZ>;
 export type PaymentInfo = z.infer<typeof PaymentInfoZ>;
-
-// Legacy interface for backward compatibility
-interface BaseEntityColumns {
-  createdAt: string;
-  updatedAt?: string;
-  createdBy: string;
-  updatedBy?: string;
-}
-
-export interface LegacySupplierPayment extends BaseEntityColumns {
-  id: string;
-  supplierId: string;
-  paymentType: string;
-  accountName?: string;
-  accountNumber?: string;
-  bankName?: string;
-  bankCode?: string;
-  swiftCode?: string;
-  routingNumber?: string;
-  isDefault: boolean;
-}

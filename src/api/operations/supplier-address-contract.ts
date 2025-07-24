@@ -9,18 +9,13 @@ const basePath = "/api/operations/supplier-addresses";
 const CreateSupplierAddressZ = SupplierAddressZ.pick({
   tenantOID: true,
   supplierOID: true,
-  addressType: true,
-  addressLine1: true,
-  addressLine2: true,
+  addressLines: true,
   city: true,
   state: true,
   postalCode: true,
   country: true,
-  phone: true,
-  fax: true,
-  email: true,
-  contactPerson: true,
-  isActive: true,
+}).extend({
+  isDefaultAddress: z.boolean().optional(),
 });
 
 const UpdateSupplierAddressZ = CreateSupplierAddressZ.omit({
