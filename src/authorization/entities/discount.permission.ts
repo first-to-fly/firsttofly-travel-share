@@ -1,4 +1,8 @@
 export const DiscountPermissions = {
+  "tenant:discount:view-list": {
+    name: "View Tenant Discount List",
+    description: "Can view list of discounts within the tenant",
+  },
   "tenant:discount:view": {
     name: "View Tenant Discounts",
     description: "Can view all Discounts within the tenant",
@@ -18,6 +22,10 @@ export const DiscountPermissions = {
 };
 
 export const DiscountTemplatePermissions = {
+  "tenant:discount-template:view-list": {
+    name: "View Tenant Discount Template List",
+    description: "Can view list of discount templates within the tenant",
+  },
   "tenant:discount-template:view": {
     name: "View Tenant Discount Templates",
     description: "Can view all Discount Templates within the tenant",

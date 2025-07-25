@@ -14,6 +14,10 @@ export const CostingItemPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:costing-item:view-list": {
+    name: "View Tenant Costing Item List",
+    description: "Can view list of costing items within the tenant",
+  },
   "tenant:costing-item:view": {
     name: "View Tenant Costing Items",
     description: "Can view all costing items within the tenant",

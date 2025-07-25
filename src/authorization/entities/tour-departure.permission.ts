@@ -24,6 +24,10 @@ export const TourDeparturePermissions = {
   },
 
   // Tenant level permissions
+  "tenant:tourDeparture:view-list": {
+    name: "View Tenant Tour Departure List",
+    description: "Can view list of tour departures within the tenant",
+  },
   "tenant:tourDeparture:view": {
     name: "View Tenant Tour Departures",
     description: "Can view all Tour Departures within the tenant",

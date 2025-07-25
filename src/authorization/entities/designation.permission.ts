@@ -6,6 +6,10 @@ export const DesignationPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:designation:view-list": {
+    name: "View Tenant Designation List",
+    description: "Can view list of designations within the tenant",
+  },
   "tenant:designation:view": {
     name: "View Tenant Designations",
     description: "Can view all designations within the tenant",

@@ -14,6 +14,10 @@ export const PrivacyPolicyPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:privacy-policy:view-list": {
+    name: "View Tenant Privacy Policy List",
+    description: "Can view list of privacy policies within the tenant",
+  },
   "tenant:privacy-policy:view": {
     name: "View Tenant Privacy Policies",
     description: "Can view all Privacy Policies within the tenant",

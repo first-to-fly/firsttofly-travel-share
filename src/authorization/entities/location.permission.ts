@@ -21,6 +21,10 @@ export const LocationPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:location:view-list": {
+    name: "View Tenant Location List",
+    description: "Can view list of locations within the tenant",
+  },
   "tenant:location:view": {
     name: "View Tenant Locations",
     description: "Can view all Locations within the tenant",

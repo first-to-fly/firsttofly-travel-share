@@ -18,6 +18,10 @@ export const TransportPlanPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:transport-plan:view-list": {
+    name: "View Tenant Transport Plan List",
+    description: "Can view list of transport plans within the tenant",
+  },
   "tenant:transport-plan:view": {
     name: "View Tenant Transport Plans",
     description: "Can view all transport plans within the tenant",

@@ -14,6 +14,10 @@ export const StationCodePermissions = {
   },
 
   // Tenant level permissions
+  "tenant:station-code:view-list": {
+    name: "View Tenant Station Code List",
+    description: "Can view list of station codes within the tenant",
+  },
   "tenant:station-code:view": {
     name: "View Tenant Station Codes",
     description: "Can view all station codes within the tenant",

@@ -14,6 +14,10 @@ export const TermConditionPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:term-condition:view-list": {
+    name: "View Tenant Term Condition List",
+    description: "Can view list of term conditions within the tenant",
+  },
   "tenant:term-condition:view": {
     name: "View Tenant Term Conditions",
     description: "Can view all term conditions within the tenant",

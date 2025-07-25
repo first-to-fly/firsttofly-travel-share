@@ -18,6 +18,10 @@ export const BadgePermissions = {
   },
 
   // Tenant level permissions
+  "tenant:badge:view-list": {
+    name: "View Tenant Badge List",
+    description: "Can view list of badges within the tenant",
+  },
   "tenant:badge:view": {
     name: "View Tenant Badges",
     description: "Can view all badges within the tenant",

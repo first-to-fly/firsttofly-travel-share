@@ -21,6 +21,10 @@ export const TransportGroupPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:transport-group:view-list": {
+    name: "View Tenant Transport Group List",
+    description: "Can view list of transport groups within the tenant",
+  },
   "tenant:transport-group:view": {
     name: "View Tenant Transport Groups",
     description: "Can view all Transport Groups within the tenant",

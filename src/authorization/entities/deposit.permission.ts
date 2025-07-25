@@ -19,6 +19,10 @@ export const DepositPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:deposit:view-list": {
+    name: "View Tenant Deposit List",
+    description: "Can view list of deposits within the tenant",
+  },
   "tenant:deposit:view": {
     name: "View Tenant Deposits",
     description: "Can view all deposits within the tenant",

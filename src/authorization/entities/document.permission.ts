@@ -14,6 +14,10 @@ export const DocumentPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:document:view-list": {
+    name: "View Tenant Document List",
+    description: "Can view list of documents within the tenant",
+  },
   "tenant:document:view": {
     name: "View Tenant Documents",
     description: "Can view all documents within the tenant",

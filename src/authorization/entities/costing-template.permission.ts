@@ -14,6 +14,10 @@ export const CostingTemplatePermissions = {
   },
 
   // Tenant level permissions
+  "tenant:costing-template:view-list": {
+    name: "View Tenant Costing Template List",
+    description: "Can view list of costing templates within the tenant",
+  },
   "tenant:costing-template:view": {
     name: "View Tenant Costing Templates",
     description: "Can view all Costing Templates within the tenant",

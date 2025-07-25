@@ -14,6 +14,10 @@ export const SectorGroupPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:sector-group:view-list": {
+    name: "View Tenant Sector Group List",
+    description: "Can view list of sector groups within the tenant",
+  },
   "tenant:sector-group:view": {
     name: "View Tenant Sector Groups",
     description: "Can view all sector groups within the tenant",

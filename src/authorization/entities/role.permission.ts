@@ -9,6 +9,10 @@ export const RolePermissions = {
   },
 
   // Tenant level permissions
+  "tenant:role:view-list": {
+    name: "View Tenant Role List",
+    description: "Can view list of roles within the tenant",
+  },
   "tenant:role:view": {
     name: "View Role",
     description: "Can view role in tenant",

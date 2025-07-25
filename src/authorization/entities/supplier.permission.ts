@@ -24,6 +24,10 @@ export const SupplierPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:supplier:view-list": {
+    name: "View Tenant Supplier List",
+    description: "Can view list of suppliers within the tenant",
+  },
   "tenant:supplier:view": {
     name: "View Tenant Suppliers",
     description: "Can view all Suppliers within the tenant",

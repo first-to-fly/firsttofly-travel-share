@@ -14,6 +14,10 @@ export const POIPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:poi:view-list": {
+    name: "View Tenant Poi List",
+    description: "Can view list of pois within the tenant",
+  },
   "tenant:poi:view": {
     name: "View Tenant POIs",
     description: "Can view all POIs within the tenant",

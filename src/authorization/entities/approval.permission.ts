@@ -1,5 +1,9 @@
 export const ApprovalPermissions = {
   // Tenant level permissions
+  "tenant:approval:view-list": {
+    name: "View Tenant Approval List",
+    description: "Can view list of approvals within the tenant",
+  },
   "tenant:approval:view": {
     name: "View Tenant Approvals",
     description: "Can view all approval configurations within the tenant",

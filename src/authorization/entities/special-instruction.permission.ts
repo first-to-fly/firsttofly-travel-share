@@ -14,6 +14,10 @@ export const SpecialInstructionPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:special-instruction:view-list": {
+    name: "View Tenant Special Instruction List",
+    description: "Can view list of special instructions within the tenant",
+  },
   "tenant:special-instruction:view": {
     name: "View Tenant Special Instructions",
     description: "Can view all special instructions within the tenant",

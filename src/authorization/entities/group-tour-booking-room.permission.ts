@@ -24,6 +24,10 @@ export const GroupTourBookingRoomPermissions = {
   },
 
   // Tenant level permissions (typically rooms are managed in context of a booking)
+  "tenant:group-tour-booking-room:view-list": {
+    name: "View Tenant Group Tour Booking Room List",
+    description: "Can view list of group tour booking rooms within the tenant",
+  },
   "tenant:group-tour-booking-room:view": {
     name: "View Tenant Group Tour Booking Rooms",
     description: "Can view all Group Tour Booking Rooms within the tenant (usually via a group tour booking)",

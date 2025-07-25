@@ -23,6 +23,10 @@ export const DepartmentPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:department:view-list": {
+    name: "View Tenant Department List",
+    description: "Can view list of departments within the tenant",
+  },
   "tenant:department:view": {
     name: "View Department",
     description: "Can view department",

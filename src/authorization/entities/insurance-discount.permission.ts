@@ -14,6 +14,10 @@ export const InsuranceDiscountPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:insurance-discount:view-list": {
+    name: "View Tenant Insurance Discount List",
+    description: "Can view list of insurance discounts within the tenant",
+  },
   "tenant:insurance-discount:view": {
     name: "View Tenant Insurance Discounts",
     description: "Can view all insurance discounts within the tenant",

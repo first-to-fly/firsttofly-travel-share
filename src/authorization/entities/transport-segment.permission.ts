@@ -21,6 +21,10 @@ export const TransportSegmentPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:transport-segment:view-list": {
+    name: "View Tenant Transport Segment List",
+    description: "Can view list of transport segments within the tenant",
+  },
   "tenant:transport-segment:view": {
     name: "View Tenant Transport Segments",
     description: "Can view all Transport Segments within the tenant",

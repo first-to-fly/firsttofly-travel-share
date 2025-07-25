@@ -33,6 +33,10 @@ export const GroupTourItineraryPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:group-tour-itinerary:view-list": {
+    name: "View Tenant Group Tour Itinerary List",
+    description: "Can view list of group tour itineraries within the tenant",
+  },
   "tenant:group-tour-itinerary:view": {
     name: "View Group Tour Itinerary",
     description: "Can view group tour itinerary in tenant",

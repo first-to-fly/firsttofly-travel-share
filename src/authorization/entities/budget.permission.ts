@@ -24,6 +24,10 @@ export const BudgetPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:budget:view-list": {
+    name: "View Tenant Budget List",
+    description: "Can view list of budgets within the tenant",
+  },
   "tenant:budget:view": {
     name: "View Tenant Budgets",
     description: "Can view all Budgets within the tenant",

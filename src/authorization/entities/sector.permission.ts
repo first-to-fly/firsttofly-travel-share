@@ -32,6 +32,10 @@ export const SectorPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:sector:view-list": {
+    name: "View Tenant Sector List",
+    description: "Can view list of sectors within the tenant",
+  },
   "tenant:sector:view": {
     name: "View Tenant Sectors",
     description: "Can view all sectors within the tenant",

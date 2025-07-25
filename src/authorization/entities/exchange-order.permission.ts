@@ -24,6 +24,10 @@ export const ExchangeOrderPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:exchange-order:view-list": {
+    name: "View Tenant Exchange Order List",
+    description: "Can view list of exchange orders within the tenant",
+  },
   "tenant:exchange-order:view": {
     name: "View Tenant Exchange Orders",
     description: "Can view all Exchange Orders within the tenant",

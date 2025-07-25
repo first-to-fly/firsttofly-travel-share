@@ -16,6 +16,10 @@ export const TransactionPermissions = {
     name: "Delete Department Transaction",
     description: "Can delete transactions within their department",
   },
+  "tenant:transaction:view-list": {
+    name: "View Tenant Transaction List",
+    description: "Can view list of transactions within the tenant",
+  },
   "tenant:transaction:view": {
     name: "View Tenant Transactions",
     description: "Can view all transactions within the tenant",

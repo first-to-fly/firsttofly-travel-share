@@ -17,6 +17,10 @@ export const RoomConfigurationPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:room-configuration:view-list": {
+    name: "View Tenant Room Configuration List",
+    description: "Can view list of room configurations within the tenant",
+  },
   "tenant:room-configuration:view": {
     name: "View Tenant Room Configurations",
     description: "Can view all Room Configurations within the tenant",

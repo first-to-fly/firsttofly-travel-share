@@ -24,6 +24,10 @@ export const GroupTourBookingPaxPermissions = {
   },
 
   // Tenant level permissions (pax are managed in context of a booking/room)
+  "tenant:group-tour-booking-pax:view-list": {
+    name: "View Tenant Group Tour Booking Pax List",
+    description: "Can view list of group tour booking paxes within the tenant",
+  },
   "tenant:group-tour-booking-pax:view": {
     name: "View Tenant Group Tour Booking Pax",
     description: "Can view all Group Tour Booking Pax within the tenant (usually via a group tour booking/room)",

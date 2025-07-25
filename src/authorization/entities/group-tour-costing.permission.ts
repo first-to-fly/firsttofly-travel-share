@@ -33,6 +33,10 @@ export const GroupTourCostingPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:group-tour-costing:view-list": {
+    name: "View Tenant Group Tour Costing List",
+    description: "Can view list of group tour costings within the tenant",
+  },
   "tenant:group-tour-costing:view": {
     name: "View Group Tour Costing",
     description: "Can view group tour costing in tenant",

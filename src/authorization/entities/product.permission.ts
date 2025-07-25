@@ -37,6 +37,10 @@ export const ProductPermissions = {
     name: "View Product Basic",
     description: "Can view product basic info in tenant (name, avatar)",
   },
+  "tenant:product:view-list": {
+    name: "View Tenant Product List",
+    description: "Can view list of products within the tenant",
+  },
   "tenant:product:view": {
     name: "View Product",
     description: "Can view product in tenant",

@@ -9,6 +9,10 @@ export const ReferenceCodePermissions = {
   },
 
   // Tenant level permissions
+  "tenant:referenceCode:view-list": {
+    name: "View Tenant Reference Code List",
+    description: "Can view list of reference codes within the tenant",
+  },
   "tenant:referenceCode:view": {
     name: "View Reference Code",
     description: "Can view reference code in tenant",

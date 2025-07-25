@@ -14,6 +14,10 @@ export const UsefulInfoPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:useful-info:view-list": {
+    name: "View Tenant Useful Info List",
+    description: "Can view list of useful infos within the tenant",
+  },
   "tenant:useful-info:view": {
     name: "View Tenant Useful Info",
     description: "Can view all useful info within the tenant",

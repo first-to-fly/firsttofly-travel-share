@@ -3,6 +3,10 @@
  */
 export const TermPermissions = {
   // Tenant scope
+  "tenant:term:view-list": {
+    name: "View Tenant Term List",
+    description: "Can view list of terms within the tenant",
+  },
   "tenant:term:view": {
     name: "View Term",
     description: "Can view terms in tenant",

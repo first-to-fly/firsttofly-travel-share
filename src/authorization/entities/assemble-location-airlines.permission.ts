@@ -17,6 +17,10 @@ export const AssembleLocationAirlinesPermissions = {
   },
 
   // Tenant scope
+  "tenant:assemble-location-airlines:view-list": {
+    name: "View Tenant Assemble Location Airlines List",
+    description: "Can view list of assemble location airlines within the tenant",
+  },
   "tenant:assemble-location-airlines:view": {
     name: "View Assemble Location Airlines",
     description: "Can view assemble location airlines in tenant",

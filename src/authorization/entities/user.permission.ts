@@ -16,6 +16,10 @@ export const UserPermissions = {
     name: "View User Basic",
     description: "Can view user basic info in tenant (name, avatar)",
   },
+  "tenant:user:view-list": {
+    name: "View Tenant User List",
+    description: "Can view list of users within the tenant",
+  },
   "tenant:user:view": {
     name: "View User",
     description: "Can view user in tenant",

@@ -14,6 +14,10 @@ export const MealPermissions = {
   },
 
   // Tenant level permissions
+  "tenant:meal:view-list": {
+    name: "View Tenant Meal List",
+    description: "Can view list of meals within the tenant",
+  },
   "tenant:meal:view": {
     name: "View Tenant Meals",
     description: "Can view all Meals within the tenant",
