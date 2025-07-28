@@ -11,7 +11,6 @@
     "src/*"
   ],
   "scripts": {
-    "postinstall": "npx --yes patch-package@latest && echo",
     "ts-node": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:${NODE_DEBUG_PORT:-9229} --require ts-node/register --require tsconfig-paths/register",
     "dev:node": "npm run ts-node -- ./src",
     "dev": "npm run dev:node",
