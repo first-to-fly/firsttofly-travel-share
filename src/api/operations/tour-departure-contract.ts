@@ -19,6 +19,8 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   departureCode: true,
   description: true,
 
+  customTourName: true,
+
   isArchived: true,
 
   durationDays: true,

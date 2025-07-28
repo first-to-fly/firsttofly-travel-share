@@ -34,6 +34,7 @@ export const TourDepartureZ = EntityZ.extend({
   itineraryOID: EntityOIDZ,
 
   departureCode: z.string().max(50),
+  customTourName: z.string().optional(),
   description: MultiLangRecordZ(z.string()),
 
   status: z.nativeEnum(TourDepartureStatus),
