@@ -43,6 +43,7 @@ export const TourDepartureAccommodationZ = EntityZ.extend({
   contact: z.string(),
   address: z.string(),
   description: MultiLangRecordZ(z.string()),
+  remarks: z.string().optional(),
   poiOID: EntityOIDZ.optional(),
   countryCode: z.string(),
   cityCode: z.string(),
