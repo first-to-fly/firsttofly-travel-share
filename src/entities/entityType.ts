@@ -71,6 +71,7 @@ export enum EntityType {
 
   // OPERATIONS
   TOUR_DEPARTURE = "tourDeparture",
+  TOUR_DEPARTURE_ACCOMMODATION = "tourDepartureAccommodation",
   EXCHANGE_ORDER = "exchangeOrder",
   EXCHANGE_ORDER_ITEM = "exchangeOrderItem",
 
