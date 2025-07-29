@@ -3,7 +3,6 @@ import { z } from "zod";
 
 import { EntityOIDZ, EntityZ } from "../../entities/entity";
 import { EntityType } from "../../entities/entityType";
-import { TourDepartureAccommodationStatus } from "../../entities/Operations/TourDepartureAccommodation";
 import { GeoPointZ } from "../../entities/Settings/General/POI";
 import { DateISOStringZ } from "../../types/date";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
@@ -29,7 +28,6 @@ const BaseTourDepartureAccommodationZ = EntityZ.extend({
   poiOID: EntityOIDZ.optional(),
   countryCode: z.string(),
   cityCode: z.string(),
-  status: z.nativeEnum(TourDepartureAccommodationStatus),
 });
 
 const CreateTourDepartureAccommodationZ = BaseTourDepartureAccommodationZ.omit({

@@ -6,15 +6,6 @@ import { EntityOIDZ, EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 import { GeoPointZ } from "../Settings/General/POI";
 
-/**
- * TourDepartureAccommodation status enum
- */
-export enum TourDepartureAccommodationStatus {
-  DRAFT = "draft",
-  CONFIRMED = "confirmed",
-  BOOKED = "booked",
-  CANCELLED = "cancelled",
-}
 
 export enum TourDepartureAccommodationEvents {
   TOUR_DEPARTURE_ACCOMMODATION_UPDATED = "TOUR_DEPARTURE_ACCOMMODATION_UPDATED",
@@ -47,7 +38,6 @@ export const TourDepartureAccommodationZ = EntityZ.extend({
   poiOID: EntityOIDZ.optional(),
   countryCode: z.string(),
   cityCode: z.string(),
-  status: z.nativeEnum(TourDepartureAccommodationStatus),
 }).refine(
   (data) => new Date(data.checkOut) > new Date(data.checkIn),
   {
