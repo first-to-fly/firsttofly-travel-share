@@ -1,4 +1,5 @@
 import { ApprovalPermissions } from "./entities/approval.permission";
+import { ApprovalRequestPermissions } from "./entities/approval-request.permission";
 import { AssembleLocationAirlinesPermissions } from "./entities/assemble-location-airlines.permission";
 import { BadgePermissions } from "./entities/badge.permission";
 import { BudgetPermissions } from "./entities/budget.permission";
@@ -97,6 +98,7 @@ const EntityPermissions = {
   Supplier: SupplierPermissions,
   "Group Tour Booking": GroupTourBookingPermissions,
   "Approval Management": ApprovalPermissions,
+  "Approval Request": ApprovalRequestPermissions,
   "User Message": UserMessagePermissions,
   "Payment Order": PaymentOrderPermissions,
   Transaction: TransactionPermissions,
