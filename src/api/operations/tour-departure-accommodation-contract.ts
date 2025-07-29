@@ -28,6 +28,7 @@ const BaseTourDepartureAccommodationZ = EntityZ.extend({
   poiOID: EntityOIDZ.optional(),
   countryCode: z.string(),
   cityCode: z.string(),
+  dev: z.string(),
 });
 
 const CreateTourDepartureAccommodationZ = BaseTourDepartureAccommodationZ.omit({

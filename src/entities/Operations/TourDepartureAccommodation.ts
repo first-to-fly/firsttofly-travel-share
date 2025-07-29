@@ -38,6 +38,7 @@ export const TourDepartureAccommodationZ = EntityZ.extend({
   poiOID: EntityOIDZ.optional(),
   countryCode: z.string(),
   cityCode: z.string(),
+  dev: z.string(),
 }).refine(
   (data) => new Date(data.checkOut) > new Date(data.checkIn),
   {
