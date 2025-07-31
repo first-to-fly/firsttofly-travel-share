@@ -23,12 +23,12 @@ export const TourDepartureAccommodationZ = EntityZ.extend({
   checkIn: DateISOStringZ
     .refine(
       (date) => new Date(date) >= new Date(),
-      "Check-in date must be in the future"
+      "Check-in date must be in the future",
     ),
   checkOut: DateISOStringZ
     .refine(
       (date) => new Date(date) >= new Date(),
-      "Check-out date must be in the future"
+      "Check-out date must be in the future",
     ),
   location: GeoPointZ,
   contact: z.string(),
@@ -44,7 +44,7 @@ export const TourDepartureAccommodationZ = EntityZ.extend({
   {
     message: "Check-out date must be after check-in date",
     path: ["checkOut"],
-  }
+  },
 ).refine(
   (data) => {
     const checkIn = new Date(data.checkIn);
@@ -55,7 +55,7 @@ export const TourDepartureAccommodationZ = EntityZ.extend({
   {
     message: "Accommodation stay cannot exceed 365 days",
     path: ["checkOut"],
-  }
+  },
 );
 
 export type TourDepartureAccommodation = z.infer<typeof TourDepartureAccommodationZ>;
