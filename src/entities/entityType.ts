@@ -94,6 +94,10 @@ export enum EntityType {
   BUDGET = "budget",
   BUDGET_ENTRY = "budgetEntry",
 
+  // FINANCE
+  BILL = "bill",
+  MATCH_DOC = "matchDoc",
+
   // USER MESSAGES
   USER_MESSAGE = "userMessage",
 }

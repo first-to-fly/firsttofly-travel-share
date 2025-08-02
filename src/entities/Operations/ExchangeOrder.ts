@@ -59,6 +59,10 @@ export const ExchangeOrderZ = EntityZ.extend({
   remarks: z.string().optional(),
 
   isArchived: z.boolean(),
+
+  // Bill relationship fields
+  billOID: EntityOIDZ.optional(),
+  billUsedAmount: z.number().optional(),
 });
 
 export type ExchangeOrder = z.infer<typeof ExchangeOrderZ>;

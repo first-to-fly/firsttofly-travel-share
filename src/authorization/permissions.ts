@@ -2,6 +2,7 @@ import { ApprovalPermissions } from "./entities/approval.permission";
 import { ApprovalRequestPermissions } from "./entities/approval-request.permission";
 import { AssembleLocationAirlinesPermissions } from "./entities/assemble-location-airlines.permission";
 import { BadgePermissions } from "./entities/badge.permission";
+import { BillPermissions } from "./entities/bill.permission";
 import { BudgetPermissions } from "./entities/budget.permission";
 import { CostingItemPermissions } from "./entities/costing-item.permission";
 import { CostingTemplatePermissions } from "./entities/costing-template.permission";
@@ -92,6 +93,7 @@ const EntityPermissions = {
   "Group Tour Itinerary": GroupTourItineraryPermissions,
   "Tour Departure": TourDeparturePermissions,
   Budget: BudgetPermissions,
+  Bill: BillPermissions,
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,
   "Transport Plan": TransportPlanPermissions,
