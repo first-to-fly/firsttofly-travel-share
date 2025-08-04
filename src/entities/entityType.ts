@@ -19,6 +19,7 @@ export enum EntityType {
   TENANT = "tenant",
 
   DOCUMENT = "document",
+  MEDIA = "media",
 
   // PRODUCT SETTINGS
   BADGE = "badge",

@@ -8,6 +8,7 @@ import { i18nContract } from "./i18n/contract";
 import { miscContract } from "./misc/contract";
 import { operationsContract } from "./operations/contract";
 import { productsContract } from "./products/contract";
+import { resourcesContract } from "./resources/contract";
 import { salesContract } from "./sales/contract";
 import { settingsContract } from "./settings/contract";
 import { userContract } from "./user/contract";
@@ -22,6 +23,7 @@ export const apiContract = initContract().router({
   sales: salesContract,
   settings: settingsContract,
   document: documentContract,
+  resources: resourcesContract,
   authorization: authorizationContract,
   misc: miscContract,
   user: userContract,

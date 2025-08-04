@@ -22,6 +22,7 @@ import { GroupTourProductPermissions } from "./entities/group-tour-product.permi
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
 import { LocationPermissions } from "./entities/location.permission";
 import { MealPermissions } from "./entities/meal.permission";
+import { MediaPermissions } from "./entities/media.permission";
 import { PaymentOrderPermissions } from "./entities/payment-order.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { PrivacyPolicyPermissions } from "./entities/privacy-policy.permission";
@@ -61,6 +62,7 @@ const EntityPermissions = {
   Department: DepartmentPermissions,
   Deposit: DepositPermissions,
   Document: DocumentPermissions,
+  Media: MediaPermissions,
   Product: ProductPermissions,
   Badge: BadgePermissions,
   "Costing Item": CostingItemPermissions,
