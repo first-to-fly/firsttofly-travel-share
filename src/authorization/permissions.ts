@@ -12,6 +12,7 @@ import { DesignationPermissions } from "./entities/designation.permission";
 import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
 import { ExchangeOrderPermissions } from "./entities/exchange-order.permission";
+import { GitMaterializationPermissions } from "./entities/git-materialization.permission";
 import { GroupTourBookingPermissions } from "./entities/group-tour-booking.permission";
 import { GroupTourBookingPaxPermissions } from "./entities/group-tour-booking-pax.permission";
 import { GroupTourBookingRoomPermissions } from "./entities/group-tour-booking-room.permission";
@@ -107,6 +108,7 @@ const EntityPermissions = {
   "Payment Order": PaymentOrderPermissions,
   Transaction: TransactionPermissions,
   "Exchange Order": ExchangeOrderPermissions,
+  "GIT Materialization": GitMaterializationPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
