@@ -12,6 +12,14 @@ export enum EntityType {
   GROUP_TOUR_PRICING = "groupTourPricing",
   GROUP_TOUR_PNL_SIMULATION = "groupTourPNLSimulation",
 
+  // INDEPENDENT TOUR PRODUCTS
+  INDEPENDENT_TOUR_PRODUCT = "independentTourProduct",
+  INDEPENDENT_TOUR_COSTING = "independentTourCosting",
+  INDEPENDENT_TOUR_PRICING = "independentTourPricing",
+  INDEPENDENT_TOUR_ACCOMMODATION_COSTING = "independentTourAccommodationCosting",
+  INDEPENDENT_TOUR_MISCELLANEOUS_COSTING = "independentTourMiscellaneousCosting",
+  INDEPENDENT_TOUR_OPTIONAL_SERVICE_COSTING = "independentTourOptionalServiceCosting",
+
   PRODUCT_TYPE = "productType",
 
   TERM = "term",
