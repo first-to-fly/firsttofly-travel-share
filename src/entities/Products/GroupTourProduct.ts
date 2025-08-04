@@ -50,6 +50,9 @@ export const GroupTourProductZ = EntityZ.extend({
   ownerOIDs: z.array(z.string()).optional(),
 
   media: z.array(NamedURLZ).default([]),
+  coverPicture: NamedURLZ.optional(),
+  productBannerDesktop: NamedURLZ.optional(),
+  productBannerMobile: NamedURLZ.optional(),
 });
 
 export type GroupTourProduct = z.infer<typeof GroupTourProductZ>;
