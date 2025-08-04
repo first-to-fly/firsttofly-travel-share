@@ -37,6 +37,7 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   transportType: true,
   assembleLocationAirlineOID: true,
   assembleAirlineLocationTime: true,
+  hkSeat: true,
 });
 
 const UpdateTourDepartureZ = CreateTourDepartureZ.omit({
