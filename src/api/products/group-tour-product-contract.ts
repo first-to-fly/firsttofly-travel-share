@@ -51,6 +51,10 @@ const CreateGroupTourProductZ = GroupTourProductZ.pick({
   coverPicture: true,
   productBannerDesktop: true,
   productBannerMobile: true,
+
+  videos: true,
+  itineraryPDFs: true,
+  documentations: true,
 });
 
 const UpdateGroupTourProductZ = CreateGroupTourProductZ.omit({
