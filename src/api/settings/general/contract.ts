@@ -9,6 +9,7 @@ import { referenceCodeContract } from "./reference-code-contract";
 import { stationCodeContract } from "./station-code-contract";
 import { tenantContract } from "./tenant-contract";
 import { termContract } from "./term-contract";
+import { mediaContract } from "./media-contract";
 
 
 export const generalSettingContract = initContract().router({
@@ -21,4 +22,5 @@ export const generalSettingContract = initContract().router({
   stationCode: stationCodeContract,
   tenant: tenantContract,
   term: termContract,
+  media: mediaContract,
 });

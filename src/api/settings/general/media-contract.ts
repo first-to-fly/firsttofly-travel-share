@@ -1,8 +1,8 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { EntityOIDZ } from "../../entities/entity";
-import { MediaTypeZ, MediaZ } from "../../entities/Resources/Media";
+import { EntityOIDZ } from "../../../entities/entity";
+import { MediaTypeZ, MediaZ } from "../../../entities/Settings/General/Media";
 
 
 const basePath = "/api/resources/medias";
