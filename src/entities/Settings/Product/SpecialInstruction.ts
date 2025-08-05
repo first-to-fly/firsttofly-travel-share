@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { ProductType } from "../../../enums/ProductType";
 import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -22,7 +23,7 @@ export const SpecialInstructionZ = EntityZ.extend({
 
   // Relationships
   coveredEntityOIDs: z.array(EntityOIDZ), // OIDs of Sectors / SectorGroups / GroupTourProducts
-  productTypeOIDs: z.array(EntityOIDZ),
+  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
 });
 
 export type SpecialInstruction = z.infer<typeof SpecialInstructionZ>;

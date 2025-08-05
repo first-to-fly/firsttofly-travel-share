@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { ProductType } from "../../../enums/ProductType";
 import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -12,7 +13,7 @@ export enum UsefulInfoEvents {
 export const UsefulInfoZ = EntityZ.extend({
   entityType: z.literal(EntityType.USEFUL_INFO),
 
-  productTypeOIDs: z.array(EntityOIDZ).optional(),
+  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
 
   name: z.string(),
   isActive: z.boolean().default(true),
