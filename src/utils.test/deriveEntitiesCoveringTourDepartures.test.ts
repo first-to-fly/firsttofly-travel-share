@@ -1,9 +1,10 @@
 import assert from "assert";
 
+import { ProductType } from "../enums/ProductType";
 import { deriveEntitiesCoveringTourDepartures } from "../utils/deriveEntitiesCoveringTourDepartures";
 
 
-type TestEntity = { oid: string; coveredEntityOIDs: string[] };
+type TestEntity = { oid: string; coveredEntityOIDs: string[]; productTypes: ProductType[] };
 
 function runTests() {
   console.log("Running deriveEntitiesCoveringTourDepartures tests...");
@@ -13,22 +14,27 @@ function runTests() {
     {
       oid: "ent-departure",
       coveredEntityOIDs: ["dep-1"],
+      productTypes: [ProductType.GIT, ProductType.FIT],
     },
     {
       oid: "ent-product",
       coveredEntityOIDs: ["prod-1"],
+      productTypes: [ProductType.GIT],
     },
     {
       oid: "ent-sector-group",
       coveredEntityOIDs: ["sg-1"],
+      productTypes: [ProductType.FIT],
     },
     {
       oid: "ent-sector",
       coveredEntityOIDs: ["s-1", "s-2"],
+      productTypes: [ProductType.GIT, ProductType.FIT],
     },
     {
       oid: "ent-unrelated",
       coveredEntityOIDs: ["x-1"],
+      productTypes: [ProductType.FIT],
     },
   ];
 
@@ -38,6 +44,7 @@ function runTests() {
       oid: "dep-1",
       product: {
         oid: "prod-1",
+        type: ProductType.GIT,
         sectorGroupOID: "sg-1",
         sectorOIDs: ["s-1", "s-3"],
       },
@@ -57,6 +64,7 @@ function runTests() {
       oid: "dep-2",
       product: {
         oid: "prod-1",
+        type: ProductType.GIT,
         sectorGroupOID: "sg-2",
         sectorOIDs: ["s-3"],
       },
@@ -76,6 +84,7 @@ function runTests() {
       oid: "dep-2",
       product: {
         oid: "prod-2",
+        type: ProductType.FIT,
         sectorGroupOID: "sg-1",
         sectorOIDs: [],
       },
@@ -94,6 +103,7 @@ function runTests() {
       oid: "dep-2",
       product: {
         oid: "prod-2",
+        type: ProductType.GIT,
         sectorGroupOID: undefined,
         sectorOIDs: ["s-2"],
       },
@@ -112,6 +122,7 @@ function runTests() {
       oid: "dep-x",
       product: {
         oid: "prod-x",
+        type: ProductType.GIT,
         sectorGroupOID: "sg-x",
         sectorOIDs: ["s-x"],
       },
@@ -119,6 +130,45 @@ function runTests() {
     const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
     assert.strictEqual(closestMatched, undefined, "Should have no closest match");
     assert.deepStrictEqual(allMatched, [], "Should have no matches");
+  }
+
+  // Test 6: ProductType filtering - should only match entities with correct productType
+  {
+    const departure = {
+      oid: "dep-1",
+      product: {
+        oid: "prod-1",
+        type: ProductType.FIT,
+        sectorGroupOID: "sg-1",
+        sectorOIDs: ["s-1", "s-3"],
+      },
+    };
+    const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
+    // Should match departure (supports both GIT/FIT) but not product (only supports GIT)
+    assert.strictEqual(closestMatched?.oid, "ent-departure", "Should match departure entity first");
+    assert.deepStrictEqual(
+      allMatched.map((e) => e.oid),
+      ["ent-departure", "ent-sector-group", "ent-sector"],
+      "Should only include entities that support FIT productType",
+    );
+  }
+
+  // Test 7: ProductType filtering - no entities support the productType
+  {
+    // Create a departure with a productType that no entities in our test data support for this specific case
+    const departure = {
+      oid: "dep-x",
+      product: {
+        oid: "prod-1", // This would normally match ent-product
+        type: ProductType.FIT, // But ent-product only supports GIT
+        sectorGroupOID: "sg-x",
+        sectorOIDs: ["s-x"],
+      },
+    };
+    const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
+    // Should have no matches because ent-product only supports GIT, not FIT
+    assert.strictEqual(closestMatched, undefined, "Should have no closest match due to productType filter");
+    assert.deepStrictEqual(allMatched, [], "Should have no matches due to productType filter");
   }
 
   console.log("All tests passed.");
