@@ -30,6 +30,12 @@ const CreateIndependentTourProductZ = IndependentTourProductZ.pick({
   isActive: true,
   published: true,
   media: true,
+  coverPicture: true,
+  productBannerDesktop: true,
+  productBannerMobile: true,
+  videos: true,
+  itineraryPDFs: true,
+  documentations: true,
 });
 
 const UpdateIndependentTourProductZ = CreateIndependentTourProductZ.omit({

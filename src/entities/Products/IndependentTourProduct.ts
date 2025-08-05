@@ -1,9 +1,21 @@
 import { z } from "zod";
 
-import { MultiLangRecordZ } from "../../types/multipleLanguage";
+import { LanguageCodeZ, MultiLangRecordZ } from "../../types/multipleLanguage";
+import { NamedURLZ } from "../../types/url";
 import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
+
+export enum IndependentTourProductDocumentationType {
+  SALE_KIT = "sale-kit",
+  COMPARISON_CHART = "comparison-chart",
+  USP_LIST = "usp-list",
+  IMPORTANT_NOTICE = "important-notice",
+  IMMIGRATION_POLICY = "immigration-policy",
+  SPECIAL_REQUIREMENTS = "special-requirements",
+  VISA_APPLICATION_FORM = "visa-application-form",
+  EXTRA_INFORMATION = "extra-information",
+}
 
 // Interface for Independent Tour Product MultiLanguageContent fields
 export interface MultiLanguageContent {
@@ -48,10 +60,31 @@ export const IndependentTourProductZ = EntityZ.extend({
   isActive: z.boolean(),
   published: z.boolean(),
 
-  media: z.array(z.object({
-    name: z.string(),
-    url: z.string(),
-  })).default([]),
+  media: z.array(NamedURLZ).default([]),
+  coverPicture: NamedURLZ.optional(),
+  productBannerDesktop: NamedURLZ.optional(),
+  productBannerMobile: NamedURLZ.optional(),
+
+  videos: z.array(z.object({
+    active: z.boolean(),
+    title: z.string(),
+    file: NamedURLZ,
+    updatedAt: z.string(),
+  })).optional(),
+  itineraryPDFs: z.array(z.object({
+    active: z.boolean(),
+    lang: LanguageCodeZ,
+    title: z.string(),
+    itineraryOID: z.string().optional(),
+    file: NamedURLZ,
+    updatedAt: z.string(),
+  })).optional(),
+  documentations: z.array(z.object({
+    active: z.boolean(),
+    type: z.nativeEnum(IndependentTourProductDocumentationType),
+    file: NamedURLZ,
+    updatedAt: z.string(),
+  })).optional(),
 });
 
 export type IndependentTourProduct = z.infer<typeof IndependentTourProductZ>;
