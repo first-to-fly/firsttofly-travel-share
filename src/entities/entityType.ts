@@ -19,6 +19,7 @@ export enum EntityType {
   TENANT = "tenant",
 
   DOCUMENT = "document",
+  MEDIA = "media",
 
   // PRODUCT SETTINGS
   BADGE = "badge",
@@ -93,6 +94,10 @@ export enum EntityType {
   // BUDGET
   BUDGET = "budget",
   BUDGET_ENTRY = "budgetEntry",
+
+  // FINANCE
+  BILL = "bill",
+  MATCH_DOC = "matchDoc",
 
   // USER MESSAGES
   USER_MESSAGE = "userMessage",

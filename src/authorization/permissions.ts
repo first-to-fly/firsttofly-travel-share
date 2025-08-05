@@ -2,6 +2,7 @@ import { ApprovalPermissions } from "./entities/approval.permission";
 import { ApprovalRequestPermissions } from "./entities/approval-request.permission";
 import { AssembleLocationAirlinesPermissions } from "./entities/assemble-location-airlines.permission";
 import { BadgePermissions } from "./entities/badge.permission";
+import { BillPermissions } from "./entities/bill.permission";
 import { BudgetPermissions } from "./entities/budget.permission";
 import { CostingItemPermissions } from "./entities/costing-item.permission";
 import { CostingTemplatePermissions } from "./entities/costing-template.permission";
@@ -21,6 +22,7 @@ import { GroupTourProductPermissions } from "./entities/group-tour-product.permi
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
 import { LocationPermissions } from "./entities/location.permission";
 import { MealPermissions } from "./entities/meal.permission";
+import { MediaPermissions } from "./entities/media.permission";
 import { PaymentOrderPermissions } from "./entities/payment-order.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { PrivacyPolicyPermissions } from "./entities/privacy-policy.permission";
@@ -60,6 +62,7 @@ const EntityPermissions = {
   Department: DepartmentPermissions,
   Deposit: DepositPermissions,
   Document: DocumentPermissions,
+  Media: MediaPermissions,
   Product: ProductPermissions,
   Badge: BadgePermissions,
   "Costing Item": CostingItemPermissions,
@@ -92,6 +95,7 @@ const EntityPermissions = {
   "Group Tour Itinerary": GroupTourItineraryPermissions,
   "Tour Departure": TourDeparturePermissions,
   Budget: BudgetPermissions,
+  Bill: BillPermissions,
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,
   "Transport Plan": TransportPlanPermissions,
