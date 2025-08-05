@@ -72,6 +72,10 @@ export const TourDepartureZ = EntityZ.extend({
 
   assembleLocationAirlineOID: EntityOIDZ.optional(),
   assembleAirlineLocationTime: z.string().max(5).regex(/^\d{2}:\d{2}$/).optional(),
+  hkSeat: FTFSafeMaxNumberZ({
+    max: 9_999,
+    name: "HK Seat",
+  }).int().nonnegative().optional(),
 
   tourLeaderOIDs: z.array(EntityOIDZ).optional(),
   tourManagerOIDs: z.array(EntityOIDZ).optional(),

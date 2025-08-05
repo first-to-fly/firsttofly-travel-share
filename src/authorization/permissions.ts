@@ -2,6 +2,7 @@ import { ApprovalPermissions } from "./entities/approval.permission";
 import { ApprovalRequestPermissions } from "./entities/approval-request.permission";
 import { AssembleLocationAirlinesPermissions } from "./entities/assemble-location-airlines.permission";
 import { BadgePermissions } from "./entities/badge.permission";
+import { BillPermissions } from "./entities/bill.permission";
 import { BudgetPermissions } from "./entities/budget.permission";
 import { CostingItemPermissions } from "./entities/costing-item.permission";
 import { CostingTemplatePermissions } from "./entities/costing-template.permission";
@@ -11,6 +12,7 @@ import { DesignationPermissions } from "./entities/designation.permission";
 import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
 import { ExchangeOrderPermissions } from "./entities/exchange-order.permission";
+import { GitMaterializationPermissions } from "./entities/git-materialization.permission";
 import { GroupTourBookingPermissions } from "./entities/group-tour-booking.permission";
 import { GroupTourBookingPaxPermissions } from "./entities/group-tour-booking-pax.permission";
 import { GroupTourBookingRoomPermissions } from "./entities/group-tour-booking-room.permission";
@@ -22,6 +24,7 @@ import { IndependentTourProductPermissions } from "./entities/independent-tour-p
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
 import { LocationPermissions } from "./entities/location.permission";
 import { MealPermissions } from "./entities/meal.permission";
+import { MediaPermissions } from "./entities/media.permission";
 import { PaymentOrderPermissions } from "./entities/payment-order.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { PrivacyPolicyPermissions } from "./entities/privacy-policy.permission";
@@ -61,6 +64,7 @@ const EntityPermissions = {
   Department: DepartmentPermissions,
   Deposit: DepositPermissions,
   Document: DocumentPermissions,
+  Media: MediaPermissions,
   Product: ProductPermissions,
   Badge: BadgePermissions,
   "Costing Item": CostingItemPermissions,
@@ -94,6 +98,7 @@ const EntityPermissions = {
   "Independent Tour Product": IndependentTourProductPermissions,
   "Tour Departure": TourDeparturePermissions,
   Budget: BudgetPermissions,
+  Bill: BillPermissions,
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,
   "Transport Plan": TransportPlanPermissions,
@@ -105,6 +110,7 @@ const EntityPermissions = {
   "Payment Order": PaymentOrderPermissions,
   Transaction: TransactionPermissions,
   "Exchange Order": ExchangeOrderPermissions,
+  "GIT Materialization": GitMaterializationPermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;
