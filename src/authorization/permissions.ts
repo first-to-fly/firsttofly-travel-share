@@ -19,6 +19,7 @@ import { GroupTourCostingPermissions } from "./entities/group-tour-costing.permi
 import { GroupTourItineraryPermissions } from "./entities/group-tour-itinerary.permission";
 import { GroupTourPricingPermissions } from "./entities/group-tour-pricing.permission";
 import { GroupTourProductPermissions } from "./entities/group-tour-product.permission";
+import { IndependentTourProductPermissions } from "./entities/independent-tour-product.permission";
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
 import { LocationPermissions } from "./entities/location.permission";
 import { MealPermissions } from "./entities/meal.permission";
@@ -93,6 +94,7 @@ const EntityPermissions = {
   "Group Tour Product": GroupTourProductPermissions,
   "Group Tour Pricing": GroupTourPricingPermissions,
   "Group Tour Itinerary": GroupTourItineraryPermissions,
+  "Independent Tour Product": IndependentTourProductPermissions,
   "Tour Departure": TourDeparturePermissions,
   Budget: BudgetPermissions,
   Bill: BillPermissions,
