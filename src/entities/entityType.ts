@@ -18,6 +18,10 @@ export enum EntityType {
   INDEPENDENT_TOUR_ACCOMMODATION = "independentTourAccommodation",
   INDEPENDENT_TOUR_MISCELLANEOUS = "independentTourMiscellaneous",
   INDEPENDENT_TOUR_OPTIONAL_SERVICE = "independentTourOptionalService",
+  INDEPENDENT_TOUR_ITINERARY = "independentTourItinerary",
+  INDEPENDENT_TOUR_ITINERARY_DAY = "independentTourItineraryDay",
+  INDEPENDENT_TOUR_ITINERARY_EVENT = "independentTourItineraryEvent",
+  INDEPENDENT_TOUR_ITINERARY_MEAL = "independentTourItineraryMeal",
 
   PRODUCT_TYPE = "productType",
 
