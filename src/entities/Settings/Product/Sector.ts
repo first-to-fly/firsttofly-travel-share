@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { ProductType } from "../../../enums/ProductType";
 import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -20,7 +21,7 @@ export const SectorZ = EntityZ.extend({
 
   isPopular: z.boolean().default(false),
 
-  productTypeOIDs: z.array(EntityOIDZ).optional(),
+  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
 
   departmentOID: EntityOIDZ.optional(),
 });

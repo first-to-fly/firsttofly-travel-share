@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { ProductType } from "../../../enums/ProductType";
 import { EntityOIDZ, EntityZ } from "../../entity";
 
 
@@ -16,7 +17,7 @@ export const DepositZ = EntityZ.extend({
   remarks: z.string().optional(),
 
   coveredEntityOIDs: z.array(EntityOIDZ),
-  productTypeOIDs: z.array(EntityOIDZ),
+  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
 
   isActive: z.boolean().default(true),
 });

@@ -55,6 +55,7 @@ const CreateGroupTourItineraryZ = GroupTourItineraryZ.pick({
   isActive: true,
   groupTourProductOID: true,
   tenantOID: true,
+  pdfs: true,
 }).extend({
   groupTourItineraryDays: z.array(CreateGroupTourItineraryDayZ),
 });

@@ -71,6 +71,12 @@ export const GroupTourItineraryZ = EntityZ.extend({
   validityEndDate: DateISOStringZ,
   isActive: z.boolean(),
 
+  pdfs: MultiLangRecordZ(z.array(z.object({
+    active: z.boolean(),
+    file: NamedURLZ,
+    updatedAt: z.string(),
+  }))).optional(),
+
   groupTourItineraryDays: z.array(GroupTourItineraryDayZ),
 });
 

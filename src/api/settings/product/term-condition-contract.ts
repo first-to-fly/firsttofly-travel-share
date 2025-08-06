@@ -30,7 +30,7 @@ const CreateTermConditionZ = TermConditionZ.pick({
   description: true,
   remarks: true,
 
-  productTypeOIDs: true,
+  productTypes: true,
 
   coveredEntityOIDs: true,
 });

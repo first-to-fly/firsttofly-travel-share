@@ -108,5 +108,8 @@ export enum EntityType {
 
   // USER MESSAGES
   USER_MESSAGE = "userMessage",
+
+  // WAREHOUSE MANAGEMENT
+  WAREHOUSE = "warehouse",
 }
 export const EntityTypes = Object.values(EntityType);

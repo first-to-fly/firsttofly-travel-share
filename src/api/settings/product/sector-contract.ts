@@ -13,7 +13,7 @@ const CreateSectorZ = SectorZ.pick({
   isActive: true,
   isPopular: true,
   images: true,
-  productTypeOIDs: true,
+  productTypes: true,
   departmentOID: true,
 });
 
