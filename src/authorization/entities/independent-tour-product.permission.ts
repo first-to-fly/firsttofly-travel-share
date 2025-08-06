@@ -4,6 +4,14 @@ export const IndependentTourProductPermissions = {
     name: "View Independent Tour Product",
     description: "Can view own Independent Tour Products",
   },
+  "user:independent-tour-product:update": {
+    name: "Update Own Independent Tour Product",
+    description: "Can update their own Independent Tour Products",
+  },
+  "user:independent-tour-product:delete": {
+    name: "Delete Own Independent Tour Product",
+    description: "Can delete their own Independent Tour Products",
+  },
 
   // Department level permissions
   "dept:independent-tour-product:view": {
