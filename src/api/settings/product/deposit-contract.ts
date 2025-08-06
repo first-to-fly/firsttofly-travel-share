@@ -13,7 +13,7 @@ const CreateDepositZ = DepositZ.pick({
   type: true,
   remarks: true,
   coveredEntityOIDs: true,
-  productTypeOIDs: true,
+  productTypes: true,
   isActive: true,
 });
 

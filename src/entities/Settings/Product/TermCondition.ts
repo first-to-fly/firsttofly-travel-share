@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { ProductType } from "../../../enums/ProductType";
 import { NamedURLZ } from "../../../types/url";
 import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
@@ -35,7 +36,7 @@ export const TermConditionZ = EntityZ.extend({
 
   coveredEntityOIDs: z.array(EntityOIDZ), // OIDs of Sectors / SectorGroups / GroupTourProducts
 
-  productTypeOIDs: z.array(EntityOIDZ),
+  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
 });
 
 export type TermCondition = z.infer<typeof TermConditionZ>;

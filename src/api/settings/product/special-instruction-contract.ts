@@ -17,7 +17,7 @@ const CreateSpecialInstructionZ = SpecialInstructionZ.pick({
   isCustomized: true,
 
   coveredEntityOIDs: true,
-  productTypeOIDs: true,
+  productTypes: true,
 });
 
 const UpdateSpecialInstructionZ = CreateSpecialInstructionZ.omit({

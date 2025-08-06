@@ -20,7 +20,7 @@ const CreateUsefulInfoZ = UsefulInfoZ.pick({
   isActive: true,
   remarks: true,
   info: true,
-  productTypeOIDs: true,
+  productTypes: true,
   applyToEntityOIDs: true,
 }).extend({
   refs: z.array(UsefulInfoRefZ).optional(),
