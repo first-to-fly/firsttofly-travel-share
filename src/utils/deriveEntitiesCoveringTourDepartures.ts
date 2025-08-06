@@ -9,7 +9,7 @@ import { ProductType } from "../enums/ProductType";
  * @returns Object containing `closestMatched` (most specific match) and `allMatched` (all matches).
  */
 export function deriveEntitiesCoveringTourDepartures<
-  Entity extends { oid: string; coveredEntityOIDs: string[]; productTypes: ProductType[] },
+  Entity extends { oid: string; coveredEntityOIDs: string[]; productTypes?: ProductType[] },
 >(
   entities: Entity[],
   departure: {
@@ -23,7 +23,7 @@ export function deriveEntitiesCoveringTourDepartures<
   },
 ): { closestMatched?: Entity; allMatched: Entity[] } {
   // First, filter entities by productTypes - only consider entities that support the product type
-  const productTypeFilteredEntities = entities.filter((entity) => entity.productTypes.includes(departure.product.type));
+  const productTypeFilteredEntities = entities.filter((entity) => !entity.productTypes || entity.productTypes.includes(departure.product.type));
 
   // Define priority levels: departure OID > product OID > sector group OID > sector OIDs
   const levels: (Set<string>)[] = [

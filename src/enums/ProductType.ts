@@ -27,3 +27,27 @@ export function getAllProductTypes(): string[] {
 export function isValidProductType(type: string): type is ProductType {
   return Object.values(ProductType).includes(type as ProductType);
 }
+
+/**
+ * Get display label for a product type
+ */
+export function getProductTypeLabel(type: ProductType): string {
+  switch (type) {
+    case ProductType.GIT:
+      return "GIT";
+    case ProductType.FIT:
+      return "FIT";
+    default:
+      return type;
+  }
+}
+
+/**
+ * Get all product types as options for form selects
+ */
+export function getProductTypeOptions() {
+  return Object.values(ProductType).map(type => ({
+    label: getProductTypeLabel(type),
+    value: type,
+  }));
+}
