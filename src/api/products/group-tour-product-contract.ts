@@ -47,13 +47,11 @@ const CreateGroupTourProductZ = GroupTourProductZ.pick({
 
   ownerOIDs: true,
 
-  media: true,
   coverPicture: true,
   productBannerDesktop: true,
   productBannerMobile: true,
 
   videos: true,
-  itineraryPDFs: true,
   documentations: true,
 });
 
