@@ -8,7 +8,6 @@ import { groupTourProductContract } from "./group-tour-product-contract";
 import { independentTourAccommodationContract } from "./independent-tour-accommodation-contract";
 import { independentTourMiscellaneousContract } from "./independent-tour-miscellaneous-contract";
 import { independentTourOptionalServiceContract } from "./independent-tour-optional-service-contract";
-import { independentTourPricingContract } from "./independent-tour-pricing-contract";
 import { independentTourProductContract } from "./independent-tour-product-contract";
 import { transportPlanContract } from "./transport-plan-contract";
 
@@ -25,7 +24,6 @@ export const productsContract = initContract().router({
 
   independentTour: {
     product: independentTourProductContract,
-    pricing: independentTourPricingContract,
     accommodation: independentTourAccommodationContract,
     miscellaneous: independentTourMiscellaneousContract,
     optionalService: independentTourOptionalServiceContract,

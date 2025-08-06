@@ -57,6 +57,8 @@ export const IndependentTourProductZ = EntityZ.extend({
   salesPeriodStartDate: z.string(),
   salesPeriodEndDate: z.string().optional(),
 
+  targetYieldPercentage: z.number().optional(),
+
   isActive: z.boolean(),
   published: z.boolean(),
 
