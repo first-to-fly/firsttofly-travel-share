@@ -33,12 +33,14 @@ export function isValidProductType(type: string): type is ProductType {
  */
 export function getProductTypeLabel(type: ProductType): string {
   switch (type) {
+
     case ProductType.GIT:
       return "GIT";
     case ProductType.FIT:
       return "FIT";
     default:
       return type;
+
   }
 }
 
@@ -46,7 +48,7 @@ export function getProductTypeLabel(type: ProductType): string {
  * Get all product types as options for form selects
  */
 export function getProductTypeOptions() {
-  return Object.values(ProductType).map(type => ({
+  return Object.values(ProductType).map((type) => ({
     label: getProductTypeLabel(type),
     value: type,
   }));
