@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { DateISOStringZ } from "../../types/date";
-import { LanguageCodeZ, MultiLangRecordZ } from "../../types/multipleLanguage";
+import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { FTFSafeMaxNumberZ } from "../../types/number";
 import { NamedURLZ } from "../../types/url";
 import { EntityOIDZ, EntityZ } from "../entity";
@@ -60,7 +60,6 @@ export const GroupTourProductZ = EntityZ.extend({
 
   ownerOIDs: z.array(z.string()).optional(),
 
-  media: z.array(NamedURLZ).default([]),
   coverPicture: NamedURLZ.optional(),
   productBannerDesktop: NamedURLZ.optional(),
   productBannerMobile: NamedURLZ.optional(),
@@ -68,14 +67,6 @@ export const GroupTourProductZ = EntityZ.extend({
   videos: z.array(z.object({
     active: z.boolean(),
     title: z.string(),
-    file: NamedURLZ,
-    updatedAt: z.string(),
-  })).optional(),
-  itineraryPDFs: z.array(z.object({
-    active: z.boolean(),
-    lang: LanguageCodeZ,
-    title: z.string(),
-    itineraryOID: z.string().optional(),
     file: NamedURLZ,
     updatedAt: z.string(),
   })).optional(),
