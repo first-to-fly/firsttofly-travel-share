@@ -25,14 +25,13 @@ const CreateIndependentTourProductZ = IndependentTourProductZ.pick({
   durationNights: true,
   validityStartDate: true,
   validityEndDate: true,
+  targetYieldPercentage: true,
   isActive: true,
   published: true,
-  media: true,
   coverPicture: true,
   productBannerDesktop: true,
   productBannerMobile: true,
   videos: true,
-  itineraryPDFs: true,
   documentations: true,
 });
 
