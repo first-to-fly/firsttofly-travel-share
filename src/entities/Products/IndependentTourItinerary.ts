@@ -71,7 +71,6 @@ export const IndependentTourItineraryZ = EntityZ.extend({
 
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ,
-  isActive: z.boolean(),
 
   pdfs: MultiLangRecordZ(z.array(z.object({
     active: z.boolean(),
