@@ -33,6 +33,7 @@ export const IndependentTourProductZ = EntityZ.extend({
 
   departmentOID: z.string(),
   sectorGroupOID: z.string().optional(),
+  sectorOIDs: z.array(z.string()).optional(),
 
   code: z.string(),
 
@@ -52,9 +53,6 @@ export const IndependentTourProductZ = EntityZ.extend({
 
   validityStartDate: z.string(),
   validityEndDate: z.string().optional(),
-
-  salesPeriodStartDate: z.string(),
-  salesPeriodEndDate: z.string().optional(),
 
   targetYieldPercentage: z.number().optional(),
 
