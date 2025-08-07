@@ -13,7 +13,8 @@ export const GroupTourPNLSimulationZ = EntityZ.omit({
   tenantOID: true,
 }).extend({
   groupTourPricingOID: EntityOIDZ,
-  groupVolumes: z.array(z.number()),
+  name: z.string(),
+  excelJSON: z.unknown(),
 });
 
 export type GroupTourPNLSimulation = z.infer<typeof GroupTourPNLSimulationZ>;

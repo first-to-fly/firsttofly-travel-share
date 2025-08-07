@@ -9,19 +9,42 @@ const basePath = "/api/products/group-tour-pnl-simulations";
 // Create/Update schemas
 const CreateGroupTourPNLSimulationZ = GroupTourPNLSimulationZ.pick({
   groupTourPricingOID: true,
-  tenantOID: true,
-  groupVolumes: true,
+  name: true,
+  excelJSON: true,
 });
 
 const UpdateGroupTourPNLSimulationZ = CreateGroupTourPNLSimulationZ.omit({
   groupTourPricingOID: true,
-  tenantOID: true,
 }).partial();
 
 export type UpdateGroupTourPNLSimulation = z.infer<typeof UpdateGroupTourPNLSimulationZ>;
 export type CreateGroupTourPNLSimulation = z.infer<typeof CreateGroupTourPNLSimulationZ>;
 
 export const groupTourPNLSimulationContract = initContract().router({
+
+  getGroupTourPNLSimulations: {
+    summary: "Get group tour P&L simulations",
+    method: "GET",
+    path: `${basePath}`,
+    query: z.object({
+      tenantOID: z.string().describe("Tenant OID"),
+    }).passthrough(),
+    responses: {
+      200: z.object({
+        oids: z.array(z.string()),
+      }),
+    },
+  },
+
+  createGroupTourPNLSimulations: {
+    summary: "Create multiple group tour P&L simulations",
+    method: "POST",
+    path: `${basePath}/batch-create`,
+    body: z.array(CreateGroupTourPNLSimulationZ),
+    responses: {
+      200: z.array(z.string().describe("OIDs of created group tour P&L simulations")),
+    },
+  },
 
   updateGroupTourPNLSimulations: {
     summary: "Update multiple existing group tour P&L simulations",
