@@ -11,13 +11,13 @@ const CostValueZ = z.object({
   tax: z.number().optional(),
 });
 
-export const IndependentTourMiscellaneousCostingZ = EntityZ.extend({
-  entityType: z.literal(EntityType.INDEPENDENT_TOUR_MISCELLANEOUS_COSTING),
+export const IndependentTourMiscellaneousZ = EntityZ.extend({
+  entityType: z.literal(EntityType.INDEPENDENT_TOUR_MISCELLANEOUS),
 
-  independentTourCostingOID: z.string(),
+  independentTourProductOID: z.string(),
 
   name: z.string(),
   costValue: CostValueZ,
 });
 
-export type IndependentTourMiscellaneousCosting = z.infer<typeof IndependentTourMiscellaneousCostingZ>;
+export type IndependentTourMiscellaneous = z.infer<typeof IndependentTourMiscellaneousZ>;

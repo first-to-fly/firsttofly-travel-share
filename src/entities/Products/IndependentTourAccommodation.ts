@@ -34,10 +34,10 @@ const PeakPeriodZ = z.object({
 // Occupancy pricing from design spec
 const OccupancyPricingZ = z.record(z.nativeEnum(OccupancyType), z.number()); // Record<OccupancyType, number>
 
-export const IndependentTourAccommodationCostingZ = EntityZ.extend({
-  entityType: z.literal(EntityType.INDEPENDENT_TOUR_ACCOMMODATION_COSTING),
+export const IndependentTourAccommodationZ = EntityZ.extend({
+  entityType: z.literal(EntityType.INDEPENDENT_TOUR_ACCOMMODATION),
 
-  independentTourCostingOID: z.string(),
+  independentTourProductOID: z.string(),
 
   name: z.string(),
   costValue: CostValueZ,
@@ -47,4 +47,4 @@ export const IndependentTourAccommodationCostingZ = EntityZ.extend({
   peakPeriods: z.array(PeakPeriodZ),
 });
 
-export type IndependentTourAccommodationCosting = z.infer<typeof IndependentTourAccommodationCostingZ>;
+export type IndependentTourAccommodation = z.infer<typeof IndependentTourAccommodationZ>;
