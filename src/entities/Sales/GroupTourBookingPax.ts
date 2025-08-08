@@ -10,6 +10,7 @@ export const GroupTourBookingPaxPersonalDetailsZ = BookingPaxPersonalDetailsZ;
 export type GroupTourBookingPaxPersonalDetails = BookingPaxPersonalDetails;
 
 export const GroupTourBookingPaxType = BookingPaxType;
+export type GroupTourBookingPaxType = BookingPaxType;  // Type alias for backward compatibility
 export const GroupTourBookingPaxTypeZ = BookingPaxTypeZ;
 
 export const GroupTourBookingPaxZ = EntityZ.extend({
