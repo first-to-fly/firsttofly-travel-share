@@ -20,6 +20,12 @@ export enum MatchDocEvents {
   MATCH_DOC_LIST_UPDATED = "MATCH_DOC_LIST_UPDATED",
 }
 
+export enum MatchDocCategory {
+  PAYMENT_MADE = "payment-made",
+  PAYMENT_RECEIVED = "payment-received",
+  BUDGET_TRANSFER = "budget-transfer",
+}
+
 /**
  * Zod schema for MatchDoc
  */
@@ -28,6 +34,7 @@ export const MatchDocZ = EntityZ.extend({
 
   matchDocNo: z.string(),
   status: z.nativeEnum(MatchDocStatus),
+  category: z.nativeEnum(MatchDocCategory),
 
   issueDate: z.string(),
   dueDate: z.string().optional(),
@@ -37,6 +44,9 @@ export const MatchDocZ = EntityZ.extend({
 
   totalAmount: z.number(),
   currency: z.string(),
+  currencyRate: z.number().optional(),
+  foreignAmount: z.number().optional(),
+  localAmount: z.number().optional(),
 
   remarks: z.string().optional(),
   documentUrl: z.string().optional(),
