@@ -1,7 +1,7 @@
 import { EntityType } from "../../entities/entityType";
 import { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
+import { BookingPaxType } from "../../entities/Sales/BookingTypes";
 import { GroupTourBookingDiscountType, TourDepartureDiscountMetadata } from "../../entities/Sales/GroupTourBookingDiscount";
-import { GroupTourBookingPaxType } from "../../entities/Sales/GroupTourBookingPax";
 import { DiscountMode } from "../../entities/Settings/Product/Discount";
 import {
   isPaxTypeAdult,
@@ -94,7 +94,7 @@ export function createDiscountInput(
  */
 export function convertPaxToDiscountInput(paxData: Array<{
   paxId: string;
-  type: GroupTourBookingPaxType;
+  type: BookingPaxType;
 }>): PaxDiscountInput[] {
   return paxData.map((pax) => ({
     paxOID: `${EntityType.GROUP_TOUR_BOOKING_PAX}:${pax.paxId}`,

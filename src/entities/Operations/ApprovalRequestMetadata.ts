@@ -1,8 +1,9 @@
 import { z } from "zod";
 
 import { EntityOIDZ } from "../entity";
+import { BookingPaxType } from "../Sales/BookingTypes";
 import { GroupTourBookingAddonTypeZ } from "../Sales/GroupTourBookingAddon";
-import { GroupTourBookingPaxPersonalDetailsZ, GroupTourBookingPaxType } from "../Sales/GroupTourBookingPax";
+import { GroupTourBookingPaxPersonalDetailsZ } from "../Sales/GroupTourBookingPax";
 import { ApprovalType } from "../Settings/General/Approval";
 import { DiscountMode } from "../Settings/Product/Discount";
 import { ExchangeOrderStatus } from "./ExchangeOrder";
@@ -40,7 +41,7 @@ export const ApprovalRequestGroupTourBookingTransferMetadataZ = z.object({
       oid: z.string(),
       firstName: z.string(),
       lastName: z.string(),
-      paxType: z.nativeEnum(GroupTourBookingPaxType),
+      paxType: z.nativeEnum(BookingPaxType),
       personalDetails: GroupTourBookingPaxPersonalDetailsZ,
     })),
     rooms: z.array(z.object({
@@ -52,7 +53,7 @@ export const ApprovalRequestGroupTourBookingTransferMetadataZ = z.object({
       infantsCount: z.number(),
       passengerAssignments: z.array(z.object({
         passengerOID: EntityOIDZ,
-        paxType: z.nativeEnum(GroupTourBookingPaxType),
+        paxType: z.nativeEnum(BookingPaxType),
       })),
     })),
     addons: z.array(z.object({

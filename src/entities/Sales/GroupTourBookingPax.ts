@@ -5,17 +5,16 @@ import { EntityOIDZ, EntityZ } from "../entity";
 import { BookingPaxPersonalDetails, BookingPaxPersonalDetailsZ, BookingPaxType, BookingPaxTypeZ } from "./BookingTypes";
 
 
-// Use unified types for backward compatibility
+// TODO: this is messy, clean this up
 export const GroupTourBookingPaxPersonalDetailsZ = BookingPaxPersonalDetailsZ;
 export type GroupTourBookingPaxPersonalDetails = BookingPaxPersonalDetails;
-
+export type GroupTourBookingPaxType = BookingPaxType;
 export const GroupTourBookingPaxType = BookingPaxType;
-export type GroupTourBookingPaxType = BookingPaxType; // Type alias for backward compatibility
 export const GroupTourBookingPaxTypeZ = BookingPaxTypeZ;
 
 export const GroupTourBookingPaxZ = EntityZ.extend({
   bookingRoomOID: EntityOIDZ,
-  type: GroupTourBookingPaxTypeZ,
+  type: BookingPaxTypeZ,
   isLandTourOnly: z.boolean().default(false),
   personalDetails: GroupTourBookingPaxPersonalDetailsZ.optional(),
   mealPreference: z.string().optional(),

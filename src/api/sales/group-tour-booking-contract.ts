@@ -6,7 +6,8 @@ import { EntityOIDZ } from "../../entities/entity";
 import { GroupTourBookingBookingStatus, GroupTourBookingZ } from "../../entities/Sales/GroupTourBooking";
 import { GroupTourBookingAddonZ } from "../../entities/Sales/GroupTourBookingAddon";
 import { GroupTourBookingDiscountType } from "../../entities/Sales/GroupTourBookingDiscount";
-import { GroupTourBookingPaxTypeZ, GroupTourBookingPaxZ } from "../../entities/Sales/GroupTourBookingPax";
+import { GroupTourBookingPaxZ } from "../../entities/Sales/GroupTourBookingPax";
+import { BookingPaxTypeZ } from "../../entities/Sales/BookingTypes";
 import { GroupTourBookingRoomZ } from "../../entities/Sales/GroupTourBookingRoom";
 import { DiscountBookingChannel, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
 
@@ -95,7 +96,7 @@ const PassengerCompositionZ = z.object({
   childrenWithBed: z.number().min(0),
   childrenNoBed: z.number().min(0),
   totalPax: z.number().min(0),
-  passengerTypes: z.array(GroupTourBookingPaxTypeZ),
+  passengerTypes: z.array(BookingPaxTypeZ),
 });
 export type PassengerComposition = z.infer<typeof PassengerCompositionZ>;
 
