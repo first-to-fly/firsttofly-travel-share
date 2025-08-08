@@ -2,12 +2,14 @@
 import { z } from "zod";
 
 import { EntityOIDZ, EntityZ } from "../entity";
-import { BookingPaxPersonalDetails, BookingPaxPersonalDetailsZ, BookingPaxTypeZ } from "./BookingTypes";
+import { BookingPaxPersonalDetails, BookingPaxPersonalDetailsZ, BookingPaxType, BookingPaxTypeZ } from "./BookingTypes";
 
 
-// Use unified types for backward compatibility
+// TODO: this is messy, clean this up
 export const GroupTourBookingPaxPersonalDetailsZ = BookingPaxPersonalDetailsZ;
 export type GroupTourBookingPaxPersonalDetails = BookingPaxPersonalDetails;
+export type GroupTourBookingPaxType = BookingPaxType;
+export const GroupTourBookingPaxType = BookingPaxType;
 
 export const GroupTourBookingPaxZ = EntityZ.extend({
   bookingRoomOID: EntityOIDZ,
