@@ -16,10 +16,10 @@ import { GroupTourBookingPermissions } from "./entities/group-tour-booking.permi
 import { GroupTourBookingPaxPermissions } from "./entities/group-tour-booking-pax.permission";
 import { GroupTourBookingRoomPermissions } from "./entities/group-tour-booking-room.permission";
 import { GroupTourCostingPermissions } from "./entities/group-tour-costing.permission";
-import { IndependentTourBookingPermissions } from "./entities/independent-tour-booking.permission";
 import { GroupTourItineraryPermissions } from "./entities/group-tour-itinerary.permission";
 import { GroupTourPricingPermissions } from "./entities/group-tour-pricing.permission";
 import { GroupTourProductPermissions } from "./entities/group-tour-product.permission";
+import { IndependentTourBookingPermissions } from "./entities/independent-tour-booking.permission";
 import { IndependentTourProductPermissions } from "./entities/independent-tour-product.permission";
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
 import { LocationPermissions } from "./entities/location.permission";

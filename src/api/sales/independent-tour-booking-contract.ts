@@ -3,12 +3,12 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
-import { BookingPaymentStatus, BookingStatus } from "../../entities/Sales/BookingTypes";
+import { BookingDiscountType, BookingPaymentStatus, BookingStatus } from "../../entities/Sales/BookingTypes";
 import { IndependentTourBookingZ } from "../../entities/Sales/IndependentTourBooking";
-import { IndependentTourBookingAddonZ, IndependentTourBookingAddonType } from "../../entities/Sales/IndependentTourBookingAddon";
-import { BookingDiscountType, DiscountMode } from "../../entities/Sales/IndependentTourBookingDiscount";
-import { BookingPaxTypeZ, IndependentTourBookingPaxZ } from "../../entities/Sales/IndependentTourBookingPax";
-import { IndependentTourBookingRoomZ, BookingRoomStatus } from "../../entities/Sales/IndependentTourBookingRoom";
+import { IndependentTourBookingAddonZ } from "../../entities/Sales/IndependentTourBookingAddon";
+import { DiscountMode } from "../../entities/Sales/IndependentTourBookingDiscount";
+import { IndependentTourBookingPaxZ } from "../../entities/Sales/IndependentTourBookingPax";
+import { IndependentTourBookingRoomZ } from "../../entities/Sales/IndependentTourBookingRoom";
 import { DiscountBookingChannel, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
 
 
@@ -210,7 +210,7 @@ export const independentTourBookingContract = initContract().router({
       }),
     },
   },
-  
+
   createIndependentTourBooking: {
     summary: "Create a new independent tour booking",
     method: "POST",
@@ -220,7 +220,7 @@ export const independentTourBookingContract = initContract().router({
       201: EntityOIDZ,
     },
   },
-  
+
   getIndependentTourBooking: {
     summary: "Get a single independent tour booking",
     method: "GET",
@@ -230,7 +230,7 @@ export const independentTourBookingContract = initContract().router({
       200: IndependentTourBookingZ,
     },
   },
-  
+
   updateIndependentTourBookings: {
     summary: "Update multiple existing independent tour bookings",
     method: "POST",
@@ -243,7 +243,7 @@ export const independentTourBookingContract = initContract().router({
       200: z.array(EntityOIDZ.describe("OIDs of updated IndependentTourBookings")),
     },
   },
-  
+
   deleteIndependentTourBookings: {
     summary: "Delete multiple independent tour bookings",
     method: "POST",
@@ -255,7 +255,7 @@ export const independentTourBookingContract = initContract().router({
       200: z.boolean(),
     },
   },
-  
+
   // #region ACCOMMODATION
   setAccommodation: {
     summary: "Set or update accommodation for booking",
@@ -271,7 +271,7 @@ export const independentTourBookingContract = initContract().router({
       }),
     },
   },
-  
+
   // #region ROOMS
   addRoom: {
     summary: "Add a room to the booking",
@@ -283,12 +283,12 @@ export const independentTourBookingContract = initContract().router({
       201: EntityOIDZ,
     },
   },
-  
+
   updateRoom: {
     summary: "Update a room in the booking",
     method: "PATCH",
     path: `${basePath}/:bookingOID/rooms/:roomOID`,
-    pathParams: z.object({ 
+    pathParams: z.object({
       bookingOID: EntityOIDZ,
       roomOID: EntityOIDZ,
     }),
@@ -297,26 +297,27 @@ export const independentTourBookingContract = initContract().router({
       200: EntityOIDZ,
     },
   },
-  
+
   deleteRoom: {
     summary: "Delete a room from the booking",
     method: "DELETE",
     path: `${basePath}/:bookingOID/rooms/:roomOID`,
-    pathParams: z.object({ 
+    pathParams: z.object({
       bookingOID: EntityOIDZ,
       roomOID: EntityOIDZ,
     }),
+    body: z.object({}).optional(),
     responses: {
       200: z.boolean(),
     },
   },
-  
+
   // #region PASSENGERS
   addPaxToRoom: {
     summary: "Add a passenger to a room",
     method: "POST",
     path: `${basePath}/:bookingOID/rooms/:roomOID/passengers`,
-    pathParams: z.object({ 
+    pathParams: z.object({
       bookingOID: EntityOIDZ,
       roomOID: EntityOIDZ,
     }),
@@ -325,12 +326,12 @@ export const independentTourBookingContract = initContract().router({
       201: EntityOIDZ,
     },
   },
-  
+
   updatePax: {
     summary: "Update a passenger",
     method: "PATCH",
     path: `${basePath}/:bookingOID/passengers/:paxOID`,
-    pathParams: z.object({ 
+    pathParams: z.object({
       bookingOID: EntityOIDZ,
       paxOID: EntityOIDZ,
     }),
@@ -339,20 +340,21 @@ export const independentTourBookingContract = initContract().router({
       200: EntityOIDZ,
     },
   },
-  
+
   deletePax: {
     summary: "Delete a passenger",
     method: "DELETE",
     path: `${basePath}/:bookingOID/passengers/:paxOID`,
-    pathParams: z.object({ 
+    pathParams: z.object({
       bookingOID: EntityOIDZ,
       paxOID: EntityOIDZ,
     }),
+    body: z.object({}).optional(),
     responses: {
       200: z.boolean(),
     },
   },
-  
+
   // #region ADDONS
   addAddon: {
     summary: "Add an addon (optional service) to the booking",
@@ -364,12 +366,12 @@ export const independentTourBookingContract = initContract().router({
       201: EntityOIDZ,
     },
   },
-  
+
   updateAddon: {
     summary: "Update an addon",
     method: "PATCH",
     path: `${basePath}/:bookingOID/addons/:addonOID`,
-    pathParams: z.object({ 
+    pathParams: z.object({
       bookingOID: EntityOIDZ,
       addonOID: EntityOIDZ,
     }),
@@ -378,20 +380,21 @@ export const independentTourBookingContract = initContract().router({
       200: EntityOIDZ,
     },
   },
-  
+
   deleteAddon: {
     summary: "Delete an addon",
     method: "DELETE",
     path: `${basePath}/:bookingOID/addons/:addonOID`,
-    pathParams: z.object({ 
+    pathParams: z.object({
       bookingOID: EntityOIDZ,
       addonOID: EntityOIDZ,
     }),
+    body: z.object({}).optional(),
     responses: {
       200: z.boolean(),
     },
   },
-  
+
   // #region DISCOUNTS
   validateDiscount: {
     summary: "Validate a discount code before applying",
@@ -406,7 +409,7 @@ export const independentTourBookingContract = initContract().router({
       200: ValidationResponseZ,
     },
   },
-  
+
   applyDiscount: {
     summary: "Apply a discount to the booking",
     method: "POST",
@@ -421,22 +424,23 @@ export const independentTourBookingContract = initContract().router({
       }),
     },
   },
-  
+
   removeDiscount: {
     summary: "Remove a discount from the booking",
     method: "DELETE",
     path: `${basePath}/:bookingOID/discounts/:discountOID`,
-    pathParams: z.object({ 
+    pathParams: z.object({
       bookingOID: EntityOIDZ,
       discountOID: EntityOIDZ,
     }),
+    body: z.object({}).optional(),
     responses: {
       200: z.object({
         totalAmount: z.number(),
       }),
     },
   },
-  
+
   // #region BOOKING CONFIRMATION
   confirmBooking: {
     summary: "Confirm an independent tour booking and trigger workflow",
@@ -451,7 +455,7 @@ export const independentTourBookingContract = initContract().router({
       200: WorkflowResponseZ,
     },
   },
-  
+
   // #region PAYMENT
   createPaymentLink: {
     summary: "Create an AirWallex payment link for the booking",
@@ -463,13 +467,14 @@ export const independentTourBookingContract = initContract().router({
       200: AirWallexPaymentLinkResponseZ,
     },
   },
-  
+
   // #region PRICING
   recalculateTotal: {
     summary: "Recalculate the booking total amount",
     method: "POST",
     path: `${basePath}/:bookingOID/recalculate`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({}).optional(),
     responses: {
       200: z.object({
         accommodationCost: z.number(),

@@ -53,7 +53,7 @@ export type BookingPaxPersonalDetails = z.infer<typeof BookingPaxPersonalDetails
 // Unified payment status for all booking types
 export enum BookingPaymentStatus {
   UNPAID = "unpaid",
-  PARTIAL_DEPOSIT = "partial_deposit", 
+  PARTIAL_DEPOSIT = "partial_deposit",
   DEPOSIT_PAID = "deposit_paid",
   FULLY_PAID = "fully_paid",
 }
@@ -63,7 +63,7 @@ export const BookingPaymentStatusZ = z.nativeEnum(BookingPaymentStatus);
 // Unified booking status for all booking types
 export enum BookingStatus {
   IN_PROGRESS = "in_progress",
-  UNPAID = "unpaid", 
+  UNPAID = "unpaid",
   DEPOSIT_PAID = "deposit_paid",
   COMPLETED = "completed",
   CANCELLED = "cancelled",
@@ -76,7 +76,7 @@ export const BookingStatusZ = z.nativeEnum(BookingStatus);
 // Unified room status for all booking types
 export enum BookingRoomStatus {
   REQUESTED = "requested",
-  CONFIRMED = "confirmed", 
+  CONFIRMED = "confirmed",
   WAITLISTED = "waitlisted",
   CANCELLED = "cancelled",
 }

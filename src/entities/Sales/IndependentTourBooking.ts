@@ -2,7 +2,7 @@
 import { z } from "zod";
 
 import { EntityOIDZ, EntityZ } from "../entity";
-import { BookingPaymentStatusZ, BookingPaymentStatus, BookingStatusZ, BookingStatus } from "./BookingTypes";
+import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "./BookingTypes";
 
 
 export const IndependentTourBookingMetadataZ = z.object({
@@ -22,42 +22,42 @@ export const IndependentTourBookingZ = EntityZ.extend({
   bookingReference: z.string().max(50),
   paymentStatus: BookingPaymentStatusZ.default(BookingPaymentStatus.UNPAID),
   bookingStatus: BookingStatusZ.default(BookingStatus.IN_PROGRESS),
-  
+
   totalAmount: z.number().optional(),
   receivedAmount: z.number().optional(),
-  
+
   // Selected accommodation
   accommodationOID: EntityOIDZ.optional(),
-  
+
   // Travel dates
   startDate: z.string(), // ISO date string
   endDate: z.string(), // ISO date string
-  
+
   // Customer information
   customerOID: EntityOIDZ.optional(),
   leadGuestName: z.string().optional(),
   leadGuestEmail: z.string().optional(),
   leadGuestPhone: z.string().optional(),
-  
+
   // Pricing breakdown
   accommodationCost: z.number().optional(),
   optionalServicesCost: z.number().optional(),
   miscellaneousCost: z.number().optional(),
   discountAmount: z.number().optional(),
   taxAmount: z.number().optional(),
-  
+
   metadata: IndependentTourBookingMetadataZ,
   specialInstructions: z.array(z.string()).optional(),
-  
+
   // Payment order reference
   paymentOrderOID: EntityOIDZ.optional(),
-  
+
   // Approval status for special discounts
   approvalRequestOID: EntityOIDZ.optional(),
-  
+
   // Snapshot data
   snapshot: z.any().optional(), // Will store frozen state at confirmation
-  
+
   // Owner information
   ownerOIDs: z.array(EntityOIDZ).optional(),
 });
