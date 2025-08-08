@@ -1,18 +1,18 @@
 import { z } from "zod";
 
 import { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
-import { GroupTourBookingPaxType, GroupTourBookingPaxTypeZ } from "../../entities/Sales/GroupTourBookingPax";
+import { BookingPaxType, BookingPaxTypeZ } from "../../entities/Sales/BookingTypes";
 
 
 /**
  * Determines if a pax type represents an adult passenger
  */
-export function isPaxTypeAdult(paxType: GroupTourBookingPaxType): boolean {
+export function isPaxTypeAdult(paxType: BookingPaxType): boolean {
   const childTypes = [
-    GroupTourBookingPaxType.CHILD_TWIN,
-    GroupTourBookingPaxType.CHILD_WITH_BED,
-    GroupTourBookingPaxType.CHILD_NO_BED,
-    GroupTourBookingPaxType.INFANT,
+    BookingPaxType.CHILD_TWIN,
+    BookingPaxType.CHILD_WITH_BED,
+    BookingPaxType.CHILD_NO_BED,
+    BookingPaxType.INFANT,
   ];
   return !childTypes.includes(paxType);
 }
@@ -20,13 +20,13 @@ export function isPaxTypeAdult(paxType: GroupTourBookingPaxType): boolean {
 // Types for tour departure discount calculation
 export interface PaxDiscountInput {
   paxOID: string;
-  paxType: GroupTourBookingPaxType;
+  paxType: BookingPaxType;
   isAdult: boolean;
 }
 
 export const PaxDiscountBreakdownZ = z.object({
   paxOID: z.string(),
-  paxType: GroupTourBookingPaxTypeZ,
+  paxType: BookingPaxTypeZ,
   isAdult: z.boolean(),
   positionInSequence: z.number(),
   tierIndex: z.number(),

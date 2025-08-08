@@ -1,4 +1,4 @@
-import { GroupTourBookingPaxType } from "../../entities/Sales/GroupTourBookingPax";
+import { BookingPaxType } from "../../entities/Sales/BookingTypes";
 import type { LineItemPrice, PaxConfiguration } from "./types";
 
 
@@ -22,18 +22,18 @@ export function calculateAirportTax(
   // Count adults and children
   const adultCount = paxConfigurations
     .filter((config) => [
-      GroupTourBookingPaxType.TWIN,
-      GroupTourBookingPaxType.SINGLE,
-      GroupTourBookingPaxType.TRIPLE,
-      GroupTourBookingPaxType.QUAD,
+      BookingPaxType.TWIN,
+      BookingPaxType.SINGLE,
+      BookingPaxType.TRIPLE,
+      BookingPaxType.QUAD,
     ].includes(config.type)).length;
 
   const childCount = paxConfigurations
     .filter((config) => [
-      GroupTourBookingPaxType.CHILD_TWIN,
-      GroupTourBookingPaxType.CHILD_WITH_BED,
-      GroupTourBookingPaxType.CHILD_NO_BED,
-      GroupTourBookingPaxType.INFANT,
+      BookingPaxType.CHILD_TWIN,
+      BookingPaxType.CHILD_WITH_BED,
+      BookingPaxType.CHILD_NO_BED,
+      BookingPaxType.INFANT,
     ].includes(config.type)).length;
 
   // Add adult airport tax
