@@ -6,6 +6,7 @@ import { groupTourPNLSimulationContract } from "./group-tour-pnl-simulation-cont
 import { groupTourPricingContract } from "./group-tour-pricing-contract";
 import { groupTourProductContract } from "./group-tour-product-contract";
 import { independentTourAccommodationContract } from "./independent-tour-accommodation-contract";
+import { independentTourItineraryContract } from "./independent-tour-itinerary-contract";
 import { independentTourMiscellaneousContract } from "./independent-tour-miscellaneous-contract";
 import { independentTourOptionalServiceContract } from "./independent-tour-optional-service-contract";
 import { independentTourProductContract } from "./independent-tour-product-contract";
@@ -24,6 +25,7 @@ export const productsContract = initContract().router({
 
   independentTour: {
     product: independentTourProductContract,
+    itinerary: independentTourItineraryContract,
     accommodation: independentTourAccommodationContract,
     miscellaneous: independentTourMiscellaneousContract,
     optionalService: independentTourOptionalServiceContract,
