@@ -5,34 +5,20 @@ import { EntityOIDZ, EntityZ } from "../entity";
 import { BookingPaxPersonalDetailsZ, BookingPaxTypeZ } from "./BookingTypes";
 
 
-export { BookingPaxTypeZ } from "./BookingTypes";
-
+export { BookingPaxType, BookingPaxTypeZ } from "./BookingTypes";
 
 export const IndependentTourBookingPaxZ = EntityZ.extend({
-
   independentTourBookingRoomOID: EntityOIDZ,
-
-  paxType: BookingPaxTypeZ,
-  personalDetails: BookingPaxPersonalDetailsZ,
-
-  // Document references
-  documentOIDs: z.array(EntityOIDZ).optional(),
-
-  // Additional information
-  ageAtTravel: z.number().optional(),
-  dietaryRequirements: z.array(z.string()).optional(),
-  medicalConditions: z.array(z.string()).optional(),
-
-  // Insurance information
-  insurancePolicyNumber: z.string().optional(),
-  insuranceProvider: z.string().optional(),
-  insuranceValidUntil: z.string().optional(), // ISO date string
-
-  // Transport preferences (for optional transport services)
-  transportRecordOID: EntityOIDZ.optional(),
-  seatPreference: z.string().optional(),
-
-  sortOrder: z.number().optional(),
+  
+  type: BookingPaxTypeZ,
+  personalDetails: BookingPaxPersonalDetailsZ.optional(),
+  mealPreference: z.string().optional(),
+  documentIds: z.array(z.string()).optional(), // UUID array
 });
 
 export type IndependentTourBookingPax = z.infer<typeof IndependentTourBookingPaxZ>;
+
+export enum IndependentTourBookingPaxEvents {
+  INDEPENDENT_TOUR_BOOKING_PAX_UPDATED = "INDEPENDENT_TOUR_BOOKING_PAX_UPDATED",
+  INDEPENDENT_TOUR_BOOKING_PAX_LIST_UPDATED = "INDEPENDENT_TOUR_BOOKING_PAX_LIST_UPDATED",
+}

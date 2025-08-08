@@ -7,7 +7,6 @@ import { BookingDiscountTypeZ } from "./BookingTypes";
 
 export { BookingDiscountType } from "./BookingTypes";
 
-
 export enum DiscountMode {
   PERCENTAGE = "percentage",
   FIXED_AMOUNT = "fixed_amount",
@@ -15,41 +14,28 @@ export enum DiscountMode {
 
 export const DiscountModeZ = z.nativeEnum(DiscountMode);
 
-export const IndependentTourBookingDiscountZ = EntityZ.extend({
-
-  independentTourBookingOID: EntityOIDZ,
-
-  discountType: BookingDiscountTypeZ,
-  discountOID: EntityOIDZ.optional(), // Reference to Discount entity if applicable
-
-  discountCode: z.string().optional(),
-  discountName: z.string(),
-  description: z.string().optional(),
-
-  discountMode: DiscountModeZ,
-  discountValue: z.number(), // Percentage (0-100) or fixed amount
-  appliedAmount: z.number(), // Actual amount discounted
-
-  // Validation metadata
-  metadata: z.object({
-    validFrom: z.string().optional(), // ISO date string
-    validUntil: z.string().optional(), // ISO date string
-    minimumPurchase: z.number().optional(),
-    maximumDiscount: z.number().optional(),
-    usageCount: z.number().optional(),
-    maxUsageCount: z.number().optional(),
-    applicableServices: z.array(z.string()).optional(),
-    excludedServices: z.array(z.string()).optional(),
-    termsAndConditions: z.string().optional(),
-  }).optional(),
-
-  // Approval tracking for special discounts
-  approvalRequired: z.boolean().default(false),
-  approvalRequestOID: EntityOIDZ.optional(),
+// Flexible metadata that can contain any fields
+export const IndependentTourBookingDiscountMetadataZ = z.object({
+  reason: z.string().optional(),
   approvedBy: z.string().optional(),
-  approvedAt: z.string().optional(), // ISO date string
+  approvalRequestOID: z.string().optional(),
+}).passthrough().optional();
 
-  sortOrder: z.number().optional(),
+export const IndependentTourBookingDiscountZ = EntityZ.extend({
+  independentTourBookingOID: EntityOIDZ,
+  
+  discountType: BookingDiscountTypeZ,
+  discountId: z.string().optional(), // UUID reference to Discount entity
+  appliedDiscountCode: z.string().max(20).optional(),
+  description: z.string(),
+  appliedAmount: z.number().positive(),
+  discountMode: DiscountModeZ,
+  metadata: IndependentTourBookingDiscountMetadataZ,
 });
 
 export type IndependentTourBookingDiscount = z.infer<typeof IndependentTourBookingDiscountZ>;
+
+export enum IndependentTourBookingDiscountEvents {
+  INDEPENDENT_TOUR_BOOKING_DISCOUNT_UPDATED = "INDEPENDENT_TOUR_BOOKING_DISCOUNT_UPDATED",
+  INDEPENDENT_TOUR_BOOKING_DISCOUNT_LIST_UPDATED = "INDEPENDENT_TOUR_BOOKING_DISCOUNT_LIST_UPDATED",
+}
