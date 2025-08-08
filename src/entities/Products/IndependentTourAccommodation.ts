@@ -5,11 +5,21 @@ import { EntityType } from "../entityType";
 import { OccupancyType } from "../Settings/Product/CostingItem";
 
 
-// Cost value structure from design spec
+// Occupancy pricing from design spec
+const OccupancyPricingZ = z.record(z.nativeEnum(OccupancyType), z.number()); // Record<OccupancyType, number>
+
+// Cost value structure with occupancy pricing
 const CostValueZ = z.object({
   currency: z.string(),
-  amount: z.number(),
   tax: z.number().optional(),
+  occupancyPricing: OccupancyPricingZ,
+});
+
+// Price value structure with occupancy pricing (same as cost value)
+const PriceValueZ = z.object({
+  currency: z.string(),
+  tax: z.number().optional(),
+  occupancyPricing: OccupancyPricingZ,
 });
 
 // Night extension configuration
@@ -31,9 +41,6 @@ const PeakPeriodZ = z.object({
   name: z.string().optional(),
 });
 
-// Occupancy pricing from design spec
-const OccupancyPricingZ = z.record(z.nativeEnum(OccupancyType), z.number()); // Record<OccupancyType, number>
-
 export const IndependentTourAccommodationZ = EntityZ.extend({
   entityType: z.literal(EntityType.INDEPENDENT_TOUR_ACCOMMODATION),
 
@@ -41,7 +48,7 @@ export const IndependentTourAccommodationZ = EntityZ.extend({
 
   name: z.string(),
   costValue: CostValueZ,
-  occupancyPricing: OccupancyPricingZ,
+  priceValue: PriceValueZ,
   nightExtensionConfig: NightExtensionConfigZ,
   peakSurchargeRates: PeakSurchargeRatesZ,
   peakPeriods: z.array(PeakPeriodZ),

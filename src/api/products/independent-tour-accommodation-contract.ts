@@ -11,7 +11,7 @@ const CreateIndependentTourAccommodationZ = IndependentTourAccommodationZ.pick({
   independentTourProductOID: true,
   name: true,
   costValue: true,
-  occupancyPricing: true,
+  priceValue: true,
   nightExtensionConfig: true,
   peakSurchargeRates: true,
   peakPeriods: true,

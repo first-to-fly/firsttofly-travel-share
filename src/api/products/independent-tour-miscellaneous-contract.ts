@@ -11,6 +11,7 @@ const CreateIndependentTourMiscellaneousZ = IndependentTourMiscellaneousZ.pick({
   independentTourProductOID: true,
   name: true,
   costValue: true,
+  priceValue: true,
 });
 
 const UpdateIndependentTourMiscellaneousZ = CreateIndependentTourMiscellaneousZ.omit({

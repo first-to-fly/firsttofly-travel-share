@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { FTFSafeMaxNumberZ } from "../../types/number";
 import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
@@ -11,6 +12,13 @@ const CostValueZ = z.object({
   tax: z.number().optional(),
 });
 
+// Price value structure similar to GroupTourPricing
+const PriceValueZ = z.object({
+  currency: z.string(),
+  amount: FTFSafeMaxNumberZ({ name: "Amount" }),
+  tax: FTFSafeMaxNumberZ({ name: "Tax" }),
+});
+
 export const IndependentTourMiscellaneousZ = EntityZ.extend({
   entityType: z.literal(EntityType.INDEPENDENT_TOUR_MISCELLANEOUS),
 
@@ -18,6 +26,7 @@ export const IndependentTourMiscellaneousZ = EntityZ.extend({
 
   name: z.string(),
   costValue: CostValueZ,
+  priceValue: PriceValueZ,
 });
 
 export type IndependentTourMiscellaneous = z.infer<typeof IndependentTourMiscellaneousZ>;

@@ -11,6 +11,7 @@ const CreateIndependentTourOptionalServiceZ = IndependentTourOptionalServiceZ.pi
   independentTourProductOID: true,
   name: true,
   costValue: true,
+  priceValue: true,
 });
 
 const UpdateIndependentTourOptionalServiceZ = CreateIndependentTourOptionalServiceZ.omit({
