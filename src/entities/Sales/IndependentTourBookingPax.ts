@@ -9,7 +9,7 @@ export { BookingPaxType, BookingPaxTypeZ } from "./BookingTypes";
 
 export const IndependentTourBookingPaxZ = EntityZ.extend({
   independentTourBookingRoomOID: EntityOIDZ,
-  
+
   type: BookingPaxTypeZ,
   personalDetails: BookingPaxPersonalDetailsZ.optional(),
   mealPreference: z.string().optional(),

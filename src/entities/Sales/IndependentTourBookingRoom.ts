@@ -9,7 +9,7 @@ export { BookingRoomStatus } from "./BookingTypes";
 
 export const IndependentTourBookingRoomZ = EntityZ.extend({
   independentTourBookingOID: EntityOIDZ,
-  
+
   roomNumber: z.string().max(20).optional(),
   status: BookingRoomStatusZ,
   notes: z.string().optional(),

@@ -3,38 +3,32 @@ import { z } from "zod";
 
 import { EntityOIDZ, EntityZ } from "../entity";
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "./BookingTypes";
+import { IndependentTourBookingMetadataZ } from "./IndependentTourBookingMetadata";
 
-
-// Metadata as per requirements - can be flexible
-export const IndependentTourBookingMetadataZ = z.object({
-  source: z.string().optional(),
-  campaign: z.string().optional(),
-  notes: z.string().optional(),
-}).passthrough().optional();
 
 export const IndependentTourBookingZ = EntityZ.extend({
   independentTourProductOID: EntityOIDZ,
   independentTourAccommodationOID: EntityOIDZ.optional(),
   departmentOID: EntityOIDZ.optional(),
-  
+
   bookingReference: z.string().max(50),
   paymentStatus: BookingPaymentStatusZ.default(BookingPaymentStatus.UNPAID),
   bookingStatus: BookingStatusZ.default(BookingStatus.IN_PROGRESS),
-  
+
   totalAmount: z.number(),
   receivedAmount: z.number().default(0),
-  
+
   travelStartDate: z.string(), // ISO datetime string
   travelEndDate: z.string(), // ISO datetime string
-  
+
   snapshot: z.any().optional(), // IndependentTourBookingSnapshotData
-  metadata: IndependentTourBookingMetadataZ,
+  metadata: IndependentTourBookingMetadataZ.optional(),
   specialInstructions: z.array(z.string()).optional(),
   overwriteTax: z.object({
     scheme: z.string(),
     rate: z.number(),
   }).optional(),
-  
+
   // Owner information
   ownerOIDs: z.array(EntityOIDZ).optional(),
 });

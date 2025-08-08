@@ -23,7 +23,7 @@ export const IndependentTourBookingDiscountMetadataZ = z.object({
 
 export const IndependentTourBookingDiscountZ = EntityZ.extend({
   independentTourBookingOID: EntityOIDZ,
-  
+
   discountType: BookingDiscountTypeZ,
   discountId: z.string().optional(), // UUID reference to Discount entity
   appliedDiscountCode: z.string().max(20).optional(),

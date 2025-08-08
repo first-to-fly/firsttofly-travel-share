@@ -7,15 +7,15 @@ import { EntityOIDZ, EntityZ } from "../entity";
 export const IndependentTourBookingAddonZ = EntityZ.extend({
   independentTourBookingOID: EntityOIDZ,
   independentTourOptionalServiceOID: EntityOIDZ.optional(),
-  
-  type: z.enum(['optional_service', 'manual']),
+
+  type: z.enum(["optional_service", "manual"]),
   serviceDate: z.string(), // ISO datetime string
   name: z.string(),
   unitPrice: z.number().positive(),
   tax: z.number().optional(),
   quantity: z.number().int().positive(),
   totalPrice: z.number().positive(),
-  
+
   supplierOID: EntityOIDZ.optional(),
   notes: z.string().optional(),
 });
