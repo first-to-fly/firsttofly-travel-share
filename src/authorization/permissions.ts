@@ -22,6 +22,7 @@ import { GroupTourProductPermissions } from "./entities/group-tour-product.permi
 import { IndependentTourProductPermissions } from "./entities/independent-tour-product.permission";
 import { InsuranceDiscountPermissions } from "./entities/insurance-discount.permission";
 import { LocationPermissions } from "./entities/location.permission";
+import { MatchDocPermissions } from "./entities/match-doc.permission";
 import { MealPermissions } from "./entities/meal.permission";
 import { MediaPermissions } from "./entities/media.permission";
 import { PaymentOrderPermissions } from "./entities/payment-order.permission";
@@ -98,6 +99,7 @@ const EntityPermissions = {
   "Tour Departure": TourDeparturePermissions,
   Budget: BudgetPermissions,
   Bill: BillPermissions,
+  "Match Doc": MatchDocPermissions,
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,
   "Transport Plan": TransportPlanPermissions,
