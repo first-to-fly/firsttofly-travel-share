@@ -221,16 +221,6 @@ export const independentTourBookingContract = initContract().router({
     },
   },
 
-  getIndependentTourBooking: {
-    summary: "Get a single independent tour booking",
-    method: "GET",
-    path: `${basePath}/:bookingOID`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    responses: {
-      200: IndependentTourBookingZ,
-    },
-  },
-
   updateIndependentTourBookings: {
     summary: "Update multiple existing independent tour bookings",
     method: "POST",
