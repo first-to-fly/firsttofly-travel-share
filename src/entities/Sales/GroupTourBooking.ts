@@ -3,28 +3,8 @@ import { z } from "zod";
 
 import { EntityOIDZ, EntityZ } from "../entity";
 import { GroupTourBookingMetadataZ } from "./GroupTourBookingMetadata";
+import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 
-
-export enum GroupTourBookingPaymentStatus {
-  UNPAID = "unpaid",
-  PARTIAL_DEPOSIT = "partial_deposit",
-  DEPOSIT_PAID = "deposit_paid",
-  FULLY_PAID = "fully_paid",
-}
-
-export const GroupTourBookingPaymentStatusZ = z.nativeEnum(GroupTourBookingPaymentStatus);
-
-export enum GroupTourBookingBookingStatus {
-  IN_PROGRESS = "in_progress",
-  UNPAID = "unpaid",
-  DEPOSIT_PAID = "deposit_paid",
-  COMPLETED = "completed",
-  CANCELLED = "cancelled",
-  VOIDED = "voided",
-  TRANSFERRED = "transferred",
-}
-
-export const GroupTourBookingBookingStatusZ = z.nativeEnum(GroupTourBookingBookingStatus);
 
 export const GroupTourBookingZ = EntityZ.extend({
 
@@ -32,8 +12,8 @@ export const GroupTourBookingZ = EntityZ.extend({
   departmentOID: EntityOIDZ.optional(),
 
   bookingReference: z.string().max(50),
-  paymentStatus: GroupTourBookingPaymentStatusZ.default(GroupTourBookingPaymentStatus.UNPAID),
-  bookingStatus: GroupTourBookingBookingStatusZ.default(GroupTourBookingBookingStatus.IN_PROGRESS),
+  paymentStatus: BookingPaymentStatusZ.default(BookingPaymentStatus.UNPAID),
+  bookingStatus: BookingStatusZ.default(BookingStatus.IN_PROGRESS),
   totalAmount: z.number().optional(),
   receivedAmount: z.number().optional(),
   metadata: GroupTourBookingMetadataZ.optional(),

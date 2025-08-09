@@ -4,30 +4,23 @@ import { TourDepartureDiscountResultZ } from "../../utils/group-tour-booking/cal
 import { EntityOIDZ, EntityZ } from "../entity";
 import { ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ } from "../Operations/ApprovalRequestMetadata";
 import { DiscountMode, DiscountZ } from "../Settings/Product/Discount";
+import { BookingDiscountType, BookingDiscountTypeZ } from "../../enums/BookingTypes";
 
-
-export enum GroupTourBookingDiscountType {
-  CODE_BASED = "code_based",
-  TOUR_DEPARTURE_DISCOUNT = "tour_departure_discount",
-  SPECIAL_REQUEST = "special_request",
-}
-
-export const GroupTourBookingDiscountTypeZ = z.nativeEnum(GroupTourBookingDiscountType);
 
 // Metadata type definitions for different discount types
 export const CodeBasedDiscountMetadataZ = z.object({
-  type: z.literal(GroupTourBookingDiscountType.CODE_BASED),
+  type: z.literal(BookingDiscountType.CODE_BASED),
   discountCodeItem: DiscountZ,
 });
 
 export const TourDepartureDiscountMetadataZ = z.object({
-  type: z.literal(GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT),
+  type: z.literal(BookingDiscountType.TOUR_DEPARTURE_DISCOUNT),
   groupIndex: z.number(),
   discountBreakdown: TourDepartureDiscountResultZ,
 });
 
 export const SpecialRequestDiscountMetadataZ = z.object({
-  type: z.literal(GroupTourBookingDiscountType.SPECIAL_REQUEST),
+  type: z.literal(BookingDiscountType.SPECIAL_REQUEST),
   approvalRequestOID: EntityOIDZ,
   approvalRequestPayload: ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ,
   approvalNote: z.string().optional(),
@@ -48,7 +41,7 @@ export type GroupTourBookingDiscountMetadata = z.infer<typeof GroupTourBookingDi
 export const GroupTourBookingDiscountZ = EntityZ.extend({
   bookingOID: EntityOIDZ,
 
-  discountType: GroupTourBookingDiscountTypeZ,
+  discountType: BookingDiscountTypeZ,
   discountOID: EntityOIDZ.optional(),
 
   appliedDiscountCode: z.string().optional(),

@@ -1,9 +1,9 @@
 import { z } from "zod";
 
 import { EntityOIDZ } from "../entity";
-import { BookingPaxType } from "../Sales/BookingTypes";
+import { BookingPaxPersonalDetailsZ, BookingPaxType } from "../../enums/BookingTypes";
 import { GroupTourBookingAddonTypeZ } from "../Sales/GroupTourBookingAddon";
-import { GroupTourBookingPaxPersonalDetailsZ } from "../Sales/GroupTourBookingPax";
+
 import { ApprovalType } from "../Settings/General/Approval";
 import { DiscountMode } from "../Settings/Product/Discount";
 import { ExchangeOrderStatus } from "./ExchangeOrder";
@@ -42,7 +42,7 @@ export const ApprovalRequestGroupTourBookingTransferMetadataZ = z.object({
       firstName: z.string(),
       lastName: z.string(),
       paxType: z.nativeEnum(BookingPaxType),
-      personalDetails: GroupTourBookingPaxPersonalDetailsZ,
+      personalDetails: BookingPaxPersonalDetailsZ,
     })),
     rooms: z.array(z.object({
       roomType: z.string(),

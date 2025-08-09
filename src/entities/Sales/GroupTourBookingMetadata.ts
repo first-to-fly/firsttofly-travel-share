@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { EntityOIDZ } from "../entity";
-import { GroupTourBookingPaxPersonalDetailsZ } from "./GroupTourBookingPax";
+import { BookingPaxPersonalDetailsZ } from "../../enums/BookingTypes";
 
 /**
  * Transfer-specific metadata fields schema
@@ -32,7 +32,7 @@ export type TransferMetadata = z.infer<typeof TransferMetadataZ>;
  * Base metadata schema for GroupTourBooking
  */
 export const BaseGroupTourBookingMetadataZ = z.object({
-  customer: GroupTourBookingPaxPersonalDetailsZ,
+  customer: BookingPaxPersonalDetailsZ,
 });
 
 export type BaseGroupTourBookingMetadata = z.infer<typeof BaseGroupTourBookingMetadataZ>;

@@ -2,23 +2,15 @@
 import { z } from "zod";
 
 import { EntityOIDZ, EntityZ } from "../entity";
+import { BookingRoomStatusZ } from "../../enums/BookingTypes";
 
-
-export enum GroupTourBookingRoomStatus {
-  REQUESTED = "requested",
-  CONFIRMED = "confirmed",
-  WAITLISTED = "waitlisted",
-  CANCELLED = "cancelled",
-}
-
-export const GroupTourBookingRoomStatusZ = z.nativeEnum(GroupTourBookingRoomStatus);
 
 export const GroupTourBookingRoomZ = EntityZ.extend({
   bookingOID: EntityOIDZ,
   roomConfigurationRuleOID: EntityOIDZ,
   roomNumber: z.string().max(20).optional(),
   isDbl: z.boolean().default(false),
-  status: GroupTourBookingRoomStatusZ,
+  status: BookingRoomStatusZ,
   notes: z.string().optional(),
 });
 

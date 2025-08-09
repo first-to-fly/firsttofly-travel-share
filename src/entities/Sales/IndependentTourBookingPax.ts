@@ -2,10 +2,7 @@
 import { z } from "zod";
 
 import { EntityOIDZ, EntityZ } from "../entity";
-import { BookingPaxPersonalDetailsZ, BookingPaxTypeZ } from "./BookingTypes";
-
-
-export { BookingPaxTypeZ } from "./BookingTypes";
+import { BookingPaxPersonalDetailsZ, BookingPaxTypeZ } from "../../enums/BookingTypes";
 
 
 export const IndependentTourBookingPaxZ = EntityZ.extend({

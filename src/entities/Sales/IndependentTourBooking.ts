@@ -2,7 +2,7 @@
 import { z } from "zod";
 
 import { EntityOIDZ, EntityZ } from "../entity";
-import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "./BookingTypes";
+import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 
 
 export const IndependentTourBookingMetadataZ = z.object({

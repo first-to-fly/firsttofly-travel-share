@@ -1,7 +1,7 @@
 import { EntityType } from "../../entities/entityType";
 import { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
-import { BookingPaxType } from "../../entities/Sales/BookingTypes";
-import { GroupTourBookingDiscountType, TourDepartureDiscountMetadata } from "../../entities/Sales/GroupTourBookingDiscount";
+import { BookingDiscountType, BookingPaxType } from "../../enums/BookingTypes";
+import { TourDepartureDiscountMetadata } from "../../entities/Sales/GroupTourBookingDiscount";
 import { DiscountMode } from "../../entities/Settings/Product/Discount";
 import {
   isPaxTypeAdult,
@@ -48,7 +48,7 @@ export function prepareDiscountApplication(
   }
 
   const metadata: TourDepartureDiscountMetadata = {
-    type: GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
+    type: BookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
     groupIndex: groupIndex,
     discountBreakdown: discountResult,
   };
@@ -142,7 +142,7 @@ export function createDiscountUpdateData(
   groupIndex: number = 0,
 ) {
   const metadata: TourDepartureDiscountMetadata = {
-    type: GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
+    type: BookingDiscountType.TOUR_DEPARTURE_DISCOUNT,
     groupIndex: groupIndex,
     discountBreakdown: discountResult,
   };

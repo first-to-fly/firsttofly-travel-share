@@ -2,18 +2,9 @@
 import { z } from "zod";
 
 import { EntityOIDZ, EntityZ } from "../entity";
-import { BookingDiscountTypeZ } from "./BookingTypes";
+import { BookingDiscountTypeZ } from "../../enums/BookingTypes";
+import { DiscountMode } from "../Settings/Product/Discount";
 
-
-export { BookingDiscountType } from "./BookingTypes";
-
-
-export enum DiscountMode {
-  PERCENTAGE = "percentage",
-  FIXED_AMOUNT = "fixed_amount",
-}
-
-export const DiscountModeZ = z.nativeEnum(DiscountMode);
 
 export const IndependentTourBookingDiscountZ = EntityZ.extend({
 
@@ -26,7 +17,7 @@ export const IndependentTourBookingDiscountZ = EntityZ.extend({
   discountName: z.string(),
   description: z.string().optional(),
 
-  discountMode: DiscountModeZ,
+  discountMode: z.nativeEnum(DiscountMode),
   discountValue: z.number(), // Percentage (0-100) or fixed amount
   appliedAmount: z.number(), // Actual amount discounted
 
