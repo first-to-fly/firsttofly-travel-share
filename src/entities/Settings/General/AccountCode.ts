@@ -45,8 +45,6 @@ export const AccountCodeZ = EntityZ.extend({
 
   // Additional metadata
   isSystemGenerated: z.boolean().default(false),
-  allowManualJournals: z.boolean().default(true),
-  taxType: z.string().optional(),
 });
 
 

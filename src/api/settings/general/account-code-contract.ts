@@ -18,8 +18,6 @@ const CreateAccountCodeZ = AccountCodeZ.pick({
   xeroAccountId: true,
   xeroAccountCode: true,
   isSystemGenerated: true,
-  allowManualJournals: true,
-  taxType: true,
 });
 
 const UpdateAccountCodeZ = CreateAccountCodeZ.omit({
