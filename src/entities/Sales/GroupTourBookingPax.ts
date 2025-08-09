@@ -1,22 +1,15 @@
 // simple-import-sort
 import { z } from "zod";
 
+import { BookingPaxPersonalDetailsZ, BookingPaxTypeZ } from "../../enums/BookingTypes";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { BookingPaxPersonalDetails, BookingPaxPersonalDetailsZ, BookingPaxType, BookingPaxTypeZ } from "./BookingTypes";
 
-
-// TODO: this is messy, clean this up
-export const GroupTourBookingPaxPersonalDetailsZ = BookingPaxPersonalDetailsZ;
-export type GroupTourBookingPaxPersonalDetails = BookingPaxPersonalDetails;
-export type GroupTourBookingPaxType = BookingPaxType;
-export const GroupTourBookingPaxType = BookingPaxType;
-export const GroupTourBookingPaxTypeZ = BookingPaxTypeZ;
 
 export const GroupTourBookingPaxZ = EntityZ.extend({
   bookingRoomOID: EntityOIDZ,
   type: BookingPaxTypeZ,
   isLandTourOnly: z.boolean().default(false),
-  personalDetails: GroupTourBookingPaxPersonalDetailsZ.optional(),
+  personalDetails: BookingPaxPersonalDetailsZ.optional(),
   mealPreference: z.string().optional(),
   transportRecordOID: EntityOIDZ.optional(),
   documentOIDs: z.array(EntityOIDZ).optional(),

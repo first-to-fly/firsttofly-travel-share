@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
-import { BookingPaxType, BookingPaxTypeZ } from "../../entities/Sales/BookingTypes";
+import { BookingPaxType, BookingPaxTypeZ } from "../../enums/BookingTypes";
 
 
 /**

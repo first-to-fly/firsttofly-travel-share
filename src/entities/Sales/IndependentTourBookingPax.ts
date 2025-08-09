@@ -1,11 +1,9 @@
 // simple-import-sort
 import { z } from "zod";
 
+import { BookingPaxPersonalDetailsZ, BookingPaxTypeZ } from "../../enums/BookingTypes";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { BookingPaxPersonalDetailsZ, BookingPaxTypeZ } from "./BookingTypes";
 
-
-export { BookingPaxType, BookingPaxTypeZ } from "./BookingTypes";
 
 export const IndependentTourBookingPaxZ = EntityZ.extend({
   independentTourBookingRoomOID: EntityOIDZ,

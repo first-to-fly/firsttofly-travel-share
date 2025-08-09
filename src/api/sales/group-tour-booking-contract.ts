@@ -3,11 +3,10 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
-import { GroupTourBookingBookingStatus, GroupTourBookingZ } from "../../entities/Sales/GroupTourBooking";
+import { BookingDiscountType, BookingPaxTypeZ, BookingStatus } from "../../enums/BookingTypes";
+import { GroupTourBookingZ } from "../../entities/Sales/GroupTourBooking";
 import { GroupTourBookingAddonZ } from "../../entities/Sales/GroupTourBookingAddon";
-import { GroupTourBookingDiscountType } from "../../entities/Sales/GroupTourBookingDiscount";
 import { GroupTourBookingPaxZ } from "../../entities/Sales/GroupTourBookingPax";
-import { BookingPaxTypeZ } from "../../entities/Sales/BookingTypes";
 import { GroupTourBookingRoomZ } from "../../entities/Sales/GroupTourBookingRoom";
 import { DiscountBookingChannel, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
 
@@ -72,19 +71,19 @@ export type UpdateGroupTourBookingPaxBody = z.infer<typeof UpdateGroupTourBookin
 const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
   // Code-based discount: requires discountOID (from validation API)
   z.object({
-    discountType: z.literal(GroupTourBookingDiscountType.CODE_BASED),
+    discountType: z.literal(BookingDiscountType.CODE_BASED),
     discountOID: z.string(),
     description: z.string().optional(),
     bookingChannel: z.nativeEnum(DiscountBookingChannel).default(DiscountBookingChannel.WEB),
   }),
   // Tour departure discount: no discountOID needed, amount calculated on backend
   z.object({
-    discountType: z.literal(GroupTourBookingDiscountType.TOUR_DEPARTURE_DISCOUNT),
+    discountType: z.literal(BookingDiscountType.TOUR_DEPARTURE_DISCOUNT),
     groupIndex: z.number(),
   }),
   // Special request discount: handled via approval workflow
   z.object({
-    discountType: z.literal(GroupTourBookingDiscountType.SPECIAL_REQUEST),
+    discountType: z.literal(BookingDiscountType.SPECIAL_REQUEST),
   }),
 ]);
 export type ApplyDiscountBody = z.infer<typeof ApplyDiscountBodyZ>;
@@ -214,12 +213,12 @@ export const groupTourBookingContract = initContract().router({
       200: z.boolean(),
     },
   },
-  batchUpdateGroupTourBookingStatus: {
+  batchUpdateBookingStatus: {
     method: "POST",
     path: `${basePath}/batch-booking-status`,
     body: z.record(
       EntityOIDZ.describe("OID of GroupTourBooking to update"),
-      z.object({ status: z.nativeEnum(GroupTourBookingBookingStatus) }),
+      z.object({ status: z.nativeEnum(BookingStatus) }),
     ),
     responses: {
       200: z.array(EntityOIDZ.describe("OIDs of updated GroupTourBookings")),

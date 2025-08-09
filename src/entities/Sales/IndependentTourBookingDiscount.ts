@@ -1,18 +1,10 @@
 // simple-import-sort
 import { z } from "zod";
 
+import { BookingDiscountTypeZ } from "../../enums/BookingTypes";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { BookingDiscountTypeZ } from "./BookingTypes";
+import { DiscountMode } from "../Settings/Product/Discount";
 
-
-export { BookingDiscountType } from "./BookingTypes";
-
-export enum DiscountMode {
-  PERCENTAGE = "percentage",
-  FIXED_AMOUNT = "fixed_amount",
-}
-
-export const DiscountModeZ = z.nativeEnum(DiscountMode);
 
 // Flexible metadata that can contain any fields
 export const IndependentTourBookingDiscountMetadataZ = z.object({
@@ -29,7 +21,7 @@ export const IndependentTourBookingDiscountZ = EntityZ.extend({
   appliedDiscountCode: z.string().max(20).optional(),
   description: z.string(),
   appliedAmount: z.number().positive(),
-  discountMode: DiscountModeZ,
+  discountMode: z.nativeEnum(DiscountMode),
   metadata: IndependentTourBookingDiscountMetadataZ,
 });
 

@@ -1,8 +1,8 @@
 // simple-import-sort
 import { z } from "zod";
 
+import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "./BookingTypes";
 import { IndependentTourBookingMetadataZ } from "./IndependentTourBookingMetadata";
 
 
