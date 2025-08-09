@@ -17,7 +17,7 @@ export enum RoomType {
   QUADRUPLE = "quadruple",
 }
 
-const RoomOccupancyZ = z.object({
+export const RoomOccupancyZ = z.object({
   adultNum: FTFSafeMaxNumberZ({ name: "Room occupancy adult number" }).int().nonnegative().optional(),
   childWithBedNum: FTFSafeMaxNumberZ({ name: "Room occupancy child with bed number" }).int().nonnegative().optional(),
   childWithoutBedNum: FTFSafeMaxNumberZ({ name: "Room occupancy child without bed number" }).int().nonnegative().optional(),

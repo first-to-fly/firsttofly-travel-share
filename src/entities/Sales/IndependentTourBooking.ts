@@ -28,9 +28,6 @@ export const IndependentTourBookingZ = EntityZ.extend({
     scheme: z.string(),
     rate: z.number(),
   }).optional(),
-
-  // Owner information
-  ownerOIDs: z.array(EntityOIDZ).optional(),
 });
 
 export type IndependentTourBooking = z.infer<typeof IndependentTourBookingZ>;
