@@ -132,10 +132,10 @@ export const accountCodeContract = initContract().router({
     }).passthrough(),
     responses: {
       200: z.object({
-        revenueAccountCodeOID: z.string().optional(),
-        expenseAccountCodeOID: z.string().optional(),
-        assetAccountCodeOID: z.string().optional(),
-        liabilityAccountCodeOID: z.string().optional(),
+        depositAccountCodeOID: z.string().optional(),
+        cancellationAccountCodeOID: z.string().optional(),
+        refundAccountCodeOID: z.string().optional(),
+        billAccountCodeOID: z.string().optional(),
       }),
     },
   },
@@ -146,10 +146,10 @@ export const accountCodeContract = initContract().router({
     path: `${basePath}/defaults`,
     body: z.object({
       tenantOID: z.string(),
-      revenueAccountCodeOID: z.string().optional(),
-      expenseAccountCodeOID: z.string().optional(),
-      assetAccountCodeOID: z.string().optional(),
-      liabilityAccountCodeOID: z.string().optional(),
+      depositAccountCodeOID: z.string(),
+      cancellationAccountCodeOID: z.string(),
+      refundAccountCodeOID: z.string(),
+      billAccountCodeOID: z.string(),
     }),
     responses: {
       200: z.boolean(),
