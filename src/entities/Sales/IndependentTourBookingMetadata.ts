@@ -1,6 +1,7 @@
 import { z } from "zod";
 
-import { BookingPaxPersonalDetailsZ } from "./BookingTypes";
+import { BookingPaxPersonalDetailsZ } from "../../enums/BookingTypes";
+
 
 /**
  * Base metadata schema for IndependentTourBooking
