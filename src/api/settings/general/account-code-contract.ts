@@ -14,7 +14,7 @@ const CreateAccountCodeZ = AccountCodeZ.pick({
   type: true,
   status: true,
   currency: true,
-  parentAccountCodeOID: true,
+
   xeroAccountId: true,
   xeroAccountCode: true,
   isSystemGenerated: true,
@@ -33,7 +33,7 @@ const AccountCodeListParamsZ = z.object({
   type: z.nativeEnum(AccountCodeType).optional(),
   status: z.nativeEnum(AccountCodeStatus).optional(),
   currency: z.string().optional(),
-  parentAccountCodeOID: z.string().optional(),
+
   search: z.string().optional(),
 }).passthrough();
 

@@ -35,8 +35,7 @@ export const AccountCodeZ = EntityZ.extend({
   status: z.nativeEnum(AccountCodeStatus).default(AccountCodeStatus.ACTIVE),
   currency: z.string().optional(),
 
-  // Parent account for hierarchical structure
-  parentAccountCodeOID: z.string().optional(),
+  // No relation OIDs for AccountCode currently
 
   // Xero integration fields
   xeroAccountId: z.string().optional(),
