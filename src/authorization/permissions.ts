@@ -1,3 +1,4 @@
+import { AccountCodePermissions } from "./entities/account-code.permission";
 import { ApprovalPermissions } from "./entities/approval.permission";
 import { ApprovalRequestPermissions } from "./entities/approval-request.permission";
 import { AssembleLocationAirlinesPermissions } from "./entities/assemble-location-airlines.permission";
@@ -101,6 +102,7 @@ const EntityPermissions = {
   Budget: BudgetPermissions,
   Bill: BillPermissions,
   "Match Doc": MatchDocPermissions,
+  "Account Code": AccountCodePermissions,
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,
   "Transport Plan": TransportPlanPermissions,

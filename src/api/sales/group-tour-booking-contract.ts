@@ -3,11 +3,11 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
+import { BookingPaxTypeZ } from "../../entities/Sales/BookingTypes";
 import { GroupTourBookingBookingStatus, GroupTourBookingZ } from "../../entities/Sales/GroupTourBooking";
 import { GroupTourBookingAddonZ } from "../../entities/Sales/GroupTourBookingAddon";
 import { GroupTourBookingDiscountType } from "../../entities/Sales/GroupTourBookingDiscount";
 import { GroupTourBookingPaxZ } from "../../entities/Sales/GroupTourBookingPax";
-import { BookingPaxTypeZ } from "../../entities/Sales/BookingTypes";
 import { GroupTourBookingRoomZ } from "../../entities/Sales/GroupTourBookingRoom";
 import { DiscountBookingChannel, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
 
