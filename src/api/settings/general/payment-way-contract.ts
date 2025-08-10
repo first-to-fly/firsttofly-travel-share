@@ -1,40 +1,29 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { PaymentMode, PaymentWayStatus, PaymentWayZ } from "../../../entities/Settings/General/PaymentWay";
+import { PaymentMethod } from "../../../entities/Sales/Transaction";
+import { PaymentMode, PaymentWayZ } from "../../../entities/Settings/General/PaymentWay";
 
 
 const basePath = "/api/settings/payment-ways";
 
 const CreatePaymentWayZ = PaymentWayZ.pick({
   tenantOID: true,
-  code: true,
+  paymentMethod: true,
   name: true,
-  description: true,
   mode: true,
   status: true,
-  
-  debitAccountCodeId: true,
-  creditAccountCodeId: true,
-  feeAccountCodeId: true,
-  
-  percentageFee: true,
-  fixedFee: true,
-  minFee: true,
-  maxFee: true,
-  
-  isDefault: true,
+  icon: true,
+  remarks: true,
   isPaymentLink: true,
   isDaily: true,
   isEvent: true,
   isRefund: true,
   isBulkPayment: true,
-  
-  displayOrder: true,
-  icon: true,
-  color: true,
-  
-  metadata: true,
+  txnRatePercent: true,
+  txnRateAmount: true,
+  accountCodeId: true,
+  txnRateAccountCodeId: true,
 });
 
 const UpdatePaymentWayZ = CreatePaymentWayZ.omit({
@@ -44,15 +33,9 @@ const UpdatePaymentWayZ = CreatePaymentWayZ.omit({
 
 const PaymentWayListParamsZ = z.object({
   tenantOID: z.string(),
+  paymentMethod: z.nativeEnum(PaymentMethod).optional(),
+  name: z.string().optional(),
   mode: z.nativeEnum(PaymentMode).optional(),
-  status: z.nativeEnum(PaymentWayStatus).optional(),
-  isDefault: z.boolean().optional(),
-  isPaymentLink: z.boolean().optional(),
-  isDaily: z.boolean().optional(),
-  isEvent: z.boolean().optional(),
-  isRefund: z.boolean().optional(),
-  isBulkPayment: z.boolean().optional(),
-  search: z.string().optional(),
 }).passthrough();
 
 export type CreatePaymentWay = z.infer<typeof CreatePaymentWayZ>;
@@ -71,7 +54,7 @@ export const paymentWayContract = initContract().router({
       }),
     },
   },
-  
+
   createPaymentWay: {
     summary: "Create a new payment way",
     method: "POST",
@@ -81,7 +64,7 @@ export const paymentWayContract = initContract().router({
       200: z.string(),
     },
   },
-  
+
   updatePaymentWay: {
     summary: "Update an existing payment way",
     method: "PATCH",
@@ -91,7 +74,7 @@ export const paymentWayContract = initContract().router({
       200: z.string(),
     },
   },
-  
+
   updatePaymentWays: {
     summary: "Update multiple existing payment ways",
     method: "POST",
@@ -104,7 +87,7 @@ export const paymentWayContract = initContract().router({
       200: z.array(z.string().describe("OIDs of updated payment ways")),
     },
   },
-  
+
   deletePaymentWay: {
     summary: "Delete a payment way",
     method: "DELETE",
@@ -114,7 +97,7 @@ export const paymentWayContract = initContract().router({
       200: z.boolean(),
     },
   },
-  
+
   deletePaymentWays: {
     summary: "Delete multiple payment ways",
     method: "POST",
@@ -126,7 +109,7 @@ export const paymentWayContract = initContract().router({
       200: z.boolean(),
     },
   },
-  
+
   bulkImportPaymentWays: {
     summary: "Bulk import payment ways",
     method: "POST",
@@ -147,7 +130,7 @@ export const paymentWayContract = initContract().router({
       }),
     },
   },
-  
+
   getActivePaymentWays: {
     summary: "Get active payment ways for specific use case",
     method: "GET",
@@ -162,34 +145,7 @@ export const paymentWayContract = initContract().router({
       }),
     },
   },
-  
-  getDefaultPaymentWay: {
-    summary: "Get default payment way for tenant",
-    method: "GET",
-    path: `${basePath}/default`,
-    query: z.object({
-      tenantOID: z.string(),
-    }).passthrough(),
-    responses: {
-      200: z.object({
-        oid: z.string().optional(),
-      }),
-    },
-  },
-  
-  setDefaultPaymentWay: {
-    summary: "Set default payment way for tenant",
-    method: "POST",
-    path: `${basePath}/default`,
-    body: z.object({
-      tenantOID: z.string(),
-      paymentWayOID: z.string(),
-    }),
-    responses: {
-      200: z.boolean(),
-    },
-  },
-  
+
   calculateFee: {
     summary: "Calculate fee for a transaction amount",
     method: "POST",
