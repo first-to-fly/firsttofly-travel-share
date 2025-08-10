@@ -1,7 +1,7 @@
-/**
- * @type {Record<string, import("../permissions.types").PermissionDeclaration>}
- */
-export const AccountCodePermissions = {
+import type { PermissionDeclaration } from "../permissions.types";
+
+
+export const AccountCodePermissions: Record<string, PermissionDeclaration> = {
   // Department level permissions
   "dept:account-code:view": {
     name: "View Department Account Codes",

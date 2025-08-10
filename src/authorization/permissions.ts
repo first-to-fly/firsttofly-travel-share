@@ -28,6 +28,7 @@ import { MatchDocPermissions } from "./entities/match-doc.permission";
 import { MealPermissions } from "./entities/meal.permission";
 import { MediaPermissions } from "./entities/media.permission";
 import { PaymentOrderPermissions } from "./entities/payment-order.permission";
+import { PaymentWayPermissions } from "./entities/payment-way.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { PrivacyPolicyPermissions } from "./entities/privacy-policy.permission";
 import { ProductPermissions } from "./entities/product.permission";
@@ -103,6 +104,7 @@ const EntityPermissions = {
   Bill: BillPermissions,
   "Match Doc": MatchDocPermissions,
   "Account Code": AccountCodePermissions,
+  "Payment Way": PaymentWayPermissions,
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,
   "Transport Plan": TransportPlanPermissions,
