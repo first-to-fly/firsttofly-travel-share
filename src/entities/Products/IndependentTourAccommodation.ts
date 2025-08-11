@@ -1,27 +1,27 @@
 import { z } from "zod";
 
+import { BookingPaxType } from "../../enums/BookingTypes";
 import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
-import { OccupancyType } from "../Settings/Product/CostingItem";
 
 
-// Occupancy pricing from design spec
-const OccupancyPricingZ = z.record(z.nativeEnum(OccupancyType), z.number()); // Record<OccupancyType, number>
+// Pax pricing from design spec
+const PaxPricingZ = z.record(z.nativeEnum(BookingPaxType), z.number()); // Record<BookingPaxType, number>
 
-// Cost value structure with occupancy pricing
+// Cost value structure with pax pricing
 const CostValueZ = z.object({
   currency: z.string(),
   tax: z.number().optional(),
-  occupancyPricing: OccupancyPricingZ,
+  paxPricing: PaxPricingZ,
   peakSurchargeFixedAmount: z.number().optional(),
   extraNightPrice: z.number().optional(),
 });
 
-// Price value structure with occupancy pricing (same as cost value)
+// Price value structure with pax pricing (same as cost value)
 const PriceValueZ = z.object({
   currency: z.string(),
   tax: z.number().optional(),
-  occupancyPricing: OccupancyPricingZ,
+  paxPricing: PaxPricingZ,
   peakSurchargeFixedAmount: z.number().optional(),
   extraNightPrice: z.number().optional(),
 });
