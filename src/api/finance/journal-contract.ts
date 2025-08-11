@@ -105,15 +105,15 @@ export const journalContract = initContract().router({
       toDate: z.string().optional(),
       groupBy: z.enum(["account", "entity"]).optional(),
     }),
-    responses: { 
-      200: z.object({ 
+    responses: {
+      200: z.object({
         summary: z.array(z.object({
           entityOID: z.string(),
           totalDebit: z.number(),
           totalCredit: z.number(),
           balance: z.number(),
-        }))
-      }) 
+        })),
+      }),
     },
   },
 
