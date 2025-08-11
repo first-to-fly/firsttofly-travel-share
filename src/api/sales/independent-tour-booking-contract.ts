@@ -22,16 +22,12 @@ const CreateIndependentTourBookingBodyZ = IndependentTourBookingZ.pick({
   bookingReference: true,
   paymentStatus: true,
   bookingStatus: true,
-  startDate: true,
-  endDate: true,
-  accommodationOID: true,
-  customerOID: true,
-  leadGuestName: true,
-  leadGuestEmail: true,
-  leadGuestPhone: true,
+  travelStartDate: true,
+  travelEndDate: true,
+  independentTourAccommodationOID: true,
   metadata: true,
   specialInstructions: true,
-  ownerOIDs: true,
+  overwriteTax: true,
 });
 export type CreateIndependentTourBookingBody = z.infer<typeof CreateIndependentTourBookingBodyZ>;
 
@@ -45,18 +41,10 @@ export type UpdateIndependentTourBookingBody = z.infer<typeof UpdateIndependentT
 // --- IndependentTourBookingRoom Schemas ---
 const CreateIndependentTourBookingRoomBodyZ = IndependentTourBookingRoomZ.pick({
   independentTourBookingOID: true,
-  roomName: true,
-  roomType: true,
-  roomStatus: true,
-  adultsCount: true,
-  childrenCount: true,
-  infantsCount: true,
-  bedPreference: true,
-  floorPreference: true,
-  viewPreference: true,
-  specialRequests: true,
-  roomPrice: true,
-  extraBedPrice: true,
+  roomNumber: true,
+  occupancy: true,
+  status: true,
+  notes: true,
 });
 export type CreateIndependentTourBookingRoomBody = z.infer<typeof CreateIndependentTourBookingRoomBodyZ>;
 
@@ -68,17 +56,10 @@ export type UpdateIndependentTourBookingRoomBody = z.infer<typeof UpdateIndepend
 // --- IndependentTourBookingPax Schemas ---
 const CreateIndependentTourBookingPaxBodyZ = IndependentTourBookingPaxZ.pick({
   independentTourBookingRoomOID: true,
-  paxType: true,
+  type: true,
   personalDetails: true,
-  documentOIDs: true,
-  ageAtTravel: true,
-  dietaryRequirements: true,
-  medicalConditions: true,
-  insurancePolicyNumber: true,
-  insuranceProvider: true,
-  insuranceValidUntil: true,
-  transportRecordOID: true,
-  seatPreference: true,
+  mealPreference: true,
+  documentIds: true,
 });
 export type CreateIndependentTourBookingPaxBody = z.infer<typeof CreateIndependentTourBookingPaxBodyZ>;
 
@@ -89,19 +70,15 @@ export type UpdateIndependentTourBookingPaxBody = z.infer<typeof UpdateIndepende
 
 // --- IndependentTourBookingAddon Schemas ---
 const AddAddonBodyZ = IndependentTourBookingAddonZ.pick({
-  addonType: true,
-  optionalServiceOID: true,
-  manualServiceName: true,
-  description: true,
+  independentTourOptionalServiceOID: true,
+  type: true,
+  name: true,
   serviceDate: true,
   unitPrice: true,
   tax: true,
   quantity: true,
   totalPrice: true,
   supplierOID: true,
-  confirmationNumber: true,
-  voucherNumber: true,
-  paxOIDs: true,
   notes: true,
 });
 export type AddAddonBody = z.infer<typeof AddAddonBodyZ>;
