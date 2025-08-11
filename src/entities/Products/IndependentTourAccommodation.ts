@@ -13,6 +13,8 @@ const CostValueZ = z.object({
   currency: z.string(),
   tax: z.number().optional(),
   occupancyPricing: OccupancyPricingZ,
+  peakSurchargeFixedAmount: z.number().optional(),
+  extraNightPrice: z.number().optional(),
 });
 
 // Price value structure with occupancy pricing (same as cost value)
@@ -20,18 +22,8 @@ const PriceValueZ = z.object({
   currency: z.string(),
   tax: z.number().optional(),
   occupancyPricing: OccupancyPricingZ,
-});
-
-// Night extension configuration
-const NightExtensionConfigZ = z.object({
-  maxNights: z.number(),
-  pricePerNight: z.number(),
-});
-
-// Peak surcharge rates
-const PeakSurchargeRatesZ = z.object({
-  percentage: z.number(),
-  fixedAmount: z.number(),
+  peakSurchargeFixedAmount: z.number().optional(),
+  extraNightPrice: z.number().optional(),
 });
 
 // Peak period definition
@@ -49,8 +41,6 @@ export const IndependentTourAccommodationZ = EntityZ.extend({
   name: z.string(),
   costValue: CostValueZ,
   priceValue: PriceValueZ,
-  nightExtensionConfig: NightExtensionConfigZ,
-  peakSurchargeRates: PeakSurchargeRatesZ,
   peakPeriods: z.array(PeakPeriodZ),
 });
 

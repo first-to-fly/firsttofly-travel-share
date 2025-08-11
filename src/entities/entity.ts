@@ -3,6 +3,9 @@ import { z } from "zod";
 import { DateISOStringZ } from "../types/date";
 import { EntityType } from "./entityType";
 
+// Re-export DateISOStringZ for use in entity definitions
+export { DateISOStringZ } from "../types/date";
+
 
 export const EntityOIDZ = z.string().regex(/[a-z]+-[a-zA-Z]+-*/);
 export const EntityZ = z.object({

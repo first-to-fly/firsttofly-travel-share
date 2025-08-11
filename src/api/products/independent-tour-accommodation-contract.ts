@@ -12,8 +12,6 @@ const CreateIndependentTourAccommodationZ = IndependentTourAccommodationZ.pick({
   name: true,
   costValue: true,
   priceValue: true,
-  nightExtensionConfig: true,
-  peakSurchargeRates: true,
   peakPeriods: true,
 });
 
