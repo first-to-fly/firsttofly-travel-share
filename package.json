@@ -21,7 +21,7 @@
     "postbuild": "echo",
     "start:node": "NODE_PATH=./build node ./build",
     "start": "npm run start:node",
-    "lint:eslint": "eslint --ignore-pattern \"submodules/**\" \"./**/*.{js,jsx,ts,tsx}\"",
+    "lint:eslint": "TIMING=1 eslint --cache .",
     "lint:tsc": "tsc --project ./tsconfig.lint.json --noEmit",
     "lint:madge": "npx --yes madge@latest --circular --no-spinner $(find ./src -type f | grep '\\.\\(ts\\|tsx\\|js\\|jsx\\|mjs\\)$' | paste -sd ' ' -)",
     "lint:stylelint": "stylelint --allow-empty-input ./**/*.{css,less,scss,sss}",

@@ -7,7 +7,7 @@ import { TermConditionZ } from "../../../entities/Settings/Product/TermCondition
 const basePath = "/api/term-conditions";
 
 // Define the coverage relationship schema
-const TermConditionCoverageZ = z.object({
+export const TermConditionCoverageZ = z.object({
   coverageType: z.enum(["sectors", "sector-group", "products"]),
   coverageOID: z.string(),
 });

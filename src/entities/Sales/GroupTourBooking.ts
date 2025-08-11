@@ -1,9 +1,9 @@
 // simple-import-sort
 import { z } from "zod";
 
+import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { GroupTourBookingMetadataZ } from "./GroupTourBookingMetadata";
-import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 
 
 export const GroupTourBookingZ = EntityZ.extend({

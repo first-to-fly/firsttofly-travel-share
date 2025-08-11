@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { EntityOIDZ } from "../entity";
 import { BookingPaxPersonalDetailsZ } from "../../enums/BookingTypes";
+import { EntityOIDZ } from "../entity";
 
 /**
  * Transfer-specific metadata fields schema

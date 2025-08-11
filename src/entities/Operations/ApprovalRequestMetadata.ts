@@ -1,9 +1,8 @@
 import { z } from "zod";
 
-import { EntityOIDZ } from "../entity";
 import { BookingPaxPersonalDetailsZ, BookingPaxType } from "../../enums/BookingTypes";
+import { EntityOIDZ } from "../entity";
 import { GroupTourBookingAddonTypeZ } from "../Sales/GroupTourBookingAddon";
-
 import { ApprovalType } from "../Settings/General/Approval";
 import { DiscountMode } from "../Settings/Product/Discount";
 import { ExchangeOrderStatus } from "./ExchangeOrder";

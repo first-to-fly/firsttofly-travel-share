@@ -23,7 +23,9 @@ export type MultiLangRecord<T> = {
   [key in LanguageCode]?: T
 };
 
-// eslint-disable-next-line max-len
-export const MultiLangRecordZ = <T extends z.ZodType>(valueSchema: T) => z.record(LanguageCodeZ, valueSchema.optional());
+
+export const MultiLangRecordZ = <T extends z.ZodType>(valueSchema: T) => (
+  z.record(LanguageCodeZ, valueSchema.optional())
+);
 
 export const LanguageCodeZ = z.nativeEnum(LanguageCode);

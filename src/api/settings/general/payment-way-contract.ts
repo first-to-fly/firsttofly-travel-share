@@ -110,27 +110,6 @@ export const paymentWayContract = initContract().router({
     },
   },
 
-  bulkImportPaymentWays: {
-    summary: "Bulk import payment ways",
-    method: "POST",
-    path: `${basePath}/bulk-import`,
-    body: z.object({
-      tenantOID: z.string(),
-      paymentWays: z.array(CreatePaymentWayZ.omit({ tenantOID: true })),
-    }),
-    responses: {
-      200: z.object({
-        imported: z.number(),
-        failed: z.number(),
-        errors: z.array(z.object({
-          index: z.number(),
-          code: z.string(),
-          message: z.string(),
-        })).optional(),
-      }),
-    },
-  },
-
   getActivePaymentWays: {
     summary: "Get active payment ways for specific use case",
     method: "GET",

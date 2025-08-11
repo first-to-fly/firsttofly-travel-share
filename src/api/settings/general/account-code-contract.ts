@@ -132,10 +132,10 @@ export const accountCodeContract = initContract().router({
     }).passthrough(),
     responses: {
       200: z.object({
-        depositAccountCodeOID: z.string().optional(),
-        cancellationAccountCodeOID: z.string().optional(),
-        refundAccountCodeOID: z.string().optional(),
-        billAccountCodeOID: z.string().optional(),
+        depositAccountCodeOID: z.string(),
+        cancellationAccountCodeOID: z.string(),
+        refundAccountCodeOID: z.string(),
+        billAccountCodeOID: z.string(),
       }),
     },
   },
