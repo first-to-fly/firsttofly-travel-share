@@ -79,6 +79,16 @@ export enum ApprovalType {
    * Exchange order DRAFT to WFA status change approval workflow
    */
   EXCHANGE_ORDER_DRAFT_TO_WFA = "exchange-order-draft-to-wfa-approval",
+
+  /**
+   * Customer refund request approval workflow
+   */
+  CUSTOMER_REFUND_REQUEST = "customer-refund-request",
+
+  /**
+   * Customer cancellation fee request approval workflow
+   */
+  CUSTOMER_CANCELLATION_FEE_REQUEST = "customer-cancellation-fee-request",
 }
 
 export enum ApprovalLevelApproverType {
