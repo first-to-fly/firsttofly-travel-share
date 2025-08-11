@@ -79,6 +79,13 @@ export enum ApprovalType {
    * Exchange order DRAFT to WFA status change approval workflow
    */
   EXCHANGE_ORDER_DRAFT_TO_WFA = "exchange-order-draft-to-wfa-approval",
+
+  /**
+   * Independent tour booking approval workflows
+   */
+  INDEPENDENT_TOUR_BOOKING = "independent-tour-booking-approval",
+  INDEPENDENT_TOUR_BOOKING_SPECIAL_DISCOUNT = "independent-tour-booking-special-discount-approval",
+  INDEPENDENT_TOUR_BOOKING_AMENDMENT = "independent-tour-booking-amendment-approval",
 }
 
 export enum ApprovalLevelApproverType {
