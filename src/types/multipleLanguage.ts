@@ -24,6 +24,8 @@ export type MultiLangRecord<T> = {
 };
 
 
-export const MultiLangRecordZ = <T extends z.ZodType>(valueSchema: T) => z.record(LanguageCodeZ, valueSchema.optional());
+export const MultiLangRecordZ = <T extends z.ZodType>(valueSchema: T) => (
+  z.record(LanguageCodeZ, valueSchema.optional())
+);
 
 export const LanguageCodeZ = z.nativeEnum(LanguageCode);
