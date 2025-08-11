@@ -76,8 +76,8 @@ export type UpdateIndependentTourBookingPaxBody = z.infer<typeof UpdateIndepende
 
 // --- IndependentTourBookingAddon Schemas ---
 const AddAddonBodyZ = IndependentTourBookingAddonZ.pick({
-  type: true,
   independentTourOptionalServiceOID: true,
+  type: true,
   name: true,
   serviceDate: true,
   unitPrice: true,
