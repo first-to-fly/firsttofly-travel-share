@@ -109,7 +109,7 @@ export const fromObjectToObject = <R extends object, S extends object>(
 export const fromArrayToDict = <V extends number | string>(items: V[]): Partial<Record<V, boolean>> => {
   const results = items.reduce<Partial<Record<V, boolean>>>(
     (_, item) => {
-      // eslint-disable-next-line no-param-reassign
+
       _[item] = true;
       return _;
     },

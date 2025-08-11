@@ -1,8 +1,8 @@
 // simple-import-sort
 import { z } from "zod";
 
-import { EntityOIDZ, EntityZ } from "../entity";
 import { BookingDiscountTypeZ } from "../../enums/BookingTypes";
+import { EntityOIDZ, EntityZ } from "../entity";
 import { DiscountMode } from "../Settings/Product/Discount";
 
 

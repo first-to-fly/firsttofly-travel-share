@@ -3,13 +3,12 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
-import { BookingDiscountType, BookingPaymentStatus, BookingStatus } from "../../enums/BookingTypes";
 import { IndependentTourBookingZ } from "../../entities/Sales/IndependentTourBooking";
 import { IndependentTourBookingAddonZ } from "../../entities/Sales/IndependentTourBookingAddon";
-
 import { IndependentTourBookingPaxZ } from "../../entities/Sales/IndependentTourBookingPax";
 import { IndependentTourBookingRoomZ } from "../../entities/Sales/IndependentTourBookingRoom";
 import { DiscountBookingChannel, DiscountMode, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
+import { BookingDiscountType, BookingPaymentStatus, BookingStatus } from "../../enums/BookingTypes";
 
 
 const basePath = "/api/sales/independent-tour-bookings";
