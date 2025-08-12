@@ -131,7 +131,7 @@ function runTests() {
   // Test 6: ProductType filtering - should only match entities with correct productType
   {
     const target = {
-      oid: "dep-1",
+      oid: "dep-1", // Specific departure OID
       product: {
         oid: "prod-1",
         type: ProductType.FIT,
