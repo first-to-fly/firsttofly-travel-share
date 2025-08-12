@@ -2,18 +2,18 @@ import { ProductType } from "../enums/ProductType";
 
 
 /**
- * Derive entities that cover a given tour departure based on its OIDs.
+ * Get entities that match a given target context based on coverage OIDs.
  * Entities should have `oid`, `coveredEntityOIDs`, and `productTypes` properties.
  * @param entities - Array of entities to match against.
- * @param departure - Tour departure metadata including its own OID and product info.
+ * @param target - Target context including optional OID and product info.
  * @returns Object containing `closestMatched` (most specific match) and `allMatched` (all matches).
  */
-export function deriveEntitiesCoveringTourDepartures<
+export function getCoverageMatches<
   Entity extends { oid: string; coveredEntityOIDs: string[]; productTypes?: ProductType[] },
 >(
   entities: Entity[],
-  departure: {
-    oid: string;
+  target: {
+    oid?: string; // Optional - only used when matching against a specific entity (like a departure)
     product: {
       oid: string;
       type: ProductType;
@@ -24,22 +24,22 @@ export function deriveEntitiesCoveringTourDepartures<
 ): { closestMatched?: Entity; allMatched: Entity[] } {
   // First, filter entities by productTypes - only consider entities that support the product type
   const productTypeFilteredEntities = entities.filter((entity) => !entity.productTypes ||
-    entity.productTypes.includes(departure.product.type));
+    entity.productTypes.includes(target.product.type));
 
-  // Define priority levels: departure OID > product OID > sector group OID > sector OIDs
+  // Define priority levels: target OID (if provided) > product OID > sector group OID > sector OIDs
   const levels: (Set<string>)[] = [
-    new Set([departure.oid]),
-    new Set([departure.product.oid]),
-    departure.product.sectorGroupOID ? new Set([departure.product.sectorGroupOID]) : new Set<string>(),
-    departure.product.sectorOIDs ? new Set(departure.product.sectorOIDs) : new Set<string>(),
+    ...(target.oid ? [new Set([target.oid])] : []),
+    new Set([target.product.oid]),
+    target.product.sectorGroupOID ? new Set([target.product.sectorGroupOID]) : new Set<string>(),
+    target.product.sectorOIDs ? new Set(target.product.sectorOIDs) : new Set<string>(),
   ].filter((level) => level.size > 0);
 
   // Flatten all target OIDs into a set for quick lookup
   const targetOIDs = new Set<string>([
-    departure.oid,
-    departure.product.oid,
-    departure.product.sectorGroupOID,
-    ...(departure.product.sectorOIDs || []),
+    ...(target.oid ? [target.oid] : []),
+    target.product.oid,
+    target.product.sectorGroupOID,
+    ...(target.product.sectorOIDs || []),
   ].filter((o): o is string => !!o));
 
   // Find all entities whose coveredEntityOIDs intersect with targetOIDs AND match productType
