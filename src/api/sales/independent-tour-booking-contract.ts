@@ -506,4 +506,17 @@ export const independentTourBookingContract = initContract().router({
       200: z.boolean(),
     },
   },
+
+  recalculateBookingTotal: {
+    summary: "Manually trigger recalculation of booking total",
+    method: "POST",
+    path: `${basePath}/:bookingOID/recalculate`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({
+      reason: z.string().optional().describe("Reason for recalculation"),
+    }).optional(),
+    responses: {
+      200: WorkflowResponseZ,
+    },
+  },
 });
