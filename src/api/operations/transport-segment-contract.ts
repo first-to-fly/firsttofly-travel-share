@@ -143,6 +143,16 @@ export const transportSegmentContract = initContract().router({
     },
   },
 
+  batchCreateTransportSegments: {
+    summary: "Create multiple new transport segments",
+    method: "POST",
+    path: `${basePath}/batch-create`,
+    body: z.array(CreateTransportSegmentZ),
+    responses: {
+      200: z.array(z.string()),
+    },
+  },
+
   updateTransportSegments: {
     summary: "Update multiple existing transport segments",
     method: "POST",
