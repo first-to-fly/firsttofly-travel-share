@@ -98,7 +98,6 @@ function runTests() {
   // Test 4: Only sector match (multiple)
   {
     const target = {
-      oid: "dep-2",
       product: {
         oid: "prod-2",
         type: ProductType.GIT,
@@ -117,7 +116,6 @@ function runTests() {
   // Test 5: No matches
   {
     const target = {
-      oid: "dep-x",
       product: {
         oid: "prod-x",
         type: ProductType.GIT,
