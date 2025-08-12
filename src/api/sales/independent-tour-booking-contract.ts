@@ -8,7 +8,7 @@ import { IndependentTourBookingAddonZ } from "../../entities/Sales/IndependentTo
 import { IndependentTourBookingPaxZ } from "../../entities/Sales/IndependentTourBookingPax";
 import { IndependentTourBookingRoomZ } from "../../entities/Sales/IndependentTourBookingRoom";
 import { DiscountBookingChannel, DiscountMode, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
-import { BookingDiscountType, BookingPaymentStatus, BookingStatus } from "../../enums/BookingTypes";
+import { BookingDiscountType, BookingPaymentStatus, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 
 
 const basePath = "/api/sales/independent-tour-bookings";
@@ -228,6 +228,21 @@ export const independentTourBookingContract = initContract().router({
     },
   },
 
+  batchUpdateBookingStatus: {
+    summary: "Batch update booking statuses",
+    method: "POST",
+    path: `${basePath}/batch-status`,
+    body: z.record(
+      EntityOIDZ.describe("OID of IndependentTourBooking"),
+      z.object({
+        status: BookingStatusZ,
+      }),
+    ),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of updated bookings")),
+    },
+  },
+
   // #region ACCOMMODATION
   setAccommodation: {
     summary: "Set or update accommodation for booking",
@@ -245,6 +260,16 @@ export const independentTourBookingContract = initContract().router({
   },
 
   // #region ROOMS
+  getRoomsForBooking: {
+    summary: "Get all rooms for a booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/rooms`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("Room OIDs")),
+    },
+  },
+
   addRoom: {
     summary: "Add a room to the booking",
     method: "POST",
@@ -285,6 +310,16 @@ export const independentTourBookingContract = initContract().router({
   },
 
   // #region PASSENGERS
+  getPaxForBooking: {
+    summary: "Get all passengers for a booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/passengers`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("Passenger OIDs")),
+    },
+  },
+
   addPaxToRoom: {
     summary: "Add a passenger to a room",
     method: "POST",
@@ -328,6 +363,16 @@ export const independentTourBookingContract = initContract().router({
   },
 
   // #region ADDONS
+  getAddonsForBooking: {
+    summary: "Get all addons for a booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/addons`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("Addon OIDs")),
+    },
+  },
+
   addAddon: {
     summary: "Add an addon (optional service) to the booking",
     method: "POST",
@@ -368,6 +413,16 @@ export const independentTourBookingContract = initContract().router({
   },
 
   // #region DISCOUNTS
+  getDiscountsForBooking: {
+    summary: "Get all discounts for a booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/discounts`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("Discount OIDs")),
+    },
+  },
+
   validateDiscount: {
     summary: "Validate a discount code before applying",
     method: "POST",
@@ -440,22 +495,15 @@ export const independentTourBookingContract = initContract().router({
     },
   },
 
-  // #region PRICING
-  recalculateTotal: {
-    summary: "Recalculate the booking total amount",
+  // #region BOOKING MANAGEMENT
+  cancelIndependentTourBooking: {
+    summary: "Cancel an independent tour booking",
     method: "POST",
-    path: `${basePath}/:bookingOID/recalculate`,
+    path: `${basePath}/:bookingOID/cancel`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     body: z.object({}).optional(),
     responses: {
-      200: z.object({
-        accommodationCost: z.number(),
-        optionalServicesCost: z.number(),
-        miscellaneousCost: z.number(),
-        discountAmount: z.number(),
-        taxAmount: z.number(),
-        totalAmount: z.number(),
-      }),
+      200: z.boolean(),
     },
   },
 });
