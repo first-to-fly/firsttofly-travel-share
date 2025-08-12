@@ -17,16 +17,8 @@ export const ReferenceCodePermissions = {
     name: "View Reference Code",
     description: "Can view reference code in tenant",
   },
-  "tenant:referenceCode:create": {
-    name: "Create Reference Code",
-    description: "Can create reference code in tenant",
-  },
   "tenant:referenceCode:update": {
     name: "Update Reference Code",
     description: "Can update reference code in tenant",
-  },
-  "tenant:referenceCode:delete": {
-    name: "Delete Reference Code",
-    description: "Can delete reference code in tenant",
   },
 };
