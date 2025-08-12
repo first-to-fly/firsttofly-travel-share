@@ -18,7 +18,7 @@ export const PaymentOrderZ = EntityZ.extend({
   minPaymentPrice: z.number().positive(),
   currencyCode: z.string().length(3),
   status: PaymentOrderStatusZ,
-  groupTourBookingOID: EntityOIDZ,
+  entityOID: EntityOIDZ,
 });
 
 export type PaymentOrder = z.infer<typeof PaymentOrderZ>;
