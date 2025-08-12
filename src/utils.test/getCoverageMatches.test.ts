@@ -151,9 +151,8 @@ function runTests() {
 
   // Test 7: ProductType filtering - no entities support the productType
   {
-    // Create a departure with a productType that no entities in our test data support for this specific case
+    // Create a product with a productType that no entities in our test data support for this specific case
     const target = {
-      oid: "dep-x",
       product: {
         oid: "prod-1", // This would normally match ent-product
         type: ProductType.FIT, // But ent-product only supports GIT
