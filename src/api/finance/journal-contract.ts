@@ -24,14 +24,10 @@ const UpdateJournalZ = CreateJournalZ.omit({
 
 const JournalListParamsZ = z.object({
   tenantOID: z.string(),
-  fromEntityOID: z.string().optional(),
-  toEntityOID: z.string().optional(),
   isVoided: z.boolean().optional(),
   fromDate: z.string().optional(),
   toDate: z.string().optional(),
-  minAmount: z.number().optional(),
-  maxAmount: z.number().optional(),
-}).passthrough();
+});
 
 export type CreateJournal = z.infer<typeof CreateJournalZ>;
 export type UpdateJournal = z.infer<typeof UpdateJournalZ>;
