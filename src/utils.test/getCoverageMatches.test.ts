@@ -1,13 +1,13 @@
 import assert from "assert";
 
 import { ProductType } from "../enums/ProductType";
-import { deriveEntitiesCoveringTourDepartures } from "../utils/deriveEntitiesCoveringTourDepartures";
+import { getCoverageMatches } from "../utils/getCoverageMatches";
 
 
 type TestEntity = { oid: string; coveredEntityOIDs: string[]; productTypes: ProductType[] };
 
 function runTests() {
-  console.log("Running deriveEntitiesCoveringTourDepartures tests...");
+  console.log("Running getCoverageMatches tests...");
 
   // Common entities for tests
   const entities: TestEntity[] = [
@@ -40,8 +40,8 @@ function runTests() {
 
   // Test 1: Match on departure OID
   {
-    const departure = {
-      oid: "dep-1",
+    const target = {
+      oid: "dep-1", // Specific departure OID
       product: {
         oid: "prod-1",
         type: ProductType.GIT,
@@ -49,19 +49,18 @@ function runTests() {
         sectorOIDs: ["s-1", "s-3"],
       },
     };
-    const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
+    const { closestMatched, allMatched } = getCoverageMatches(entities, target);
     assert.strictEqual(closestMatched?.oid, "ent-departure", "Should match departure entity first");
     assert.deepStrictEqual(
       allMatched.map((e) => e.oid),
-      ["ent-departure", "ent-product", "ent-sector-group", "ent-sector"],
+      ["ent-departure", "ent-product", "ent-sector"],
       "Should include all matching entities",
     );
   }
 
   // Test 2: No departure OID, match on product OID
   {
-    const departure = {
-      oid: "dep-2",
+    const target = {
       product: {
         oid: "prod-1",
         type: ProductType.GIT,
@@ -69,7 +68,7 @@ function runTests() {
         sectorOIDs: ["s-3"],
       },
     };
-    const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
+    const { closestMatched, allMatched } = getCoverageMatches(entities, target);
     assert.strictEqual(closestMatched?.oid, "ent-product", "Should match product entity first");
     assert.deepStrictEqual(
       allMatched.map((e) => e.oid),
@@ -80,8 +79,7 @@ function runTests() {
 
   // Test 3: Only sector group match
   {
-    const departure = {
-      oid: "dep-2",
+    const target = {
       product: {
         oid: "prod-2",
         type: ProductType.FIT,
@@ -89,7 +87,7 @@ function runTests() {
         sectorOIDs: [],
       },
     };
-    const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
+    const { closestMatched, allMatched } = getCoverageMatches(entities, target);
     assert.strictEqual(closestMatched?.oid, "ent-sector-group", "Should match sector group entity first");
     assert.deepStrictEqual(
       allMatched.map((e) => e.oid),
@@ -99,8 +97,7 @@ function runTests() {
 
   // Test 4: Only sector match (multiple)
   {
-    const departure = {
-      oid: "dep-2",
+    const target = {
       product: {
         oid: "prod-2",
         type: ProductType.GIT,
@@ -108,7 +105,7 @@ function runTests() {
         sectorOIDs: ["s-2"],
       },
     };
-    const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
+    const { closestMatched, allMatched } = getCoverageMatches(entities, target);
     assert.strictEqual(closestMatched?.oid, "ent-sector", "Should match sector entity");
     assert.deepStrictEqual(
       allMatched.map((e) => e.oid),
@@ -118,8 +115,7 @@ function runTests() {
 
   // Test 5: No matches
   {
-    const departure = {
-      oid: "dep-x",
+    const target = {
       product: {
         oid: "prod-x",
         type: ProductType.GIT,
@@ -127,15 +123,15 @@ function runTests() {
         sectorOIDs: ["s-x"],
       },
     };
-    const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
+    const { closestMatched, allMatched } = getCoverageMatches(entities, target);
     assert.strictEqual(closestMatched, undefined, "Should have no closest match");
     assert.deepStrictEqual(allMatched, [], "Should have no matches");
   }
 
   // Test 6: ProductType filtering - should only match entities with correct productType
   {
-    const departure = {
-      oid: "dep-1",
+    const target = {
+      oid: "dep-1", // Specific departure OID
       product: {
         oid: "prod-1",
         type: ProductType.FIT,
@@ -143,7 +139,7 @@ function runTests() {
         sectorOIDs: ["s-1", "s-3"],
       },
     };
-    const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
+    const { closestMatched, allMatched } = getCoverageMatches(entities, target);
     // Should match departure (supports both GIT/FIT) but not product (only supports GIT)
     assert.strictEqual(closestMatched?.oid, "ent-departure", "Should match departure entity first");
     assert.deepStrictEqual(
@@ -155,9 +151,8 @@ function runTests() {
 
   // Test 7: ProductType filtering - no entities support the productType
   {
-    // Create a departure with a productType that no entities in our test data support for this specific case
-    const departure = {
-      oid: "dep-x",
+    // Create a product with a productType that no entities in our test data support for this specific case
+    const target = {
       product: {
         oid: "prod-1", // This would normally match ent-product
         type: ProductType.FIT, // But ent-product only supports GIT
@@ -165,7 +160,7 @@ function runTests() {
         sectorOIDs: ["s-x"],
       },
     };
-    const { closestMatched, allMatched } = deriveEntitiesCoveringTourDepartures(entities, departure);
+    const { closestMatched, allMatched } = getCoverageMatches(entities, target);
     // Should have no matches because ent-product only supports GIT, not FIT
     assert.strictEqual(closestMatched, undefined, "Should have no closest match due to productType filter");
     assert.deepStrictEqual(allMatched, [], "Should have no matches due to productType filter");
