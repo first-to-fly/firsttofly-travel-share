@@ -7,7 +7,6 @@ import { IndependentTourBookingZ } from "../../entities/Sales/IndependentTourBoo
 import { IndependentTourBookingAddonZ } from "../../entities/Sales/IndependentTourBookingAddon";
 import { IndependentTourBookingPaxZ } from "../../entities/Sales/IndependentTourBookingPax";
 import { IndependentTourBookingRoomZ } from "../../entities/Sales/IndependentTourBookingRoom";
-import { PaymentMethod, TransactionStatus, TransactionType } from "../../entities/Sales/Transaction";
 import { DiscountBookingChannel, DiscountMode, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
 import { BookingDiscountType, BookingPaymentStatus, BookingStatus } from "../../enums/BookingTypes";
 
@@ -438,43 +437,6 @@ export const independentTourBookingContract = initContract().router({
     body: CreateAirWallexPaymentLinkBodyZ,
     responses: {
       200: AirWallexPaymentLinkResponseZ,
-    },
-  },
-
-  processRefund: {
-    summary: "Process a refund for the booking",
-    method: "POST",
-    path: `${basePath}/:bookingOID/refund`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: z.object({
-      amount: z.number().positive(),
-      reason: z.string(),
-    }),
-    responses: {
-      200: z.object({
-        success: z.boolean(),
-        transactionOID: EntityOIDZ.optional(),
-      }),
-    },
-  },
-
-  getBookingTransactions: {
-    summary: "Get all transactions for a booking",
-    method: "GET",
-    path: `${basePath}/:bookingOID/transactions`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    responses: {
-      200: z.object({
-        transactions: z.array(z.object({
-          oid: EntityOIDZ,
-          amount: z.number(),
-          transactionType: z.nativeEnum(TransactionType),
-          paymentMethod: z.nativeEnum(PaymentMethod).optional(),
-          transactionDate: z.string(),
-          status: z.nativeEnum(TransactionStatus),
-          reference: z.string().optional(),
-        })),
-      }),
     },
   },
 
