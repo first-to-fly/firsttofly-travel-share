@@ -40,6 +40,7 @@ export const MatchDocListParamsZ = z.object({
 
 export type CreateMatchDoc = z.infer<typeof CreateMatchDocZ>;
 export type UpdateMatchDoc = z.infer<typeof UpdateMatchDocZ>;
+export type MatchDocListParams = z.infer<typeof MatchDocListParamsZ>;
 
 export const matchDocContract = initContract().router({
   getMatchDocs: {
