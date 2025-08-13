@@ -32,7 +32,7 @@ export enum MatchDocCategory {
 export const MatchDocZ = EntityZ.extend({
   entityType: z.literal(EntityType.MATCH_DOC),
 
-  matchDocNo: z.string(),
+  code: z.string(),
   status: z.nativeEnum(MatchDocStatus),
   category: z.nativeEnum(MatchDocCategory),
 
