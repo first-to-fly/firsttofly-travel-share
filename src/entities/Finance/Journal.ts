@@ -17,7 +17,7 @@ export enum JournalEvents {
 export const JournalZ = EntityZ.extend({
   entityType: z.literal(EntityType.JOURNAL),
 
-  ref: z.string(),
+  code: z.string(),
   fromEntityOID: EntityOIDZ,
   toEntityOID: EntityOIDZ,
   amount: z.number().positive(),

@@ -8,7 +8,7 @@ const basePath = "/api/finance/journals";
 
 const CreateJournalZ = JournalZ.pick({
   tenantOID: true,
-  ref: true,
+  code: true,
   fromEntityOID: true,
   toEntityOID: true,
   amount: true,
@@ -19,7 +19,7 @@ const CreateJournalZ = JournalZ.pick({
 
 const UpdateJournalZ = CreateJournalZ.omit({
   tenantOID: true,
-  ref: true,
+  code: true,
 }).partial();
 
 const JournalListParamsZ = z.object({
