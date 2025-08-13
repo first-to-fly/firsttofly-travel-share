@@ -1,14 +1,14 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { BillPaymentStatus, BillStatus, BillZ } from "../../entities/Finance/Bill";
+import { BillCategory, BillPaymentStatus, BillStatus, BillZ } from "../../entities/Finance/Bill";
 
 
 const basePath = "/api/operations/bills";
 
 const CreateBillZ = BillZ.pick({
   tenantOID: true,
-  billNo: true,
+  code: true,
   invoiceNo: true,
   status: true,
   paymentStatus: true,
@@ -17,13 +17,17 @@ const CreateBillZ = BillZ.pick({
   supplierOID: true,
   totalAmount: true,
   currency: true,
+  category: true,
+  currencyRate: true,
+  files: true,
   remarks: true,
   internalNotes: true,
 });
 
 const UpdateBillZ = CreateBillZ.omit({
   tenantOID: true,
-  billNo: true,
+  code: true,
+  category: true,
 }).partial();
 
 const BillListParamsZ = z.object({
@@ -31,6 +35,7 @@ const BillListParamsZ = z.object({
   supplierOID: z.string().optional(),
   status: z.nativeEnum(BillStatus).optional(),
   paymentStatus: z.nativeEnum(BillPaymentStatus).optional(),
+  category: z.nativeEnum(BillCategory).optional(),
 }).passthrough();
 
 const LinkItemsToBillZ = z.object({
