@@ -4,11 +4,18 @@ import { z } from "zod";
 import { EntityOIDZ, EntityZ } from "../entity";
 
 
+export enum IndependentTourBookingAddonType {
+  OPTIONAL_SERVICE = "optional_service",
+  MANUAL = "manual",
+}
+
+export const IndependentTourBookingAddonTypeZ = z.nativeEnum(IndependentTourBookingAddonType);
+
 export const IndependentTourBookingAddonZ = EntityZ.extend({
   independentTourBookingOID: EntityOIDZ,
   independentTourOptionalServiceOID: EntityOIDZ.optional(),
 
-  type: z.enum(["optional_service", "manual"]),
+  type: IndependentTourBookingAddonTypeZ,
   serviceDate: z.string(), // ISO datetime string
   name: z.string(),
   unitPrice: z.number().positive(),

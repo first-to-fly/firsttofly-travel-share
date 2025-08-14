@@ -61,7 +61,7 @@ const CreateIndependentTourBookingPaxBodyZ = IndependentTourBookingPaxZ.pick({
   type: true,
   personalDetails: true,
   mealPreference: true,
-  documentIds: true,
+  documentOIDs: true,
 });
 export type CreateIndependentTourBookingPaxBody = z.infer<typeof CreateIndependentTourBookingPaxBodyZ>;
 
@@ -69,7 +69,7 @@ const UpdateIndependentTourBookingPaxBodyZ = IndependentTourBookingPaxZ.pick({
   type: true,
   personalDetails: true,
   mealPreference: true,
-  documentIds: true,
+  documentOIDs: true,
 }).partial();
 export type UpdateIndependentTourBookingPaxBody = z.infer<typeof UpdateIndependentTourBookingPaxBodyZ>;
 

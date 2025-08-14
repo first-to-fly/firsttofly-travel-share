@@ -17,7 +17,7 @@ export const IndependentTourBookingDiscountZ = EntityZ.extend({
   independentTourBookingOID: EntityOIDZ,
 
   discountType: BookingDiscountTypeZ,
-  discountId: z.string().optional(), // UUID reference to Discount entity
+  discountOID: EntityOIDZ.optional(),
   appliedDiscountCode: z.string().max(20).optional(),
   description: z.string(),
   appliedAmount: z.number().positive(),
