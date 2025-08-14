@@ -10,7 +10,7 @@ export const IndependentTourBookingRoomZ = EntityZ.extend({
   independentTourBookingOID: EntityOIDZ,
 
   roomNumber: z.string().max(20).optional(),
-  occupancy: RoomOccupancyZ, // Required field
+  occupancy: RoomOccupancyZ,
   status: BookingRoomStatusZ,
   notes: z.string().optional(),
 });
