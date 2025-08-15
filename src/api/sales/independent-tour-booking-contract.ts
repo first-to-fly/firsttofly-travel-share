@@ -19,7 +19,6 @@ const CreateIndependentTourBookingBodyZ = IndependentTourBookingZ.pick({
   independentTourProductOID: true,
   independentTourAccommodationOID: true,
   departmentOID: true,
-  bookingReference: true,
   paymentStatus: true,
   bookingStatus: true,
   travelStartDate: true,
@@ -27,6 +26,8 @@ const CreateIndependentTourBookingBodyZ = IndependentTourBookingZ.pick({
   metadata: true,
   specialInstructions: true,
   overwriteTax: true,
+}).extend({
+  bookingReference: IndependentTourBookingZ.shape.bookingReference.optional(),
 });
 export type CreateIndependentTourBookingBody = z.infer<typeof CreateIndependentTourBookingBodyZ>;
 
