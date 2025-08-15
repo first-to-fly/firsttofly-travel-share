@@ -5,6 +5,12 @@ import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
 
+export enum IndependentTourAccommodationEvents {
+  INDEPENDENT_TOUR_ACCOMMODATION_UPDATED = "INDEPENDENT_TOUR_ACCOMMODATION_UPDATED",
+  INDEPENDENT_TOUR_ACCOMMODATION_LIST_UPDATED = "INDEPENDENT_TOUR_ACCOMMODATION_LIST_UPDATED",
+}
+
+
 // Pax pricing from design spec
 const PaxPricingZ = z.record(z.nativeEnum(BookingPaxType), z.number()); // Record<BookingPaxType, number>
 

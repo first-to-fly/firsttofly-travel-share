@@ -17,6 +17,11 @@ export enum IndependentTourProductDocumentationType {
   EXTRA_INFORMATION = "extra-information",
 }
 
+export enum IndependentTourProductEvents {
+  INDEPENDENT_TOUR_PRODUCT_UPDATED = "INDEPENDENT_TOUR_PRODUCT_UPDATED",
+  INDEPENDENT_TOUR_PRODUCT_LIST_UPDATED = "INDEPENDENT_TOUR_PRODUCT_LIST_UPDATED",
+}
+
 // Interface for Independent Tour Product MultiLanguageContent fields
 export interface MultiLanguageContent {
   [languageCode: string]: string;

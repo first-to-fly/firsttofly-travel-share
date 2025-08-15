@@ -5,6 +5,12 @@ import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
 
 
+export enum IndependentTourOptionalServiceEvents {
+  INDEPENDENT_TOUR_OPTIONAL_SERVICE_UPDATED = "INDEPENDENT_TOUR_OPTIONAL_SERVICE_UPDATED",
+  INDEPENDENT_TOUR_OPTIONAL_SERVICE_LIST_UPDATED = "INDEPENDENT_TOUR_OPTIONAL_SERVICE_LIST_UPDATED",
+}
+
+
 // Cost value structure from design spec
 const CostValueZ = z.object({
   currency: z.string(),
