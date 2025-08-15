@@ -35,6 +35,7 @@ export const ApprovalRequestZ = EntityZ.extend({
   rejectionReason: z.string().optional(),
   completedAt: DateISOStringZ.optional(),
   metadata: ApprovalRequestMetadataZ,
+  code: z.string(),
 });
 
 export type ApprovalRequest = z.infer<typeof ApprovalRequestZ>;
