@@ -18,12 +18,13 @@ const CreateGroupTourBookingBodyZ = GroupTourBookingZ.pick({
   tenantOID: true,
   tourDepartureOID: true,
   departmentOID: true,
-  bookingReference: true,
   paymentStatus: true,
   metadata: true,
   specialInstructions: true,
   overwriteTax: true,
   ownerOIDs: true,
+}).extend({
+  bookingReference: GroupTourBookingZ.shape.bookingReference.optional(),
 });
 export type CreateGroupTourBookingBody = z.infer<typeof CreateGroupTourBookingBodyZ>;
 

@@ -8,7 +8,6 @@ const basePath = "/api/operations/bills";
 
 const CreateBillZ = BillZ.pick({
   tenantOID: true,
-  code: true,
   invoiceNo: true,
   status: true,
   paymentStatus: true,
@@ -22,6 +21,8 @@ const CreateBillZ = BillZ.pick({
   files: true,
   remarks: true,
   internalNotes: true,
+}).extend({
+  code: BillZ.shape.code.optional(),
 });
 
 const UpdateBillZ = CreateBillZ.omit({

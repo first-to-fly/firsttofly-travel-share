@@ -8,7 +8,6 @@ const basePath = "/api/operations/exchange-orders";
 
 const CreateExchangeOrderZ = ExchangeOrderZ.pick({
   tenantOID: true,
-  exchangeOrderNo: true,
   status: true,
   issueDate: true,
   dueDate: true,
@@ -22,6 +21,8 @@ const CreateExchangeOrderZ = ExchangeOrderZ.pick({
   currency: true,
   remarks: true,
   isArchived: true,
+}).extend({
+  exchangeOrderNo: ExchangeOrderZ.shape.exchangeOrderNo.optional(),
 });
 
 const UpdateExchangeOrderZ = CreateExchangeOrderZ.omit({

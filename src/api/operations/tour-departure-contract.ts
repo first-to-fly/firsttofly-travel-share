@@ -16,7 +16,6 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   tourLeaderOIDs: true,
   tourManagerOIDs: true,
 
-  departureCode: true,
   description: true,
 
   customTourName: true,
@@ -38,6 +37,8 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   assembleLocationAirlineOID: true,
   assembleAirlineLocationTime: true,
   hkSeat: true,
+}).extend({
+  departureCode: TourDepartureZ.shape.departureCode.optional(),
 });
 
 const UpdateTourDepartureZ = CreateTourDepartureZ.omit({

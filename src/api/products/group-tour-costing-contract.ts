@@ -32,7 +32,6 @@ const CreateGroupTourCostingZ = GroupTourCostingZ.pick({
 
   templateOID: true,
   name: true,
-  code: true,
   remarks: true,
   validityStartDate: true,
   validityEndDate: true,
@@ -42,6 +41,7 @@ const CreateGroupTourCostingZ = GroupTourCostingZ.pick({
   isActive: true,
   airlineOIDs: true,
 }).extend({
+  code: GroupTourCostingZ.shape.code.optional(),
   groupTourCostingEntries: z.array(CreateGroupTourCostingEntryZ),
 });
 
