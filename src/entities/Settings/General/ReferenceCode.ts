@@ -23,25 +23,28 @@ export enum ReferenceCodeEvents {
 }
 
 export enum ReferenceMachineCode {
+  // GIT Tour Product is manual input
+  // FIT Tour Product is manual input
+
   // Operation Module
   OPERATION_COSTING = "operation_costing",
-  OPERATION_TOUR_CODES = "operation_tour_codes",
+  OPERATION_TOUR_PRODUCT = "operation_tour_product", // --> Group Tour Departure
   OPERATION_PRICE_CODES = "operation_price_codes",
-  OPERATION_BUDGETS = "operation_budgets",
+  // OPERATION_BUDGETS = "operation_budgets",
   OPERATION_EO = "operation_eo",
-  OPERATION_FIT_TOUR_CODES = "operation_fit_tour_codes",
-  OPERATION_TOUR_LEADER_ALLOWANCE = "operation_tour_leader_allowance",
-  OPERATION_TL_TM_ADVANCE_CASH = "operation_tl_tm_advance_cash",
-  OPERATION_CASH_RETURN = "operation_cash_return",
+  OPERATION_FIT_TOUR_CODES = "operation_fit_tour_codes", // --> remove
+  // OPERATION_TOUR_LEADER_ALLOWANCE = "operation_tour_leader_allowance",
+  // OPERATION_TL_TM_ADVANCE_CASH = "operation_tl_tm_advance_cash",
+  // OPERATION_CASH_RETURN = "operation_cash_return",
   OPERATION_APPROVAL = "operation_approval",
 
   // Sales Module
-  SALES_ENQUIRIES = "sales_enquiries",
+  // SALES_ENQUIRIES = "sales_enquiries",
   SALES_GIT_BOOKINGS = "sales_git_bookings",
   SALES_FIT_BOOKINGS = "sales_fit_bookings",
   SALES_CANCELLATION_FEE_REQUEST = "sales_cancellation_fee_request",
   SALES_AMEND_GIT_BOOKING = "sales_amend_git_booking",
-  SALES_INSURANCE_BOOKINGS = "sales_insurance_bookings",
+  // SALES_INSURANCE_BOOKINGS = "sales_insurance_bookings",
 
   // Finance Module
   FINANCE_BILL = "finance_bill",
@@ -51,7 +54,7 @@ export enum ReferenceMachineCode {
   FINANCE_PAYMENT_RECEIVED = "finance_payment_received",
   FINANCE_BUDGET_TRANSFER = "finance_budget_transfer",
   FINANCE_REFUND = "finance_refund",
-  FINANCE_PAYMENT_LINK = "finance_payment_link",
+  // FINANCE_PAYMENT_LINK = "finance_payment_link",
   FINANCE_MANUAL_JOURNAL = "finance_manual_journal",
   FINANCE_JOURNAL = "finance_journal",
   FINANCE_CANCELLATION_FEE = "finance_cancellation_fee",
