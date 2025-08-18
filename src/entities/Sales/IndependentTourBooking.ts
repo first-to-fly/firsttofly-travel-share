@@ -2,7 +2,7 @@
 import { z } from "zod";
 
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
-import { EntityOIDZ, EntityZ } from "../entity";
+import { DateISOStringZ, EntityOIDZ, EntityZ } from "../entity";
 import { IndependentTourBookingMetadataZ } from "./IndependentTourBookingMetadata";
 
 
@@ -18,8 +18,8 @@ export const IndependentTourBookingZ = EntityZ.extend({
   totalAmount: z.number(),
   receivedAmount: z.number().default(0),
 
-  travelStartDate: z.string(), // ISO datetime string
-  travelEndDate: z.string(), // ISO datetime string
+  travelStartDate: DateISOStringZ.optional(), // ISO datetime string
+  travelEndDate: DateISOStringZ.optional(), // ISO datetime string
 
   snapshot: z.any().optional(), // IndependentTourBookingSnapshotData
   metadata: IndependentTourBookingMetadataZ.optional(),
