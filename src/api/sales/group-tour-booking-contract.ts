@@ -7,8 +7,9 @@ import { GroupTourBookingZ } from "../../entities/Sales/GroupTourBooking";
 import { GroupTourBookingAddonZ } from "../../entities/Sales/GroupTourBookingAddon";
 import { GroupTourBookingPaxZ } from "../../entities/Sales/GroupTourBookingPax";
 import { GroupTourBookingRoomZ } from "../../entities/Sales/GroupTourBookingRoom";
-import { DiscountBookingChannel, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
-import { BookingDiscountType, BookingPaxTypeZ, BookingStatus } from "../../enums/BookingTypes";
+import { DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
+import { BookingStatusZ } from "../../enums/BookingTypes";
+import { BookingValidationContextZ, CodeBasedDiscountZ, SpecialRequestDiscountZ, TourDepartureDiscountZ } from "../../types/discount";
 
 
 const basePath = "/api/sales/group-tour-bookings";
@@ -70,46 +71,11 @@ export type UpdateGroupTourBookingPaxBody = z.infer<typeof UpdateGroupTourBookin
 
 // --- GroupTourBookingDiscount Schemas ---
 const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
-  // Code-based discount: requires discountOID (from validation API)
-  z.object({
-    discountType: z.literal(BookingDiscountType.CODE_BASED),
-    discountOID: z.string(),
-    description: z.string().optional(),
-    bookingChannel: z.nativeEnum(DiscountBookingChannel).default(DiscountBookingChannel.WEB),
-  }),
-  // Tour departure discount: no discountOID needed, amount calculated on backend
-  z.object({
-    discountType: z.literal(BookingDiscountType.TOUR_DEPARTURE_DISCOUNT),
-    groupIndex: z.number(),
-  }),
-  // Special request discount: handled via approval workflow
-  z.object({
-    discountType: z.literal(BookingDiscountType.SPECIAL_REQUEST),
-  }),
+  CodeBasedDiscountZ,
+  TourDepartureDiscountZ,
+  SpecialRequestDiscountZ,
 ]);
 export type ApplyDiscountBody = z.infer<typeof ApplyDiscountBodyZ>;
-
-// --- Shared Validation Types ---
-const PassengerCompositionZ = z.object({
-  adults: z.number().min(0),
-  children: z.number().min(0),
-  childrenWithBed: z.number().min(0),
-  childrenNoBed: z.number().min(0),
-  totalPax: z.number().min(0),
-  passengerTypes: z.array(BookingPaxTypeZ),
-});
-export type PassengerComposition = z.infer<typeof PassengerCompositionZ>;
-
-const BookingValidationContextZ = z.object({
-  bookingChannel: z.nativeEnum(DiscountBookingChannel).default(DiscountBookingChannel.WEB),
-  passengerComposition: PassengerCompositionZ,
-  totalAmount: z.number().min(0),
-  netPrice: z.number().min(0),
-  grossPrice: z.number().min(0),
-  roomCount: z.number().min(0),
-  bookingTimestamp: z.string().datetime().optional(),
-});
-export type BookingValidationContext = z.infer<typeof BookingValidationContextZ>;
 
 // --- GroupTourBookingAddon Schemas ---
 const AddAddonBodyZ = GroupTourBookingAddonZ.pick({
@@ -219,7 +185,7 @@ export const groupTourBookingContract = initContract().router({
     path: `${basePath}/batch-booking-status`,
     body: z.record(
       EntityOIDZ.describe("OID of GroupTourBooking to update"),
-      z.object({ status: z.nativeEnum(BookingStatus) }),
+      z.object({ status: BookingStatusZ }),
     ),
     responses: {
       200: z.array(EntityOIDZ.describe("OIDs of updated GroupTourBookings")),

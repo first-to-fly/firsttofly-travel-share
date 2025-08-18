@@ -30,6 +30,7 @@ export enum DiscountBookingChannel {
   WEB = "web",
   IPAD = "ipad",
   APP = "app",
+  MOBILE = "mobile",
 }
 
 export enum DiscountMechanics {

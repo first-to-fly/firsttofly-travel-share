@@ -7,8 +7,9 @@ import { IndependentTourBookingZ } from "../../entities/Sales/IndependentTourBoo
 import { IndependentTourBookingAddonZ } from "../../entities/Sales/IndependentTourBookingAddon";
 import { IndependentTourBookingPaxZ } from "../../entities/Sales/IndependentTourBookingPax";
 import { IndependentTourBookingRoomZ } from "../../entities/Sales/IndependentTourBookingRoom";
-import { DiscountBookingChannel, DiscountMode, DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
-import { BookingDiscountType, BookingPaymentStatus, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
+import { DiscountValidationErrorCode } from "../../entities/Settings/Product/Discount";
+import { BookingPaymentStatus, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
+import { BookingValidationContextZ, CodeBasedDiscountZ, SpecialRequestDiscountZ } from "../../types/discount";
 
 
 const basePath = "/api/sales/independent-tour-bookings";
@@ -94,23 +95,8 @@ export type UpdateAddonBody = z.infer<typeof UpdateAddonBodyZ>;
 
 // --- IndependentTourBookingDiscount Schemas ---
 const ApplyDiscountBodyZ = z.discriminatedUnion("discountType", [
-  // Code-based discount: requires discountOID (from validation API)
-  z.object({
-    discountType: z.literal(BookingDiscountType.CODE_BASED),
-    discountOID: z.string(),
-    discountCode: z.string(),
-    description: z.string().optional(),
-    bookingChannel: z.nativeEnum(DiscountBookingChannel).default(DiscountBookingChannel.WEB),
-  }),
-  // Special request discount: handled via approval workflow
-  z.object({
-    discountType: z.literal(BookingDiscountType.SPECIAL_REQUEST),
-    discountName: z.string(),
-    discountMode: z.nativeEnum(DiscountMode),
-    discountValue: z.number(),
-    description: z.string().optional(),
-    approvalRequired: z.boolean().default(true),
-  }),
+  CodeBasedDiscountZ,
+  SpecialRequestDiscountZ,
 ]);
 export type ApplyDiscountBody = z.infer<typeof ApplyDiscountBodyZ>;
 
@@ -123,29 +109,16 @@ const SetAccommodationBodyZ = z.object({
 });
 export type SetAccommodationBody = z.infer<typeof SetAccommodationBodyZ>;
 
-// --- Validation Context ---
-const BookingValidationContextZ = z.object({
-  bookingChannel: z.nativeEnum(DiscountBookingChannel).default(DiscountBookingChannel.WEB),
-  totalAmount: z.number().min(0),
-  roomCount: z.number().min(0),
-  paxCount: z.number().min(0),
-  startDate: z.string(),
-  endDate: z.string(),
-  bookingTimestamp: z.string().datetime().optional(),
-});
-export type BookingValidationContext = z.infer<typeof BookingValidationContextZ>;
-
 // --- Validation Response Schemas ---
-const ValidationErrorZ = z.object({
-  code: z.nativeEnum(DiscountValidationErrorCode),
-  message: z.string(),
-  field: z.string().optional(),
-});
-
+// Aligned with Group tour booking validation response schema
 const ValidationResponseZ = z.object({
-  isValid: z.boolean(),
-  errors: z.array(ValidationErrorZ).optional(),
-  warnings: z.array(z.string()).optional(),
+  valid: z.boolean(),
+  discountOID: z.string().optional(),
+  discountName: z.string().optional(),
+  discountValue: z.number().optional(),
+  calculatedAmount: z.number().optional(),
+  errorCode: z.nativeEnum(DiscountValidationErrorCode).optional(),
+  errorMessage: z.string().optional(),
 });
 export type ValidationResponse = z.infer<typeof ValidationResponseZ>;
 
@@ -309,36 +282,32 @@ export const independentTourBookingContract = initContract().router({
     },
   },
 
-  updateRoom: {
-    summary: "Update a room in the booking",
-    method: "PATCH",
-    path: `${basePath}/:bookingOID/rooms/:roomOID`,
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      roomOID: EntityOIDZ,
-    }),
-    body: UpdateIndependentTourBookingRoomBodyZ,
+  batchUpdateRooms: {
+    summary: "Batch update multiple rooms in the booking",
+    method: "PUT",
+    path: `${basePath}/:bookingOID/rooms/batch-update`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.record(z.string(), UpdateIndependentTourBookingRoomBodyZ),
     responses: {
-      200: EntityOIDZ,
+      200: z.array(EntityOIDZ.describe("Updated room OIDs")),
     },
   },
 
-  deleteRoom: {
-    summary: "Delete a room from the booking",
+  batchDeleteRooms: {
+    summary: "Batch delete multiple rooms from the booking",
     method: "DELETE",
-    path: `${basePath}/:bookingOID/rooms/:roomOID`,
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      roomOID: EntityOIDZ,
+    path: `${basePath}/:bookingOID/rooms/batch-delete`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({
+      bookingRoomOIDs: z.array(EntityOIDZ),
     }),
-    body: z.object({}).optional(),
     responses: {
       200: z.boolean(),
     },
   },
   // #endregion
 
-  // #region PASSENGERS
+  // #region PAX
   getPaxForBooking: {
     summary: "Get all passengers for a booking",
     method: "GET",
@@ -349,43 +318,25 @@ export const independentTourBookingContract = initContract().router({
     },
   },
 
-  addPaxToRoom: {
-    summary: "Add a passenger to a room",
-    method: "POST",
-    path: `${basePath}/:bookingOID/rooms/:roomOID/passengers`,
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      roomOID: EntityOIDZ,
-    }),
-    body: CreateIndependentTourBookingPaxBodyZ,
+  batchUpdatePax: {
+    summary: "Batch update multiple pax in the booking",
+    method: "PUT",
+    path: `${basePath}/:bookingOID/pax/batch-update`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.record(z.string(), UpdateIndependentTourBookingPaxBodyZ),
     responses: {
-      201: EntityOIDZ,
+      200: z.array(EntityOIDZ.describe("Updated pax OIDs")),
     },
   },
 
-  updatePax: {
-    summary: "Update a passenger",
-    method: "PATCH",
-    path: `${basePath}/:bookingOID/passengers/:paxOID`,
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      paxOID: EntityOIDZ,
-    }),
-    body: UpdateIndependentTourBookingPaxBodyZ,
-    responses: {
-      200: EntityOIDZ,
-    },
-  },
-
-  deletePax: {
-    summary: "Delete a passenger",
+  batchDeletePax: {
+    summary: "Batch delete multiple pax from the booking",
     method: "DELETE",
-    path: `${basePath}/:bookingOID/passengers/:paxOID`,
-    pathParams: z.object({
-      bookingOID: EntityOIDZ,
-      paxOID: EntityOIDZ,
+    path: `${basePath}/:bookingOID/pax/batch-delete`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({
+      bookingPaxOIDs: z.array(EntityOIDZ),
     }),
-    body: z.object({}).optional(),
     responses: {
       200: z.boolean(),
     },
@@ -443,6 +394,23 @@ export const independentTourBookingContract = initContract().router({
   },
   // #endregion
 
+  // #region DISCOUNT VALIDATION
+  validateDiscountCode: {
+    summary: "Validate a discount code for independent tour booking",
+    method: "POST",
+    path: `${basePath}/validate-discount-code`,
+    body: z.object({
+      tenantOID: z.string(),
+      discountCode: z.string(),
+      bookingOID: z.string(),
+      bookingContext: BookingValidationContextZ,
+    }),
+    responses: {
+      200: ValidationResponseZ,
+    },
+  },
+  // #endregion
+
   // #region DISCOUNTS
   getDiscountsForBooking: {
     summary: "Get all discounts for a booking",
@@ -454,19 +422,6 @@ export const independentTourBookingContract = initContract().router({
     },
   },
 
-  validateDiscount: {
-    summary: "Validate a discount code before applying",
-    method: "POST",
-    path: `${basePath}/:bookingOID/discounts/validate`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: z.object({
-      discountCode: z.string(),
-      context: BookingValidationContextZ,
-    }),
-    responses: {
-      200: ValidationResponseZ,
-    },
-  },
 
   applyDiscount: {
     summary: "Apply a discount to the booking",
@@ -475,11 +430,7 @@ export const independentTourBookingContract = initContract().router({
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     body: ApplyDiscountBodyZ,
     responses: {
-      201: z.object({
-        discountOID: EntityOIDZ,
-        appliedAmount: z.number(),
-        totalAmount: z.number(),
-      }),
+      201: EntityOIDZ.describe("Created discount OID"),
     },
   },
 
