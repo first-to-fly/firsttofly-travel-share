@@ -32,7 +32,6 @@ export type BookingValidationContext = z.infer<typeof BookingValidationContextZ>
 export const CodeBasedDiscountZ = z.object({
   discountType: z.literal(BookingDiscountType.CODE_BASED),
   discountOID: z.string(),
-  discountCode: z.string(),
   description: z.string().optional(),
   bookingChannel: z.nativeEnum(DiscountBookingChannel).default(DiscountBookingChannel.WEB),
 });

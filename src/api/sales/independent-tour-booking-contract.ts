@@ -58,15 +58,6 @@ const UpdateIndependentTourBookingRoomBodyZ = IndependentTourBookingRoomZ.pick({
 export type UpdateIndependentTourBookingRoomBody = z.infer<typeof UpdateIndependentTourBookingRoomBodyZ>;
 
 // --- IndependentTourBookingPax Schemas ---
-const CreateIndependentTourBookingPaxBodyZ = IndependentTourBookingPaxZ.pick({
-  independentTourBookingRoomOID: true,
-  type: true,
-  personalDetails: true,
-  mealPreference: true,
-  documentOIDs: true,
-});
-export type CreateIndependentTourBookingPaxBody = z.infer<typeof CreateIndependentTourBookingPaxBodyZ>;
-
 const UpdateIndependentTourBookingPaxBodyZ = IndependentTourBookingPaxZ.pick({
   type: true,
   personalDetails: true,
