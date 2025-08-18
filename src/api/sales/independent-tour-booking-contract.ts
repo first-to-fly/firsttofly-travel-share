@@ -229,6 +229,31 @@ export const independentTourBookingContract = initContract().router({
     },
   },
 
+  confirmBooking: {
+    summary: "Confirm an independent tour booking and trigger workflow",
+    method: "POST",
+    path: `${basePath}/:bookingOID/confirm`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({
+      sendConfirmationEmail: z.boolean().default(true),
+      emailRecipients: z.array(z.string().email()).optional(),
+    }).optional(),
+    responses: {
+      200: WorkflowResponseZ,
+    },
+  },
+
+  cancelIndependentTourBooking: {
+    summary: "Cancel an independent tour booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/cancel`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({}).optional(),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
   batchUpdateBookingStatus: {
     summary: "Batch update booking statuses",
     method: "POST",
@@ -243,6 +268,7 @@ export const independentTourBookingContract = initContract().router({
       200: z.array(EntityOIDZ.describe("OIDs of updated bookings")),
     },
   },
+  // #endregion
 
   // #region ACCOMMODATION
   setAccommodation: {
@@ -259,6 +285,7 @@ export const independentTourBookingContract = initContract().router({
       }),
     },
   },
+  // #endregion
 
   // #region ROOMS
   getRoomsForBooking: {
@@ -309,6 +336,7 @@ export const independentTourBookingContract = initContract().router({
       200: z.boolean(),
     },
   },
+  // #endregion
 
   // #region PASSENGERS
   getPaxForBooking: {
@@ -362,6 +390,7 @@ export const independentTourBookingContract = initContract().router({
       200: z.boolean(),
     },
   },
+  // #endregion
 
   // #region ADDONS
   getAddonsForBooking: {
@@ -412,6 +441,7 @@ export const independentTourBookingContract = initContract().router({
       200: z.boolean(),
     },
   },
+  // #endregion
 
   // #region DISCOUNTS
   getDiscountsForBooking: {
@@ -468,21 +498,7 @@ export const independentTourBookingContract = initContract().router({
       }),
     },
   },
-
-  // #region BOOKING CONFIRMATION
-  confirmBooking: {
-    summary: "Confirm an independent tour booking and trigger workflow",
-    method: "POST",
-    path: `${basePath}/:bookingOID/confirm`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: z.object({
-      sendConfirmationEmail: z.boolean().default(true),
-      emailRecipients: z.array(z.string().email()).optional(),
-    }).optional(),
-    responses: {
-      200: WorkflowResponseZ,
-    },
-  },
+  // #endregion
 
   // #region PAYMENT
   createAirWallexPaymentLink: {
@@ -495,17 +511,6 @@ export const independentTourBookingContract = initContract().router({
       200: AirWallexPaymentLinkResponseZ,
     },
   },
-
-  // #region BOOKING MANAGEMENT
-  cancelIndependentTourBooking: {
-    summary: "Cancel an independent tour booking",
-    method: "POST",
-    path: `${basePath}/:bookingOID/cancel`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: z.object({}).optional(),
-    responses: {
-      200: z.boolean(),
-    },
-  },
+  // #endregion
 
 });
