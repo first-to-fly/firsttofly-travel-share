@@ -31,7 +31,6 @@ import { PaymentOrderPermissions } from "./entities/payment-order.permission";
 import { PaymentWayPermissions } from "./entities/payment-way.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { PrivacyPolicyPermissions } from "./entities/privacy-policy.permission";
-import { ProductPermissions } from "./entities/product.permission";
 import { ReferenceCodePermissions } from "./entities/reference-code.permission";
 import { RolePermissions } from "./entities/role.permission"; // Corrected import path and name
 import { RoomConfigurationPermissions } from "./entities/room-configuration.permission";
@@ -68,7 +67,6 @@ const EntityPermissions = {
   Deposit: DepositPermissions,
   Document: DocumentPermissions,
   Media: MediaPermissions,
-  Product: ProductPermissions,
   Badge: BadgePermissions,
   "Costing Item": CostingItemPermissions,
   "Costing Template": CostingTemplatePermissions,
