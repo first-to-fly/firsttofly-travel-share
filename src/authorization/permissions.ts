@@ -26,7 +26,6 @@ import { InsuranceDiscountPermissions } from "./entities/insurance-discount.perm
 import { JournalPermissions } from "./entities/journal.permission";
 import { LocationPermissions } from "./entities/location.permission";
 import { MatchDocPermissions } from "./entities/match-doc.permission";
-import { MealPermissions } from "./entities/meal.permission";
 import { MediaPermissions } from "./entities/media.permission";
 import { PaymentOrderPermissions } from "./entities/payment-order.permission";
 import { PaymentWayPermissions } from "./entities/payment-way.permission";
@@ -84,7 +83,6 @@ const EntityPermissions = {
   "Station Code": StationCodePermissions,
   Tenant: TenantPermissions,
   "Term Condition": TermConditionPermissions,
-  Meal: MealPermissions,
   Sector: SectorPermissions,
   "Sector Group": SectorGroupPermissions,
   Term: TermPermissions,
