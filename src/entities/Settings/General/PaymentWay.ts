@@ -46,8 +46,8 @@ export const PaymentWayZ = EntityZ.extend({
   txnRateAmount: z.number().min(0).optional(),
 
   // Account Codes
-  accountCodeId: z.string(),
-  txnRateAccountCodeId: z.string().optional(),
+  accountCodeOID: z.string(),
+  txnRateAccountCodeOID: z.string().optional(),
 
   // Audit fields
   createdAt: DateISOStringZ,

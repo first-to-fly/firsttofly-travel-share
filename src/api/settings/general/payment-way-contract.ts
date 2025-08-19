@@ -21,8 +21,8 @@ const CreatePaymentWayZ = PaymentWayZ.pick({
   isRefund: true,
   txnRatePercent: true,
   txnRateAmount: true,
-  accountCodeId: true,
-  txnRateAccountCodeId: true,
+  accountCodeOID: true,
+  txnRateAccountCodeOID: true,
 });
 
 const UpdatePaymentWayZ = CreatePaymentWayZ.omit({
