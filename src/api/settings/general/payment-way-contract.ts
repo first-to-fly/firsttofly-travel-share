@@ -17,10 +17,7 @@ const CreatePaymentWayZ = PaymentWayZ.pick({
   remarks: true,
   isDaily: true,
   isEvent: true,
-  txnRatePercent: true,
-  txnRateAmount: true,
-  accountCodeOID: true,
-  txnRateAccountCodeOID: true,
+  paymentConfigs: true,
 });
 
 const UpdatePaymentWayZ = CreatePaymentWayZ.omit({

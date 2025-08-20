@@ -15,10 +15,34 @@ export enum PaymentWayStatus {
   INACTIVE = "inactive",
 }
 
+export enum CreditCardBank {
+  AMEX = "amex",
+  UOB = "uob",
+  DBS = "dbs",
+  CITI = "citi",
+  VISA = "visa",
+  MASTERCARD = "mastercard",
+  OTHERS = "others",
+}
+
 // Schemas
 export const PaymentModeZ = z.nativeEnum(PaymentMode);
 export const PaymentWayStatusZ = z.nativeEnum(PaymentWayStatus);
 export const PaymentMethodZ = z.nativeEnum(PaymentMethod);
+export const CreditCardBankZ = z.nativeEnum(CreditCardBank);
+
+// Unified Payment Configuration (for all payment methods)
+export const PaymentConfigZ = z.object({
+  // For CREDIT_CARD methods only
+  bank: CreditCardBankZ.optional(),
+  // Core account configuration (required for all)
+  accountCodeOID: z.string(),
+  txnRateAccountCodeOID: z.string().optional(),
+  txnRatePercent: z.number().min(0).max(100).optional(),
+  txnRateAmount: z.number().min(0).optional(),
+});
+
+export type PaymentConfig = z.infer<typeof PaymentConfigZ>;
 
 export const PaymentWayZ = EntityZ.extend({
   tenantOID: EntityOIDZ,
@@ -39,13 +63,8 @@ export const PaymentWayZ = EntityZ.extend({
   isDaily: z.boolean().default(false),
   isEvent: z.boolean().default(false),
 
-  // Transaction Fees
-  txnRatePercent: z.number().min(0).max(100).optional(),
-  txnRateAmount: z.number().min(0).optional(),
-
-  // Account Codes
-  accountCodeOID: z.string(),
-  txnRateAccountCodeOID: z.string().optional(),
+  // Unified Payment Configurations (for all payment methods)
+  paymentConfigs: z.array(PaymentConfigZ).min(1),
 
   // Audit fields
   createdAt: DateISOStringZ,
