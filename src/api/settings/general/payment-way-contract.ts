@@ -15,10 +15,8 @@ const CreatePaymentWayZ = PaymentWayZ.pick({
   status: true,
   icon: true,
   remarks: true,
-  isPaymentLink: true,
   isDaily: true,
   isEvent: true,
-  isRefund: true,
   txnRatePercent: true,
   txnRateAmount: true,
   accountCodeOID: true,
@@ -115,7 +113,7 @@ export const paymentWayContract = initContract().router({
     path: `${basePath}/active`,
     query: z.object({
       tenantOID: z.string(),
-      purpose: z.enum(["daily", "event", "payment-link", "refund"]).optional(),
+      purpose: z.enum(["daily", "event"]).optional(),
     }).passthrough(),
     responses: {
       200: z.object({

@@ -38,8 +38,6 @@ export const PaymentWayZ = EntityZ.extend({
   // Business Rules
   isDaily: z.boolean().default(false),
   isEvent: z.boolean().default(false),
-  isRefund: z.boolean().default(false),
-  isPaymentLink: z.boolean().default(false),
 
   // Transaction Fees
   txnRatePercent: z.number().min(0).max(100).optional(),
