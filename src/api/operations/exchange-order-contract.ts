@@ -17,7 +17,6 @@ const CreateExchangeOrderZ = ExchangeOrderZ.pick({
   supplierPersonOID: true,
   supplierPaymentOID: true,
   supplierAddressOID: true,
-  totalAmount: true,
   currency: true,
   remarks: true,
   isArchived: true,

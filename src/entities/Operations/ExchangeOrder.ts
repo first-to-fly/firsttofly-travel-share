@@ -53,7 +53,6 @@ export const ExchangeOrderZ = EntityZ.extend({
   supplierPaymentOID: EntityOIDZ.optional(),
   supplierAddressOID: EntityOIDZ.optional(),
 
-  totalAmount: z.number(),
   currency: z.string(),
 
   remarks: z.string().optional(),
