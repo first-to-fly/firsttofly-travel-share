@@ -1,7 +1,9 @@
-import { z } from "zod";
+import { EnumLike, z } from "zod";
 
 import { BookingPaxPersonalDetailsZ, BookingPaxType } from "../../enums/BookingTypes";
 import { EntityOIDZ } from "../entity";
+import { BillStatus } from "../Finance/Bill";
+import { MatchDocStatus } from "../Finance/MatchDoc";
 import { GroupTourBookingAddonTypeZ } from "../Sales/GroupTourBookingAddon";
 import { ApprovalType } from "../Settings/General/Approval";
 import { DiscountMode } from "../Settings/Product/Discount";
@@ -263,18 +265,50 @@ export const ApprovalRequestGroupTourBookingAmendmentMetadataZ = z.object({
 export type ApprovalRequestGroupTourBookingAmendmentMetadata =
   z.infer<typeof ApprovalRequestGroupTourBookingAmendmentMetadataZ>;
 
-export const ApprovalRequestExchangeOrderDraftToWfaMetadataZ = z.object({
-  type: z.literal(ApprovalType.EXCHANGE_ORDER_DRAFT_TO_WFA),
-  exchangeOrderOID: EntityOIDZ,
-  fromStatus: z.nativeEnum(ExchangeOrderStatus),
-  toStatus: z.nativeEnum(ExchangeOrderStatus),
+export const CommonSubmitDraftMetadataZ = <T extends EnumLike>(statusEnum: T) => z.object({
+  fromStatus: z.nativeEnum(statusEnum),
+  toStatus: z.nativeEnum(statusEnum),
   requestedBy: EntityOIDZ,
   requestedAt: z.string(),
   businessJustification: z.string().optional(),
 });
 
+export const ApprovalRequestExchangeOrderDraftToWfaMetadataZ = CommonSubmitDraftMetadataZ(ExchangeOrderStatus)
+  .extend({
+    type: z.literal(ApprovalType.EXCHANGE_ORDER_DRAFT_TO_WFA),
+    exchangeOrderOID: EntityOIDZ,
+  });
+
 export type ApprovalRequestExchangeOrderDraftToWfaMetadata =
   z.infer<typeof ApprovalRequestExchangeOrderDraftToWfaMetadataZ>;
+
+export const ApprovalRequestMatchDocPaymentMadeDraftToSubmittedMetadataZ = CommonSubmitDraftMetadataZ(MatchDocStatus)
+  .extend({
+    type: z.literal(ApprovalType.MATCH_DOC_PAYMENT_MADE_DRAFT_TO_SUBMITTED),
+    matchDocOID: EntityOIDZ,
+  });
+
+export type ApprovalRequestMatchDocPaymentMadeDraftToSubmittedMetadata =
+  z.infer<typeof ApprovalRequestMatchDocPaymentMadeDraftToSubmittedMetadataZ>;
+
+export const ApprovalRequestMatchDocPaymentReceivedDraftToSubmittedMetadataZ =
+  CommonSubmitDraftMetadataZ(MatchDocStatus)
+    .extend({
+      type: z.literal(ApprovalType.MATCH_DOC_PAYMENT_RECEIVED_DRAFT_TO_SUBMITTED),
+      matchDocOID: EntityOIDZ,
+    });
+
+export type ApprovalRequestMatchDocPaymentReceivedDraftToSubmittedMetadata =
+  z.infer<typeof ApprovalRequestMatchDocPaymentReceivedDraftToSubmittedMetadataZ>;
+
+export const ApprovalRequestBillDraftToSubmittedMetadataZ = CommonSubmitDraftMetadataZ(BillStatus)
+  .extend({
+    type: z.literal(ApprovalType.BILL_DRAFT_TO_SUBMITTED),
+    billOID: EntityOIDZ,
+  });
+
+export type ApprovalRequestBillDraftToSubmittedMetadata =
+  z.infer<typeof ApprovalRequestBillDraftToSubmittedMetadataZ>;
 
 // Union type for all metadata
 export const ApprovalRequestMetadataZ = z.union([
@@ -283,6 +317,9 @@ export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestGroupTourBookingTransferMetadataZ,
   ApprovalRequestGroupTourBookingAmendmentMetadataZ,
   ApprovalRequestExchangeOrderDraftToWfaMetadataZ,
+  ApprovalRequestMatchDocPaymentMadeDraftToSubmittedMetadataZ,
+  ApprovalRequestMatchDocPaymentReceivedDraftToSubmittedMetadataZ,
+  ApprovalRequestBillDraftToSubmittedMetadataZ,
 ]);
 
 export type ApprovalRequestMetadata = z.infer<typeof ApprovalRequestMetadataZ>;

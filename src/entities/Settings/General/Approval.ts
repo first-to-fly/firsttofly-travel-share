@@ -95,6 +95,21 @@ export enum ApprovalType {
    * Customer cancellation fee request approval workflow
    */
   CUSTOMER_CANCELLATION_FEE_REQUEST = "customer-cancellation-fee-request",
+
+  /**
+   * Match document payment made DRAFT to SUBMITTED status change approval workflow
+   */
+  MATCH_DOC_PAYMENT_MADE_DRAFT_TO_SUBMITTED = "match-doc-payment-made-draft-to-submitted-approval",
+
+  /**
+   * Match document payment received DRAFT to SUBMITTED status change approval workflow
+   */
+  MATCH_DOC_PAYMENT_RECEIVED_DRAFT_TO_SUBMITTED = "match-doc-payment-received-draft-to-submitted-approval",
+
+  /**
+   * Bill DRAFT to SUBMITTED status change approval workflow
+   */
+  BILL_DRAFT_TO_SUBMITTED = "bill-draft-to-submitted-approval",
 }
 
 export enum ApprovalLevelApproverType {
