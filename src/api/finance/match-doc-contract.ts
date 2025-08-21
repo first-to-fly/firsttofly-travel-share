@@ -92,7 +92,7 @@ export const matchDocContract = initContract().router({
     path: `${basePath}/:matchDocOID/allocations`,
     pathParams: z.object({ matchDocOID: z.string() }),
     body: z.array(z.object({
-      budgetEntryId: z.string(),
+      budgetEntryOID: z.string(),
       amountUsed: z.number().positive(),
       currencyRate: z.number().nullable().optional(),
     })),
