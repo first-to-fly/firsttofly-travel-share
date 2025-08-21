@@ -2,7 +2,7 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { PaymentMethod } from "../../../entities/Sales/Transaction";
-import { PaymentMode, PaymentWayZ } from "../../../entities/Settings/General/PaymentWay";
+import { PaymentWayZ } from "../../../entities/Settings/General/PaymentWay";
 
 
 const basePath = "/api/settings/payment-ways";
@@ -28,8 +28,6 @@ const UpdatePaymentWayZ = CreatePaymentWayZ.omit({
 const PaymentWayListParamsZ = z.object({
   tenantOID: z.string(),
   paymentMethod: z.nativeEnum(PaymentMethod).optional(),
-  name: z.string().optional(),
-  mode: z.nativeEnum(PaymentMode).optional(),
 }).passthrough();
 
 export type CreatePaymentWay = z.infer<typeof CreatePaymentWayZ>;
