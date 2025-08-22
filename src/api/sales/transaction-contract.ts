@@ -54,4 +54,13 @@ export const transactionContract = initContract().router({
     },
   },
 
+  reverseTransaction: {
+    summary: "Reverse a transaction",
+    method: "POST",
+    path: `${basePath}/:transactionOID/reverse`,
+    pathParams: z.object({ transactionOID: z.string() }),
+    body: z.object({ reason: z.string().optional() }),
+    responses: { 200: z.string() },
+  },
+
 });
