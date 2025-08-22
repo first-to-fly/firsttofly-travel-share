@@ -118,6 +118,7 @@ const CreateAirWallexPaymentLinkBodyZ = z.object({
   amount: z.number().positive().describe("Payment amount"),
   currency: z.string().length(3).describe("Currency code (e.g., USD, EUR)"),
   customerEmail: z.string().email().describe("Customer email address"),
+  paymentWayOID: EntityOIDZ.optional().describe("Payment way OID to use for this transaction"),
 });
 export type CreateAirWallexPaymentLinkBody = z.infer<typeof CreateAirWallexPaymentLinkBodyZ>;
 

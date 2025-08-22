@@ -18,7 +18,7 @@ const CreateTransactionZ = TransactionZ.pick({
   serviceFee: true,
   transactionType: true,
   transactionDate: true,
-  paymentWay: true,
+  paymentWayOID: true,
   status: true,
   transactionReference: true,
   notes: true,

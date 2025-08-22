@@ -34,11 +34,6 @@ export enum PaymentMethod {
 
 export const PaymentMethodZ = z.nativeEnum(PaymentMethod);
 
-export const PaymentWayZ = z.object({
-  method: PaymentMethodZ,
-  details: z.record(z.unknown()).optional(),
-});
-
 export const TransactionZ = EntityZ.extend({
   paymentOrderOID: EntityOIDZ,
   payerFirstName: z.string().optional(),
@@ -49,7 +44,7 @@ export const TransactionZ = EntityZ.extend({
   serviceFee: z.number().min(0).default(0),
   transactionType: TransactionTypeZ,
   transactionDate: DateISOStringZ,
-  paymentWay: PaymentWayZ.optional(),
+  paymentWayOID: EntityOIDZ.optional(),
   status: TransactionStatusZ,
   transactionReference: z.string().optional(),
   notes: z.string().optional(),
@@ -58,7 +53,6 @@ export const TransactionZ = EntityZ.extend({
 });
 
 export type Transaction = z.infer<typeof TransactionZ>;
-export type PaymentWay = z.infer<typeof PaymentWayZ>;
 
 export enum TransactionEvents {
   TRANSACTION_UPDATED = "TRANSACTION_UPDATED",
