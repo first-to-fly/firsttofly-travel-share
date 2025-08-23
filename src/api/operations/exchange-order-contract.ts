@@ -20,6 +20,8 @@ const CreateExchangeOrderZ = ExchangeOrderZ.pick({
   currency: true,
   remarks: true,
   isArchived: true,
+  billOID: true,
+  billUsedAmount: true,
 }).extend({
   exchangeOrderNo: ExchangeOrderZ.shape.exchangeOrderNo.optional(),
 });
