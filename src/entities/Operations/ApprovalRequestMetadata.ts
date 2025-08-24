@@ -310,6 +310,32 @@ export const ApprovalRequestBillDraftToSubmittedMetadataZ = CommonSubmitDraftMet
 export type ApprovalRequestBillDraftToSubmittedMetadata =
   z.infer<typeof ApprovalRequestBillDraftToSubmittedMetadataZ>;
 
+export const ApprovalRequestCustomerRefundMetadataZ = z.object({
+  type: z.literal(ApprovalType.CUSTOMER_REFUND_REQUEST),
+  amount: z.number(),
+  paymentOrderOID: EntityOIDZ,
+  bookingOID: EntityOIDZ,
+  tenantOID: EntityOIDZ,
+  currencyCode: z.string().optional(),
+  notes: z.string().optional(),
+});
+
+export type ApprovalRequestCustomerRefundMetadata =
+  z.infer<typeof ApprovalRequestCustomerRefundMetadataZ>;
+
+export const ApprovalRequestCustomerCancellationFeeMetadataZ = z.object({
+  type: z.literal(ApprovalType.CUSTOMER_CANCELLATION_FEE_REQUEST),
+  amount: z.number(),
+  paymentOrderOID: EntityOIDZ,
+  bookingOID: EntityOIDZ,
+  tenantOID: EntityOIDZ,
+  currencyCode: z.string().optional(),
+  notes: z.string().optional(),
+});
+
+export type ApprovalRequestCustomerCancellationFeeMetadata =
+  z.infer<typeof ApprovalRequestCustomerCancellationFeeMetadataZ>;
+
 // Union type for all metadata
 export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ,
@@ -320,6 +346,8 @@ export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestMatchDocPaymentMadeDraftToSubmittedMetadataZ,
   ApprovalRequestMatchDocPaymentReceivedDraftToSubmittedMetadataZ,
   ApprovalRequestBillDraftToSubmittedMetadataZ,
+  ApprovalRequestCustomerRefundMetadataZ,
+  ApprovalRequestCustomerCancellationFeeMetadataZ,
 ]);
 
 export type ApprovalRequestMetadata = z.infer<typeof ApprovalRequestMetadataZ>;
