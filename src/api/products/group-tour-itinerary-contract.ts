@@ -34,6 +34,7 @@ const CreateGroupTourItineraryDayZ = GroupTourItineraryDayZ.pick({
   dayNumber: true,
   title: true,
   description: true,
+  files: true,
 }).extend({
   groupTourItineraryMeals: z.array(CreateGroupTourItineraryMealZ),
   groupTourItineraryEvents: z.array(CreateGroupTourItineraryEventZ),

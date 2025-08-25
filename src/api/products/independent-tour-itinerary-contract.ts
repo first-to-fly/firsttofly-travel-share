@@ -34,6 +34,7 @@ const CreateIndependentTourItineraryDayZ = IndependentTourItineraryDayZ.pick({
   dayNumber: true,
   title: true,
   description: true,
+  files: true,
 }).extend({
   independentTourItineraryMeals: z.array(CreateIndependentTourItineraryMealZ),
   independentTourItineraryEvents: z.array(CreateIndependentTourItineraryEventZ),
