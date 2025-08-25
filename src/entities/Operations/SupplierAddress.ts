@@ -13,3 +13,8 @@ export const SupplierAddressZ = EntityZ.extend({
 });
 
 export type SupplierAddress = z.infer<typeof SupplierAddressZ>;
+
+export enum SupplierAddressEvents {
+  SUPPLIER_ADDRESS_UPDATED = "SUPPLIER_ADDRESS_UPDATED",
+  SUPPLIER_ADDRESS_LIST_UPDATED = "SUPPLIER_ADDRESS_LIST_UPDATED",
+}

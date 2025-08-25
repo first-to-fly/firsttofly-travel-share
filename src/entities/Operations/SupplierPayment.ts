@@ -38,3 +38,8 @@ export const SupplierPaymentZ = EntityZ.extend({
 
 export type SupplierPayment = z.infer<typeof SupplierPaymentZ>;
 export type PaymentInfo = z.infer<typeof PaymentInfoZ>;
+
+export enum SupplierPaymentEvents {
+  SUPPLIER_PAYMENT_UPDATED = "SUPPLIER_PAYMENT_UPDATED",
+  SUPPLIER_PAYMENT_LIST_UPDATED = "SUPPLIER_PAYMENT_LIST_UPDATED",
+}

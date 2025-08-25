@@ -22,3 +22,8 @@ export const SupplierPersonZ = EntityZ.extend({
 
 export type SupplierPerson = z.infer<typeof SupplierPersonZ>;
 export type ContactInfo = z.infer<typeof ContactInfoZ>;
+
+export enum SupplierPersonEvents {
+  SUPPLIER_PERSON_UPDATED = "SUPPLIER_PERSON_UPDATED",
+  SUPPLIER_PERSON_LIST_UPDATED = "SUPPLIER_PERSON_LIST_UPDATED",
+}
