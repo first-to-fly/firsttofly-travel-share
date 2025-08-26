@@ -11,7 +11,6 @@ const CreateExchangeOrderZ = ExchangeOrderZ.pick({
   status: true,
   issueDate: true,
   dueDate: true,
-  parentExchangeOrderOID: true,
   budgetOID: true,
   supplierOID: true,
   supplierPersonOID: true,
