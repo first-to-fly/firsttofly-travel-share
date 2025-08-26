@@ -2,6 +2,7 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 import { StationCodeZ } from "../../../entities/Settings/General/StationCode";
+import { FTFSafeMaxNumberZ } from "../../../types/number";
 
 
 const basePath = "/api/settings/station-codes";
@@ -9,15 +10,21 @@ const basePath = "/api/settings/station-codes";
 const CreateStationCodeZ = StationCodeZ.pick({
   tenantOID: true,
   code: true,
-  isActive: true,
   seq: true,
 }).extend({
+  isActive: z.boolean().optional(),
   departmentOIDs: z.array(z.string()).optional(),
 });
 
-const UpdateStationCodeZ = CreateStationCodeZ.omit({
-  tenantOID: true,
-}).partial();
+const UpdateStationCodeZ = z.object({
+  code: z.string().min(1, "Station code is required").max(50, "Station code must be 50 characters or less").optional(),
+  isActive: z.boolean().optional(),
+  seq: FTFSafeMaxNumberZ({
+    max: 99999999,
+    name: "Sequence",
+  }).int().nonnegative().optional(),
+  departmentOIDs: z.array(z.string()).optional(),
+});
 
 export type UpdateStationCode = z.infer<typeof UpdateStationCodeZ>;
 export type CreateStationCode = z.infer<typeof CreateStationCodeZ>;
