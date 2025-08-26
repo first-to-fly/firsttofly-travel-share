@@ -8,7 +8,6 @@ const basePath = "/api/operations/exchange-orders";
 
 const CreateExchangeOrderZ = ExchangeOrderZ.pick({
   tenantOID: true,
-  status: true,
   issueDate: true,
   dueDate: true,
   budgetOID: true,
