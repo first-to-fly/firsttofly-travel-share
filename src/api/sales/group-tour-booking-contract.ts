@@ -166,7 +166,7 @@ export const groupTourBookingContract = initContract().router({
     path: `${basePath}/:bookingOID/confirm`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     summary: "Confirm a group tour booking, trigger validation and data snapshotting",
-    body: z.undefined(),
+    body: z.object({}).optional(),
     responses: {
       200: z.boolean(),
     },
@@ -176,7 +176,7 @@ export const groupTourBookingContract = initContract().router({
     path: `${basePath}/:bookingOID/cancel`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     summary: "Cancel a group tour booking",
-    body: z.undefined(),
+    body: z.object({}).optional(),
     responses: {
       200: z.boolean(),
     },
@@ -325,7 +325,7 @@ export const groupTourBookingContract = initContract().router({
       bookingOID: EntityOIDZ,
       bookingDiscountOID: EntityOIDZ,
     }),
-    body: z.undefined(),
+    body: z.object({}).optional(),
     responses: {
       200: z.boolean(),
     },
@@ -373,7 +373,7 @@ export const groupTourBookingContract = initContract().router({
       bookingOID: EntityOIDZ,
       bookingAddonOID: EntityOIDZ,
     }),
-    body: z.undefined(),
+    body: z.object({}).optional(),
     responses: {
       200: z.boolean(),
     },
