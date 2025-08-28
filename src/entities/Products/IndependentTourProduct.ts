@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
+import { ProductPlatformZ } from "../../types/platform";
 import { NamedURLZ } from "../../types/url";
 import { EntityZ } from "../entity";
 import { EntityType } from "../entityType";
@@ -63,6 +64,8 @@ export const IndependentTourProductZ = EntityZ.extend({
 
   isActive: z.boolean(),
   published: z.boolean(),
+
+  platforms: z.array(ProductPlatformZ).optional(),
 
   coverPicture: NamedURLZ.optional(),
   productBannerDesktop: NamedURLZ.optional(),

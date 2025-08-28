@@ -3,6 +3,7 @@ import { z } from "zod";
 import { DateISOStringZ } from "../../types/date";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { FTFSafeMaxNumberZ } from "../../types/number";
+import { ProductPlatformZ } from "../../types/platform";
 import { NamedURLZ } from "../../types/url";
 import { EntityOIDZ, EntityZ } from "../entity";
 
@@ -57,6 +58,8 @@ export const GroupTourProductZ = EntityZ.extend({
 
   isActive: z.boolean(),
   published: z.boolean(),
+
+  platforms: z.array(ProductPlatformZ).optional(),
 
   ownerOIDs: z.array(z.string()).optional(),
 

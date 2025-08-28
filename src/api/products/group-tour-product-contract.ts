@@ -53,6 +53,8 @@ const CreateGroupTourProductZ = GroupTourProductZ.pick({
 
   videos: true,
   documentations: true,
+
+  platforms: true,
 });
 
 const UpdateGroupTourProductZ = CreateGroupTourProductZ.omit({

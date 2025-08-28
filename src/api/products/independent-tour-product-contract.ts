@@ -33,6 +33,7 @@ const CreateIndependentTourProductZ = IndependentTourProductZ.pick({
   productBannerMobile: true,
   videos: true,
   documentations: true,
+  platforms: true,
 });
 
 const UpdateIndependentTourProductZ = CreateIndependentTourProductZ.omit({
