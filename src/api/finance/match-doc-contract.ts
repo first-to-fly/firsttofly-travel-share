@@ -8,7 +8,6 @@ const basePath = "/api/operations/match-docs";
 
 export const CreateMatchDocZ = MatchDocZ.pick({
   tenantOID: true,
-  code: true,
   status: true,
   category: true,
   issueDate: true,
@@ -24,6 +23,8 @@ export const CreateMatchDocZ = MatchDocZ.pick({
   currencyRate: true,
   foreignAmount: true,
   localAmount: true,
+}).extend({
+  code: z.string().optional(),
 });
 
 export const UpdateMatchDocZ = CreateMatchDocZ.omit({
