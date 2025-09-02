@@ -19,6 +19,7 @@ const CreateGroupTourBookingBodyZ = GroupTourBookingZ.pick({
   tenantOID: true,
   tourDepartureOID: true,
   departmentOID: true,
+  stationCodeOID: true,
   paymentStatus: true,
   metadata: true,
   specialInstructions: true,

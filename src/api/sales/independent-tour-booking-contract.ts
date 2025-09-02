@@ -20,6 +20,7 @@ const CreateIndependentTourBookingBodyZ = IndependentTourBookingZ.pick({
   independentTourProductOID: true,
   independentTourAccommodationOID: true,
   departmentOID: true,
+  stationCodeOID: true,
   paymentStatus: true,
   bookingStatus: true,
   metadata: true,
