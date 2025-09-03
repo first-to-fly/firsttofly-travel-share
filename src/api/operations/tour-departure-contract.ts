@@ -31,6 +31,7 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   departureDate: true,
   finalizationDate: true,
   paymentDueDate: true,
+  fullPaymentDueDaysOverride: true,
   transportGroupOIDs: true,
 
   transportType: true,
@@ -46,6 +47,7 @@ const UpdateTourDepartureZ = CreateTourDepartureZ.omit({
   groupTourPricingOID: true,
 }).extend({
   discount: GroupTourPricingDiscountZ.optional(),
+  fullPaymentDueDaysOverride: TourDepartureZ.shape.fullPaymentDueDaysOverride.optional(),
 }).partial();
 
 export type UpdateTourDeparture = z.infer<typeof UpdateTourDepartureZ>;
