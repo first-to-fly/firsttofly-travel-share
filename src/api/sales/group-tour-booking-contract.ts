@@ -34,6 +34,7 @@ const UpdateGroupTourBookingBodyZ = CreateGroupTourBookingBodyZ.omit({
   tenantOID: true,
   departmentOID: true,
   tourDepartureOID: true,
+  stationCodeOID: true,
 }).partial();
 export type UpdateGroupTourBookingBody = z.infer<typeof UpdateGroupTourBookingBodyZ>;
 
