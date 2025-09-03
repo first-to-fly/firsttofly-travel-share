@@ -26,6 +26,7 @@ const CreateIndependentTourProductZ = IndependentTourProductZ.pick({
   validityStartDate: true,
   validityEndDate: true,
   targetYieldPercentage: true,
+  defaultFullPaymentDueDays: true,
   isActive: true,
   published: true,
   coverPicture: true,

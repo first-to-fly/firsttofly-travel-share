@@ -56,6 +56,8 @@ export const GroupTourProductZ = EntityZ.extend({
   salesPeriodStartDate: DateISOStringZ,
   salesPeriodEndDate: DateISOStringZ.optional(), // end indefinitely
 
+  defaultFullPaymentDueDays: z.number().optional(),
+
   isActive: z.boolean(),
   published: z.boolean(),
 

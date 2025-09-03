@@ -68,6 +68,7 @@ export const TourDepartureZ = EntityZ.extend({
   departureDate: DateISOStringZ,
   finalizationDate: DateISOStringZ.optional(),
   paymentDueDate: DateISOStringZ.optional(),
+  fullPaymentDueDaysOverride: z.number().optional(),
   discount: GroupTourPricingDiscountZ.optional(),
 
   assembleLocationAirlineOID: EntityOIDZ.optional(),
