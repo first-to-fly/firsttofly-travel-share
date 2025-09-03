@@ -1,7 +1,8 @@
-import { GroupTourPricingEntry, GroupTourPricingFareStructure } from "../../entities/Products/GroupTourPricing";
+import type { GroupTourPricingEntry, GroupTourPricingFareStructure } from "../../entities/Products/GroupTourPricing";
 import { CalculationBasis, CostingItemCategory } from "../../entities/Settings/Product/CostingItem";
-import { BookingPaxType } from "../../enums/BookingTypes";
-import { AirportTaxStructure, calculateAirportTax } from "../pricing/airportTaxCalculator";
+import type { BookingPaxType } from "../../enums/BookingTypes";
+import type { AirportTaxStructure } from "../pricing/airportTaxCalculator";
+import { calculateAirportTax } from "../pricing/airportTaxCalculator";
 import { convertPriceToHomeCurrency } from "../pricing/currencyConverter";
 import { calculateTourFare } from "../pricing/tourFareCalculator";
 import type { LineItemPrice, PaxConfiguration } from "../pricing/types";

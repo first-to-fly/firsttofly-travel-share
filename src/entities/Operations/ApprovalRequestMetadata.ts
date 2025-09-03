@@ -1,4 +1,5 @@
-import { EnumLike, z } from "zod";
+import type { EnumLike } from "zod";
+import { z } from "zod";
 
 import { BookingPaxPersonalDetailsZ, BookingPaxType } from "../../enums/BookingTypes";
 import { EntityOIDZ } from "../entity";

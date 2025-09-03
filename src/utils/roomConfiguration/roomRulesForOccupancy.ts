@@ -1,4 +1,5 @@
-import { RoomConfigurationRule, RoomOccupancy, RoomType } from "../../entities/Settings/Product/RoomConfiguration";
+import type { RoomConfigurationRule, RoomOccupancy } from "../../entities/Settings/Product/RoomConfiguration";
+import { RoomType } from "../../entities/Settings/Product/RoomConfiguration";
 
 
 /**

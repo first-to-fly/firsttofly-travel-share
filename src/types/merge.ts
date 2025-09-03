@@ -1,4 +1,4 @@
-import { ToOptional } from "./utils";
+import type { ToOptional } from "./utils";
 
 
 type CommonKeys<T extends object> = keyof T;

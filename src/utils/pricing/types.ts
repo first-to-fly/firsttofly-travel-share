@@ -1,4 +1,4 @@
-import { BookingPaxType } from "../../enums/BookingTypes";
+import type { BookingPaxType } from "../../enums/BookingTypes";
 
 
 export interface LineItemPrice {

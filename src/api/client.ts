@@ -1,4 +1,4 @@
-import {
+import type {
   ApiFetcher,
   ApiFetcherArgs,
   AppRoute,
@@ -7,14 +7,16 @@ import {
   AreAllPropertiesOptional,
   ClientArgs,
   ExtractExtraParametersFromClientArgs,
-  initClient as baseInitClient,
   OptionalIfAllOptional,
   PathParamsFromUrl,
   Prettify,
-  tsRestFetchApi,
   Without,
   ZodInferOrType,
   ZodInputOrType,
+} from "@ts-rest/core";
+import {
+  initClient as baseInitClient,
+  tsRestFetchApi,
 } from "@ts-rest/core";
 
 import { apiContract } from "./contract";
