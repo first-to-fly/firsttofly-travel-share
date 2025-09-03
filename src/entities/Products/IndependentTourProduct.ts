@@ -62,6 +62,8 @@ export const IndependentTourProductZ = EntityZ.extend({
 
   targetYieldPercentage: z.number().optional(),
 
+  defaultFullPaymentDueDays: z.number().optional(),
+
   isActive: z.boolean(),
   published: z.boolean(),
 

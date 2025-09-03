@@ -328,6 +328,8 @@ const config = {
     "comma-dangle": "off", // Note: you must disable the base rule as it can report incorrect errors
     "@typescript-eslint/comma-dangle": ["warn", "always-multiline"],
 
+    "@typescript-eslint/consistent-type-imports": "error",
+
     "@typescript-eslint/explicit-function-return-type": "off",
 
     // Only explicit non-publics (private, ...)

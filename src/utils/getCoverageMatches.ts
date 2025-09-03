@@ -1,4 +1,4 @@
-import { ProductType } from "../enums/ProductType";
+import type { ProductType } from "../enums/ProductType";
 
 
 /**

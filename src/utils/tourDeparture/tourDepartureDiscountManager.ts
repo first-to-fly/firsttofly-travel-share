@@ -1,8 +1,9 @@
 import { EntityType } from "../../entities/entityType";
-import { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
-import { TourDepartureDiscountMetadata } from "../../entities/Sales/GroupTourBookingDiscount";
+import type { GroupTourPricingDiscount } from "../../entities/Products/GroupTourPricing";
+import type { TourDepartureDiscountMetadata } from "../../entities/Sales/GroupTourBookingDiscount";
 import { DiscountMode } from "../../entities/Settings/Product/Discount";
-import { BookingDiscountType, BookingPaxType } from "../../enums/BookingTypes";
+import type { BookingPaxType } from "../../enums/BookingTypes";
+import { BookingDiscountType } from "../../enums/BookingTypes";
 import {
   isPaxTypeAdult,
   type PaxDiscountInput,

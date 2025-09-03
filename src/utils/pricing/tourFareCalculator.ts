@@ -1,4 +1,4 @@
-import { GroupTourPricingFareStructure } from "../../entities/Products/GroupTourPricing";
+import type { GroupTourPricingFareStructure } from "../../entities/Products/GroupTourPricing";
 import { BookingPaxType } from "../../enums/BookingTypes";
 import type { LineItemPrice, PaxConfiguration } from "./types";
 
