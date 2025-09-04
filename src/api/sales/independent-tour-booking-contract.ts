@@ -21,6 +21,7 @@ const CreateIndependentTourBookingBodyZ = IndependentTourBookingZ.pick({
   independentTourAccommodationOID: true,
   departmentOID: true,
   stationCodeOID: true,
+  tcpBookingOID: true,
   paymentStatus: true,
   bookingStatus: true,
   metadata: true,
@@ -38,6 +39,7 @@ const UpdateIndependentTourBookingBodyZ = CreateIndependentTourBookingBodyZ.omit
   departmentOID: true,
   stationCodeOID: true,
   independentTourProductOID: true,
+  tcpBookingOID: true,
 }).partial();
 export type UpdateIndependentTourBookingBody = z.infer<typeof UpdateIndependentTourBookingBodyZ>;
 

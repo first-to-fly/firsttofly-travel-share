@@ -11,6 +11,7 @@ export const IndependentTourBookingZ = EntityZ.extend({
   independentTourAccommodationOID: EntityOIDZ.optional(),
   departmentOID: EntityOIDZ.optional(),
   stationCodeOID: EntityOIDZ.optional(), // Added station code OID
+  tcpBookingOID: EntityOIDZ.optional(),
 
   bookingReference: z.string().max(50),
   paymentStatus: BookingPaymentStatusZ.default(BookingPaymentStatus.UNPAID),
