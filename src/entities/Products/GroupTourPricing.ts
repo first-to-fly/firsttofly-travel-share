@@ -104,6 +104,8 @@ export const GroupTourPricingMatrixChangeHistoryZ = z.object({
   retailPriceChanges: z.array(PricingMatrixRetailPriceChangeZ).max(20).default([]),
   discountChanges: z.array(PricingMatrixDiscountChangeZ).max(20).default([]),
   groupVolumeChanges: z.array(PricingMatrixGroupVolumeChangeZ).max(20).default([]),
+  landRetailPriceChanges: z.array(PricingMatrixRetailPriceChangeZ).max(20).default([]),
+  landGroupVolumeChanges: z.array(PricingMatrixGroupVolumeChangeZ).max(20).default([]),
 });
 
 export type BasePricingMatrixChange = z.infer<typeof BasePricingMatrixChangeZ>;
