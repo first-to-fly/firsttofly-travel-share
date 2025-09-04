@@ -23,7 +23,7 @@ export function getCoverageMatches<
   },
 ): { closestMatched?: Entity; allMatched: Entity[] } {
   // First, filter entities by productTypes - only consider entities that support the product type
-  const productTypeFilteredEntities = entities.filter((entity) => !entity.productTypes ||
+  const productTypeFilteredEntities = entities.filter((entity) => !entity.productTypes || !entity.productTypes.length ||
     entity.productTypes.includes(target.product.type));
 
   // Define priority levels: target OID (if provided) > product OID > sector group OID > sector OIDs
