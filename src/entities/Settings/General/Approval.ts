@@ -10,10 +10,6 @@ import { EntityType } from "../../entityType";
  * and are used for handler registration and targeting.
  */
 export enum ApprovalType {
-  /**
-   * Group tour booking approval workflow
-   */
-  GROUP_TOUR_BOOKING = "group-tour-booking-approval",
 
   /**
    * Group tour booking special discount approval workflow
@@ -80,10 +76,6 @@ export enum ApprovalType {
    */
   EXCHANGE_ORDER_DRAFT_TO_WFA = "exchange-order-draft-to-wfa-approval",
 
-  /**
-   * Independent tour booking approval workflows
-   */
-  INDEPENDENT_TOUR_BOOKING = "independent-tour-booking-approval",
   INDEPENDENT_TOUR_BOOKING_SPECIAL_DISCOUNT = "independent-tour-booking-special-discount-approval",
   INDEPENDENT_TOUR_BOOKING_AMENDMENT = "independent-tour-booking-amendment-approval",
   /**
