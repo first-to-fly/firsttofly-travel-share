@@ -266,6 +266,50 @@ export const ApprovalRequestGroupTourBookingAmendmentMetadataZ = z.object({
 export type ApprovalRequestGroupTourBookingAmendmentMetadata =
   z.infer<typeof ApprovalRequestGroupTourBookingAmendmentMetadataZ>;
 
+// Independent Tour Booking Amendment metadata (parallel to group tour, adapted for independent tour forms)
+export const ApprovalRequestIndependentTourBookingAmendmentMetadataZ = z.object({
+  type: z.literal(ApprovalType.INDEPENDENT_TOUR_BOOKING_AMENDMENT),
+  originalBookingOID: EntityOIDZ,
+
+  // For Independent Tour, the amended form values come from NewIndependentTourBookingFormValues.
+  // Keep this flexible but structured enough for auditing.
+  amendedFormValues: z.object({
+    rooms: z.array(z.object({}).passthrough()),
+    addOns: z.array(z.object({}).passthrough()).optional(),
+    discounts: z.array(z.object({}).passthrough()).optional(),
+    primaryContact: z.object({}).passthrough().optional(),
+    overwriteTax: z.object({
+      scheme: z.string(),
+      rate: z.number(),
+    }).optional(),
+    totalAmount: z.number().optional(),
+  }).passthrough(),
+
+  // Calculated breakdowns (reuse common schema)
+  originalBookingBreakdown: BookingBreakdownZ,
+  amendedBreakdown: BookingBreakdownZ,
+
+  financialSummary: z.object({
+    amendedTotal: z.number(),
+    totalDifference: z.number(),
+    originalOutstanding: z.number(),
+    amendedOutstanding: z.number(),
+    receivedAmount: z.number(),
+    refundRequired: z.boolean(),
+    refundAmount: z.number(),
+    additionalPaymentRequired: z.boolean(),
+    additionalPaymentAmount: z.number(),
+  }),
+
+  amendmentReason: z.string(),
+  changedFields: z.array(z.string()),
+  requestedBy: EntityOIDZ,
+  requestedDate: z.string(),
+});
+
+export type ApprovalRequestIndependentTourBookingAmendmentMetadata =
+  z.infer<typeof ApprovalRequestIndependentTourBookingAmendmentMetadataZ>;
+
 export const CommonSubmitDraftMetadataZ = <T extends EnumLike>(statusEnum: T) => z.object({
   fromStatus: z.nativeEnum(statusEnum),
   toStatus: z.nativeEnum(statusEnum),
@@ -343,6 +387,7 @@ export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestBudgetApprovalMetadataZ,
   ApprovalRequestGroupTourBookingTransferMetadataZ,
   ApprovalRequestGroupTourBookingAmendmentMetadataZ,
+  ApprovalRequestIndependentTourBookingAmendmentMetadataZ,
   ApprovalRequestExchangeOrderDraftToWfaMetadataZ,
   ApprovalRequestMatchDocPaymentMadeDraftToSubmittedMetadataZ,
   ApprovalRequestMatchDocPaymentReceivedDraftToSubmittedMetadataZ,
