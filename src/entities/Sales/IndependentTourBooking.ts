@@ -19,6 +19,7 @@ export const IndependentTourBookingZ = EntityZ.extend({
 
   totalAmount: z.number(),
   receivedAmount: z.number().default(0),
+  fullPaymentDueDate: z.string().nullable().optional(),
 
   travelStartDate: DateISOStringZ.optional(), // ISO datetime string
   travelEndDate: DateISOStringZ.optional(), // ISO datetime string

@@ -24,6 +24,7 @@ const CreateIndependentTourBookingBodyZ = IndependentTourBookingZ.pick({
   tcpBookingOID: true,
   paymentStatus: true,
   bookingStatus: true,
+  fullPaymentDueDate: true,
   metadata: true,
   specialInstructions: true,
   overwriteTax: true,

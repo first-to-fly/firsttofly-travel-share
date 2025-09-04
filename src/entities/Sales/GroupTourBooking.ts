@@ -18,6 +18,7 @@ export const GroupTourBookingZ = EntityZ.extend({
   bookingStatus: BookingStatusZ.default(BookingStatus.IN_PROGRESS),
   totalAmount: z.number().optional(),
   receivedAmount: z.number().optional(),
+  fullPaymentDueDate: z.string().nullable().optional(),
   metadata: GroupTourBookingMetadataZ.optional(),
   specialInstructions: z.array(z.string()).optional(),
   overwriteTax: z.object({
