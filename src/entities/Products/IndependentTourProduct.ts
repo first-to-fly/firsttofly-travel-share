@@ -63,9 +63,11 @@ export const IndependentTourProductZ = EntityZ.extend({
   targetYieldPercentage: z.number().optional(),
 
   defaultFullPaymentDueDays: z.number().optional(),
+  pricingPlaceholder: z.record(z.string(), z.number()).optional(),
 
   isActive: z.boolean(),
   published: z.boolean(),
+  isUmrahHaj: z.boolean().optional(),
 
   platforms: z.array(ProductPlatformZ).optional(),
 

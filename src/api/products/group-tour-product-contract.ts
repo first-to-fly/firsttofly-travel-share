@@ -43,9 +43,11 @@ const CreateGroupTourProductZ = GroupTourProductZ.pick({
   salesPeriodEndDate: true,
 
   defaultFullPaymentDueDays: true,
+  pricingPlaceholder: true,
 
   isActive: true,
   published: true,
+  isUmrahHaj: true,
 
   ownerOIDs: true,
 
