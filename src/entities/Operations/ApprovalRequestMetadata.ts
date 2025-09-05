@@ -1,11 +1,12 @@
 import type { EnumLike } from "zod";
 import { z } from "zod";
 
-import { BookingPaxPersonalDetailsZ, BookingPaxType } from "../../enums/BookingTypes";
+import { BookingDiscountTypeZ, BookingPaxPersonalDetailsZ, BookingPaxType } from "../../enums/BookingTypes";
 import { EntityOIDZ } from "../entity";
 import { BillStatus } from "../Finance/Bill";
 import { MatchDocStatus } from "../Finance/MatchDoc";
 import { GroupTourBookingAddonTypeZ } from "../Sales/GroupTourBookingAddon";
+import { IndependentTourBookingAddonTypeZ } from "../Sales/IndependentTourBookingAddon";
 import { ApprovalType } from "../Settings/General/Approval";
 import { DiscountMode } from "../Settings/Product/Discount";
 import { ExchangeOrderStatus } from "./ExchangeOrder";
@@ -271,19 +272,88 @@ export const ApprovalRequestIndependentTourBookingAmendmentMetadataZ = z.object(
   type: z.literal(ApprovalType.INDEPENDENT_TOUR_BOOKING_AMENDMENT),
   originalBookingOID: EntityOIDZ,
 
-  // For Independent Tour, the amended form values come from NewIndependentTourBookingFormValues.
-  // Keep this flexible but structured enough for auditing.
+  // Amended form values (typed to match Independent Tour amend form)
   amendedFormValues: z.object({
-    rooms: z.array(z.object({}).passthrough()),
-    addOns: z.array(z.object({}).passthrough()).optional(),
-    discounts: z.array(z.object({}).passthrough()).optional(),
-    primaryContact: z.object({}).passthrough().optional(),
+    rooms: z.array(z.object({
+      roomNumber: z.number(),
+      accommodationOID: z.string().optional(),
+      roomTypeOID: z.string().optional(),
+      checkInDate: z.string().optional(),
+      checkOutDate: z.string().optional(),
+      selectedRuleOID: z.string().optional(),
+      passengers: z.array(z.object({
+        oid: z.string().optional(),
+        bookingPaxOID: z.string().optional(),
+        title: z.string(),
+        gender: z.string(),
+        firstName: z.string(),
+        lastName: z.string(),
+        dateOfBirth: z.string().optional(),
+        nationality: z.string().optional(),
+        email: z.string().optional(),
+        phone: z.string().optional(),
+        alternativeMobile: z.string().optional(),
+        address: z.string().optional(),
+        postalCode: z.string().optional(),
+        isLeadPassenger: z.boolean().optional(),
+      })),
+      adultSelections: z.array(z.object({ paxIndex: z.number() })),
+      childWithBedSelections: z.array(z.object({ paxIndex: z.number() })),
+      childNoBedSelections: z.array(z.object({ paxIndex: z.number() })),
+      infantSelections: z.array(z.object({ paxIndex: z.number() })),
+      bookingRoomOID: z.string().optional(),
+      toBeRemoved: z.boolean().optional(),
+    })),
+    addOns: z.array(z.object({
+      oid: z.string().optional(),
+      independentTourOptionalServiceOID: z.string().optional(),
+      independentTourBookingAddonOID: z.string().optional(),
+      name: z.string(),
+      price: z.number(),
+      quantity: z.number(),
+      tax: z.number().optional(),
+      totalPrice: z.number(),
+      type: IndependentTourBookingAddonTypeZ.optional(),
+      passengerOIDs: z.array(z.string()).optional(),
+      toBeRemoved: z.boolean().optional(),
+    })).optional(),
+    discounts: z.array(z.object({
+      oid: z.string().optional(),
+      independentTourBookingDiscountOID: z.string().optional(),
+      type: BookingDiscountTypeZ,
+      amount: z.number(),
+      percentage: z.number().optional(),
+      discountMode: z.nativeEnum(DiscountMode),
+      name: z.string(),
+      description: z.string().optional(),
+      code: z.string().optional(),
+      discountCodeOID: z.string().optional(),
+      reason: z.string().optional(),
+      approvalRequestOID: z.string().optional(),
+      toBeRemoved: z.boolean().optional(),
+    })).optional(),
+    primaryContact: z.object({
+      oid: z.string().optional(),
+      title: z.string(),
+      gender: z.string(),
+      firstName: z.string(),
+      lastName: z.string(),
+      dateOfBirth: z.string().optional(),
+      nationality: z.string().optional(),
+      email: z.string().optional(),
+      phone: z.string().optional(),
+      alternativeMobile: z.string().optional(),
+      address: z.string().optional(),
+      postalCode: z.string().optional(),
+      isLeadPassenger: z.boolean().optional(),
+    }).optional(),
+    specialInstructions: z.string().optional(),
     overwriteTax: z.object({
       scheme: z.string(),
       rate: z.number(),
     }).optional(),
-    totalAmount: z.number().optional(),
-  }).passthrough(),
+    totalAmount: z.number(),
+  }),
 
   // Calculated breakdowns (reuse common schema)
   originalBookingBreakdown: BookingBreakdownZ,
