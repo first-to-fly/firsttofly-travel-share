@@ -451,84 +451,6 @@ export const ApprovalRequestCustomerCancellationFeeMetadataZ = z.object({
 export type ApprovalRequestCustomerCancellationFeeMetadata =
   z.infer<typeof ApprovalRequestCustomerCancellationFeeMetadataZ>;
 
-// Unified Booking Transfer (GTB↔ITB, ITB↔ITB, GTB↔GTB)
-const BookingTransferTargetGTBZ = z.object({
-  targetBookingType: z.literal("GTB"),
-  targetTourDepartureOID: EntityOIDZ,
-  passengers: ApprovalRequestGroupTourBookingTransferMetadataZ.shape.transferItems.element.shape.passengers,
-  rooms: ApprovalRequestGroupTourBookingTransferMetadataZ.shape.transferItems.element.shape.rooms,
-  addons: ApprovalRequestGroupTourBookingTransferMetadataZ.shape.transferItems.element.shape.addons.optional(),
-  discounts: ApprovalRequestGroupTourBookingTransferMetadataZ.shape.transferItems.element.shape.discounts.optional(),
-  specialInstructions: z.array(z.string()).optional(),
-});
-
-const BookingTransferTargetITBZ = z.object({
-  targetBookingType: z.literal("ITB"),
-  targetIndependentTourProductOID: EntityOIDZ,
-  targetIndependentTourAccommodationOID: EntityOIDZ.optional(),
-  rooms: z.array(z.object({
-    roomNumber: z.number(),
-    passengers: BookingPaxPersonalDetailsZ.extend({ oid: z.string().optional() }).array(),
-    adultSelections: z.array(z.object({ paxIndex: z.number() })),
-    childWithBedSelections: z.array(z.object({ paxIndex: z.number() })),
-    childNoBedSelections: z.array(z.object({ paxIndex: z.number() })),
-    infantSelections: z.array(z.object({ paxIndex: z.number() })),
-    selectedRuleOID: z.string().optional(),
-  })),
-  addons: z.array(z.object({
-    oid: z.string().optional(),
-    independentTourOptionalServiceOID: z.string().optional(),
-    independentTourBookingAddonOID: z.string().optional(),
-    name: z.string(),
-    price: z.number(),
-    quantity: z.number(),
-    tax: z.number().optional(),
-    totalPrice: z.number(),
-    type: IndependentTourBookingAddonTypeZ.optional(),
-    passengerOIDs: z.array(z.string()).optional(),
-    toBeRemoved: z.boolean().optional(),
-  })).optional(),
-  discounts: z.array(z.object({
-    oid: z.string().optional(),
-    independentTourBookingDiscountOID: z.string().optional(),
-    type: BookingDiscountTypeZ,
-    amount: z.number(),
-    percentage: z.number().optional(),
-    discountMode: z.nativeEnum(DiscountMode),
-    name: z.string(),
-    description: z.string().optional(),
-    code: z.string().optional(),
-    discountCodeOID: z.string().optional(),
-    reason: z.string().optional(),
-    approvalRequestOID: z.string().optional(),
-    toBeRemoved: z.boolean().optional(),
-  })).optional(),
-  specialInstructions: z.array(z.string()).optional(),
-});
-
-export const ApprovalRequestBookingTransferMetadataZ = z.object({
-  type: z.literal(ApprovalType.BOOKING_TRANSFER),
-  sourceBookingType: z.enum(["GTB", "ITB"]),
-  originalBookingOID: EntityOIDZ,
-  transferItems: z.array(z.union([BookingTransferTargetGTBZ, BookingTransferTargetITBZ])),
-  transferReason: z.string(),
-  financialSummary: z.object({
-    originalBookingPaidAmount: z.number(),
-    transferAllocation: z.array(z.object({
-      targetIndex: z.number(),
-      allocatedAmount: z.number(),
-      newBookingTotal: z.number(),
-      balanceDue: z.number(),
-    })),
-  }),
-  idempotencyKey: z.string(),
-  // Created by workflow: list of destination booking OIDs for correlation
-  createdBookingOIDs: z.array(z.string()).optional(),
-});
-
-export type ApprovalRequestBookingTransferMetadata =
-  z.infer<typeof ApprovalRequestBookingTransferMetadataZ>;
-
 // Union type for all metadata
 export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ,
@@ -542,7 +464,6 @@ export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestBillDraftToSubmittedMetadataZ,
   ApprovalRequestCustomerRefundMetadataZ,
   ApprovalRequestCustomerCancellationFeeMetadataZ,
-  ApprovalRequestBookingTransferMetadataZ,
 ]);
 
 export type ApprovalRequestMetadata = z.infer<typeof ApprovalRequestMetadataZ>;

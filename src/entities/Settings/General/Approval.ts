@@ -102,11 +102,6 @@ export enum ApprovalType {
    * Bill DRAFT to SUBMITTED status change approval workflow
    */
   BILL_DRAFT_TO_SUBMITTED = "bill-draft-to-submitted-approval",
-
-  /**
-   * Unified booking transfer approval workflow (GTB↔ITB, ITB↔ITB, GTB↔GTB)
-   */
-  BOOKING_TRANSFER = "booking-transfer-approval",
 }
 
 export enum ApprovalLevelApproverType {
