@@ -16,10 +16,7 @@ export enum ApprovalType {
    */
   GROUP_TOUR_BOOKING_SPECIAL_DISCOUNT = "group-tour-booking-special-discount-approval",
 
-  /**
-   * Group tour booking transfer approval workflow
-   */
-  GROUP_TOUR_BOOKING_TRANSFER = "group-tour-booking-transfer-approval",
+  // Legacy GTB transfer removed in favor of unified BOOKING_TRANSFER
 
   /**
    * Group tour booking amendment approval workflow
