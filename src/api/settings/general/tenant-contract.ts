@@ -15,6 +15,7 @@ const CreateTenantZ = TenantZ.pick({
   homeCurrency: true,
   currencyExtra: true,
   defaultTaxConfig: true,
+  pdfHeader: true,
 });
 
 const UpdateTenantZ = CreateTenantZ.partial();
