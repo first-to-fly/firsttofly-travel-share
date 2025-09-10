@@ -15,15 +15,15 @@ export const SpecialInstructionZ = EntityZ.extend({
   entityType: z.literal(EntityType.SPECIAL_INSTRUCTION),
 
   isPreset: z.boolean(),
-  description: z.string().optional(),
+  description: z.string().nullish(),
 
-  remarks: z.string().optional(),
+  remarks: z.string().nullish(),
   isActive: z.boolean().default(true),
-  isCustomized: z.boolean().optional(),
+  isCustomized: z.boolean().nullish(),
 
   // Relationships
   coveredEntityOIDs: z.array(EntityOIDZ), // OIDs of Sectors / SectorGroups / GroupTourProducts
-  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
+  productTypes: z.array(z.nativeEnum(ProductType)).nullish(),
 });
 
 export type SpecialInstruction = z.infer<typeof SpecialInstructionZ>;

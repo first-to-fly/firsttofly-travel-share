@@ -30,13 +30,13 @@ export const DocumentZ = EntityZ.extend({
   entityOID: EntityOIDZ, // linkage to the entity that owns this document
 
   type: FTFDocumentTypeZ,
-  name: z.string().optional(),
-  docIdentification: z.string().optional(),
+  name: z.string().nullish(),
+  docIdentification: z.string().nullish(),
 
-  issuedDate: DateISOStringZ.optional(),
-  expiryDate: DateISOStringZ.optional(),
+  issuedDate: DateISOStringZ.nullish(),
+  expiryDate: DateISOStringZ.nullish(),
 
-  files: z.array(NamedURLZ).optional(),
+  files: z.array(NamedURLZ).nullish(),
 });
 
 export type Document = z.infer<typeof DocumentZ>;

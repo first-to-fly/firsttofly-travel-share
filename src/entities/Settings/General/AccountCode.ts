@@ -30,18 +30,18 @@ export const AccountCodeZ = EntityZ.extend({
   entityType: z.literal(EntityType.ACCOUNT_CODE),
   code: z.string(),
   name: z.string(),
-  description: z.string().optional(),
+  description: z.string().nullish(),
   type: z.nativeEnum(AccountCodeType),
   status: z.nativeEnum(AccountCodeStatus).default(AccountCodeStatus.ACTIVE),
-  currency: z.string().optional(),
+  currency: z.string().nullish(),
 
   // No relation OIDs for AccountCode currently
 
   // Xero integration fields
-  xeroAccountId: z.string().optional(),
-  xeroAccountCode: z.string().optional(),
-  xeroSyncStatus: z.string().optional(),
-  xeroSyncedAt: z.string().optional(),
+  xeroAccountId: z.string().nullish(),
+  xeroAccountCode: z.string().nullish(),
+  xeroSyncStatus: z.string().nullish(),
+  xeroSyncedAt: z.string().nullish(),
 
   // Additional metadata
   isSystemGenerated: z.boolean().default(false),

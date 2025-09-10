@@ -41,12 +41,12 @@ export const BillZ = EntityZ.extend({
   entityType: z.literal(EntityType.BILL),
 
   code: z.string(),
-  invoiceNo: z.string().optional(),
+  invoiceNo: z.string().nullish(),
   status: z.nativeEnum(BillStatus),
   paymentStatus: z.nativeEnum(BillPaymentStatus),
 
   issueDate: z.string(),
-  dueDate: z.string().optional(),
+  dueDate: z.string().nullish(),
 
   // Required supplier reference
   supplierOID: EntityOIDZ,
@@ -56,18 +56,18 @@ export const BillZ = EntityZ.extend({
 
   // Bill category and currency rate
   category: z.nativeEnum(BillCategory).default(BillCategory.BILL),
-  currencyRate: z.number().optional(),
+  currencyRate: z.number().nullish(),
 
   // Files
-  files: z.array(NamedURLZ).optional(),
+  files: z.array(NamedURLZ).nullish(),
 
   // Xero integration fields
-  xeroInvoiceId: z.string().optional(),
-  xeroSyncStatus: z.string().optional(),
-  xeroSyncedAt: z.string().optional(),
+  xeroInvoiceId: z.string().nullish(),
+  xeroSyncStatus: z.string().nullish(),
+  xeroSyncedAt: z.string().nullish(),
 
-  remarks: z.string().optional(),
-  internalNotes: z.string().optional(),
+  remarks: z.string().nullish(),
+  internalNotes: z.string().nullish(),
 });
 
 export type Bill = z.infer<typeof BillZ>;
