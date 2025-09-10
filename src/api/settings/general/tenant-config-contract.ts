@@ -4,22 +4,6 @@ import { z } from "zod";
 
 const basePath = "/api/settings/tenant-config";
 
-const TenantConfigResponseZ = z.object({
-  oid: z.string(),
-  tenantOID: z.string(),
-  key: z.string(),
-  configValue: z.unknown(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  createdBy: z.string(),
-  updatedBy: z.string().nullable(),
-});
-
-const CreateTenantConfigZ = z.object({
-  tenantOID: z.string(),
-  key: z.string(),
-  configValue: z.unknown(),
-});
 
 const UpdateTenantConfigZ = z.object({
   configValue: z.unknown(),
