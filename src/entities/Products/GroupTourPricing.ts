@@ -122,7 +122,7 @@ export const GroupTourPricingZ = EntityZ.extend({
   name: z.string(),
   code: z.string(),
 
-  remarks: z.string().nullable(),
+  remarks: z.string().nullish(),
   targetYieldPercentage: FTFSafeMaxNumberZ({ name: "Target yield percentage" }),
 
   validityStartDate: DateISOStringZ,
@@ -139,11 +139,11 @@ export const GroupTourPricingZ = EntityZ.extend({
     child: FTFSafeMaxNumberZ({ name: "Airport tax child" }),
   }),
 
-  discount: GroupTourPricingDiscountZ.optional(),
+  discount: GroupTourPricingDiscountZ.nullish(),
 
   groupTourPricingEntries: z.array(GroupTourPricingEntryZ),
 
-  changeHistory: GroupTourPricingMatrixChangeHistoryZ.optional(),
+  changeHistory: GroupTourPricingMatrixChangeHistoryZ.nullish(),
 });
 
 export type GroupTourPricing = z.infer<typeof GroupTourPricingZ>;

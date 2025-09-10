@@ -38,55 +38,55 @@ export const IndependentTourProductZ = EntityZ.extend({
   entityType: z.literal(EntityType.INDEPENDENT_TOUR_PRODUCT),
 
   departmentOID: z.string(),
-  sectorGroupOID: z.string().optional(),
+  sectorGroupOID: z.string().nullish(),
   sectorOIDs: z.array(z.string()).optional(),
 
   code: z.string(),
 
   name: MultiLangRecordZ(z.string()),
-  description: MultiLangRecordZ(z.string()).optional(),
-  remarks: z.string().optional(),
+  description: MultiLangRecordZ(z.string()).nullish(),
+  remarks: z.string().nullish(),
 
-  shoutout: MultiLangRecordZ(z.string()).optional(),
-  highlights: MultiLangRecordZ(z.string()).optional(),
-  writeup: MultiLangRecordZ(z.string()).optional(),
-  importantNotes: MultiLangRecordZ(z.string()).optional(),
-  inclusions: MultiLangRecordZ(z.string()).optional(),
-  exclusions: MultiLangRecordZ(z.string()).optional(),
+  shoutout: MultiLangRecordZ(z.string()).nullish(),
+  highlights: MultiLangRecordZ(z.string()).nullish(),
+  writeup: MultiLangRecordZ(z.string()).nullish(),
+  importantNotes: MultiLangRecordZ(z.string()).nullish(),
+  inclusions: MultiLangRecordZ(z.string()).nullish(),
+  exclusions: MultiLangRecordZ(z.string()).nullish(),
 
   durationDays: z.number(),
   durationNights: z.number(),
 
   validityStartDate: z.string(),
-  validityEndDate: z.string().optional(),
+  validityEndDate: z.string().nullish(),
 
-  targetYieldPercentage: z.number().optional(),
+  targetYieldPercentage: z.number().nullish(),
 
-  defaultFullPaymentDueDays: z.number().optional(),
-  pricingPlaceholder: z.record(z.string(), z.number()).optional(),
+  defaultFullPaymentDueDays: z.number().nullish(),
+  pricingPlaceholder: z.record(z.string(), z.number()).nullish(),
 
   isActive: z.boolean(),
   published: z.boolean(),
-  isUmrahHaj: z.boolean().optional(),
+  isUmrahHaj: z.boolean().nullish(),
 
-  platforms: z.array(ProductPlatformZ).optional(),
+  platforms: z.array(ProductPlatformZ).nullish(),
 
-  coverPicture: NamedURLZ.optional(),
-  productBannerDesktop: NamedURLZ.optional(),
-  productBannerMobile: NamedURLZ.optional(),
+  coverPicture: NamedURLZ.nullish(),
+  productBannerDesktop: NamedURLZ.nullish(),
+  productBannerMobile: NamedURLZ.nullish(),
 
   videos: z.array(z.object({
     active: z.boolean(),
     title: z.string(),
     file: NamedURLZ,
     updatedAt: z.string(),
-  })).optional(),
+  })).nullish(),
   documentations: z.array(z.object({
     active: z.boolean(),
     type: z.nativeEnum(IndependentTourProductDocumentationType),
     file: NamedURLZ,
     updatedAt: z.string(),
-  })).optional(),
+  })).nullish(),
 });
 
 export type IndependentTourProduct = z.infer<typeof IndependentTourProductZ>;
