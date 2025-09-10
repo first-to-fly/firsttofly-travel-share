@@ -8,7 +8,7 @@ import { EntityOIDZ, EntityZ } from "../entity";
 export const GroupTourBookingRoomZ = EntityZ.extend({
   bookingOID: EntityOIDZ,
   roomConfigurationRuleOID: EntityOIDZ,
-  roomNumber: z.string().max(20).nullish(),
+  roomNumber: z.string().max(20),
   isDbl: z.boolean().default(false),
   status: BookingRoomStatusZ,
   notes: z.string().nullish(),

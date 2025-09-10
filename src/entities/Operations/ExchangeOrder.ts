@@ -46,7 +46,7 @@ export const ExchangeOrderZ = EntityZ.extend({
 
   parentExchangeOrderOID: EntityOIDZ.nullish(),
   budgetOID: EntityOIDZ.nullish(),
-  supplierOID: EntityOIDZ.nullish(),
+  supplierOID: EntityOIDZ,
 
   // Supplier-related fields (1:1 relationship)
   supplierPersonOID: EntityOIDZ.nullish(),
