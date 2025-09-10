@@ -30,7 +30,7 @@ export const GroupTourBookingZ = EntityZ.extend({
   }).nullish(),
 
   // Owner information
-  ownerOIDs: z.array(EntityOIDZ),
+  ownerOIDs: z.array(EntityOIDZ).optional(),
 });
 
 export type GroupTourBooking = z.infer<typeof GroupTourBookingZ>;
