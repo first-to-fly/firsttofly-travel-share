@@ -23,7 +23,7 @@ export const SpecialRequestDiscountMetadataZ = z.object({
   type: z.literal(BookingDiscountType.SPECIAL_REQUEST),
   approvalRequestOID: EntityOIDZ,
   approvalRequestPayload: ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ,
-  approvalNote: z.string().optional(),
+  approvalNote: z.string().nullish(),
 });
 
 export const GroupTourBookingDiscountMetadataZ = z.discriminatedUnion("type", [
@@ -42,15 +42,15 @@ export const GroupTourBookingDiscountZ = EntityZ.extend({
   bookingOID: EntityOIDZ,
 
   discountType: BookingDiscountTypeZ,
-  discountOID: EntityOIDZ.optional(),
+  discountOID: EntityOIDZ.nullish(),
 
-  appliedDiscountCode: z.string().optional(),
+  appliedDiscountCode: z.string().nullish(),
 
   description: z.string(),
   appliedAmount: z.number(),
   discountMode: z.nativeEnum(DiscountMode),
 
-  metadata: GroupTourBookingDiscountMetadataZ.optional(),
+  metadata: GroupTourBookingDiscountMetadataZ.nullish(),
 });
 
 export type GroupTourBookingDiscount = z.infer<typeof GroupTourBookingDiscountZ>;

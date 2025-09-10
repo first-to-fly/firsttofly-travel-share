@@ -9,10 +9,10 @@ import { RoomOccupancyZ } from "../Settings/Product/RoomConfiguration";
 export const IndependentTourBookingRoomZ = EntityZ.extend({
   independentTourBookingOID: EntityOIDZ,
 
-  roomNumber: z.string().max(20).optional(),
+  roomNumber: z.string().max(20).nullish(),
   occupancy: RoomOccupancyZ,
   status: BookingRoomStatusZ,
-  notes: z.string().optional(),
+  notes: z.string().nullish(),
 });
 
 export type IndependentTourBookingRoom = z.infer<typeof IndependentTourBookingRoomZ>;

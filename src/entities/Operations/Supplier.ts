@@ -30,11 +30,11 @@ export enum SupplierStatus {
 }
 
 export const SupplierInfoZ = z.object({
-  uenNo: z.string().optional(),
-  gstNo: z.string().optional(),
-  iataCode: z.string().optional(),
-  icon: z.string().optional(),
-  bsp: z.boolean().optional(),
+  uenNo: z.string().nullish(),
+  gstNo: z.string().nullish(),
+  iataCode: z.string().nullish(),
+  icon: z.string().nullish(),
+  bsp: z.boolean().nullish(),
 });
 export type SupplierInfo = z.infer<typeof SupplierInfoZ>;
 

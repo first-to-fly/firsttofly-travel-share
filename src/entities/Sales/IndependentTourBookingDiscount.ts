@@ -8,17 +8,17 @@ import { DiscountMode } from "../Settings/Product/Discount";
 
 // Flexible metadata that can contain any fields
 export const IndependentTourBookingDiscountMetadataZ = z.object({
-  reason: z.string().optional(),
-  approvedBy: z.string().optional(),
-  approvalRequestOID: z.string().optional(),
-}).passthrough().optional();
+  reason: z.string().nullish(),
+  approvedBy: z.string().nullish(),
+  approvalRequestOID: z.string().nullish(),
+}).passthrough().nullish();
 
 export const IndependentTourBookingDiscountZ = EntityZ.extend({
   independentTourBookingOID: EntityOIDZ,
 
   discountType: BookingDiscountTypeZ,
-  discountOID: EntityOIDZ.optional(),
-  appliedDiscountCode: z.string().max(20).optional(),
+  discountOID: EntityOIDZ.nullish(),
+  appliedDiscountCode: z.string().max(20).nullish(),
   description: z.string(),
   appliedAmount: z.number().positive(),
   discountMode: z.nativeEnum(DiscountMode),

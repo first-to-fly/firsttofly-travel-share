@@ -7,8 +7,8 @@ export const SupplierAddressZ = EntityZ.extend({
   supplierOID: EntityOIDZ,
   addressLines: z.array(z.string()),
   city: z.string(),
-  state: z.string().optional(),
-  postalCode: z.string().optional(),
+  state: z.string().nullish(),
+  postalCode: z.string().nullish(),
   country: z.string(),
 });
 

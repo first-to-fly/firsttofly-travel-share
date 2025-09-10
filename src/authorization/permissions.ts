@@ -40,6 +40,7 @@ import { SpecialInstructionPermissions } from "./entities/special-instruction.pe
 import { StationCodePermissions } from "./entities/station-code.permission";
 import { SupplierPermissions } from "./entities/supplier.permission";
 import { TenantPermissions } from "./entities/tenant.permission";
+import { TenantConfigPermissions } from "./entities/tenant-config.permission";
 import { TermPermissions } from "./entities/term.permission";
 import { TermConditionPermissions } from "./entities/term-condition.permission";
 import { TourDeparturePermissions } from "./entities/tour-departure.permission";
@@ -80,6 +81,7 @@ const EntityPermissions = {
   "Special Instruction": SpecialInstructionPermissions,
   "Station Code": StationCodePermissions,
   Tenant: TenantPermissions,
+  "Tenant Config": TenantConfigPermissions,
   "Term Condition": TermConditionPermissions,
   Sector: SectorPermissions,
   "Sector Group": SectorGroupPermissions,

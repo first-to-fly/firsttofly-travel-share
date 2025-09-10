@@ -32,7 +32,7 @@ export const IndependentTourItineraryMealZ = EntityZ.omit({
 
   provided: z.boolean(),
   onBoard: z.boolean(),
-  poiOID: EntityOIDZ.optional(),
+  poiOID: EntityOIDZ.nullish(),
 });
 
 
@@ -44,7 +44,7 @@ export const IndependentTourItineraryEventZ = EntityZ.omit({
   title: MultiLangRecordZ(z.string()),
   description: MultiLangRecordZ(z.string()),
 
-  poiOID: EntityOIDZ.optional(),
+  poiOID: EntityOIDZ.nullish(),
   seq: FTFSafeMaxNumberZ({ name: "Sequence" }).int().nonnegative(),
 });
 
@@ -57,10 +57,10 @@ export const IndependentTourItineraryDayZ = EntityZ.omit({
   title: MultiLangRecordZ(z.string()),
   description: MultiLangRecordZ(z.string()),
 
-  files: z.array(NamedURLZ).optional(),
+  files: z.array(NamedURLZ).nullish(),
 
-  independentTourItineraryMeals: z.array(IndependentTourItineraryMealZ).optional(),
-  independentTourItineraryEvents: z.array(IndependentTourItineraryEventZ).optional(),
+  independentTourItineraryMeals: z.array(IndependentTourItineraryMealZ).nullish(),
+  independentTourItineraryEvents: z.array(IndependentTourItineraryEventZ).nullish(),
 });
 
 
@@ -76,9 +76,9 @@ export const IndependentTourItineraryZ = EntityZ.extend({
     active: z.boolean(),
     file: NamedURLZ,
     updatedAt: z.string(),
-  }))).optional(),
+  }))).nullish(),
 
-  independentTourItineraryDays: z.array(IndependentTourItineraryDayZ).optional(),
+  independentTourItineraryDays: z.array(IndependentTourItineraryDayZ).nullish(),
 });
 
 export type IndependentTourItinerary = z.infer<typeof IndependentTourItineraryZ>;

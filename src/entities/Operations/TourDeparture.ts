@@ -34,15 +34,15 @@ export const TourDepartureZ = EntityZ.extend({
   itineraryOID: EntityOIDZ,
 
   departureCode: z.string().max(50),
-  customTourName: z.string().optional(),
+  customTourName: z.string().nullish(),
   description: MultiLangRecordZ(z.string()),
 
   status: z.nativeEnum(TourDepartureStatus),
   isArchived: z.boolean().default(false),
   isCancelled: z.boolean().default(false),
 
-  transportType: z.nativeEnum(TransportType).optional(),
-  transportGroupOIDs: z.array(EntityOIDZ).optional(),
+  transportType: z.nativeEnum(TransportType).nullish(),
+  transportGroupOIDs: z.array(EntityOIDZ).nullish(),
 
   durationDays: FTFSafeMaxNumberZ({
     max: 999,
@@ -66,19 +66,19 @@ export const TourDepartureZ = EntityZ.extend({
   }).int().nonnegative(),
 
   departureDate: DateISOStringZ,
-  finalizationDate: DateISOStringZ.optional(),
-  paymentDueDate: DateISOStringZ.optional(),
-  discount: GroupTourPricingDiscountZ.optional(),
+  finalizationDate: DateISOStringZ.nullish(),
+  paymentDueDate: DateISOStringZ.nullish(),
+  discount: GroupTourPricingDiscountZ.nullish(),
 
-  assembleLocationAirlineOID: EntityOIDZ.optional(),
-  assembleAirlineLocationTime: z.string().max(5).regex(/^\d{2}:\d{2}$/).optional(),
+  assembleLocationAirlineOID: EntityOIDZ.nullish(),
+  assembleAirlineLocationTime: z.string().max(5).regex(/^\d{2}:\d{2}$/).nullish(),
   hkSeat: FTFSafeMaxNumberZ({
     max: 9_999,
     name: "HK Seat",
-  }).int().nonnegative().optional(),
+  }).int().nonnegative().nullish(),
 
-  tourLeaderOIDs: z.array(EntityOIDZ).optional(),
-  tourManagerOIDs: z.array(EntityOIDZ).optional(),
+  tourLeaderOIDs: z.array(EntityOIDZ).nullish(),
+  tourManagerOIDs: z.array(EntityOIDZ).nullish(),
 });
 
 export type TourDeparture = z.infer<typeof TourDepartureZ>;

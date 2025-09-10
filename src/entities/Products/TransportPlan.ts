@@ -12,11 +12,11 @@ export enum TransportPlanEvents {
 export const TransportPlanZ = EntityZ.extend({
   entityType: z.literal(EntityType.TRANSPORT_PLAN),
   name: z.string(),
-  description: z.string().optional(),
+  description: z.string().nullish(),
 
   groupTourProductOID: EntityOIDZ,
 
-  transportSegmentOIDs: z.array(EntityOIDZ).optional(),
+  transportSegmentOIDs: z.array(EntityOIDZ).nullish(),
 });
 
 export type TransportPlan = z.infer<typeof TransportPlanZ>;

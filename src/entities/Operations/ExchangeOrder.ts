@@ -42,26 +42,26 @@ export const ExchangeOrderZ = EntityZ.extend({
   status: z.nativeEnum(ExchangeOrderStatus),
 
   issueDate: z.string(),
-  dueDate: z.string().optional(),
+  dueDate: z.string().nullish(),
 
-  parentExchangeOrderOID: EntityOIDZ.optional(),
-  budgetOID: EntityOIDZ.optional(),
-  supplierOID: EntityOIDZ.optional(),
+  parentExchangeOrderOID: EntityOIDZ.nullish(),
+  budgetOID: EntityOIDZ.nullish(),
+  supplierOID: EntityOIDZ.nullish(),
 
   // Supplier-related fields (1:1 relationship)
-  supplierPersonOID: EntityOIDZ.optional(),
-  supplierPaymentOID: EntityOIDZ.optional(),
-  supplierAddressOID: EntityOIDZ.optional(),
+  supplierPersonOID: EntityOIDZ.nullish(),
+  supplierPaymentOID: EntityOIDZ.nullish(),
+  supplierAddressOID: EntityOIDZ.nullish(),
 
   currency: z.string(),
 
-  remarks: z.string().optional(),
+  remarks: z.string().nullish(),
 
   isArchived: z.boolean(),
 
   // Bill relationship fields
-  billOID: EntityOIDZ.optional(),
-  billUsedAmount: z.number().optional(),
+  billOID: EntityOIDZ.nullish(),
+  billUsedAmount: z.number().nullish(),
 });
 
 export type ExchangeOrder = z.infer<typeof ExchangeOrderZ>;

@@ -17,26 +17,26 @@ const PaxPricingZ = z.record(z.nativeEnum(BookingPaxType), z.number()); // Recor
 // Cost value structure with pax pricing
 const CostValueZ = z.object({
   currency: z.string(),
-  tax: z.number().optional(),
+  tax: z.number().nullish(),
   paxPricing: PaxPricingZ,
-  peakSurchargeFixedAmount: z.number().optional(),
-  extraNightPrice: z.number().optional(),
+  peakSurchargeFixedAmount: z.number().nullish(),
+  extraNightPrice: z.number().nullish(),
 });
 
 // Price value structure with pax pricing (same as cost value)
 const PriceValueZ = z.object({
   currency: z.string(),
-  tax: z.number().optional(),
+  tax: z.number().nullish(),
   paxPricing: PaxPricingZ,
-  peakSurchargeFixedAmount: z.number().optional(),
-  extraNightPrice: z.number().optional(),
+  peakSurchargeFixedAmount: z.number().nullish(),
+  extraNightPrice: z.number().nullish(),
 });
 
 // Peak period definition
 const PeakPeriodZ = z.object({
   startDate: z.string(), // ISO date string
   endDate: z.string(), // ISO date string
-  name: z.string().optional(),
+  name: z.string().nullish(),
 });
 
 export const IndependentTourAccommodationZ = EntityZ.extend({

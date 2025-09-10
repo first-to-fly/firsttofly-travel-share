@@ -13,15 +13,15 @@ export const GroupTourBookingAddonTypeZ = z.nativeEnum(GroupTourBookingAddonType
 export const GroupTourBookingAddonZ = EntityZ.extend({
   bookingOID: EntityOIDZ,
   type: GroupTourBookingAddonTypeZ,
-  groupTourPricingOID: EntityOIDZ.optional(),
-  groupTourCostingEntryOID: EntityOIDZ.optional(),
+  groupTourPricingOID: EntityOIDZ.nullish(),
+  groupTourCostingEntryOID: EntityOIDZ.nullish(),
   name: z.string(),
   unitPrice: z.number(),
-  tax: z.number().optional(),
+  tax: z.number().nullish(),
   quantity: z.number(),
   totalPrice: z.number(),
-  supplierOID: EntityOIDZ.optional(),
-  notes: z.string().optional(),
+  supplierOID: EntityOIDZ.nullish(),
+  notes: z.string().nullish(),
 });
 
 export type GroupTourBookingAddon = z.infer<typeof GroupTourBookingAddonZ>;

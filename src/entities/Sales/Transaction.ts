@@ -36,19 +36,19 @@ export const PaymentMethodZ = z.nativeEnum(PaymentMethod);
 
 export const TransactionZ = EntityZ.extend({
   paymentOrderOID: EntityOIDZ,
-  payerFirstName: z.string().optional(),
-  payerLastName: z.string().optional(),
-  payerMobile: z.string().optional(),
-  payerEmail: z.string().email().optional(),
+  payerFirstName: z.string().nullish(),
+  payerLastName: z.string().nullish(),
+  payerMobile: z.string().nullish(),
+  payerEmail: z.string().email().nullish(),
   amount: z.number(),
   serviceFee: z.number().min(0).default(0),
   transactionType: TransactionTypeZ,
   transactionDate: DateISOStringZ,
-  paymentWayOID: EntityOIDZ.optional(),
+  paymentWayOID: EntityOIDZ.nullish(),
   status: TransactionStatusZ,
-  transactionReference: z.string().optional(),
-  notes: z.string().optional(),
-  metadata: z.record(z.unknown()).optional(),
+  transactionReference: z.string().nullish(),
+  notes: z.string().nullish(),
+  metadata: z.record(z.unknown()).nullish(),
   files: z.array(NamedURLZ).default([]),
 });
 
