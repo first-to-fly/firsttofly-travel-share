@@ -35,54 +35,54 @@ export const GroupTourProductZ = EntityZ.extend({
   sectorOIDs: z.array(EntityOIDZ),
   displaySectorOIDs: z.array(EntityOIDZ),
 
-  sectorGroupOID: EntityOIDZ.optional(),
+  sectorGroupOID: EntityOIDZ.nullish(),
 
-  shoutout: MultiLangRecordZ(z.string()).optional(),
-  highlights: MultiLangRecordZ(z.string()).optional(),
-  writeup: MultiLangRecordZ(z.string()).optional(),
-  importantNotes: MultiLangRecordZ(z.string()).optional(),
-  inclusions: MultiLangRecordZ(z.string()).optional(),
-  exclusions: MultiLangRecordZ(z.string()).optional(),
+  shoutout: MultiLangRecordZ(z.string()).nullish(),
+  highlights: MultiLangRecordZ(z.string()).nullish(),
+  writeup: MultiLangRecordZ(z.string()).nullish(),
+  importantNotes: MultiLangRecordZ(z.string()).nullish(),
+  inclusions: MultiLangRecordZ(z.string()).nullish(),
+  exclusions: MultiLangRecordZ(z.string()).nullish(),
 
   durationDays: FTFSafeMaxNumberZ({ name: "Duration days" }),
   durationNights: FTFSafeMaxNumberZ({ name: "Duration nights" }),
 
-  proposedDepartureDates: z.array(DateISOStringZ).optional(),
-  transportPlanOIDs: z.array(EntityOIDZ).optional(),
+  proposedDepartureDates: z.array(DateISOStringZ).nullish(),
+  transportPlanOIDs: z.array(EntityOIDZ).nullish(),
 
   validityStartDate: DateISOStringZ,
-  validityEndDate: DateISOStringZ.optional(), // end indefinitely
+  validityEndDate: DateISOStringZ.nullish(), // end indefinitely
 
   salesPeriodStartDate: DateISOStringZ,
-  salesPeriodEndDate: DateISOStringZ.optional(), // end indefinitely
+  salesPeriodEndDate: DateISOStringZ.nullish(), // end indefinitely
 
-  defaultFullPaymentDueDays: z.number().optional(),
-  pricingPlaceholder: z.record(z.string(), z.number()).optional(),
+  defaultFullPaymentDueDays: z.number().nullish(),
+  pricingPlaceholder: z.record(z.string(), z.number()).nullish(),
 
   isActive: z.boolean(),
   published: z.boolean(),
-  isUmrahHaj: z.boolean().optional(),
+  isUmrahHaj: z.boolean().nullish(),
 
-  platforms: z.array(ProductPlatformZ).optional(),
+  platforms: z.array(ProductPlatformZ).nullish(),
 
   ownerOIDs: z.array(z.string()).optional(),
 
-  coverPicture: NamedURLZ.optional(),
-  productBannerDesktop: NamedURLZ.optional(),
-  productBannerMobile: NamedURLZ.optional(),
+  coverPicture: NamedURLZ.nullish(),
+  productBannerDesktop: NamedURLZ.nullish(),
+  productBannerMobile: NamedURLZ.nullish(),
 
   videos: z.array(z.object({
     active: z.boolean(),
     title: z.string(),
     file: NamedURLZ,
     updatedAt: z.string(),
-  })).optional(),
+  })).nullish(),
   documentations: z.array(z.object({
     active: z.boolean(),
     type: z.nativeEnum(GroupTourProductDocumentationType),
     file: NamedURLZ,
     updatedAt: z.string(),
-  })).optional(),
+  })).nullish(),
 });
 
 export type GroupTourProduct = z.infer<typeof GroupTourProductZ>;

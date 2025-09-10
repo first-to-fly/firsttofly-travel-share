@@ -53,7 +53,7 @@ export const GroupTourCostingZ = EntityZ.extend({
   name: z.string(),
   code: z.string(),
 
-  remarks: z.string(),
+  remarks: z.string().optional(),
 
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ,
