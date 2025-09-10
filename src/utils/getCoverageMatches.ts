@@ -17,8 +17,8 @@ export function getCoverageMatches<
     product: {
       oid: string;
       type: ProductType;
-      sectorGroupOID?: string;
-      sectorOIDs?: string[];
+      sectorGroupOID?: string | null;
+      sectorOIDs?: string[] | null;
     };
   },
 ): { closestMatched?: Entity; allMatched: Entity[] } {
