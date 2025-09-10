@@ -8,10 +8,10 @@ import { EntityOIDZ, EntityZ } from "../entity";
 export const GroupTourBookingRoomZ = EntityZ.extend({
   bookingOID: EntityOIDZ,
   roomConfigurationRuleOID: EntityOIDZ,
-  roomNumber: z.string().max(20).optional(),
+  roomNumber: z.string().max(20).nullish(),
   isDbl: z.boolean().default(false),
   status: BookingRoomStatusZ,
-  notes: z.string().optional(),
+  notes: z.string().nullish(),
 });
 
 export type GroupTourBookingRoom = z.infer<typeof GroupTourBookingRoomZ>;

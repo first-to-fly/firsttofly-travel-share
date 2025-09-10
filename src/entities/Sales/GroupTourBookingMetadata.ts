@@ -8,22 +8,22 @@ import { EntityOIDZ } from "../entity";
  */
 export const TransferMetadataZ = z.object({
   // === Original GroupTourBooking (being transferred FROM) ===
-  transferredTo: z.array(z.string()).optional(),
-  transferringOIDs: z.array(EntityOIDZ).optional(),
-  transferStartDate: z.string().optional(),
-  transferredBy: z.string().optional(),
+  transferredTo: z.array(z.string()).nullish(),
+  transferringOIDs: z.array(EntityOIDZ).nullish(),
+  transferStartDate: z.string().nullish(),
+  transferredBy: z.string().nullish(),
   transferPassengers: z.array(z.object({
-    oid: z.string().optional(),
+    oid: z.string().nullish(),
     name: z.string(),
     targetTourDepartureOID: EntityOIDZ,
-  })).optional(),
+  })).nullish(),
 
   // === New GroupTourBooking (created FROM transfer) ===
-  transferredFrom: z.string().optional(),
-  transferredFromBookingNumber: z.string().optional(),
-  transferDate: z.string().optional(),
-  transferApprovedBy: z.string().optional(),
-  passengerMapping: z.record(z.string(), z.string()).optional(),
+  transferredFrom: z.string().nullish(),
+  transferredFromBookingNumber: z.string().nullish(),
+  transferDate: z.string().nullish(),
+  transferApprovedBy: z.string().nullish(),
+  passengerMapping: z.record(z.string(), z.string()).nullish(),
 }).partial();
 
 export type TransferMetadata = z.infer<typeof TransferMetadataZ>;

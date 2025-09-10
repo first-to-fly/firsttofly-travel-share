@@ -30,10 +30,10 @@ export const ApprovalRequestZ = EntityZ.extend({
   approvalOID: EntityOIDZ,
   targetEntityOID: EntityOIDZ,
   submitterOID: EntityOIDZ,
-  departmentOID: EntityOIDZ.optional(),
+  departmentOID: EntityOIDZ.nullish(),
   status: z.nativeEnum(ApprovalRequestStatus),
-  rejectionReason: z.string().optional(),
-  completedAt: DateISOStringZ.optional(),
+  rejectionReason: z.string().nullish(),
+  completedAt: DateISOStringZ.nullish(),
   metadata: ApprovalRequestMetadataZ,
   code: z.string(),
 });

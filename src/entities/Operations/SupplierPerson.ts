@@ -4,10 +4,10 @@ import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export const ContactInfoZ = z.object({
-  email: z.string().email().optional(),
-  phone: z.string().optional(),
-  fax: z.string().optional(),
-  officePhone: z.string().optional(),
+  email: z.string().email().nullish(),
+  phone: z.string().nullish(),
+  fax: z.string().nullish(),
+  officePhone: z.string().nullish(),
   isDefault: z.boolean().default(false),
 });
 
@@ -15,8 +15,8 @@ export const SupplierPersonZ = EntityZ.extend({
   supplierOID: EntityOIDZ,
   firstName: z.string(),
   lastName: z.string(),
-  department: z.string().optional(),
-  position: z.string().optional(),
+  department: z.string().nullish(),
+  position: z.string().nullish(),
   contactInfo: z.array(ContactInfoZ),
 });
 
