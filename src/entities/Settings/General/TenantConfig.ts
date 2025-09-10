@@ -16,9 +16,9 @@ export type TenantConfigTypes = {
 
 export const DEFAULT_TENANT_CONFIG_VALUES: TenantConfigTypes = {
   [TENANT_CONFIG_KEYS.GIT_BOOKING_EXPECTED_CANCEL_TIME]: {
-    [ProductPlatform.SALESKIT]: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-    [ProductPlatform.B2B]: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
-    [ProductPlatform.B2C]: 7 * 24 * 60 * 60 * 1000, // 7 days in milliseconds
+    [ProductPlatform.SALESKIT]: 24 * 60 * 60 * 1000, // 24 hours in milliseconds (30 hours during Travel Fair)
+    [ProductPlatform.B2B]: 3 * 24 * 60 * 60 * 1000, // 3 days in milliseconds (configurable: 3/5/10 days)
+    [ProductPlatform.B2C]: 30 * 60 * 1000, // 30 minutes in milliseconds
   },
 };
 
