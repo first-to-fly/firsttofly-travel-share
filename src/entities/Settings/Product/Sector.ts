@@ -16,14 +16,14 @@ export const SectorZ = EntityZ.extend({
 
   name: z.string(),
   isActive: z.boolean().default(true),
-  images: z.array(z.string().url()).optional(),
-  parentOID: EntityOIDZ.optional(),
+  images: z.array(z.string().url()).nullish(),
+  parentOID: EntityOIDZ.nullish(),
 
   isPopular: z.boolean().default(false),
 
-  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
+  productTypes: z.array(z.nativeEnum(ProductType)).nullish(),
 
-  departmentOID: EntityOIDZ.optional(),
+  departmentOID: EntityOIDZ.nullish(),
 });
 
 export type Sector = z.infer<typeof SectorZ>;

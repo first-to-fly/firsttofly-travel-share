@@ -37,25 +37,25 @@ export const MatchDocZ = EntityZ.extend({
   category: z.nativeEnum(MatchDocCategory),
 
   issueDate: z.string(),
-  dueDate: z.string().optional(),
+  dueDate: z.string().nullish(),
 
   // Supplier reference
-  supplierOID: EntityOIDZ.optional(),
+  supplierOID: EntityOIDZ.nullish(),
 
   totalAmount: z.number(),
   currency: z.string(),
-  currencyRate: z.number().optional(),
-  foreignAmount: z.number().optional(),
-  localAmount: z.number().optional(),
+  currencyRate: z.number().nullish(),
+  foreignAmount: z.number().nullish(),
+  localAmount: z.number().nullish(),
 
-  remarks: z.string().optional(),
-  documentUrl: z.string().optional(),
+  remarks: z.string().nullish(),
+  documentUrl: z.string().nullish(),
 
   isArchived: z.boolean(),
 
   // Bill relationship fields
-  billOID: EntityOIDZ.optional(),
-  billUsedAmount: z.number().optional(),
+  billOID: EntityOIDZ.nullish(),
+  billUsedAmount: z.number().nullish(),
 });
 
 export type MatchDoc = z.infer<typeof MatchDocZ>;

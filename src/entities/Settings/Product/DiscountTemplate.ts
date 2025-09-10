@@ -18,7 +18,7 @@ export const DiscountTemplateZ = EntityZ.extend({
   entityType: z.literal(EntityType.DISCOUNT_TEMPLATE),
 
   templateName: z.string(),
-  description: z.string().optional(),
+  description: z.string().nullish(),
 
   bookingChannels: z.array(z.nativeEnum(DiscountBookingChannel)),
   discountMechanics: z.nativeEnum(DiscountMechanics),
@@ -35,22 +35,22 @@ export const DiscountTemplateZ = EntityZ.extend({
   minSpending: FTFSafeMaxNumberZ({ name: "Min spending" }).int().nonnegative().default(0),
 
   amountType: z.nativeEnum(DiscountAmountType).default(DiscountAmountType.UNLIMITED),
-  amountValue: FTFSafeMaxNumberZ({ name: "Amount value" }).int().optional(),
-  amountRangeStart: FTFSafeMaxNumberZ({ name: "Amount range start" }).int().optional(),
-  amountRangeEnd: FTFSafeMaxNumberZ({ name: "Amount range end" }).int().optional(),
+  amountValue: FTFSafeMaxNumberZ({ name: "Amount value" }).int().nullish(),
+  amountRangeStart: FTFSafeMaxNumberZ({ name: "Amount range start" }).int().nullish(),
+  amountRangeEnd: FTFSafeMaxNumberZ({ name: "Amount range end" }).int().nullish(),
 
   specialDatesType: z.nativeEnum(DiscountSpecialDatesType).default(DiscountSpecialDatesType.NA),
-  specialDatesStart: DateISOStringZ.optional(),
-  specialDatesEnd: DateISOStringZ.optional(),
+  specialDatesStart: DateISOStringZ.nullish(),
+  specialDatesEnd: DateISOStringZ.nullish(),
 
   timeslotType: z.nativeEnum(DiscountTimeslotType).default(DiscountTimeslotType.NA),
-  timeslotStart: z.string().optional().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
+  timeslotStart: z.string().nullish().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
     message: "Timeslot must be in 'HH:MM' format",
   }),
-  timeslotEnd: z.string().optional().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
+  timeslotEnd: z.string().nullish().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
     message: "Timeslot must be in 'HH:MM' format",
   }),
-  timeslotTimezone: z.string().optional(),
+  timeslotTimezone: z.string().nullish(),
 
   discountValue: FTFSafeMaxNumberZ({ name: "Discount value" }).int().nonnegative().default(0),
   howToApply: z.nativeEnum(DiscountHowToApply).default(DiscountHowToApply.AUTO),
