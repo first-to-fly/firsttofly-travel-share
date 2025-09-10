@@ -2,6 +2,7 @@
 import { z } from "zod";
 
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
+import { ProductPlatform, ProductPlatformZ } from "../../types/platform";
 import { DateISOStringZ, EntityOIDZ, EntityZ } from "../entity";
 import { IndependentTourBookingMetadataZ } from "./IndependentTourBookingMetadata";
 
@@ -23,6 +24,7 @@ export const IndependentTourBookingZ = EntityZ.extend({
 
   travelStartDate: DateISOStringZ.nullish(), // ISO datetime string
   travelEndDate: DateISOStringZ.nullish(), // ISO datetime string
+  platform: ProductPlatformZ.default(ProductPlatform.B2C),
 
   snapshot: z.any().nullish(), // IndependentTourBookingSnapshotData
   metadata: IndependentTourBookingMetadataZ.nullish(),

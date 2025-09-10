@@ -2,6 +2,7 @@
 import { z } from "zod";
 
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
+import { ProductPlatform, ProductPlatformZ } from "../../types/platform";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { GroupTourBookingMetadataZ } from "./GroupTourBookingMetadata";
 
@@ -18,7 +19,9 @@ export const GroupTourBookingZ = EntityZ.extend({
   bookingStatus: BookingStatusZ.default(BookingStatus.IN_PROGRESS),
   totalAmount: z.number().nullish(),
   receivedAmount: z.number().nullish(),
-  fullPaymentDueDate: z.string().nullable().nullish(),
+  fullPaymentDueDate: z.string().nullish(),
+  expectedCancelTime: z.string().datetime().nullish(),
+  platform: ProductPlatformZ.default(ProductPlatform.B2C),
   metadata: GroupTourBookingMetadataZ.nullish(),
   specialInstructions: z.array(z.string()).nullish(),
   overwriteTax: z.object({
