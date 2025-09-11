@@ -9,6 +9,8 @@ const UpdateTenantConfigZ = z.object({
   configValue: z.unknown(),
 });
 
+export type UpdateTenantConfig = z.infer<typeof UpdateTenantConfigZ>;
+
 export const tenantConfigContract = initContract().router({
   getTenantConfigs: {
     method: "GET",
