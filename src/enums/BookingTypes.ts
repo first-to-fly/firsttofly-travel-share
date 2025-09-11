@@ -91,3 +91,11 @@ export enum BookingDiscountType {
 }
 
 export const BookingDiscountTypeZ = z.nativeEnum(BookingDiscountType);
+
+// Unified booking types for all booking entities
+export enum BookingType {
+  GROUP_TOUR = "GROUP_TOUR",
+  INDEPENDENT_TOUR = "INDEPENDENT_TOUR",
+}
+
+export const BookingTypeZ = z.nativeEnum(BookingType);

@@ -423,4 +423,83 @@ export const groupTourBookingContract = initContract().router({
   },
   // #endregion
 
+  // #region CUSTOMER BOOKING LINKS
+  generateCustomerLink: {
+    summary: "Generate a customer booking link for group tour booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/customer-link`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({
+      expiresAt: z.string().optional(),
+    }),
+    responses: {
+      201: z.object({
+        linkOID: EntityOIDZ,
+        secureToken: z.string(),
+        linkUrl: z.string(),
+        qrCodeDataUrl: z.string(),
+        expiresAt: z.string().optional(),
+      }),
+    },
+  },
+  getCustomerLinks: {
+    summary: "Get customer links for group tour booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/customer-links`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    query: z.object({
+      isActive: z.boolean().optional(),
+      isVerified: z.boolean().optional(),
+    }),
+    responses: {
+      200: z.object({
+        items: z.array(z.object({
+          oid: EntityOIDZ,
+          isActive: z.boolean(),
+          isVerified: z.boolean(),
+          expiresAt: z.string().optional(),
+        })),
+        nextCursor: z.string().nullable(),
+      }),
+    },
+  },
+  regenerateCustomerLink: {
+    summary: "Regenerate customer booking link token",
+    method: "POST",
+    path: `${basePath}/:bookingOID/customer-links/:linkOID/regenerate`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+      linkOID: EntityOIDZ,
+    }),
+    body: z.object({}).optional(),
+    responses: {
+      200: z.object({
+        linkOID: EntityOIDZ,
+        secureToken: z.string(),
+        linkUrl: z.string(),
+        qrCodeDataUrl: z.string(),
+        expiresAt: z.string().optional(),
+      }),
+    },
+  },
+  deactivateCustomerLink: {
+    summary: "Deactivate customer booking link",
+    method: "POST",
+    path: `${basePath}/:bookingOID/customer-links/:linkOID/deactivate`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+      linkOID: EntityOIDZ,
+    }),
+    body: z.object({
+      reason: z.string().optional(),
+    }),
+    responses: {
+      200: z.object({
+        oid: EntityOIDZ,
+        isActive: z.boolean(),
+      }),
+    },
+  },
+  // #endregion
+
 });
