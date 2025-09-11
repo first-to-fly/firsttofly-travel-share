@@ -13,20 +13,20 @@ export enum UsefulInfoEvents {
 export const UsefulInfoZ = EntityZ.extend({
   entityType: z.literal(EntityType.USEFUL_INFO),
 
-  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
+  productTypes: z.array(z.nativeEnum(ProductType)).nullish(),
 
   name: z.string(),
   isActive: z.boolean().default(true),
-  remarks: z.string().optional(),
+  remarks: z.string().nullish(),
   info: z.object({
-    otherInfo: z.string().optional(),
-    tipping: z.string().optional(),
-    visa: z.string().optional(),
-    weather: z.string().optional(),
-    optionalTours: z.string().optional(),
-  }).optional(),
+    otherInfo: z.string().nullish(),
+    tipping: z.string().nullish(),
+    visa: z.string().nullish(),
+    weather: z.string().nullish(),
+    optionalTours: z.string().nullish(),
+  }).nullish(),
 
-  applyToEntityOIDs: z.array(EntityOIDZ).optional(),
+  applyToEntityOIDs: z.array(EntityOIDZ).nullish(),
 });
 
 export type UsefulInfo = z.infer<typeof UsefulInfoZ>;

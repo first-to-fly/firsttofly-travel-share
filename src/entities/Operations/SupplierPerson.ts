@@ -4,10 +4,10 @@ import { EntityOIDZ, EntityZ } from "../entity";
 
 
 export const ContactInfoZ = z.object({
-  email: z.string().email().nullish(),
-  phone: z.string().nullish(),
-  fax: z.string().nullish(),
-  officePhone: z.string().nullish(),
+  email: z.string().email().optional(),
+  phone: z.string().optional(),
+  fax: z.string().optional(),
+  officePhone: z.string().optional(),
   isDefault: z.boolean().default(false),
 });
 

@@ -32,10 +32,10 @@ export const MediaZ = EntityZ.extend({
   type: MediaTypeZ,
   name: z.string(),
   url: z.string(),
-  size: z.number().optional(),
-  dimensions: MediaDimensionsZ.optional(),
-  description: z.string().optional(),
-  relevantLocations: z.array(MediaRelevantLocationZ).optional(),
+  size: z.number().nullish(),
+  dimensions: MediaDimensionsZ.nullish(),
+  description: z.string().nullish(),
+  relevantLocations: z.array(MediaRelevantLocationZ).nullish(),
 });
 
 export type Media = z.infer<typeof MediaZ>;

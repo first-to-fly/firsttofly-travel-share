@@ -14,10 +14,10 @@ export const CostingTemplateZ = EntityZ.extend({
   entityType: z.literal(EntityType.COSTING_TEMPLATE),
 
   name: z.string(),
-  remarks: z.string().optional(),
+  remarks: z.string().nullish(),
   isActive: z.boolean(),
 
-  costingItemOIDs: z.array(EntityOIDZ).optional(),
+  costingItemOIDs: z.array(EntityOIDZ).nullish(),
 });
 
 export type CostingTemplate = z.infer<typeof CostingTemplateZ>;

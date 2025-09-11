@@ -5,7 +5,12 @@ import { RoomType } from "../../entities/Settings/Product/RoomConfiguration";
 /**
  * Normalize a RoomOccupancy object to ensure all counts are numbers.
  */
-function normalizeOccupancy(o: RoomOccupancy): Required<RoomOccupancy> {
+function normalizeOccupancy(o: RoomOccupancy): {
+  adultNum: number;
+  childWithBedNum: number;
+  childWithoutBedNum: number;
+  infantNum: number;
+} {
   return {
     adultNum: o.adultNum ?? 0,
     childWithBedNum: o.childWithBedNum ?? 0,

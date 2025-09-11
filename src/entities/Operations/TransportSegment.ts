@@ -100,16 +100,16 @@ export const BaseTransportSegmentZ = EntityZ.extend({
   destinationTimezone: z.string(),
 
   // Actual mode fields
-  departureDateTime: DateISOStringZ.nullish(),
-  arrivalDateTime: DateISOStringZ.nullish(),
-  seatCapacity: z.number().int().positive().nullish(),
+  departureDateTime: DateISOStringZ.optional(),
+  arrivalDateTime: DateISOStringZ.optional(),
+  seatCapacity: z.number().int().positive().optional(),
 
   // Planning mode fields
-  isPlanning: z.boolean().default(false).nullish(),
-  plannedDepartureTime: z.string().nullish().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
+  isPlanning: z.boolean().default(false).optional(),
+  plannedDepartureTime: z.string().optional().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
     message: "Planned departure time must be in 'HH:MM' format",
   }),
-  plannedArrivalTime: z.string().nullish().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
+  plannedArrivalTime: z.string().optional().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
     message: "Planned arrival time must be in 'HH:MM' format",
   }),
 });
@@ -119,8 +119,8 @@ export const FlightSegmentDetailsZ = z.object({
   flightNumber: z.string(),
   class: z.string(),
   departureDate: DateISOStringZ,
-  flightInfo: FlightInfoZ.nullish(),
-  flightInfoUpdatedAt: DateISOStringZ.nullish(),
+  flightInfo: FlightInfoZ.optional(),
+  flightInfoUpdatedAt: DateISOStringZ.optional(),
 });
 
 // Bus specific details

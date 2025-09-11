@@ -49,10 +49,10 @@ export const POIZ = EntityZ.extend({
   country: z.string(),
   area: z.string(),
   category: z.nativeEnum(POICategory),
-  description: z.string().optional(),
+  description: z.string().nullish(),
   position: GeoPointZ,
-  images: z.array(z.string()).optional(),
-  additionalInfo: z.record(z.string(), z.any()).optional(),
+  images: z.array(z.string()).nullish(),
+  additionalInfo: z.record(z.string(), z.any()).nullish(),
 });
 
 

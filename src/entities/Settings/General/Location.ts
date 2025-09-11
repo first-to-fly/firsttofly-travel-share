@@ -18,7 +18,7 @@ export enum LocationEvents {
 export const LocationZ = EntityZ.extend({
   entityType: z.literal(EntityType.LOCATION),
   name: z.string(),
-  description: z.string().optional(),
+  description: z.string().nullish(),
   type: z.nativeEnum(LocationType),
 });
 

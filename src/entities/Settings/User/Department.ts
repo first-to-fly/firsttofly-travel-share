@@ -15,7 +15,7 @@ export const DepartmentZ = EntityZ.extend({
 
   name: z.string().min(1, "Department name is required"),
   locationOID: EntityOIDZ,
-  parentDepartmentOID: EntityOIDZ.optional(),
+  parentDepartmentOID: EntityOIDZ.nullish(),
   code: z.string(),
   isActive: z.boolean().default(true),
 });

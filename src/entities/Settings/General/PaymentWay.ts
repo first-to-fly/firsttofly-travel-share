@@ -34,12 +34,12 @@ export const CreditCardBankZ = z.nativeEnum(CreditCardBank);
 // Unified Payment Configuration (for all payment methods)
 export const PaymentConfigZ = z.object({
   // For CREDIT_CARD methods only
-  bank: CreditCardBankZ.optional(),
+  bank: CreditCardBankZ.nullish(),
   // Core account configuration (required for all)
   accountCodeOID: z.string(),
-  txnRateAccountCodeOID: z.string().optional(),
-  txnRatePercent: z.number().min(0).max(100).optional(),
-  txnRateAmount: z.number().min(0).optional(),
+  txnRateAccountCodeOID: z.string().nullish(),
+  txnRatePercent: z.number().min(0).max(100).nullish(),
+  txnRateAmount: z.number().min(0).nullish(),
 });
 
 export type PaymentConfig = z.infer<typeof PaymentConfigZ>;
@@ -53,8 +53,8 @@ export const PaymentWayZ = EntityZ.extend({
   mode: PaymentModeZ,
 
   // UI and Display
-  icon: z.string().optional(),
-  remarks: z.string().optional(),
+  icon: z.string().nullish(),
+  remarks: z.string().nullish(),
 
   // Status
   status: PaymentWayStatusZ.default(PaymentWayStatus.ACTIVE),
@@ -70,8 +70,8 @@ export const PaymentWayZ = EntityZ.extend({
   createdAt: DateISOStringZ,
   updatedAt: DateISOStringZ,
   createdBy: z.string(),
-  updatedBy: z.string().optional(),
-  deletedAt: DateISOStringZ.optional(),
+  updatedBy: z.string().nullish(),
+  deletedAt: DateISOStringZ.nullish(),
 });
 
 export type PaymentWay = z.infer<typeof PaymentWayZ>;

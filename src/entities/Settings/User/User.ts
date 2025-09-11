@@ -23,29 +23,29 @@ export const UserZ = EntityZ.extend({
   lastName: z.string(),
   preferredName: z.string(),
   dob: DateISOStringZ,
-  otherNames: MultiLangRecordZ(z.string()).optional(),
+  otherNames: MultiLangRecordZ(z.string()).nullish(),
   mobile: z.number(),
-  altMobile: z.number().optional(),
-  personalEmail: z.string().optional(),
-  images: z.array(z.string()).optional(),
-  avatar: z.string().optional(),
+  altMobile: z.number().nullish(),
+  personalEmail: z.string().nullish(),
+  images: z.array(z.string()).nullish(),
+  avatar: z.string().nullish(),
   emergencyContact: z.object({
     name: z.string(),
-    relationship: z.string().optional(),
+    relationship: z.string().nullish(),
     mobile: z.number(),
-    email: z.string().optional(),
-  }).optional(),
-  description: z.string().optional(),
+    email: z.string().nullish(),
+  }).nullish(),
+  description: z.string().nullish(),
   salutation: z.string(),
 
   // Tenant specific properties
   designationOIDs: z.array(EntityOIDZ),
-  departmentOIDs: z.array(EntityOIDZ).optional(),
-  roleOIDs: z.array(EntityOIDZ).optional(),
+  departmentOIDs: z.array(EntityOIDZ).nullish(),
+  roleOIDs: z.array(EntityOIDZ).nullish(),
 
   isActive: z.boolean().default(true),
   staffType: z.string().default("permanent"),
-  buddyOID: EntityOIDZ.optional(),
+  buddyOID: EntityOIDZ.nullish(),
 
   tourLeadingSkills: z.array(z.object({
     sectorOID: EntityOIDZ,
@@ -54,13 +54,13 @@ export const UserZ = EntityZ.extend({
       name: "Tour leading skills start year",
       max: new Date().getFullYear(),
     }),
-  })).optional(),
+  })).nullish(),
 
   languageSkills: z.array(z.object({
     termOID: EntityOIDZ,
-  })).optional(),
+  })).nullish(),
 
-  documentOIDs: z.array(EntityOIDZ).optional(),
+  documentOIDs: z.array(EntityOIDZ).nullish(),
 });
 
 

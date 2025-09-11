@@ -13,29 +13,29 @@ export enum UserMessageType {
 export const UserMessageBodyParamZ = z.object({
   key: z.string(),
   value: z.object({
-    oid: z.string().optional(),
-    text: z.string().optional(),
-    link: z.string().optional(),
+    oid: z.string().nullish(),
+    text: z.string().nullish(),
+    link: z.string().nullish(),
     meta: z.array(z.object({
       key: z.string(),
       value: z.string(),
-    })).optional(),
+    })).nullish(),
   }),
 });
 
 export const UserMessageZ = EntityZ.extend({
-  userMessageOID: EntityOIDZ.optional(),
-  tenantOID: EntityOIDZ.optional(),
-  userOID: EntityOIDZ.optional(),
+  userMessageOID: EntityOIDZ.nullish(),
+  tenantOID: EntityOIDZ.nullish(),
+  userOID: EntityOIDZ.nullish(),
   title: z.string(),
   type: z.nativeEnum(UserMessageType),
   key: z.string(),
   bodyFormat: z.string(), // Template string like "{{user}} has assigned {{task}} to you"
-  bodyParams: z.array(UserMessageBodyParamZ).optional(),
+  bodyParams: z.array(UserMessageBodyParamZ).nullish(),
   isRead: z.boolean().default(false),
   isResolved: z.boolean().default(false),
-  metadata: z.record(z.unknown()).optional(),
-  expiresAt: z.string().optional(),
+  metadata: z.record(z.unknown()).nullish(),
+  expiresAt: z.string().nullish(),
 });
 
 export type UserMessage = z.infer<typeof UserMessageZ>;

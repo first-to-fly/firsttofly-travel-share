@@ -61,7 +61,7 @@ export const CostingItemZ = EntityZ.extend({
   applyToPackageType: z.nativeEnum(PackageType),
   applyToOccupancyType: z.nativeEnum(OccupancyType),
 
-  remarks: z.string().optional(),
+  remarks: z.string().nullish(),
   isActive: z.boolean(),
 });
 

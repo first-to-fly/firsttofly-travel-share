@@ -23,7 +23,7 @@ export const TermConditionZ = EntityZ.extend({
 
   name: z.string(),
 
-  pdf: NamedURLZ.optional(),
+  pdf: NamedURLZ.nullish(),
 
   isCustomized: z.boolean(),
   isPrint: z.boolean(),
@@ -31,12 +31,12 @@ export const TermConditionZ = EntityZ.extend({
   type: z.nativeEnum(TermConditionType).default(TermConditionType.TERM_CONDITION),
 
   isActive: z.boolean(),
-  description: z.string().optional(),
-  remarks: z.string().optional(),
+  description: z.string().nullish(),
+  remarks: z.string().nullish(),
 
   coveredEntityOIDs: z.array(EntityOIDZ), // OIDs of Sectors / SectorGroups / GroupTourProducts
 
-  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
+  productTypes: z.array(z.nativeEnum(ProductType)).nullish(),
 });
 
 export type TermCondition = z.infer<typeof TermConditionZ>;
