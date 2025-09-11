@@ -2,6 +2,7 @@
 import { z } from "zod";
 
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
+import { ProductPlatform, ProductPlatformZ } from "../../types/platform";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { BaseBookingCustomerMetadataZ, GTBTransferMetadataZ } from "./BookingMetadata";
 
@@ -14,22 +15,24 @@ export type GroupTourBookingMetadata = z.infer<typeof GroupTourBookingMetadataZ>
 export const GroupTourBookingZ = EntityZ.extend({
 
   tourDepartureOID: EntityOIDZ,
-  departmentOID: EntityOIDZ.optional(),
-  stationCodeOID: EntityOIDZ.optional(), // Added station code OID
-  tcpBookingOID: EntityOIDZ.optional(),
+  departmentOID: EntityOIDZ.nullish(),
+  stationCodeOID: EntityOIDZ.nullish(), // Added station code OID
+  tcpBookingOID: EntityOIDZ.nullish(),
 
   bookingReference: z.string().max(50),
   paymentStatus: BookingPaymentStatusZ.default(BookingPaymentStatus.UNPAID),
   bookingStatus: BookingStatusZ.default(BookingStatus.IN_PROGRESS),
-  totalAmount: z.number().optional(),
-  receivedAmount: z.number().optional(),
-  fullPaymentDueDate: z.string().nullable().optional(),
-  metadata: GroupTourBookingMetadataZ.optional(),
-  specialInstructions: z.array(z.string()).optional(),
+  totalAmount: z.number().nullish(),
+  receivedAmount: z.number().nullish(),
+  fullPaymentDueDate: z.string().nullish(),
+  expectedCancelTime: z.string().datetime().nullish(),
+  platform: ProductPlatformZ.default(ProductPlatform.B2C),
+  metadata: GroupTourBookingMetadataZ.nullish(),
+  specialInstructions: z.array(z.string()).nullish(),
   overwriteTax: z.object({
     scheme: z.string(),
     rate: z.number().nonnegative(),
-  }).optional(),
+  }).nullish(),
 
   // Owner information
   ownerOIDs: z.array(EntityOIDZ).optional(),

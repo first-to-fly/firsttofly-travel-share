@@ -13,27 +13,27 @@ export enum PaymentType {
 }
 
 export const PaymentInfoZ = z.object({
-  notes: z.string().optional(),
-  referenceNumber: z.string().optional(),
-}).optional();
+  notes: z.string().nullish(),
+  referenceNumber: z.string().nullish(),
+}).nullish();
 
 export const SupplierPaymentZ = EntityZ.extend({
   supplierOID: EntityOIDZ,
   paymentType: z.nativeEnum(PaymentType),
-  bankName: z.string().optional(),
-  accountNumber: z.string().optional(),
-  accountName: z.string().optional(),
-  bankCode: z.string().optional(),
-  routingNumber: z.string().optional(),
-  swiftCode: z.string().optional(),
-  iban: z.string().optional(),
-  currency: z.string().optional(),
-  cnapCode: z.string().optional(),
-  bicCode: z.string().optional(),
-  branchNo: z.string().optional(),
-  branch: z.string().optional(),
-  beneficiary: z.string().optional(),
-  remarks: z.string().optional(),
+  bankName: z.string().nullish(),
+  accountNumber: z.string().nullish(),
+  accountName: z.string().nullish(),
+  bankCode: z.string().nullish(),
+  routingNumber: z.string().nullish(),
+  swiftCode: z.string().nullish(),
+  iban: z.string().nullish(),
+  currency: z.string().nullish(),
+  cnapCode: z.string().nullish(),
+  bicCode: z.string().nullish(),
+  branchNo: z.string().nullish(),
+  branch: z.string().nullish(),
+  beneficiary: z.string().nullish(),
+  remarks: z.string().nullish(),
 });
 
 export type SupplierPayment = z.infer<typeof SupplierPaymentZ>;

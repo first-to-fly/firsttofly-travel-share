@@ -184,10 +184,10 @@ export const ReferenceCodeZ = EntityZ.extend({
   template: z.string(),
   machineCode: z.nativeEnum(ReferenceMachineCode),
 
-  availableComponents: z.array(z.string()).optional(),
+  availableComponents: z.array(z.string()).nullish(),
 
   // Metadata field for flexible additional data
-  metadata: z.record(z.string(), z.unknown()).optional(),
+  metadata: z.record(z.string(), z.unknown()).nullish(),
 });
 
 

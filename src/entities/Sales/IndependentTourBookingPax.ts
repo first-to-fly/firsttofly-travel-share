@@ -9,9 +9,9 @@ export const IndependentTourBookingPaxZ = EntityZ.extend({
   independentTourBookingRoomOID: EntityOIDZ,
 
   type: BookingPaxTypeZ,
-  personalDetails: BookingPaxPersonalDetailsZ.optional(),
-  mealPreference: z.string().optional(),
-  documentOIDs: z.array(EntityOIDZ).optional(),
+  personalDetails: BookingPaxPersonalDetailsZ.nullish(),
+  mealPreference: z.string().nullish(),
+  documentOIDs: z.array(EntityOIDZ).nullish(),
 });
 
 export type IndependentTourBookingPax = z.infer<typeof IndependentTourBookingPaxZ>;

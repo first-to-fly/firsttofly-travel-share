@@ -14,10 +14,10 @@ export const DepositZ = EntityZ.extend({
   name: z.string(),
   minDeposit: z.number(),
   type: z.nativeEnum(DepositType),
-  remarks: z.string().optional(),
+  remarks: z.string().nullish(),
 
   coveredEntityOIDs: z.array(EntityOIDZ),
-  productTypes: z.array(z.nativeEnum(ProductType)).optional(),
+  productTypes: z.array(z.nativeEnum(ProductType)).nullish(),
 
   isActive: z.boolean().default(true),
 });

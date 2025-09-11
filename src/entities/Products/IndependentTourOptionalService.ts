@@ -15,7 +15,7 @@ export enum IndependentTourOptionalServiceEvents {
 const CostValueZ = z.object({
   currency: z.string(),
   amount: z.number(),
-  tax: z.number().optional(),
+  tax: z.number().nullish(),
 });
 
 // Price value structure similar to GroupTourPricing
