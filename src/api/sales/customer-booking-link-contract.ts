@@ -25,19 +25,82 @@ const CustomerLinkAccessRequestZ = z.object({
 });
 export type CustomerLinkAccessRequest = z.infer<typeof CustomerLinkAccessRequestZ>;
 
+// Customer booking response aligned with CD entities structure
+const CustomerBookingPaxSnapshotZ = z.object({
+  oid: z.string(),
+  type: z.string(),
+  personalDetails: z.object({
+    title: z.string().optional(),
+    firstName: z.string(),
+    lastName: z.string(),
+    dateOfBirth: z.string().optional(),
+    nationality: z.string().optional(),
+    passportNumber: z.string().optional(),
+    passportExpiry: z.string().optional(),
+    specialRequirements: z.string().optional(),
+  }).optional(),
+  mealPreference: z.string().optional(),
+});
+
+const CustomerBookingRoomSnapshotZ = z.object({
+  oid: z.string(),
+  roomNumber: z.string().nullable(),
+  status: z.string(),
+  notes: z.string().optional(),
+  paxes: z.array(CustomerBookingPaxSnapshotZ),
+});
+
+const CustomerProductSnapshotZ = z.object({
+  oid: z.string(),
+  name: z.string(),
+  code: z.string().optional(),
+  description: z.string().optional(),
+});
+
+const CustomerTenantCurrencySnapshotZ = z.object({
+  homeCurrency: z.string(),
+  defaultTaxConfig: z.object({
+    scheme: z.string(),
+    rate: z.number(),
+  }).nullable(),
+});
+
+const CustomerBookingSnapshotZ = z.object({
+  productSnapshot: CustomerProductSnapshotZ.optional(),
+  roomsSnapshot: z.array(CustomerBookingRoomSnapshotZ),
+  paxSnapshot: z.array(CustomerBookingPaxSnapshotZ),
+  tenantCurrencySnapshot: CustomerTenantCurrencySnapshotZ,
+  snapshotTimestamp: z.string(),
+});
+
+const CustomerBookingMetadataZ = z.object({
+  customer: z.object({
+    title: z.string().optional(),
+    firstName: z.string(),
+    lastName: z.string(),
+    email: z.string().email().optional(),
+    phone: z.string().optional(),
+  }),
+});
+
 const CustomerBookingDataResponseZ = z.object({
+  oid: z.string(),
+  tenantOID: z.string(),
   bookingReference: z.string(),
-  totalAmount: z.number().optional(),
-  receivedAmount: z.number().optional(),
   paymentStatus: z.string(),
   bookingStatus: z.string(),
-  customerEmail: z.string().email(),
-  travelers: z.array(z.object({
-    name: z.string(),
-    type: z.string(),
-    personalDetails: z.object({}).passthrough().optional(),
-  })).optional(),
-  summary: z.object({}).passthrough().optional(),
+  totalAmount: z.number(),
+  receivedAmount: z.number(),
+  fullPaymentDueDate: z.string().nullable(),
+  travelStartDate: z.string().optional().nullable(),
+  travelEndDate: z.string().optional().nullable(),
+  specialInstructions: z.array(z.string()).nullable(),
+  liveRoomCount: z.number(),
+  livePaxCount: z.number(),
+  snapshot: CustomerBookingSnapshotZ.nullable(),
+  metadata: CustomerBookingMetadataZ.nullable(),
+  createdAt: z.string(),
+  updatedAt: z.string(),
 });
 export type CustomerBookingDataResponse = z.infer<typeof CustomerBookingDataResponseZ>;
 
