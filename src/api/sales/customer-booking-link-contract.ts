@@ -12,17 +12,12 @@ const basePath = "/api/sales/customer-booking-links";
 const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
   tenantOID: true,
   bookingOID: true,
-  expiresAt: true,
+  customerEmail: true,
 }).extend({
   departmentOID: EntityOIDZ.optional(),
 });
 
-const UpdateCustomerBookingLinkZ = CreateCustomerBookingLinkBodyZ.omit({
-  tenantOID: true,
-}).partial();
-
 export type CreateCustomerBookingLink = z.infer<typeof CreateCustomerBookingLinkBodyZ>;
-export type UpdateCustomerBookingLink = z.infer<typeof UpdateCustomerBookingLinkZ>;
 
 // --- Customer Access Schemas ---
 const CustomerLinkAccessRequestZ = z.object({
@@ -49,65 +44,39 @@ export type CustomerBookingDataResponse = z.infer<typeof CustomerBookingDataResp
 // --- Generate Response Schema ---
 const GenerateCustomerLinkResponseZ = z.object({
   linkOID: EntityOIDZ,
-  secureToken: z.string().min(32).max(256),
-  linkUrl: z.string().url(),
-  qrCodeDataUrl: z.string().regex(/^data:image\/(png|svg\+xml);base64,/).or(z.string().url()),
+  linkUrl: z.string().url(), // URL with linkOID, not secure token
   expiresAt: z.string().optional(),
 });
 export type GenerateCustomerLinkResponse = z.infer<typeof GenerateCustomerLinkResponseZ>;
 
 
 export const customerBookingLinkContract = initContract().router({
-  // #region STANDARD CRUD ENDPOINTS
   getCustomerBookingLinks: {
     summary: "Get customer booking links",
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOID: EntityOIDZ,
+      tenantOID: z.string(),
     }).passthrough(),
     responses: {
       200: z.object({
-        oids: z.array(EntityOIDZ),
+        oids: z.array(z.string()),
       }),
     },
   },
 
-  createCustomerBookingLink: {
-    summary: "Create a new customer booking link",
-    method: "POST",
-    path: basePath,
-    body: CreateCustomerBookingLinkBodyZ,
-    responses: {
-      200: EntityOIDZ,
-    },
-  },
-
-  updateCustomerBookingLinks: {
-    summary: "Update multiple existing customer booking links",
-    method: "POST",
-    path: `${basePath}/batch-update`,
-    body: z.record(
-      EntityOIDZ.describe("OID of CustomerBookingLink to update"),
-      UpdateCustomerBookingLinkZ,
-    ),
-    responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of updated CustomerBookingLinks")),
-    },
-  },
 
   deleteCustomerBookingLinks: {
     summary: "Delete multiple customer booking links",
     method: "POST",
     path: `${basePath}/batch-delete`,
     body: z.object({
-      customerBookingLinkOIDs: z.array(EntityOIDZ.describe("OIDs of CustomerBookingLinks to delete")),
+      customerBookingLinkOIDs: z.array(z.string()),
     }),
     responses: {
       200: z.boolean(),
     },
   },
-  // #endregion
 
   // #region SPECIALIZED STAFF ENDPOINTS
   generateCustomerLink: {
@@ -158,42 +127,23 @@ export const customerBookingLinkContract = initContract().router({
   // #endregion
 
   // #region CUSTOMER ACCESS ENDPOINTS
-  verifyCustomerIdentity: {
-    summary: "Verify customer email against booking data",
-    method: "POST",
-    path: `${basePath}/access/:secureToken/verify`,
-    pathParams: z.object({ secureToken: z.string() }),
-    body: CustomerLinkAccessRequestZ,
-    responses: {
-      200: z.object({
-        verified: z.boolean(),
-        message: z.string(),
-      }),
-      401: z.object({ message: z.string() }),
-      403: z.object({ message: z.string() }),
-      404: z.object({ message: z.string() }),
-      410: z.object({ message: z.string() }),
-    },
-  },
   accessBookingData: {
     summary: "Retrieve booking data after verification",
-    method: "GET",
-    path: `${basePath}/access/:secureToken/booking`,
-    pathParams: z.object({ secureToken: z.string() }),
+    method: "POST",
+    path: `${basePath}/access/booking`,
+    body: z.object({
+      secureToken: z.string(),
+    }),
     responses: {
       200: CustomerBookingDataResponseZ,
-      401: z.object({ message: z.string() }),
-      403: z.object({ message: z.string() }),
-      404: z.object({ message: z.string() }),
-      410: z.object({ message: z.string() }),
     },
   },
   requestOtpForAccess: {
-    summary: "Request OTP for customer verification",
+    summary: "Request OTP for customer verification using link OID",
     method: "POST",
-    path: `${basePath}/access/:secureToken/request-otp`,
-    pathParams: z.object({ secureToken: z.string() }),
+    path: `${basePath}/access/request-otp`,
     body: z.object({
+      linkOID: EntityOIDZ, // Public link OID, not secure token
       email: z.string().email(),
     }),
     responses: {
@@ -201,18 +151,14 @@ export const customerBookingLinkContract = initContract().router({
         otpSent: z.boolean(),
         message: z.string(),
       }),
-      401: z.object({ message: z.string() }),
-      403: z.object({ message: z.string() }),
-      404: z.object({ message: z.string() }),
-      410: z.object({ message: z.string() }),
     },
   },
   validateOtpForAccess: {
-    summary: "Validate OTP and grant access to booking",
+    summary: "Validate OTP and receive secure token for booking access",
     method: "POST",
-    path: `${basePath}/access/:secureToken/validate-otp`,
-    pathParams: z.object({ secureToken: z.string() }),
+    path: `${basePath}/access/validate-otp`,
     body: z.object({
+      linkOID: EntityOIDZ, // Public link OID, not secure token
       email: z.string().email(),
       otpCode: z.string(),
     }),
@@ -220,33 +166,9 @@ export const customerBookingLinkContract = initContract().router({
       200: z.object({
         verified: z.boolean(),
         message: z.string(),
+        secureToken: z.string().optional(), // Return secure token on successful validation
       }),
-      401: z.object({ message: z.string() }),
-      403: z.object({ message: z.string() }),
-      404: z.object({ message: z.string() }),
-      410: z.object({ message: z.string() }),
     },
   },
   // #endregion
-});
-
-// Export separate contracts for staff and public endpoints
-export const customerBookingLinkStaffContract = initContract().router({
-  // Standard CRUD endpoints
-  getCustomerBookingLinks: customerBookingLinkContract.getCustomerBookingLinks,
-  createCustomerBookingLink: customerBookingLinkContract.createCustomerBookingLink,
-  updateCustomerBookingLinks: customerBookingLinkContract.updateCustomerBookingLinks,
-  deleteCustomerBookingLinks: customerBookingLinkContract.deleteCustomerBookingLinks,
-
-  // Specialized endpoints
-  generateCustomerLink: customerBookingLinkContract.generateCustomerLink,
-  getCustomerLinksByBooking: customerBookingLinkContract.getCustomerLinksByBooking,
-  regenerateCustomerLink: customerBookingLinkContract.regenerateCustomerLink,
-});
-
-export const customerBookingLinkPublicContract = initContract().router({
-  verifyCustomerIdentity: customerBookingLinkContract.verifyCustomerIdentity,
-  accessBookingData: customerBookingLinkContract.accessBookingData,
-  requestOtpForAccess: customerBookingLinkContract.requestOtpForAccess,
-  validateOtpForAccess: customerBookingLinkContract.validateOtpForAccess,
 });
