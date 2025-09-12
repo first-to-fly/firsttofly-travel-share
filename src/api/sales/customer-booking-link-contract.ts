@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
 import { CustomerBookingLinkZ } from "../../entities/Sales/CustomerBookingLink";
+// CD entities are not available in this submodule, so we'll just use the contract structure directly
 
 
 const basePath = "/api/sales/customer-booking-links";
@@ -25,83 +26,78 @@ const CustomerLinkAccessRequestZ = z.object({
 });
 export type CustomerLinkAccessRequest = z.infer<typeof CustomerLinkAccessRequestZ>;
 
-// Customer booking response aligned with CD entities structure
-const CustomerBookingPaxSnapshotZ = z.object({
-  oid: z.string(),
-  type: z.string(),
-  personalDetails: z.object({
-    title: z.string().optional(),
-    firstName: z.string(),
-    lastName: z.string(),
-    dateOfBirth: z.string().optional(),
-    nationality: z.string().optional(),
-    passportNumber: z.string().optional(),
-    passportExpiry: z.string().optional(),
-    specialRequirements: z.string().optional(),
-  }).optional(),
-  mealPreference: z.string().optional(),
-});
-
-const CustomerBookingRoomSnapshotZ = z.object({
-  oid: z.string(),
-  roomNumber: z.string().nullable(),
-  status: z.string(),
-  notes: z.string().optional(),
-  paxes: z.array(CustomerBookingPaxSnapshotZ),
-});
-
-const CustomerProductSnapshotZ = z.object({
-  oid: z.string(),
-  name: z.string(),
-  code: z.string().optional(),
-  description: z.string().optional(),
-});
-
-const CustomerTenantCurrencySnapshotZ = z.object({
-  homeCurrency: z.string(),
-  defaultTaxConfig: z.object({
-    scheme: z.string(),
-    rate: z.number(),
-  }).nullable(),
-});
-
-const CustomerBookingSnapshotZ = z.object({
-  productSnapshot: CustomerProductSnapshotZ.optional(),
-  roomsSnapshot: z.array(CustomerBookingRoomSnapshotZ),
-  paxSnapshot: z.array(CustomerBookingPaxSnapshotZ),
-  tenantCurrencySnapshot: CustomerTenantCurrencySnapshotZ,
-  snapshotTimestamp: z.string(),
-});
-
-const CustomerBookingMetadataZ = z.object({
-  customer: z.object({
-    title: z.string().optional(),
-    firstName: z.string(),
-    lastName: z.string(),
-    email: z.string().email().optional(),
-    phone: z.string().optional(),
+// Customer booking response using exact CD entity structure
+// We create a union type that matches both GroupTour and IndependentTour booking structures
+const CustomerBookingDataResponseZ = z.union([
+  // Group Tour Booking Response (based on FTFGroupTourBooking)
+  z.object({
+    oid: z.string(),
+    tenantOID: z.string(),
+    tourDepartureOID: z.string(),
+    groupTourPricingOID: z.string(),
+    groupTourProductOID: z.string(),
+    itineraryOID: z.string(),
+    sectorOIDs: z.array(z.string()),
+    stationCodeOID: z.string().nullable(),
+    tcpBookingOID: z.string().nullable(),
+    bookingReference: z.string(),
+    paymentStatus: z.string(), // BookingPaymentStatus enum
+    bookingStatus: z.string(), // BookingStatus enum
+    totalAmount: z.number(),
+    receivedAmount: z.number(),
+    fullPaymentDueDate: z.string().nullable(),
+    snapshot: z.record(z.unknown()).nullable(), // GroupTourBookingSnapshotData
+    metadata: z.record(z.unknown()).nullable(),
+    specialInstructions: z.array(z.string()).nullable(),
+    overwriteTax: z.object({
+      scheme: z.string(),
+      rate: z.number(),
+    }).nullable(),
+    transactionOIDs: z.array(z.string()).nullable(),
+    paymentOrderOID: z.string().nullable(),
+    liveRoomCount: z.number(),
+    livePaxCount: z.number(),
+    latestApprovalRequestOID: z.string().nullable(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    updatedBy: z.string().nullable(),
   }),
-});
+  // Independent Tour Booking Response (based on FTFIndependentTourBooking)
+  z.object({
+    oid: z.string(),
+    tenantOID: z.string(),
+    independentTourProductOID: z.string(),
+    independentTourAccommodationOID: z.string().nullable(),
+    stationCodeOID: z.string().nullable(),
+    tcpBookingOID: z.string().nullable(),
+    bookingReference: z.string(),
+    paymentStatus: z.string(), // BookingPaymentStatus enum
+    bookingStatus: z.string(), // BookingStatus enum
+    totalAmount: z.number(),
+    receivedAmount: z.number(),
+    fullPaymentDueDate: z.string().nullable(),
+    travelStartDate: z.string().nullable(),
+    travelEndDate: z.string().nullable(),
+    snapshot: z.record(z.unknown()).nullable(), // IndependentTourBookingSnapshotData
+    metadata: z.record(z.unknown()).nullable(),
+    specialInstructions: z.array(z.string()).nullable(),
+    overwriteTax: z.object({
+      scheme: z.string(),
+      rate: z.number(),
+    }).nullable(),
+    transactionOIDs: z.array(z.string()).nullable(),
+    paymentOrderOID: z.string().nullable(),
+    liveRoomCount: z.number(),
+    livePaxCount: z.number(),
+    liveAddonCount: z.number(),
+    latestApprovalRequestOID: z.string().nullable(),
+    createdAt: z.string(),
+    updatedAt: z.string(),
+    updatedBy: z.string().nullable(),
+  }),
+]);
 
-const CustomerBookingDataResponseZ = z.object({
-  oid: z.string(),
-  tenantOID: z.string(),
-  bookingReference: z.string(),
-  paymentStatus: z.string(),
-  bookingStatus: z.string(),
-  totalAmount: z.number(),
-  receivedAmount: z.number(),
-  fullPaymentDueDate: z.string().nullable(),
-  travelStartDate: z.string().optional().nullable(),
-  travelEndDate: z.string().optional().nullable(),
-  specialInstructions: z.array(z.string()).nullable(),
-  liveRoomCount: z.number(),
-  livePaxCount: z.number(),
-  snapshot: CustomerBookingSnapshotZ.nullable(),
-  metadata: CustomerBookingMetadataZ.nullable(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-});
+// Type inferred from the Zod schema
 export type CustomerBookingDataResponse = z.infer<typeof CustomerBookingDataResponseZ>;
 
 // --- Generate Response Schema ---
