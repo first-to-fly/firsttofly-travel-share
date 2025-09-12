@@ -16,13 +16,13 @@ const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
 }).extend({
   departmentOID: EntityOIDZ.optional(),
 });
-export type CreateCustomerBookingLinkBody = z.infer<typeof CreateCustomerBookingLinkBodyZ>;
 
-const UpdateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
-  isActive: true,
-  expiresAt: true,
+const UpdateCustomerBookingLinkZ = CreateCustomerBookingLinkBodyZ.omit({
+  tenantOID: true,
 }).partial();
-export type UpdateCustomerBookingLinkBody = z.infer<typeof UpdateCustomerBookingLinkBodyZ>;
+
+export type CreateCustomerBookingLink = z.infer<typeof CreateCustomerBookingLinkBodyZ>;
+export type UpdateCustomerBookingLink = z.infer<typeof UpdateCustomerBookingLinkZ>;
 
 // --- Customer Access Schemas ---
 const CustomerLinkAccessRequestZ = z.object({
@@ -58,17 +58,68 @@ export type GenerateCustomerLinkResponse = z.infer<typeof GenerateCustomerLinkRe
 
 
 export const customerBookingLinkContract = initContract().router({
-  // #region STAFF ENDPOINTS
+  // #region STANDARD CRUD ENDPOINTS
+  getCustomerBookingLinks: {
+    summary: "Get customer booking links",
+    method: "GET",
+    path: basePath,
+    query: z.object({
+      tenantOID: EntityOIDZ,
+    }).passthrough(),
+    responses: {
+      200: z.object({
+        oids: z.array(EntityOIDZ),
+      }),
+    },
+  },
+
+  createCustomerBookingLink: {
+    summary: "Create a new customer booking link",
+    method: "POST",
+    path: basePath,
+    body: CreateCustomerBookingLinkBodyZ,
+    responses: {
+      200: EntityOIDZ,
+    },
+  },
+
+  updateCustomerBookingLinks: {
+    summary: "Update multiple existing customer booking links",
+    method: "POST",
+    path: `${basePath}/batch-update`,
+    body: z.record(
+      EntityOIDZ.describe("OID of CustomerBookingLink to update"),
+      UpdateCustomerBookingLinkZ,
+    ),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of updated CustomerBookingLinks")),
+    },
+  },
+
+  deleteCustomerBookingLinks: {
+    summary: "Delete multiple customer booking links",
+    method: "POST",
+    path: `${basePath}/batch-delete`,
+    body: z.object({
+      customerBookingLinkOIDs: z.array(EntityOIDZ.describe("OIDs of CustomerBookingLinks to delete")),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  // #endregion
+
+  // #region SPECIALIZED STAFF ENDPOINTS
   generateCustomerLink: {
     summary: "Generate a new customer booking link with QR code",
     method: "POST",
-    path: basePath,
+    path: `${basePath}/generate`,
     body: CreateCustomerBookingLinkBodyZ,
     responses: {
       201: GenerateCustomerLinkResponseZ,
     },
   },
-  getCustomerLinks: {
+  getCustomerLinksByBooking: {
     summary: "Get customer links for a booking",
     method: "GET",
     path: `${basePath}/booking/:bookingOID`,
@@ -90,33 +141,6 @@ export const customerBookingLinkContract = initContract().router({
         })),
         nextCursor: z.string().nullable(),
       }),
-    },
-  },
-  updateCustomerLink: {
-    summary: "Update multiple customer links",
-    method: "PUT",
-    path: `${basePath}/batch-update`,
-    body: z.object({
-      tenantOID: EntityOIDZ,
-      updates: z.record(
-        EntityOIDZ.describe("OID of CustomerBookingLink to update"),
-        UpdateCustomerBookingLinkBodyZ,
-      ),
-    }),
-    responses: {
-      200: z.array(EntityOIDZ.describe("OIDs of updated CustomerBookingLinks")),
-    },
-  },
-  deleteCustomerLinks: {
-    summary: "Delete multiple customer links",
-    method: "POST",
-    path: `${basePath}/batch-delete`,
-    body: z.object({
-      tenantOID: EntityOIDZ,
-      linkOIDs: z.array(EntityOIDZ.describe("OIDs of CustomerBookingLinks to delete")),
-    }),
-    responses: {
-      200: z.boolean(),
     },
   },
   regenerateCustomerLink: {
@@ -208,10 +232,15 @@ export const customerBookingLinkContract = initContract().router({
 
 // Export separate contracts for staff and public endpoints
 export const customerBookingLinkStaffContract = initContract().router({
+  // Standard CRUD endpoints
+  getCustomerBookingLinks: customerBookingLinkContract.getCustomerBookingLinks,
+  createCustomerBookingLink: customerBookingLinkContract.createCustomerBookingLink,
+  updateCustomerBookingLinks: customerBookingLinkContract.updateCustomerBookingLinks,
+  deleteCustomerBookingLinks: customerBookingLinkContract.deleteCustomerBookingLinks,
+
+  // Specialized endpoints
   generateCustomerLink: customerBookingLinkContract.generateCustomerLink,
-  getCustomerLinks: customerBookingLinkContract.getCustomerLinks,
-  updateCustomerLink: customerBookingLinkContract.updateCustomerLink,
-  deleteCustomerLinks: customerBookingLinkContract.deleteCustomerLinks,
+  getCustomerLinksByBooking: customerBookingLinkContract.getCustomerLinksByBooking,
   regenerateCustomerLink: customerBookingLinkContract.regenerateCustomerLink,
 });
 
