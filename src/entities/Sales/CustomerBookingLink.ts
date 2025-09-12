@@ -1,14 +1,12 @@
 // simple-import-sort
 import { z } from "zod";
 
-import { BookingTypeZ } from "../../enums/BookingTypes";
 import { DateISOStringZ, EntityOIDZ, EntityZ } from "../entity";
 
 
 export const CustomerBookingLinkZ = EntityZ.extend({
 
   bookingOID: EntityOIDZ,
-  bookingType: BookingTypeZ,
   secureToken: z.string().min(32).max(256),
   expiresAt: DateISOStringZ.optional(),
   isActive: z.boolean().default(true),

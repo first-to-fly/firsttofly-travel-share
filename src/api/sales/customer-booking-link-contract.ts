@@ -4,7 +4,6 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
 import { CustomerBookingLinkZ } from "../../entities/Sales/CustomerBookingLink";
-import { BookingTypeZ } from "../../enums/BookingTypes";
 
 
 const basePath = "/api/sales/customer-booking-links";
@@ -13,7 +12,6 @@ const basePath = "/api/sales/customer-booking-links";
 const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
   tenantOID: true,
   bookingOID: true,
-  bookingType: true,
   expiresAt: true,
 }).extend({
   departmentOID: EntityOIDZ.optional(),
@@ -34,7 +32,6 @@ export type CustomerLinkAccessRequest = z.infer<typeof CustomerLinkAccessRequest
 
 const CustomerBookingDataResponseZ = z.object({
   bookingReference: z.string(),
-  bookingType: BookingTypeZ,
   totalAmount: z.number().optional(),
   receivedAmount: z.number().optional(),
   paymentStatus: z.string(),
