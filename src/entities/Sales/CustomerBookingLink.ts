@@ -11,9 +11,9 @@ export const CustomerBookingLinkZ = EntityZ.extend({
   expiresAt: DateISOStringZ.optional(),
   isActive: z.boolean().default(true),
   accessCount: z.number().default(0), // Successful accesses
-  failedAccessCount: z.number().default(0), // Failed verification attempts  
+  failedAccessCount: z.number().default(0), // Failed verification attempts
   lastAccessedAt: DateISOStringZ.optional(),
-  customerEmail: z.string().email().optional(),
+  customerEmail: z.string().email(),
   isVerified: z.boolean().default(false),
   verifiedAt: DateISOStringZ.optional(),
   metadata: z.record(z.unknown()).optional(),
