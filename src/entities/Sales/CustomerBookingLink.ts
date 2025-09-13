@@ -8,10 +8,10 @@ export const CustomerBookingLinkZ = EntityZ.extend({
 
   bookingOID: EntityOIDZ,
   secureToken: z.string().min(32).max(256),
-  expiresAt: DateISOStringZ.optional(),
+  expiresAt: DateISOStringZ,
   isActive: z.boolean().default(true),
-  accessCount: z.number().default(0), // Successful accesses
-  failedAccessCount: z.number().default(0), // Failed verification attempts
+  accessCount: z.number().default(0),
+  failedAccessCount: z.number().default(0),
   lastAccessedAt: DateISOStringZ.optional(),
   customerEmail: z.string().email(),
   isVerified: z.boolean().default(false),
