@@ -108,7 +108,7 @@ export const customerBookingLinkContract = initContract().router({
     path: `${basePath}/create`,
     body: CreateCustomerBookingLinkBodyZ,
     responses: {
-      201: GenerateCustomerLinkResponseZ,
+      200: z.string(),
     },
   },
   getCustomerLinksByBooking: {
@@ -118,20 +118,10 @@ export const customerBookingLinkContract = initContract().router({
     body: z.object({
       bookingOID: EntityOIDZ,
       tenantOID: EntityOIDZ,
-      isActive: z.boolean().optional(),
-      isVerified: z.boolean().optional(),
-      limit: z.number().min(1).max(100).default(50),
-      cursor: z.string().optional(),
     }),
     responses: {
       200: z.object({
-        items: z.array(CustomerBookingLinkZ.pick({
-          oid: true,
-          isActive: true,
-          isVerified: true,
-          expiresAt: true,
-        })),
-        nextCursor: z.string().nullable(),
+        oids: z.array(z.string()),
       }),
     },
   },
