@@ -13,8 +13,6 @@ const basePath = "/api/sales/customer-booking-links";
 const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
   bookingOID: true,
   customerEmail: true,
-}).extend({
-  departmentOID: EntityOIDZ.optional(),
 });
 
 export type CreateCustomerBookingLink = z.infer<typeof CreateCustomerBookingLinkBodyZ>;
@@ -104,10 +102,10 @@ export const customerBookingLinkContract = initContract().router({
   },
 
   // #region SPECIALIZED STAFF ENDPOINTS
-  generateCustomerLink: {
-    summary: "Generate a new customer booking link with QR code",
+  createCustomerLink: {
+    summary: "Create a new customer booking link with QR code",
     method: "POST",
-    path: `${basePath}/generate`,
+    path: `${basePath}/create`,
     body: CreateCustomerBookingLinkBodyZ,
     responses: {
       201: GenerateCustomerLinkResponseZ,
@@ -115,16 +113,16 @@ export const customerBookingLinkContract = initContract().router({
   },
   getCustomerLinksByBooking: {
     summary: "Get customer links for a booking",
-    method: "GET",
-    path: `${basePath}/booking/:bookingOID`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    query: z.object({
+    method: "POST",
+    path: `${basePath}/get-by-booking`,
+    body: z.object({
+      bookingOID: EntityOIDZ,
       tenantOID: EntityOIDZ,
       isActive: z.boolean().optional(),
       isVerified: z.boolean().optional(),
       limit: z.number().min(1).max(100).default(50),
       cursor: z.string().optional(),
-    }).passthrough(),
+    }),
     responses: {
       200: z.object({
         items: z.array(CustomerBookingLinkZ.pick({
@@ -140,10 +138,9 @@ export const customerBookingLinkContract = initContract().router({
   regenerateCustomerLink: {
     summary: "Regenerate secure token for an existing customer link (requires appropriate permissions, returns full token intentionally for authorized staff)",
     method: "POST",
-    path: `${basePath}/:linkOID/regenerate`,
-    pathParams: z.object({ linkOID: EntityOIDZ }),
+    path: `${basePath}/regenerate`,
     body: z.object({
-      tenantOID: EntityOIDZ,
+      linkOID: EntityOIDZ,
     }),
     responses: {
       200: GenerateCustomerLinkResponseZ,
