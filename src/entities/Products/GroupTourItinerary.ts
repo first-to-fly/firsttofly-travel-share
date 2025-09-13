@@ -31,7 +31,7 @@ export const GroupTourItineraryMealZ = EntityZ.omit({
 
   provided: z.boolean(),
   onBoard: z.boolean(),
-  poiOID: EntityOIDZ.optional(),
+  poiOID: EntityOIDZ.nullish(),
 });
 
 
@@ -43,7 +43,7 @@ export const GroupTourItineraryEventZ = EntityZ.omit({
   title: MultiLangRecordZ(z.string()),
   description: MultiLangRecordZ(z.string()),
 
-  poiOID: EntityOIDZ.optional(),
+  poiOID: EntityOIDZ.nullish(),
 });
 
 export const GroupTourItineraryDayZ = EntityZ.omit({
@@ -55,7 +55,7 @@ export const GroupTourItineraryDayZ = EntityZ.omit({
   title: MultiLangRecordZ(z.string()),
   description: MultiLangRecordZ(z.string()),
 
-  files: z.array(NamedURLZ).optional(),
+  files: z.array(NamedURLZ).nullish(),
 
   groupTourItineraryMeals: z.array(GroupTourItineraryMealZ),
   groupTourItineraryEvents: z.array(GroupTourItineraryEventZ),
@@ -75,7 +75,7 @@ export const GroupTourItineraryZ = EntityZ.extend({
     active: z.boolean(),
     file: NamedURLZ,
     updatedAt: z.string(),
-  }))).optional(),
+  }))).nullish(),
 
   groupTourItineraryDays: z.array(GroupTourItineraryDayZ),
 });

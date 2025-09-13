@@ -50,8 +50,8 @@ export const RoomConfigurationRuleZ = EntityZ.extend({
 
   pricingArrangement: RoomPricingArrangementZ,
 
-  isBackendOnly: z.boolean().optional(),
-  isTcp: z.boolean().optional(),
+  isBackendOnly: z.boolean().nullish(),
+  isTcp: z.boolean().nullish(),
 });
 
 
@@ -60,7 +60,7 @@ export const RoomConfigurationZ = EntityZ.extend({
 
   name: z.string(),
   isActive: z.boolean().default(true),
-  remarks: z.string().optional(),
+  remarks: z.string().nullish(),
 
   childWithoutBedStartAge: FTFSafeMaxNumberZ({
     max: 2,

@@ -21,7 +21,7 @@ export enum PaymentStatus {
 export const GroupTourCostingEntryZ = EntityZ.extend({
   groupTourCostingOID: EntityOIDZ,
 
-  supplierOID: EntityOIDZ.optional(),
+  supplierOID: EntityOIDZ.nullish(),
 
   // Copy from CostingItem
   name: z.string(),
@@ -30,7 +30,7 @@ export const GroupTourCostingEntryZ = EntityZ.extend({
   applyToPackageType: z.nativeEnum(PackageType),
   applyToOccupancyType: z.nativeEnum(OccupancyType),
 
-  remarks: z.string().optional(),
+  remarks: z.string().nullish(),
 
   quantity: FTFSafeMaxNumberZ({ name: "Quantity" }),
 
@@ -53,7 +53,7 @@ export const GroupTourCostingZ = EntityZ.extend({
   name: z.string(),
   code: z.string(),
 
-  remarks: z.string(),
+  remarks: z.string().nullish(),
 
   validityStartDate: DateISOStringZ,
   validityEndDate: DateISOStringZ,
@@ -66,19 +66,19 @@ export const GroupTourCostingZ = EntityZ.extend({
   freeOfChargeTiers: z.array(z.object({
     pax: FTFSafeMaxNumberZ({ name: "FOC Tier Pax" }),
     freePax: FTFSafeMaxNumberZ({ name: "FOC Tier Free Pax" }),
-  })).optional(),
+  })).nullish(),
 
   leadManagerCountTiers: z.array(z.object({
     pax: FTFSafeMaxNumberZ({ name: "Lead Manager Count per Pax" }),
     leadCount: FTFSafeMaxNumberZ({ name: "Lead Count" }),
     managerCount: FTFSafeMaxNumberZ({ name: "Manager Count" }),
-  })).optional(),
+  })).nullish(),
 
   groupTourCostingEntries: z.array(GroupTourCostingEntryZ),
 
   isActive: z.boolean(),
 
-  airlineOIDs: z.array(EntityOIDZ).optional(), // ???
+  airlineOIDs: z.array(EntityOIDZ).nullish(), // ???
 
 });
 

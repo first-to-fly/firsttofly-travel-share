@@ -13,18 +13,18 @@ export const IndependentTourBookingAddonTypeZ = z.nativeEnum(IndependentTourBook
 
 export const IndependentTourBookingAddonZ = EntityZ.extend({
   independentTourBookingOID: EntityOIDZ,
-  independentTourOptionalServiceOID: EntityOIDZ.optional(),
+  independentTourOptionalServiceOID: EntityOIDZ.nullish(),
 
   type: IndependentTourBookingAddonTypeZ,
   serviceDate: z.string(), // ISO datetime string
   name: z.string(),
   unitPrice: z.number().positive(),
-  tax: z.number().optional(),
+  tax: z.number().nullish(),
   quantity: z.number().int().positive(),
   totalPrice: z.number().positive(),
 
-  supplierOID: EntityOIDZ.optional(),
-  notes: z.string().optional(),
+  supplierOID: EntityOIDZ.nullish(),
+  notes: z.string().nullish(),
 });
 
 export type IndependentTourBookingAddon = z.infer<typeof IndependentTourBookingAddonZ>;

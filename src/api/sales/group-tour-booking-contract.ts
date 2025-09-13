@@ -23,6 +23,8 @@ const CreateGroupTourBookingBodyZ = GroupTourBookingZ.pick({
   tcpBookingOID: true,
   paymentStatus: true,
   fullPaymentDueDate: true,
+  expectedCancelTime: true,
+  platform: true,
   metadata: true,
   specialInstructions: true,
   overwriteTax: true,

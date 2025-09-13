@@ -10,6 +10,7 @@ import { poiContract } from "./poi-contract";
 import { privacyPolicyContract } from "./privacy-policy-contract";
 import { referenceCodeContract } from "./reference-code-contract";
 import { stationCodeContract } from "./station-code-contract";
+import { tenantConfigContract } from "./tenant-config-contract";
 import { tenantContract } from "./tenant-contract";
 import { termContract } from "./term-contract";
 
@@ -25,6 +26,7 @@ export const generalSettingContract = initContract().router({
   referenceCode: referenceCodeContract,
   stationCode: stationCodeContract,
   tenant: tenantContract,
+  tenantConfig: tenantConfigContract,
   term: termContract,
   media: mediaContract,
 });

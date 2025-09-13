@@ -27,7 +27,7 @@ export const BudgetZ = EntityZ.extend({
 
   tourDepartureOID: EntityOIDZ,
   status: z.nativeEnum(BudgetStatus),
-  remarks: z.string().optional(),
+  remarks: z.string().nullish(),
   isArchived: z.boolean(),
 });
 

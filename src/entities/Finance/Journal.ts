@@ -22,7 +22,7 @@ export const JournalZ = EntityZ.extend({
   toEntityOID: EntityOIDZ,
   amount: z.number().positive(),
   isVoided: z.boolean().default(false),
-  description: z.string().optional(),
+  description: z.string().nullish(),
   transactionDate: z.string(),
 });
 

@@ -15,7 +15,7 @@ export enum TenantEvents {
 export const TenantZ = EntityZ.extend({
   entityType: z.literal(EntityType.TENANT),
   name: z.string(),
-  logo: z.string().optional(),
+  logo: z.string().nullish(),
   description: z.string(),
   domain: z.string(),
   localizationSupportLanguages: z.array(LanguageCodeZ),
@@ -27,11 +27,12 @@ export const TenantZ = EntityZ.extend({
         rate: FTFSafeMaxNumberZ({ name: "Supported currency rate" }).nonnegative(),
       }),
     ),
-  }).optional(),
+  }).nullish(),
   defaultTaxConfig: z.object({
     scheme: z.string(),
     rate: FTFSafeMaxNumberZ({ name: "Default tax rate" }).nonnegative(),
-  }).optional(),
+  }).nullish(),
+  pdfHeader: z.string().nullish(),
 });
 
 export type Tenant = z.infer<typeof TenantZ>;

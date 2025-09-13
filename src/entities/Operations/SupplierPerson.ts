@@ -15,8 +15,8 @@ export const SupplierPersonZ = EntityZ.extend({
   supplierOID: EntityOIDZ,
   firstName: z.string(),
   lastName: z.string(),
-  department: z.string().optional(),
-  position: z.string().optional(),
+  department: z.string().nullish(),
+  position: z.string().nullish(),
   contactInfo: z.array(ContactInfoZ),
 });
 

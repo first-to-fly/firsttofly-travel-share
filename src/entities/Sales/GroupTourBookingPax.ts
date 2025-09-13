@@ -9,10 +9,10 @@ export const GroupTourBookingPaxZ = EntityZ.extend({
   bookingRoomOID: EntityOIDZ,
   type: BookingPaxTypeZ,
   isLandTourOnly: z.boolean().default(false),
-  personalDetails: BookingPaxPersonalDetailsZ.optional(),
-  mealPreference: z.string().optional(),
-  transportRecordOID: EntityOIDZ.optional(),
-  documentOIDs: z.array(EntityOIDZ).optional(),
+  personalDetails: BookingPaxPersonalDetailsZ.nullish(),
+  mealPreference: z.string().nullish(),
+  transportRecordOID: EntityOIDZ.nullish(),
+  documentOIDs: z.array(EntityOIDZ).nullish(),
 }).omit({
   tenantOID: true,
 });
