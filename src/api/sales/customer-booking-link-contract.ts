@@ -11,7 +11,6 @@ const basePath = "/api/sales/customer-booking-links";
 
 // --- Create/Update Schemas ---
 const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
-  tenantOID: true,
   bookingOID: true,
   customerEmail: true,
 }).extend({
