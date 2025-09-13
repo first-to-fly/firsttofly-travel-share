@@ -25,50 +25,26 @@ const CustomerLinkAccessRequestZ = z.object({
 });
 export type CustomerLinkAccessRequest = z.infer<typeof CustomerLinkAccessRequestZ>;
 
-// Customer booking response using exact CD entity structure
+// Customer booking response with sensitive data removed for security
 // We create a union type that matches both GroupTour and IndependentTour booking structures
 const CustomerBookingDataResponseZ = z.union([
-  // Group Tour Booking Response (based on FTFGroupTourBooking)
+  // Group Tour Booking Response (customer-safe fields only)
   z.object({
-    oid: z.string(),
-    tenantOID: z.string(),
-    tourDepartureOID: z.string(),
-    groupTourPricingOID: z.string(),
-    groupTourProductOID: z.string(),
-    itineraryOID: z.string(),
-    sectorOIDs: z.array(z.string()),
-    stationCodeOID: z.string().nullable(),
-    tcpBookingOID: z.string().nullable(),
     bookingReference: z.string(),
     paymentStatus: z.string(), // BookingPaymentStatus enum
     bookingStatus: z.string(), // BookingStatus enum
     totalAmount: z.number(),
     receivedAmount: z.number(),
     fullPaymentDueDate: z.string().nullable(),
-    snapshot: z.record(z.unknown()).nullable(), // GroupTourBookingSnapshotData
-    metadata: z.record(z.unknown()).nullable(),
+    snapshot: z.record(z.unknown()).nullable(), // GroupTourBookingSnapshotData (customer-safe)
+    metadata: z.record(z.unknown()).nullable(), // Customer metadata only
     specialInstructions: z.array(z.string()).nullable(),
-    overwriteTax: z.object({
-      scheme: z.string(),
-      rate: z.number(),
-    }).nullable(),
-    transactionOIDs: z.array(z.string()).nullable(),
-    paymentOrderOID: z.string().nullable(),
     liveRoomCount: z.number(),
     livePaxCount: z.number(),
-    latestApprovalRequestOID: z.string().nullable(),
     createdAt: z.string(),
-    updatedAt: z.string(),
-    updatedBy: z.string().nullable(),
   }),
-  // Independent Tour Booking Response (based on FTFIndependentTourBooking)
+  // Independent Tour Booking Response (customer-safe fields only)
   z.object({
-    oid: z.string(),
-    tenantOID: z.string(),
-    independentTourProductOID: z.string(),
-    independentTourAccommodationOID: z.string().nullable(),
-    stationCodeOID: z.string().nullable(),
-    tcpBookingOID: z.string().nullable(),
     bookingReference: z.string(),
     paymentStatus: z.string(), // BookingPaymentStatus enum
     bookingStatus: z.string(), // BookingStatus enum
@@ -77,22 +53,13 @@ const CustomerBookingDataResponseZ = z.union([
     fullPaymentDueDate: z.string().nullable(),
     travelStartDate: z.string().nullable(),
     travelEndDate: z.string().nullable(),
-    snapshot: z.record(z.unknown()).nullable(), // IndependentTourBookingSnapshotData
-    metadata: z.record(z.unknown()).nullable(),
+    snapshot: z.record(z.unknown()).nullable(), // IndependentTourBookingSnapshotData (customer-safe)
+    metadata: z.record(z.unknown()).nullable(), // Customer metadata only
     specialInstructions: z.array(z.string()).nullable(),
-    overwriteTax: z.object({
-      scheme: z.string(),
-      rate: z.number(),
-    }).nullable(),
-    transactionOIDs: z.array(z.string()).nullable(),
-    paymentOrderOID: z.string().nullable(),
     liveRoomCount: z.number(),
     livePaxCount: z.number(),
     liveAddonCount: z.number(),
-    latestApprovalRequestOID: z.string().nullable(),
     createdAt: z.string(),
-    updatedAt: z.string(),
-    updatedBy: z.string().nullable(),
   }),
 ]);
 
