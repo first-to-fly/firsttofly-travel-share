@@ -18,6 +18,7 @@ const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
 export type CreateCustomerBookingLink = z.infer<typeof CreateCustomerBookingLinkBodyZ>;
 
 // --- Customer Access Schemas ---
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CustomerLinkAccessRequestZ = z.object({
   email: z.string().email(),
 });
