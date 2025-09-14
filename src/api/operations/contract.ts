@@ -11,6 +11,7 @@ import { supplierPaymentContract } from "./supplier-payment-contract";
 import { supplierPersonContract } from "./supplier-person-contract";
 import { tourDepartureAccommodationContract } from "./tour-departure-accommodation-contract";
 import { tourDepartureContract } from "./tour-departure-contract";
+import { tourDepartureRoomAllocationContract } from "./tour-departure-room-allocation-contract";
 import { transportGroupContract } from "./transport-group-contract";
 import { transportSegmentContract } from "./transport-segment-contract";
 
@@ -27,6 +28,7 @@ export const operationsContract = initContract().router({
   supplierPerson: supplierPersonContract,
   tourDeparture: tourDepartureContract,
   tourDepartureAccommodation: tourDepartureAccommodationContract,
+  tourDepartureRoomAllocation: tourDepartureRoomAllocationContract,
   transportGroup: transportGroupContract,
   transportSegment: transportSegmentContract,
 });
