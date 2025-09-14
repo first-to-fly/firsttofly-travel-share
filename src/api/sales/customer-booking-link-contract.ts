@@ -159,10 +159,7 @@ export const customerBookingLinkContract = initContract().router({
       email: z.string().email(),
     }),
     responses: {
-      200: z.object({
-        otpSent: z.boolean(),
-        message: z.string(),
-      }),
+      200: z.boolean(),
     },
   },
   validateOtpForAccess: {
