@@ -19,8 +19,10 @@ const CreateRoomAssignmentZ = RoomAssignmentZ.omit({
   // Remove fields that are auto-generated or derived
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const UpdateRoomAssignmentZ = CreateRoomAssignmentZ.partial();
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const RoomAssignmentResponseZ = RoomAssignmentZ.extend({
   id: z.string(),
   tenantOID: EntityOIDZ,
@@ -42,8 +44,10 @@ const CreateRoomAdjacencyZ = RoomAdjacencyZ.omit({
   // Remove fields that are auto-generated or derived
 });
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const UpdateRoomAdjacencyZ = CreateRoomAdjacencyZ.partial();
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const RoomAdjacencyResponseZ = RoomAdjacencyZ.extend({
   id: z.string(),
   tenantOID: EntityOIDZ,
