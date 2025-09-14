@@ -7,6 +7,7 @@ import { BillPermissions } from "./entities/bill.permission";
 import { BudgetPermissions } from "./entities/budget.permission";
 import { CostingItemPermissions } from "./entities/costing-item.permission";
 import { CostingTemplatePermissions } from "./entities/costing-template.permission";
+import { CustomerBookingLinkPermissions } from "./entities/customer-booking-link.permission";
 import { DepartmentPermissions } from "./entities/department.permission";
 import { DepositPermissions } from "./entities/deposit.permission";
 import { DesignationPermissions } from "./entities/designation.permission";
@@ -110,6 +111,7 @@ const EntityPermissions = {
   "Transport Plan": TransportPlanPermissions,
   Supplier: SupplierPermissions,
   "Group Tour Booking": GroupTourBookingPermissions,
+  "Customer Booking Link": CustomerBookingLinkPermissions,
   "Independent Tour Booking": IndependentTourBookingPermissions,
   "Approval Management": ApprovalPermissions,
   "Approval Request": ApprovalRequestPermissions,

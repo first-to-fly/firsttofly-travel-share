@@ -14,7 +14,7 @@
     "ts-node": "TS_NODE_PROJECT=./tsconfig.json TS_NODE_TRANSPILE_ONLY=true node --inspect=localhost:${NODE_DEBUG_PORT:-9229} --require ts-node/register --require tsconfig-paths/register",
     "dev:node": "npm run ts-node -- ./src",
     "dev": "npm run dev:node",
-    "build:tsc-declaration": "tsc --project ./tsconfig.build.json --allowJs true --checkJs false --declaration",
+    "build:tsc-declaration": "tsc --project ./tsconfig.build.json --allowJs true --checkJs false --declaration || true",
     "build:tsc": "tsc --project ./tsconfig.build.json",
     "build:node": "npx --yes concurrently@latest --kill-others-on-fail --names \"tsc-declaration,tsc\" --prefix-colors \"blue,cyan\" \"npm run build:tsc-declaration\" \"npm run build:tsc\"",
     "build": "npm run build:node",

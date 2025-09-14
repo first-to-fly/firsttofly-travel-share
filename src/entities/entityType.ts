@@ -98,6 +98,9 @@ export enum EntityType {
   GROUP_TOUR_BOOKING_DISCOUNT = "groupTourBookingDiscount",
   GROUP_TOUR_BOOKING_ADDON = "groupTourBookingAddon",
 
+  // CUSTOMER BOOKING LINK
+  CUSTOMER_BOOKING_LINK = "customerBookingLink",
+
   // INDEPENDENT TOUR BOOKING
   INDEPENDENT_TOUR_BOOKING = "independentTourBooking",
   INDEPENDENT_TOUR_BOOKING_ROOM = "independentTourBookingRoom",
