@@ -22,6 +22,7 @@ export const TransportGroupZ = EntityZ.extend({
   name: z.string(),
   mainType: z.nativeEnum(TransportType).nullish(),
   description: z.string().nullish(),
+  isActive: z.boolean().nullish(),
 });
 
 export type TransportGroup = z.infer<typeof TransportGroupZ>;

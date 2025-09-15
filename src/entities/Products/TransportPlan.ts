@@ -13,6 +13,7 @@ export const TransportPlanZ = EntityZ.extend({
   entityType: z.literal(EntityType.TRANSPORT_PLAN),
   name: z.string(),
   description: z.string().nullish(),
+  isActive: z.boolean().nullish(),
 
   groupTourProductOID: EntityOIDZ,
 
