@@ -425,4 +425,27 @@ export const groupTourBookingContract = initContract().router({
   },
   // #endregion
 
+  // #region BOOKING EXPIRY
+  manualExtendBookingExpiry: {
+    summary: "Manually extend booking expiry time",
+    method: "POST",
+    path: `${basePath}/:bookingOID/manual-extend-expiry`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+    }),
+    body: z.object({
+      newExpiryTime: z.string().datetime(),
+    }),
+    responses: {
+      200: z.boolean(),
+      400: z.object({
+        error: z.object({
+          code: z.string(),
+          message: z.string(),
+        }),
+      }),
+    },
+  },
+  // #endregion
+
 });
