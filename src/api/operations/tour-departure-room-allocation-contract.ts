@@ -7,7 +7,7 @@ import { EntityOIDZ } from "../../entities/entity";
 const basePath = "/api/operations/tour-departure-room-allocation";
 
 // Room Assignment Schemas
-const RoomAssignmentZ = z.object({
+const CreateRoomAssignmentZ = z.object({
   tourDepartureOID: EntityOIDZ,
   paxOID: EntityOIDZ,
   assignedRoomOID: EntityOIDZ,
@@ -15,46 +15,12 @@ const RoomAssignmentZ = z.object({
   notes: z.string().optional(),
 });
 
-const CreateRoomAssignmentZ = RoomAssignmentZ.omit({
-  // Remove fields that are auto-generated or derived
-});
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const UpdateRoomAssignmentZ = CreateRoomAssignmentZ.partial();
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const RoomAssignmentResponseZ = RoomAssignmentZ.extend({
-  id: z.string(),
-  tenantOID: EntityOIDZ,
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  createdBy: EntityOIDZ,
-  updatedBy: EntityOIDZ,
-});
-
 // Room Adjacency Schemas
-const RoomAdjacencyZ = z.object({
+const CreateRoomAdjacencyZ = z.object({
   tourDepartureOID: EntityOIDZ,
   roomOneOID: EntityOIDZ,
   roomTwoOID: EntityOIDZ,
   notes: z.string().optional(),
-});
-
-const CreateRoomAdjacencyZ = RoomAdjacencyZ.omit({
-  // Remove fields that are auto-generated or derived
-});
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const UpdateRoomAdjacencyZ = CreateRoomAdjacencyZ.partial();
-
-// eslint-disable-next-line @typescript-eslint/no-unused-vars
-const RoomAdjacencyResponseZ = RoomAdjacencyZ.extend({
-  id: z.string(),
-  tenantOID: EntityOIDZ,
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  createdBy: EntityOIDZ,
-  updatedBy: EntityOIDZ,
 });
 
 // Bulk Operation Schemas
@@ -118,16 +84,6 @@ export const tourDepartureRoomAllocationContract = initContract().router({
 });
 
 // Export types
-export type RoomAssignment = z.infer<typeof RoomAssignmentZ>;
-export type CreateRoomAssignment = z.infer<typeof CreateRoomAssignmentZ>;
-export type UpdateRoomAssignment = z.infer<typeof UpdateRoomAssignmentZ>;
-export type RoomAssignmentResponse = z.infer<typeof RoomAssignmentResponseZ>;
-
-export type RoomAdjacency = z.infer<typeof RoomAdjacencyZ>;
-export type CreateRoomAdjacency = z.infer<typeof CreateRoomAdjacencyZ>;
-export type UpdateRoomAdjacency = z.infer<typeof UpdateRoomAdjacencyZ>;
-export type RoomAdjacencyResponse = z.infer<typeof RoomAdjacencyResponseZ>;
-
 export type BulkAssignPaxToRooms = z.infer<typeof BulkAssignPaxToRoomsZ>;
 export type BulkCreateRoomAdjacencies = z.infer<typeof BulkCreateRoomAdjacenciesZ>;
 export type BulkDeleteRoomAdjacencies = z.infer<typeof BulkDeleteRoomAdjacenciesZ>;
