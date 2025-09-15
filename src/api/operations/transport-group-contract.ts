@@ -11,6 +11,7 @@ const CreateTransportGroupZ = TransportGroupZ.pick({
   name: true,
   mainType: true,
   description: true,
+  isActive: true,
 });
 
 const UpdateTransportGroupZ = CreateTransportGroupZ.omit({

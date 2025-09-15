@@ -32,6 +32,8 @@ const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   isPlanning: true,
   plannedDepartureTime: true,
   plannedArrivalTime: true,
+
+  isActive: true,
 });
 
 // Create specialized schemas based on segment type

@@ -112,6 +112,8 @@ export const BaseTransportSegmentZ = EntityZ.extend({
   plannedArrivalTime: z.string().optional().refine((val) => val === "" || val === null || val === undefined || /^\d{2}:\d{2}$/.test(val), {
     message: "Planned arrival time must be in 'HH:MM' format",
   }),
+
+  isActive: z.boolean().nullish(),
 });
 
 // Flight specific details

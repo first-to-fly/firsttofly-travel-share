@@ -9,6 +9,7 @@ const basePath = "/api/pr/transport-plans";
 const CreateTransportPlanZ = TransportPlanZ.pick({
   name: true,
   description: true,
+  isActive: true,
   groupTourProductOID: true,
   transportSegmentOIDs: true,
 }).extend({

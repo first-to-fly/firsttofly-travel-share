@@ -211,6 +211,15 @@ export const groupTourBookingContract = initContract().router({
       200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingRooms")),
     },
   },
+  getRoomsForTourDeparture: {
+    summary: "List rooms for a tour departure",
+    method: "GET",
+    path: "/api/sales/tour-departures/:tourDepartureOID/rooms",
+    pathParams: z.object({ tourDepartureOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingRooms")),
+    },
+  },
   addRoomToGroupTourBooking: {
     summary: "Add a new room to a group tour booking",
     method: "POST",
@@ -260,6 +269,15 @@ export const groupTourBookingContract = initContract().router({
     method: "GET",
     path: `${basePath}/:bookingOID/pax`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingPax")),
+    },
+  },
+  getPaxForTourDeparture: {
+    summary: "List passengers for a tour departure",
+    method: "GET",
+    path: "/api/sales/tour-departures/:tourDepartureOID/pax",
+    pathParams: z.object({ tourDepartureOID: EntityOIDZ }),
     responses: {
       200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingPax")),
     },
@@ -421,6 +439,29 @@ export const groupTourBookingContract = initContract().router({
     body: CreateAirWallexPaymentLinkBodyZ,
     responses: {
       201: AirWallexPaymentLinkResponseZ,
+    },
+  },
+  // #endregion
+
+  // #region BOOKING EXPIRY
+  manualExtendBookingExpiry: {
+    summary: "Manually extend booking expiry time",
+    method: "POST",
+    path: `${basePath}/:bookingOID/manual-extend-expiry`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+    }),
+    body: z.object({
+      newExpiryTime: z.string().datetime(),
+    }),
+    responses: {
+      200: z.boolean(),
+      400: z.object({
+        error: z.object({
+          code: z.string(),
+          message: z.string(),
+        }),
+      }),
     },
   },
   // #endregion
