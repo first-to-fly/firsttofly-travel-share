@@ -34,6 +34,10 @@ export const GroupTourBookingPermissions = {
     name: "Read Department Group Tour Booking Snapshot",
     description: "Can read snapshot data of Group Tour Bookings within their department's scope",
   },
+  "dept:group-tour-booking:manual-extend-expiry": {
+    name: "Manual Extend Department Group Tour Booking Expiry",
+    description: "Can manually extend expiry time of Group Tour Bookings within their department's scope",
+  },
 
   // Tenant level permissions
   "tenant:group-tour-booking:view-list": {
@@ -67,5 +71,9 @@ export const GroupTourBookingPermissions = {
   "tenant:group-tour-booking:read-snapshot": {
     name: "Read Tenant Group Tour Booking Snapshot",
     description: "Can read snapshot data of Group Tour Bookings within the tenant",
+  },
+  "tenant:group-tour-booking:manual-extend-expiry": {
+    name: "Manual Extend Tenant Group Tour Booking Expiry",
+    description: "Can manually extend expiry time of Group Tour Bookings within the tenant",
   },
 };
