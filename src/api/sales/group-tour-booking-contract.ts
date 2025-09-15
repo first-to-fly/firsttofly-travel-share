@@ -211,6 +211,15 @@ export const groupTourBookingContract = initContract().router({
       200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingRooms")),
     },
   },
+  getRoomsForTourDeparture: {
+    summary: "List rooms for a tour departure",
+    method: "GET",
+    path: "/api/sales/tour-departures/:tourDepartureOID/rooms",
+    pathParams: z.object({ tourDepartureOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingRooms")),
+    },
+  },
   addRoomToGroupTourBooking: {
     summary: "Add a new room to a group tour booking",
     method: "POST",
@@ -260,6 +269,15 @@ export const groupTourBookingContract = initContract().router({
     method: "GET",
     path: `${basePath}/:bookingOID/pax`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingPax")),
+    },
+  },
+  getPaxForTourDeparture: {
+    summary: "List passengers for a tour departure",
+    method: "GET",
+    path: "/api/sales/tour-departures/:tourDepartureOID/pax",
+    pathParams: z.object({ tourDepartureOID: EntityOIDZ }),
     responses: {
       200: z.array(EntityOIDZ.describe("OIDs of GroupTourBookingPax")),
     },
