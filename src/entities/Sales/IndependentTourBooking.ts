@@ -38,6 +38,9 @@ export const IndependentTourBookingZ = EntityZ.extend({
     scheme: z.string(),
     rate: z.number(),
   }).nullish(),
+  overwriteDeposit: z.number().nullish(),
+  saleStaffOID: EntityOIDZ.nullish(),
+  saleReferrerOID: EntityOIDZ.nullish(),
 });
 
 export type IndependentTourBooking = z.infer<typeof IndependentTourBookingZ>;
