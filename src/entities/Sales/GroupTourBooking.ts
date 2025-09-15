@@ -4,7 +4,12 @@ import { z } from "zod";
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 import { ProductPlatform, ProductPlatformZ } from "../../types/platform";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { GroupTourBookingMetadataZ } from "./GroupTourBookingMetadata";
+import { BaseBookingCustomerMetadataZ, GTBTransferMetadataZ } from "./BookingMetadata";
+
+// Inline metadata schemas for GTB
+// Combines base customer info with GTB-specific transfer metadata fields
+export const GroupTourBookingMetadataZ = BaseBookingCustomerMetadataZ.merge(GTBTransferMetadataZ);
+export type GroupTourBookingMetadata = z.infer<typeof GroupTourBookingMetadataZ>;
 
 
 export const GroupTourBookingZ = EntityZ.extend({

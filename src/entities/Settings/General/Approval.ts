@@ -16,10 +16,7 @@ export enum ApprovalType {
    */
   GROUP_TOUR_BOOKING_SPECIAL_DISCOUNT = "group-tour-booking-special-discount-approval",
 
-  /**
-   * Group tour booking transfer approval workflow
-   */
-  GROUP_TOUR_BOOKING_TRANSFER = "group-tour-booking-transfer-approval",
+  // Legacy GTB transfer removed in favor of unified BOOKING_TRANSFER
 
   /**
    * Group tour booking amendment approval workflow
@@ -102,6 +99,11 @@ export enum ApprovalType {
    * Bill DRAFT to SUBMITTED status change approval workflow
    */
   BILL_DRAFT_TO_SUBMITTED = "bill-draft-to-submitted-approval",
+
+  /**
+   * Unified booking transfer approval workflow (GTB↔ITB, ITB↔ITB, GTB↔GTB)
+   */
+  BOOKING_TRANSFER = "booking-transfer-approval",
 }
 
 export enum ApprovalLevelApproverType {
