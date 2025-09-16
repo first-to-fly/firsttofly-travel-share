@@ -33,7 +33,6 @@ export type TransferMetadata = z.infer<typeof TransferMetadataZ>;
  */
 export const BaseGroupTourBookingMetadataZ = z.object({
   customer: BookingPaxPersonalDetailsZ,
-  extendedTimes: z.number().default(0).optional(),
 });
 
 export type BaseGroupTourBookingMetadata = z.infer<typeof BaseGroupTourBookingMetadataZ>;
