@@ -464,6 +464,30 @@ export const groupTourBookingContract = initContract().router({
       }),
     },
   },
+  requestExtendBookingExpiry: {
+    summary: "Request automatic extension of booking expiry based on rules",
+    method: "POST",
+    path: `${basePath}/:bookingOID/request-extend-expiry`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+    }),
+    body: z.object({}),
+    responses: {
+      200: z.object({
+        success: z.boolean(),
+        extendableTime: z.number(),
+        requireApproval: z.boolean(),
+        remainingExtendedTimes: z.number(),
+        newExpiryTime: z.string().datetime().optional(),
+      }),
+      400: z.object({
+        error: z.object({
+          code: z.string(),
+          message: z.string(),
+        }),
+      }),
+    },
+  },
   // #endregion
 
 });
