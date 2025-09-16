@@ -384,6 +384,15 @@ export const ApprovalRequestCustomerCancellationFeeMetadataZ = z.object({
 export type ApprovalRequestCustomerCancellationFeeMetadata =
   z.infer<typeof ApprovalRequestCustomerCancellationFeeMetadataZ>;
 
+export const ApprovalRequestBookingExtensionMetadataZ = z.object({
+  type: z.literal(ApprovalType.BOOKING_EXTENSION),
+  extensionRequestID: z.string(),
+  remarks: z.string().optional(),
+});
+
+export type ApprovalRequestBookingExtensionMetadata =
+  z.infer<typeof ApprovalRequestBookingExtensionMetadataZ>;
+
 // Unified Booking Transfer (GTB↔ITB, ITB↔ITB, GTB↔GTB)
 const BookingTransferTargetGTBZ = z.object({
   targetBookingType: z.literal("GTB"),
@@ -517,6 +526,7 @@ export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestBillDraftToSubmittedMetadataZ,
   ApprovalRequestCustomerRefundMetadataZ,
   ApprovalRequestCustomerCancellationFeeMetadataZ,
+  ApprovalRequestBookingExtensionMetadataZ,
   ApprovalRequestBookingTransferMetadataZ,
 ]);
 

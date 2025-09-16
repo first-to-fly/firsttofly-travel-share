@@ -474,7 +474,10 @@ export const groupTourBookingContract = initContract().router({
     pathParams: z.object({
       bookingOID: EntityOIDZ,
     }),
-    body: z.object({}),
+    body: z.object({
+      approvalOID: EntityOIDZ.optional(),
+      remarks: z.string().optional(),
+    }),
     responses: {
       200: z.object({
         success: z.boolean(),
