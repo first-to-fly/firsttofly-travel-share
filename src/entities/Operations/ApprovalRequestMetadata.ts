@@ -505,6 +505,14 @@ export const ApprovalRequestBookingTransferMetadataZ = z.object({
 export type ApprovalRequestBookingTransferMetadata =
   z.infer<typeof ApprovalRequestBookingTransferMetadataZ>;
 
+export const ApprovalRequestBookingExtensionMetadataZ = z.object({
+  type: z.literal(ApprovalType.BOOKING_EXTENSION),
+  extensionRequestID: z.string(),
+  remarks: z.string().optional(),
+});
+
+export type ApprovalRequestBookingExtensionMetadata = z.infer<typeof ApprovalRequestBookingExtensionMetadataZ>;
+
 // Union type for all metadata
 export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ,
@@ -518,6 +526,7 @@ export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestCustomerRefundMetadataZ,
   ApprovalRequestCustomerCancellationFeeMetadataZ,
   ApprovalRequestBookingTransferMetadataZ,
+  ApprovalRequestBookingExtensionMetadataZ,
 ]);
 
 export type ApprovalRequestMetadata = z.infer<typeof ApprovalRequestMetadataZ>;

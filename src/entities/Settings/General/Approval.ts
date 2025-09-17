@@ -104,6 +104,11 @@ export enum ApprovalType {
    * Unified booking transfer approval workflow (GTB↔ITB, ITB↔ITB, GTB↔GTB)
    */
   BOOKING_TRANSFER = "booking-transfer-approval",
+
+  /**
+   * Booking extension approval workflow
+   */
+  BOOKING_EXTENSION = "booking-extension-approval",
 }
 
 export enum ApprovalLevelApproverType {
