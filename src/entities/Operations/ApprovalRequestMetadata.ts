@@ -28,6 +28,17 @@ export const ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ = z.object(
 export type ApprovalRequestGroupTourBookingSpecialDiscountMetadata =
   z.infer<typeof ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ>;
 
+export const ApprovalRequestIndependentTourBookingSpecialDiscountMetadataZ = z.object({
+  type: z.literal(ApprovalType.INDEPENDENT_TOUR_BOOKING_SPECIAL_DISCOUNT),
+  discountName: z.string(),
+  discountValue: z.number(),
+  discountMode: z.nativeEnum(DiscountMode),
+  reason: z.string().optional(),
+});
+
+export type ApprovalRequestIndependentTourBookingSpecialDiscountMetadata =
+  z.infer<typeof ApprovalRequestIndependentTourBookingSpecialDiscountMetadataZ>;
+
 export const ApprovalRequestBudgetApprovalMetadataZ = z.object({
   type: z.literal(ApprovalType.BUDGET_APPROVAL),
   // empty metadata
@@ -516,6 +527,7 @@ export type ApprovalRequestBookingExtensionMetadata = z.infer<typeof ApprovalReq
 // Union type for all metadata
 export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestGroupTourBookingSpecialDiscountMetadataZ,
+  ApprovalRequestIndependentTourBookingSpecialDiscountMetadataZ,
   ApprovalRequestBudgetApprovalMetadataZ,
   ApprovalRequestGroupTourBookingAmendmentMetadataZ,
   ApprovalRequestIndependentTourBookingAmendmentMetadataZ,
