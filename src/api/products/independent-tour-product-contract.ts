@@ -37,6 +37,7 @@ const CreateIndependentTourProductZ = IndependentTourProductZ.pick({
   videos: true,
   documentations: true,
   platforms: true,
+  hardpush: true,
 });
 
 const UpdateIndependentTourProductZ = CreateIndependentTourProductZ.omit({
