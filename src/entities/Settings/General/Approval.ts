@@ -106,7 +106,7 @@ export enum ApprovalType {
   BOOKING_TRANSFER = "booking-transfer-approval",
 
   /**
-   * Group tour booking extension approval workflow
+   * Booking extension approval workflow
    */
   BOOKING_EXTENSION = "booking-extension-approval",
 }
