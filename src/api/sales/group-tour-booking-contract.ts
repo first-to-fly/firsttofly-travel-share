@@ -494,6 +494,30 @@ export const groupTourBookingContract = initContract().router({
       }),
     },
   },
+  calculateExtendableTime: {
+    summary: "Calculate extendable time for booking without creating extension record",
+    method: "GET",
+    path: `${basePath}/:bookingOID/calculate-extendable-time`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+    }),
+    responses: {
+      200: z.object({
+        extendableTime: z.number(),
+        requireApproval: z.boolean(),
+        remainingExtendedTimes: z.number(),
+        balanceSeats: z.number(),
+        requestedSeats: z.number(),
+        extendedTimes: z.number(),
+      }),
+      400: z.object({
+        error: z.object({
+          code: z.string(),
+          message: z.string(),
+        }),
+      }),
+    },
+  },
   // #endregion
 
 });
