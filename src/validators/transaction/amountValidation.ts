@@ -20,7 +20,7 @@ export interface ValidateCreateTransactionParams {
   bookingTotalAmount: number; // booking total amount
   bookingTenantId: string;
   inputTenantId: string; // tenant extracted from input OID
-  inputCurrencyCode: string;
+  inputCurrencyCode?: string; // optional; only validated if both this and paymentOrderCurrencyCode present
   paymentOrderCurrencyCode?: string; // optional (when PO exists)
   proposedTransactionType: TransactionType;
   proposedAmount: number; // >0 for receipt, <0 for refund/cancellation
@@ -103,7 +103,7 @@ export function validateCreateTransaction(
   }
 
   // Optional currency check (only when a PO already exists and has a currency)
-  if (paymentOrderCurrencyCode && paymentOrderCurrencyCode !== inputCurrencyCode) {
+  if (paymentOrderCurrencyCode && inputCurrencyCode && paymentOrderCurrencyCode !== inputCurrencyCode) {
     return {
       result: "invalid",
       message: `Currency mismatch. PaymentOrder currency ${paymentOrderCurrencyCode} does not match input ${inputCurrencyCode}.`,
@@ -171,4 +171,3 @@ export function validateCreateTransaction(
     aggregates: aggregates,
   };
 }
-
