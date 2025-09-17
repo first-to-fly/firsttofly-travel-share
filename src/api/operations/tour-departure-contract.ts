@@ -37,6 +37,7 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   assembleLocationAirlineOID: true,
   assembleAirlineLocationTime: true,
   hkSeat: true,
+  hardpush: true,
 }).extend({
   departureCode: TourDepartureZ.shape.departureCode.optional(),
 });
