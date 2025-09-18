@@ -8,7 +8,7 @@ export const TOUR_DEPARTURE_VALID_STATUS_TRANSITIONS: Record<TourDepartureStatus
   [TourDepartureStatus.DRAFT]: [TourDepartureStatus.CONFIRMED, TourDepartureStatus.OPEN],
   [TourDepartureStatus.CONFIRMED]: [TourDepartureStatus.OPEN],
   [TourDepartureStatus.OPEN]: [TourDepartureStatus.CLOSED],
-  [TourDepartureStatus.CLOSED]: [],
+  [TourDepartureStatus.CLOSED]: [TourDepartureStatus.OPEN],
 };
 
 
