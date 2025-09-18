@@ -36,9 +36,31 @@ const ExchangeOrderListParamsZ = z.object({
   parentExchangeOrderOID: z.string().optional(),
 }).passthrough();
 
+// Batch Create and Link types
+const BatchCreateAndLinkItemZ = z.object({
+  budgetEntryOID: z.string(),
+  quantity: z.number(),
+  unitAmount: z.number(),
+  tax: z.number(),
+  total: z.number(),
+});
+
+const BatchCreateAndLinkGroupZ = z.object({
+  supplierOID: z.string(),
+  currency: z.string(),
+  items: z.array(BatchCreateAndLinkItemZ),
+});
+
+const BatchCreateAndLinkExchangeOrdersRequestZ = z.object({
+  tenantOID: z.string(),
+  tourDepartureOID: z.string(),
+  groups: z.array(BatchCreateAndLinkGroupZ),
+});
+
 export type CreateExchangeOrder = z.infer<typeof CreateExchangeOrderZ>;
 export type UpdateExchangeOrder = z.infer<typeof UpdateExchangeOrderZ>;
 export type ExchangeOrderListParams = z.infer<typeof ExchangeOrderListParamsZ>;
+export type BatchCreateAndLinkExchangeOrdersRequest = z.infer<typeof BatchCreateAndLinkExchangeOrdersRequestZ>;
 
 export const exchangeOrderContract = initContract().router({
 
@@ -87,6 +109,14 @@ export const exchangeOrderContract = initContract().router({
       exchangeOrderOIDs: z.array(z.string().describe("OIDs of exchange orders to delete")),
     }),
     responses: { 200: z.boolean() },
+  },
+
+  batchCreateAndLinkExchangeOrders: {
+    summary: "Batch create exchange orders and link items to budget entries",
+    method: "POST",
+    path: `${basePath}/batch-create-and-link`,
+    body: BatchCreateAndLinkExchangeOrdersRequestZ,
+    responses: { 200: z.array(z.string().describe("OIDs of created exchange orders")) },
   },
 
 });
