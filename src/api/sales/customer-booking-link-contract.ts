@@ -17,6 +17,36 @@ const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
 
 export type CreateCustomerBookingLink = z.infer<typeof CreateCustomerBookingLinkBodyZ>;
 
+const CustomerPaxDetailZ = z.object({
+  paxOID: z.string(),
+  paxType: z.string(),
+  personalDetails: z.record(z.unknown()).nullable(),
+  mealPreference: z.string().nullable(),
+  remarks: z.string().nullable(),
+  isConfirmed: z.boolean(),
+  confirmedAt: z.string().nullable(),
+  roomOID: z.string().nullable(),
+  isLandTourOnly: z.boolean().optional(),
+});
+
+const GroupRoomDetailZ = z.object({
+  roomOID: z.string(),
+  roomNumber: z.string().nullable(),
+  status: z.string(),
+  notes: z.string().nullable(),
+  paxOIDs: z.array(z.string()),
+  isDoubleOccupancy: z.boolean(),
+});
+
+const IndependentRoomDetailZ = z.object({
+  roomOID: z.string(),
+  roomNumber: z.string().nullable(),
+  status: z.string(),
+  notes: z.string().nullable(),
+  paxOIDs: z.array(z.string()),
+  occupancy: z.record(z.unknown()),
+});
+
 // --- Customer Access Schemas ---
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CustomerLinkAccessRequestZ = z.object({
@@ -41,6 +71,8 @@ const CustomerBookingDataResponseZ = z.union([
     liveRoomCount: z.number(),
     livePaxCount: z.number(),
     createdAt: z.string(),
+    rooms: z.array(GroupRoomDetailZ),
+    pax: z.array(CustomerPaxDetailZ),
   }),
   // Independent Tour Booking Response (customer-safe fields only)
   z.object({
@@ -59,6 +91,8 @@ const CustomerBookingDataResponseZ = z.union([
     livePaxCount: z.number(),
     liveAddonCount: z.number(),
     createdAt: z.string(),
+    rooms: z.array(IndependentRoomDetailZ),
+    pax: z.array(CustomerPaxDetailZ.omit({ isLandTourOnly: true })),
   }),
 ]);
 
