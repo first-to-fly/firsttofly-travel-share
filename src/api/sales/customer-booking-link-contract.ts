@@ -7,7 +7,7 @@ import { CustomerBookingLinkZ } from "../../entities/Sales/CustomerBookingLink";
 // CD entities are not available in this submodule, so we'll just use the contract structure directly
 
 
-const basePath = "/api/sales/customer-booking-links";
+const basePath = "/api/customer-booking-links";
 
 // --- Create/Update Schemas ---
 const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
@@ -65,13 +65,16 @@ const CustomerBookingDataResponseZ = z.union([
 // Type inferred from the Zod schema
 export type CustomerBookingDataResponse = z.infer<typeof CustomerBookingDataResponseZ>;
 
-// --- Generate Response Schema ---
 const GenerateCustomerLinkResponseZ = z.object({
   linkOID: EntityOIDZ,
   linkUrl: z.string().url(), // URL with linkOID, not secure token
   expiresAt: z.string().optional(),
 });
 export type GenerateCustomerLinkResponse = z.infer<typeof GenerateCustomerLinkResponseZ>;
+
+const SecureTokenBodyZ = z.object({
+  secureToken: z.string().min(1, "secureToken is required"),
+});
 
 
 export const customerBookingLinkContract = initContract().router({
@@ -180,5 +183,18 @@ export const customerBookingLinkContract = initContract().router({
       }),
     },
   },
+  confirmBooking: {
+    summary: "Mark booking as customer confirmed",
+    method: "POST",
+    path: `${basePath}/booking/confirm`,
+    body: SecureTokenBodyZ,
+    responses: {
+      200: z.object({
+        bookingOID: z.string(),
+        isCustomerConfirmed: z.boolean(),
+      }),
+    },
+  },
   // #endregion
+
 });
