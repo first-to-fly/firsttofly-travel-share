@@ -17,6 +17,24 @@ const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
 
 export type CreateCustomerBookingLink = z.infer<typeof CreateCustomerBookingLinkBodyZ>;
 
+const CustomerPaxDocumentFileZ = z.object({
+  url: z.string(),
+  name: z.string().optional(),
+  mimeType: z.string().optional(),
+  size: z.number().optional(),
+});
+
+const CustomerPaxDocumentZ = z.object({
+  documentId: z.string(),
+  documentOID: z.string(),
+  type: z.string(),
+  name: z.string().optional(),
+  docIdentification: z.string().optional(),
+  issuedDate: z.string().optional(),
+  expiryDate: z.string().optional(),
+  files: z.array(CustomerPaxDocumentFileZ),
+});
+
 const CustomerPaxDetailZ = z.object({
   paxOID: z.string(),
   paxType: z.string(),
@@ -27,8 +45,7 @@ const CustomerPaxDetailZ = z.object({
   confirmedAt: z.string().nullable(),
   roomOID: z.string().nullable(),
   isLandTourOnly: z.boolean().optional(),
-  documentIds: z.array(z.string()),
-  documentOIDs: z.array(z.string()),
+  documents: z.array(CustomerPaxDocumentZ),
 });
 
 const GroupRoomDetailZ = z.object({
