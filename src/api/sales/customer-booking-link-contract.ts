@@ -27,6 +27,8 @@ const CustomerPaxDetailZ = z.object({
   confirmedAt: z.string().nullable(),
   roomOID: z.string().nullable(),
   isLandTourOnly: z.boolean().optional(),
+  documentIds: z.array(z.string()),
+  documentOIDs: z.array(z.string()),
 });
 
 const GroupRoomDetailZ = z.object({
