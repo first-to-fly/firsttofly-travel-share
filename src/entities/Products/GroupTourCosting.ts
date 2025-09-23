@@ -3,7 +3,7 @@ import { z } from "zod";
 import { DateISOStringZ } from "../../types/date";
 import { FTFSafeMaxNumberZ } from "../../types/number";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { CalculationBasis, CostingItemCategory, OccupancyType, PackageType } from "../Settings/Product/CostingItem";
+import { CalculationBasis, CostingItemCategory, OccupancyType, PackageType, QuantityMode } from "../Settings/Product/CostingItem";
 
 
 export enum GroupTourCostingEvents {
@@ -32,6 +32,7 @@ export const GroupTourCostingEntryZ = EntityZ.extend({
 
   remarks: z.string().nullish(),
 
+  quantityMode: z.nativeEnum(QuantityMode).default(QuantityMode.AUTO),
   quantity: FTFSafeMaxNumberZ({ name: "Quantity" }),
 
   isTieredPrice: z.boolean(),

@@ -16,6 +16,7 @@ const CreateCostingItemZ = CostingItemZ.pick({
   tenantOID: true,
   name: true,
   category: true,
+  quantityMode: true,
   calculationBasis: true,
   applyToPackageType: true,
   applyToOccupancyType: true,

@@ -186,7 +186,17 @@ export const groupTourBookingContract = initContract().router({
     path: `${basePath}/:bookingOID/cancel`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     summary: "Cancel a group tour booking",
-    body: z.object({}).optional(),
+    body: z.object({ remarks: z.string() }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  voidGroupTourBooking: {
+    method: "POST",
+    path: `${basePath}/:bookingOID/void`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    summary: "Void a group tour booking",
+    body: z.object({ remarks: z.string() }),
     responses: {
       200: z.boolean(),
     },
