@@ -36,6 +36,7 @@ export const GroupTourBookingZ = EntityZ.extend({
   overwriteDeposit: z.number().nullish(),
   saleStaffOID: EntityOIDZ.nullish(),
   saleReferrerOID: EntityOIDZ.nullish(),
+  remarks: z.string().nullish(),
 
   // Owner information
   ownerOIDs: z.array(EntityOIDZ).optional(),
