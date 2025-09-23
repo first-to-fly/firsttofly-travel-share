@@ -19,6 +19,7 @@ export const CreateGroupTourCostingEntryZ = GroupTourCostingEntryZ.pick({
   isTieredPrice: true,
   currency: true,
   prices: true,
+  quantityMode: true,
 });
 
 const UpdateGroupTourCostingEntryZ = CreateGroupTourCostingEntryZ.extend({
