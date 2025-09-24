@@ -44,6 +44,7 @@ export const IndependentTourBookingZ = EntityZ.extend({
   saleStaffOID: EntityOIDZ.nullish(),
   saleReferrerOID: EntityOIDZ.nullish(),
   remarks: z.string().nullish(),
+  insuranceDeclaration: z.string().nullish(),
 });
 
 export type IndependentTourBooking = z.infer<typeof IndependentTourBookingZ>;
