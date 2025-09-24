@@ -66,6 +66,58 @@ const IndependentRoomDetailZ = z.object({
   occupancy: z.record(z.unknown()),
 });
 
+// Payment information schemas for customer viewing
+const CustomerTransactionFileZ = z.object({
+  url: z.string(),
+  name: z.string().optional(),
+  mimeType: z.string().optional(),
+  size: z.number().optional(),
+});
+
+const CustomerPayerDetailsZ = z.object({
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  email: z.string().optional(),
+  mobile: z.string().optional(),
+});
+
+const CustomerPaymentWayZ = z.object({
+  name: z.string().optional(),
+  type: z.string().optional(),
+});
+
+const CustomerTransactionZ = z.object({
+  transactionId: z.string(),
+  amount: z.number(),
+  serviceFee: z.number(),
+  transactionType: z.string(),
+  transactionDate: z.string(),
+  status: z.string(),
+  transactionReference: z.string().optional(),
+  payerDetails: CustomerPayerDetailsZ.optional(),
+  paymentWay: CustomerPaymentWayZ.optional(),
+  receiptFiles: z.array(CustomerTransactionFileZ).optional(),
+});
+
+const CustomerPaymentOrderZ = z.object({
+  amount: z.number(),
+  received: z.number(),
+  minPaymentPrice: z.number(),
+  currencyCode: z.string(),
+  status: z.string(),
+});
+
+const CustomerPaymentInfoZ = z.object({
+  totalAmount: z.number(),
+  receivedAmount: z.number(),
+  outstandingAmount: z.number(),
+  currency: z.string().optional(),
+  paymentStatus: z.string(),
+  fullPaymentDueDate: z.string().optional(),
+  paymentOrder: CustomerPaymentOrderZ.optional(),
+  transactions: z.array(CustomerTransactionZ).optional(),
+});
+
 // --- Customer Access Schemas ---
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CustomerLinkAccessRequestZ = z.object({
@@ -92,6 +144,7 @@ const CustomerBookingDataResponseZ = z.union([
     createdAt: z.string(),
     rooms: z.array(GroupRoomDetailZ),
     pax: z.array(CustomerPaxDetailZ),
+    paymentInfo: CustomerPaymentInfoZ.optional(),
   }),
   // Independent Tour Booking Response (customer-safe fields only)
   z.object({
@@ -112,6 +165,7 @@ const CustomerBookingDataResponseZ = z.union([
     createdAt: z.string(),
     rooms: z.array(IndependentRoomDetailZ),
     pax: z.array(CustomerPaxDetailZ.omit({ isLandTourOnly: true })),
+    paymentInfo: CustomerPaymentInfoZ.optional(),
   }),
 ]);
 
