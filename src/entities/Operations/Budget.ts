@@ -25,7 +25,7 @@ export enum BudgetEvents {
 export const BudgetZ = EntityZ.extend({
   entityType: z.literal(EntityType.BUDGET),
 
-  tourDepartureOID: EntityOIDZ,
+  entityOID: EntityOIDZ,
   status: z.nativeEnum(BudgetStatus),
   remarks: z.string().nullish(),
   isArchived: z.boolean(),
