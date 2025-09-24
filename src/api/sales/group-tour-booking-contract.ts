@@ -31,6 +31,7 @@ const CreateGroupTourBookingBodyZ = GroupTourBookingZ.pick({
   overwriteDeposit: true,
   saleStaffOID: true,
   saleReferrerOID: true,
+  insuranceDeclaration: true,
   ownerOIDs: true,
 }).extend({
   bookingReference: GroupTourBookingZ.shape.bookingReference.optional(),

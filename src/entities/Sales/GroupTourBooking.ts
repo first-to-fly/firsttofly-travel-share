@@ -37,6 +37,7 @@ export const GroupTourBookingZ = EntityZ.extend({
   saleStaffOID: EntityOIDZ.nullish(),
   saleReferrerOID: EntityOIDZ.nullish(),
   remarks: z.string().nullish(),
+  insuranceDeclaration: z.string().nullish(),
 
   // Owner information
   ownerOIDs: z.array(EntityOIDZ).optional(),
