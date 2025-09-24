@@ -123,7 +123,7 @@ export const DEFAULT_TENANT_CONFIG_VALUES: TenantConfigTypes = {
       "I wish to purchase such travel insurance myself",
       "I wish to purchase such travel insurance later/I have already purchased/I do not wish to be insured",
     ],
-    mandatory: false,
+    mandatory: true,
   },
 };
 
