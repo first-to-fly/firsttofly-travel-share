@@ -7,7 +7,7 @@ import { CustomerBookingLinkZ } from "../../entities/Sales/CustomerBookingLink";
 // CD entities are not available in this submodule, so we'll just use the contract structure directly
 
 
-const basePath = "/api/sales/customer-booking-links";
+const basePath = "/api/customer-booking-links";
 
 // --- Create/Update Schemas ---
 const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
@@ -16,6 +16,107 @@ const CreateCustomerBookingLinkBodyZ = CustomerBookingLinkZ.pick({
 });
 
 export type CreateCustomerBookingLink = z.infer<typeof CreateCustomerBookingLinkBodyZ>;
+
+const CustomerPaxDocumentFileZ = z.object({
+  url: z.string(),
+  name: z.string().optional(),
+  mimeType: z.string().optional(),
+  size: z.number().optional(),
+});
+
+const CustomerPaxDocumentZ = z.object({
+  documentId: z.string(),
+  documentOID: z.string(),
+  type: z.string(),
+  name: z.string().optional(),
+  docIdentification: z.string().optional(),
+  issuedDate: z.string().optional(),
+  expiryDate: z.string().optional(),
+  files: z.array(CustomerPaxDocumentFileZ),
+});
+
+const CustomerPaxDetailZ = z.object({
+  paxOID: z.string(),
+  paxType: z.string(),
+  personalDetails: z.record(z.unknown()).nullable(),
+  mealPreference: z.string().nullable(),
+  remarks: z.string().nullable(),
+  isConfirmed: z.boolean(),
+  confirmedAt: z.string().nullable(),
+  roomOID: z.string().nullable(),
+  isLandTourOnly: z.boolean().optional(),
+  documents: z.array(CustomerPaxDocumentZ),
+});
+
+const GroupRoomDetailZ = z.object({
+  roomOID: z.string(),
+  roomNumber: z.string().nullable(),
+  status: z.string(),
+  notes: z.string().nullable(),
+  paxOIDs: z.array(z.string()),
+  isDoubleOccupancy: z.boolean(),
+});
+
+const IndependentRoomDetailZ = z.object({
+  roomOID: z.string(),
+  roomNumber: z.string().nullable(),
+  status: z.string(),
+  notes: z.string().nullable(),
+  paxOIDs: z.array(z.string()),
+  occupancy: z.record(z.unknown()),
+});
+
+// Payment information schemas for customer viewing
+const CustomerTransactionFileZ = z.object({
+  url: z.string(),
+  name: z.string().optional(),
+  mimeType: z.string().optional(),
+  size: z.number().optional(),
+});
+
+const CustomerPayerDetailsZ = z.object({
+  firstName: z.string().optional(),
+  lastName: z.string().optional(),
+  email: z.string().optional(),
+  mobile: z.string().optional(),
+});
+
+const CustomerPaymentWayZ = z.object({
+  name: z.string().optional(),
+  type: z.string().optional(),
+});
+
+const CustomerTransactionZ = z.object({
+  transactionId: z.string(),
+  amount: z.number(),
+  serviceFee: z.number(),
+  transactionType: z.string(),
+  transactionDate: z.string(),
+  status: z.string(),
+  transactionReference: z.string().optional(),
+  payerDetails: CustomerPayerDetailsZ.optional(),
+  paymentWay: CustomerPaymentWayZ.optional(),
+  receiptFiles: z.array(CustomerTransactionFileZ).optional(),
+});
+
+const CustomerPaymentOrderZ = z.object({
+  amount: z.number(),
+  received: z.number(),
+  minPaymentPrice: z.number(),
+  currencyCode: z.string(),
+  status: z.string(),
+});
+
+const CustomerPaymentInfoZ = z.object({
+  totalAmount: z.number(),
+  receivedAmount: z.number(),
+  outstandingAmount: z.number(),
+  currency: z.string().optional(),
+  paymentStatus: z.string(),
+  fullPaymentDueDate: z.string().optional(),
+  paymentOrder: CustomerPaymentOrderZ.optional(),
+  transactions: z.array(CustomerTransactionZ).optional(),
+});
 
 // --- Customer Access Schemas ---
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -41,6 +142,11 @@ const CustomerBookingDataResponseZ = z.union([
     liveRoomCount: z.number(),
     livePaxCount: z.number(),
     createdAt: z.string(),
+    isCustomerConfirmed: z.boolean(),
+    customerConfirmedAt: z.string().nullable(),
+    rooms: z.array(GroupRoomDetailZ),
+    pax: z.array(CustomerPaxDetailZ),
+    paymentInfo: CustomerPaymentInfoZ.optional(),
   }),
   // Independent Tour Booking Response (customer-safe fields only)
   z.object({
@@ -59,19 +165,27 @@ const CustomerBookingDataResponseZ = z.union([
     livePaxCount: z.number(),
     liveAddonCount: z.number(),
     createdAt: z.string(),
+    isCustomerConfirmed: z.boolean(),
+    customerConfirmedAt: z.string().nullable(),
+    rooms: z.array(IndependentRoomDetailZ),
+    pax: z.array(CustomerPaxDetailZ.omit({ isLandTourOnly: true })),
+    paymentInfo: CustomerPaymentInfoZ.optional(),
   }),
 ]);
 
 // Type inferred from the Zod schema
 export type CustomerBookingDataResponse = z.infer<typeof CustomerBookingDataResponseZ>;
 
-// --- Generate Response Schema ---
 const GenerateCustomerLinkResponseZ = z.object({
   linkOID: EntityOIDZ,
   linkUrl: z.string().url(), // URL with linkOID, not secure token
   expiresAt: z.string().optional(),
 });
 export type GenerateCustomerLinkResponse = z.infer<typeof GenerateCustomerLinkResponseZ>;
+
+const SecureTokenBodyZ = z.object({
+  secureToken: z.string().min(1, "secureToken is required"),
+});
 
 
 export const customerBookingLinkContract = initContract().router({
@@ -180,5 +294,18 @@ export const customerBookingLinkContract = initContract().router({
       }),
     },
   },
+  confirmBooking: {
+    summary: "Mark booking as customer confirmed",
+    method: "POST",
+    path: `${basePath}/booking/confirm`,
+    body: SecureTokenBodyZ,
+    responses: {
+      200: z.object({
+        bookingOID: z.string(),
+        isCustomerConfirmed: z.boolean(),
+      }),
+    },
+  },
   // #endregion
+
 });
