@@ -40,6 +40,10 @@ export const GroupTourBookingPaxPermissions = {
     name: "Update Tenant Group Tour Booking Pax",
     description: "Can update Group Tour Booking Pax within the tenant (usually via a group tour booking/room)",
   },
+  "tenant:group-tour-booking-pax:update-confirmed": {
+    name: "Update Confirmed Tenant Group Tour Booking Pax",
+    description: "Can update confirmed Group Tour Booking Pax within the tenant (usually via a group tour booking/room)",
+  },
   "tenant:group-tour-booking-pax:delete": {
     name: "Delete Tenant Group Tour Booking Pax",
     description: "Can delete Group Tour Booking Pax within the tenant (usually via a group tour booking/room)",

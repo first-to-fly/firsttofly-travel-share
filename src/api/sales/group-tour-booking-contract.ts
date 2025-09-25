@@ -75,8 +75,9 @@ const CreateGroupTourBookingPaxBodyZ = GroupTourBookingPaxZ.pick({
 });
 export type CreateGroupTourBookingPaxBody = z.infer<typeof CreateGroupTourBookingPaxBodyZ>;
 
-const UpdateGroupTourBookingPaxBodyZ = CreateGroupTourBookingPaxBodyZ.omit({
-}).partial();
+const UpdateGroupTourBookingPaxBodyZ = CreateGroupTourBookingPaxBodyZ.partial().extend({
+  isConfirmed: z.boolean().optional(),
+});
 export type UpdateGroupTourBookingPaxBody = z.infer<typeof UpdateGroupTourBookingPaxBodyZ>;
 
 
