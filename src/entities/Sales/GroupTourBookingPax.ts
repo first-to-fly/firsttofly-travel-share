@@ -13,6 +13,9 @@ export const GroupTourBookingPaxZ = EntityZ.extend({
   mealPreference: z.string().nullish(),
   transportRecordOID: EntityOIDZ.nullish(),
   documentOIDs: z.array(EntityOIDZ).nullish(),
+  remarks: z.string().nullish(),
+  isConfirmed: z.boolean().default(false),
+  confirmedAt: z.string().nullish(),
 }).omit({
   tenantOID: true,
 });
