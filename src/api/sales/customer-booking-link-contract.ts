@@ -127,7 +127,7 @@ export type CustomerLinkAccessRequest = z.infer<typeof CustomerLinkAccessRequest
 
 // Customer booking response with sensitive data removed for security
 // We create a union type that matches both GroupTour and IndependentTour booking structures
-const CustomerBookingDataResponseZ = z.union([
+export const CustomerBookingDataResponseZ = z.union([
   // Group Tour Booking Response (customer-safe fields only)
   z.object({
     bookingReference: z.string(),
