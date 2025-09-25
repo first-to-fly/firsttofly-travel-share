@@ -1,29 +1,41 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { PaymentStatus } from "../../entities/Products/GroupTourCosting";
-import { FTFSafeMaxNumberZ } from "../../types/number";
-import { CreateGroupTourCostingEntryZ } from "../products/group-tour-costing-contract";
+import { BudgetEntryZ } from "../../entities/Operations/BudgetEntry";
 
 
-export const BudgetEntryEvents = {
-  BUDGET_ENTRY_UPDATED: "BUDGET_ENTRY_UPDATED",
-  BUDGET_ENTRY_LIST_UPDATED: "BUDGET_ENTRY_LIST_UPDATED",
-} as const;
+export { BudgetEntryEvents } from "../../entities/Operations/BudgetEntry";
+
 
 const basePath = "/api/operations/budget-entries";
 
-const CreateBudgetEntryZ = CreateGroupTourCostingEntryZ.extend({
-  budgetOID: z.string(),
-  forexRate: FTFSafeMaxNumberZ({ name: "Forex rate" }),
-  localCurrency: z.string(),
-  localAmount: FTFSafeMaxNumberZ({ name: "Local amount" }),
-  paymentStatus: z.nativeEnum(PaymentStatus),
-  paidAmount: FTFSafeMaxNumberZ({ name: "Paid amount" }),
+const CreateBudgetEntryZ = BudgetEntryZ.pick({
+  tenantOID: true,
+  budgetOID: true,
+  supplierOID: true,
+  name: true,
+  category: true,
+  calculationBasis: true,
+  applyToPackageType: true,
+  applyToOccupancyType: true,
+  remarks: true,
+  quantityMode: true,
+  quantity: true,
+  isTieredPrice: true,
+  currency: true,
+  prices: true,
+  originalCostingEntryOID: true,
+  originalCostingEntityType: true,
+  forexRate: true,
+  localCurrency: true,
+  localAmount: true,
+  paymentStatus: true,
+  paidAmount: true,
 });
 
 const UpdateBudgetEntryZ = CreateBudgetEntryZ.omit({
   budgetOID: true,
+  tenantOID: true,
 }).partial();
 
 export type CreateBudgetEntry = z.infer<typeof CreateBudgetEntryZ>;

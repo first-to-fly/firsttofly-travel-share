@@ -31,7 +31,6 @@ export const IndependentTourBookingZ = EntityZ.extend({
   travelEndDate: DateISOStringZ.nullish(), // ISO datetime string
   platform: ProductPlatformZ.default(ProductPlatform.B2C),
 
-  snapshot: z.any().nullish(), // IndependentTourBookingSnapshotData
   metadata: IndependentTourBookingMetadataZ.nullish(),
   specialInstructions: z.array(z.string()).nullish(),
   overwriteTax: z.object({
