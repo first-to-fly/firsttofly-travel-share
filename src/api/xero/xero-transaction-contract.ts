@@ -18,6 +18,8 @@ export const BuildTxnStateZ = z.object({
     taxType: z.string().optional(),
     description: z.string().optional(),
   })).optional(),
+  contactId: z.string().optional(),
+  hasAttachments: z.boolean().optional(),
 });
 
 export type BuildTxnState = z.infer<typeof BuildTxnStateZ>;
@@ -74,6 +76,8 @@ export const xeroTransactionContract = initContract().router({
       stateId: z.string(),
       header: z.record(z.any()).optional(),
       lineOverrides: z.record(z.string(), z.record(z.any())).optional(),
+      contactId: z.string().optional(),
+      hasAttachments: z.boolean().optional(),
     }),
     responses: { 200: z.boolean() },
   },
