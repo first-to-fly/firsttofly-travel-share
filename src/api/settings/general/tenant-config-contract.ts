@@ -35,7 +35,7 @@ export const tenantConfigContract = initContract().router({
   updateTenantConfig: {
     summary: "Update a tenant config",
     method: "PATCH",
-    path: `${basePath}/:tenantConfigOID`,
+    path: `${basePath}/oid/:tenantConfigOID`,
     body: UpdateTenantConfigZ,
     responses: {
       200: z.string(),
