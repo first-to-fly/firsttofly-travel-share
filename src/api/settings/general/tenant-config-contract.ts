@@ -56,7 +56,7 @@ export const tenantConfigContract = initContract().router({
   },
 
   updateTenantConfigByKey: {
-    summary: "Update tenant config by key",
+    summary: "Update or create tenant config by key",
     method: "PATCH",
     path: `${basePath}/by-key`,
     query: z.object({
@@ -64,7 +64,7 @@ export const tenantConfigContract = initContract().router({
     }),
     body: UpdateTenantConfigByKeyZ,
     responses: {
-      200: z.string().describe("OID of updated tenant config"),
+      200: z.string().describe("OID of updated or created tenant config"),
     },
   },
 });
