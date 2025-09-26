@@ -4,7 +4,12 @@ import { z } from "zod";
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 import { ProductPlatform, ProductPlatformZ } from "../../types/platform";
 import { EntityOIDZ, EntityZ } from "../entity";
-import { GroupTourBookingMetadataZ } from "./GroupTourBookingMetadata";
+import { BaseBookingCustomerMetadataZ, GTBTransferMetadataZ } from "./BookingMetadata";
+
+// Inline metadata schemas for GTB
+// Combines base customer info with GTB-specific transfer metadata fields
+export const GroupTourBookingMetadataZ = BaseBookingCustomerMetadataZ.merge(GTBTransferMetadataZ);
+export type GroupTourBookingMetadata = z.infer<typeof GroupTourBookingMetadataZ>;
 
 
 export const GroupTourBookingZ = EntityZ.extend({
@@ -22,12 +27,19 @@ export const GroupTourBookingZ = EntityZ.extend({
   fullPaymentDueDate: z.string().nullish(),
   expectedCancelTime: z.string().datetime().nullish(),
   platform: ProductPlatformZ.default(ProductPlatform.B2C),
+  isCustomerConfirmed: z.boolean().default(false),
+  finalConfirmed: z.boolean().default(false),
   metadata: GroupTourBookingMetadataZ.nullish(),
   specialInstructions: z.array(z.string()).nullish(),
   overwriteTax: z.object({
     scheme: z.string(),
     rate: z.number().nonnegative(),
   }).nullish(),
+  overwriteDeposit: z.number().nullish(),
+  saleStaffOID: EntityOIDZ.nullish(),
+  saleReferrerOID: EntityOIDZ.nullish(),
+  remarks: z.string().nullish(),
+  insuranceDeclaration: z.string().nullish(),
 
   // Owner information
   ownerOIDs: z.array(EntityOIDZ).optional(),

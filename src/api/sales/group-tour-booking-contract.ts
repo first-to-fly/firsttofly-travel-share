@@ -28,6 +28,10 @@ const CreateGroupTourBookingBodyZ = GroupTourBookingZ.pick({
   metadata: true,
   specialInstructions: true,
   overwriteTax: true,
+  overwriteDeposit: true,
+  saleStaffOID: true,
+  saleReferrerOID: true,
+  insuranceDeclaration: true,
   ownerOIDs: true,
 }).extend({
   bookingReference: GroupTourBookingZ.shape.bookingReference.optional(),
@@ -71,8 +75,9 @@ const CreateGroupTourBookingPaxBodyZ = GroupTourBookingPaxZ.pick({
 });
 export type CreateGroupTourBookingPaxBody = z.infer<typeof CreateGroupTourBookingPaxBodyZ>;
 
-const UpdateGroupTourBookingPaxBodyZ = CreateGroupTourBookingPaxBodyZ.omit({
-}).partial();
+const UpdateGroupTourBookingPaxBodyZ = CreateGroupTourBookingPaxBodyZ.partial().extend({
+  isConfirmed: z.boolean().optional(),
+});
 export type UpdateGroupTourBookingPaxBody = z.infer<typeof UpdateGroupTourBookingPaxBodyZ>;
 
 
@@ -183,7 +188,17 @@ export const groupTourBookingContract = initContract().router({
     path: `${basePath}/:bookingOID/cancel`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
     summary: "Cancel a group tour booking",
-    body: z.object({}).optional(),
+    body: z.object({ remarks: z.string() }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  voidGroupTourBooking: {
+    method: "POST",
+    path: `${basePath}/:bookingOID/void`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    summary: "Void a group tour booking",
+    body: z.object({ remarks: z.string() }),
     responses: {
       200: z.boolean(),
     },
@@ -456,6 +471,57 @@ export const groupTourBookingContract = initContract().router({
     }),
     responses: {
       200: z.boolean(),
+      400: z.object({
+        error: z.object({
+          code: z.string(),
+          message: z.string(),
+        }),
+      }),
+    },
+  },
+  requestExtendBookingExpiry: {
+    summary: "Request automatic extension of booking expiry based on rules",
+    method: "POST",
+    path: `${basePath}/:bookingOID/request-extend-expiry`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+    }),
+    body: z.object({
+      approvalOID: EntityOIDZ.optional(),
+      remarks: z.string().optional(),
+    }),
+    responses: {
+      200: z.object({
+        success: z.boolean(),
+        extendableTime: z.number(),
+        requireApproval: z.boolean(),
+        remainingExtendedTimes: z.number(),
+        newExpiryTime: z.string().datetime().optional(),
+      }),
+      400: z.object({
+        error: z.object({
+          code: z.string(),
+          message: z.string(),
+        }),
+      }),
+    },
+  },
+  calculateExtendableTime: {
+    summary: "Calculate extendable time for booking without creating extension record",
+    method: "GET",
+    path: `${basePath}/:bookingOID/calculate-extendable-time`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+    }),
+    responses: {
+      200: z.object({
+        extendableTime: z.number(),
+        requireApproval: z.boolean(),
+        remainingExtendedTimes: z.number(),
+        balanceSeats: z.number(),
+        requestedSeats: z.number(),
+        extendedTimes: z.number(),
+      }),
       400: z.object({
         error: z.object({
           code: z.string(),

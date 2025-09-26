@@ -9,7 +9,13 @@ const UpdateTenantConfigZ = z.object({
   configValue: z.unknown(),
 });
 
+const UpdateTenantConfigByKeyZ = z.object({
+  configKey: z.string(),
+  configValue: z.unknown(),
+});
+
 export type UpdateTenantConfig = z.infer<typeof UpdateTenantConfigZ>;
+export type UpdateTenantConfigByKey = z.infer<typeof UpdateTenantConfigByKeyZ>;
 
 export const tenantConfigContract = initContract().router({
   getTenantConfigs: {
@@ -29,7 +35,7 @@ export const tenantConfigContract = initContract().router({
   updateTenantConfig: {
     summary: "Update a tenant config",
     method: "PATCH",
-    path: `${basePath}/:tenantConfigOID`,
+    path: `${basePath}/oid/:tenantConfigOID`,
     body: UpdateTenantConfigZ,
     responses: {
       200: z.string(),
@@ -46,6 +52,19 @@ export const tenantConfigContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated tenant configs")),
+    },
+  },
+
+  updateTenantConfigByKey: {
+    summary: "Update or create tenant config by key",
+    method: "PATCH",
+    path: `${basePath}/by-key`,
+    query: z.object({
+      tenantOID: z.string(),
+    }),
+    body: UpdateTenantConfigByKeyZ,
+    responses: {
+      200: z.string().describe("OID of updated or created tenant config"),
     },
   },
 });

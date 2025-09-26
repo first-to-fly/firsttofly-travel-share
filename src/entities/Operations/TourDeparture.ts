@@ -79,6 +79,7 @@ export const TourDepartureZ = EntityZ.extend({
 
   tourLeaderOIDs: z.array(EntityOIDZ).nullish(),
   tourManagerOIDs: z.array(EntityOIDZ).nullish(),
+  hardpush: z.boolean().nullish().default(false),
 });
 
 export type TourDeparture = z.infer<typeof TourDepartureZ>;

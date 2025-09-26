@@ -25,6 +25,11 @@ export enum CalculationBasis {
   PER_TOUR_LEAD_OR_MANAGER = "per-tour-lead-or-manager",
 }
 
+export enum QuantityMode {
+  AUTO = "auto",
+  MANUAL = "manual",
+}
+
 export enum PackageType {
   BOTH = "both",
   FULL_ONLY = "full-only",
@@ -57,6 +62,7 @@ export const CostingItemZ = EntityZ.extend({
 
   name: z.string(),
   category: z.nativeEnum(CostingItemCategory),
+  quantityMode: z.nativeEnum(QuantityMode),
   calculationBasis: z.nativeEnum(CalculationBasis),
   applyToPackageType: z.nativeEnum(PackageType),
   applyToOccupancyType: z.nativeEnum(OccupancyType),

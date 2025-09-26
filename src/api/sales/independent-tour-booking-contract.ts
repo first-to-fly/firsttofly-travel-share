@@ -29,6 +29,10 @@ const CreateIndependentTourBookingBodyZ = IndependentTourBookingZ.pick({
   metadata: true,
   specialInstructions: true,
   overwriteTax: true,
+  overwriteDeposit: true,
+  saleStaffOID: true,
+  saleReferrerOID: true,
+  insuranceDeclaration: true,
 }).extend({
   bookingReference: IndependentTourBookingZ.shape.bookingReference.optional(),
   travelStartDate: IndependentTourBookingZ.shape.travelStartDate.optional(),
@@ -69,6 +73,7 @@ const UpdateIndependentTourBookingPaxBodyZ = IndependentTourBookingPaxZ.pick({
   personalDetails: true,
   mealPreference: true,
   documentOIDs: true,
+  isConfirmed: true,
 }).partial();
 export type UpdateIndependentTourBookingPaxBody = z.infer<typeof UpdateIndependentTourBookingPaxBodyZ>;
 
@@ -219,7 +224,17 @@ export const independentTourBookingContract = initContract().router({
     method: "POST",
     path: `${basePath}/:bookingOID/cancel`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: z.object({}).optional(),
+    body: z.object({ remarks: z.string() }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  voidIndependentTourBooking: {
+    summary: "Void an independent tour booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/void`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({ remarks: z.string() }),
     responses: {
       200: z.boolean(),
     },

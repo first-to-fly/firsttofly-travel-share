@@ -4,7 +4,12 @@ import { z } from "zod";
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 import { ProductPlatform, ProductPlatformZ } from "../../types/platform";
 import { DateISOStringZ, EntityOIDZ, EntityZ } from "../entity";
-import { IndependentTourBookingMetadataZ } from "./IndependentTourBookingMetadata";
+import { BaseBookingCustomerMetadataZ, ITBTransferMetadataZ } from "./BookingMetadata";
+
+// Inline metadata schemas for ITB
+// Combines base customer info with ITB-specific transfer metadata fields
+export const IndependentTourBookingMetadataZ = BaseBookingCustomerMetadataZ.merge(ITBTransferMetadataZ);
+export type IndependentTourBookingMetadata = z.infer<typeof IndependentTourBookingMetadataZ>;
 
 
 export const IndependentTourBookingZ = EntityZ.extend({
@@ -25,14 +30,20 @@ export const IndependentTourBookingZ = EntityZ.extend({
   travelStartDate: DateISOStringZ.nullish(), // ISO datetime string
   travelEndDate: DateISOStringZ.nullish(), // ISO datetime string
   platform: ProductPlatformZ.default(ProductPlatform.B2C),
+  isCustomerConfirmed: z.boolean().default(false),
+  finalConfirmed: z.boolean().default(false),
 
-  snapshot: z.any().nullish(), // IndependentTourBookingSnapshotData
   metadata: IndependentTourBookingMetadataZ.nullish(),
   specialInstructions: z.array(z.string()).nullish(),
   overwriteTax: z.object({
     scheme: z.string(),
     rate: z.number(),
   }).nullish(),
+  overwriteDeposit: z.number().nullish(),
+  saleStaffOID: EntityOIDZ.nullish(),
+  saleReferrerOID: EntityOIDZ.nullish(),
+  remarks: z.string().nullish(),
+  insuranceDeclaration: z.string().nullish(),
 });
 
 export type IndependentTourBooking = z.infer<typeof IndependentTourBookingZ>;

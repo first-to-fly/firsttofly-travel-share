@@ -87,6 +87,8 @@ export const IndependentTourProductZ = EntityZ.extend({
     file: NamedURLZ,
     updatedAt: z.string(),
   })).nullish(),
+
+  hardpush: z.boolean().nullish(),
 });
 
 export type IndependentTourProduct = z.infer<typeof IndependentTourProductZ>;

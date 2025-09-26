@@ -37,6 +37,7 @@ const CreateTourDepartureZ = TourDepartureZ.pick({
   assembleLocationAirlineOID: true,
   assembleAirlineLocationTime: true,
   hkSeat: true,
+  hardpush: true,
 }).extend({
   departureCode: TourDepartureZ.shape.departureCode.optional(),
 });
@@ -134,6 +135,21 @@ export const tourDepartureContract = initContract().router({
     }),
     responses: {
       200: z.array(z.string().describe("OIDs of cancelled tour departures")),
+    },
+  },
+
+  regenerateTourDepartureCode: {
+    summary: "Regenerate departure code for a tour departure",
+    method: "POST",
+    path: `${basePath}/regenerate-code`,
+    body: z.object({
+      tourDepartureOID: z.string().describe("OID of tour departure to regenerate code for"),
+    }),
+    responses: {
+      200: z.object({
+        tourDepartureOID: z.string().describe("OID of the updated tour departure"),
+        newDepartureCode: z.string().describe("The newly generated departure code"),
+      }),
     },
   },
 });
