@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
 import { CustomerBookingLinkZ } from "../../entities/Sales/CustomerBookingLink";
+import { NamedURLZ } from "../../types/url";
 // CD entities are not available in this submodule, so we'll just use the contract structure directly
 
 
@@ -118,6 +119,17 @@ const CustomerPaymentInfoZ = z.object({
   transactions: z.array(CustomerTransactionZ).optional(),
 });
 
+const CustomerTermConditionZ = z.object({
+  termConditionOID: z.string(),
+  name: z.string(),
+  type: z.string(),
+  description: z.string().nullable(),
+  remarks: z.string().nullable(),
+  pdf: NamedURLZ.nullable(),
+  isCustomized: z.boolean(),
+  isPrint: z.boolean(),
+});
+
 // --- Customer Access Schemas ---
 // eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CustomerLinkAccessRequestZ = z.object({
@@ -141,12 +153,16 @@ export const CustomerBookingDataResponseZ = z.union([
     specialInstructions: z.array(z.string()).nullable(),
     liveRoomCount: z.number(),
     livePaxCount: z.number(),
+    liveAddonCount: z.number(),
+    travelStartDate: z.string().nullable(),
+    travelEndDate: z.string().nullable(),
     createdAt: z.string(),
     isCustomerConfirmed: z.boolean(),
     customerConfirmedAt: z.string().nullable(),
     rooms: z.array(GroupRoomDetailZ),
     pax: z.array(CustomerPaxDetailZ),
     paymentInfo: CustomerPaymentInfoZ.optional(),
+    termsAndConditions: z.array(CustomerTermConditionZ),
   }),
   // Independent Tour Booking Response (customer-safe fields only)
   z.object({
@@ -170,6 +186,7 @@ export const CustomerBookingDataResponseZ = z.union([
     rooms: z.array(IndependentRoomDetailZ),
     pax: z.array(CustomerPaxDetailZ.omit({ isLandTourOnly: true })),
     paymentInfo: CustomerPaymentInfoZ.optional(),
+    termsAndConditions: z.array(CustomerTermConditionZ),
   }),
 ]);
 
