@@ -1,5 +1,6 @@
 import { DiscountMode } from "../../entities/Settings/Product/Discount";
 import type { BookingPaxType } from "../../enums/BookingTypes";
+import type { CurrencyConversion } from "../pricing/types";
 
 
 const MILLISECONDS_PER_DAY = 1000 * 60 * 60 * 24;
@@ -7,18 +8,25 @@ const DECIMAL_PLACES = 2;
 const MIN_NIGHTS = 1;
 const DEFAULT_NIGHTS = 1;
 
+function roundToDecimalPlaces(value: number, decimalPlaces: number = DECIMAL_PLACES): number {
+  const multiplier = 10 ** decimalPlaces;
+  return Math.round(value * multiplier) / multiplier;
+}
+
 export interface IndependentTourBookingPax {
   type: BookingPaxType;
 }
 
 export interface IndependentTourBookingAddon {
   totalPrice?: number | string | null;
+  currency?: string | null;
 }
 
 export interface IndependentTourBookingDiscount {
   appliedAmount?: number | string | null;
-  discountMode?: DiscountMode | `${DiscountMode}` | null;
+  discountMode?: DiscountMode | `${DiscountMode}` | "percentage" | "amount" | null;
   discountValue?: number | string | null;
+  currency?: string | null;
 }
 
 export interface IndependentTourOverwriteTax {
@@ -86,6 +94,8 @@ export interface IndependentTourBookingPriceInput {
   discounts?: IndependentTourBookingDiscount[];
   accommodation?: AccommodationPricingInfo | null;
   overwriteTax?: IndependentTourOverwriteTax | null;
+  homeCurrency?: string;
+  supportCurrencies?: CurrencyConversion[];
 }
 
 function toFiniteNumber(value: number | string | null | undefined): number {
@@ -103,6 +113,13 @@ function normalizeDiscountMode(mode: IndependentTourBookingDiscount["discountMod
   }
 
   if (typeof mode === "string") {
+    if (mode === "percentage") {
+      return DiscountMode.PERCENTAGE;
+    }
+    if (mode === "amount") {
+      return DiscountMode.FIXED_AMOUNT;
+    }
+
     const entries = Object.values(DiscountMode) as string[];
     if (entries.includes(mode)) {
       return mode as DiscountMode;
@@ -116,6 +133,8 @@ function normalizeDiscountMode(mode: IndependentTourBookingDiscount["discountMod
 function calculateDiscountTotals(
   baseAmount: number,
   discounts: IndependentTourBookingDiscount[],
+  homeCurrency: string,
+  supportCurrencies: CurrencyConversion[],
 ): { totalDiscount: number } {
   if (discounts.length === 0) {
     return { totalDiscount: 0 };
@@ -129,8 +148,6 @@ function calculateDiscountTotals(
     return result < 0 ? 0 : result;
   };
 
-  const round = (value: number): number => roundToDecimalPlaces(value);
-
   const fixedDiscounts = discounts.filter((discount) => {
     const mode = normalizeDiscountMode(discount.discountMode);
     return mode === DiscountMode.FIXED_AMOUNT ||
@@ -143,14 +160,15 @@ function calculateDiscountTotals(
   const unspecifiedDiscounts = discounts.filter((discount) => !normalizeDiscountMode(discount.discountMode));
 
   const applyDiscountAmount = (amount: number) => {
-    const bounded = Math.min(round(amount), remainingAmount);
+    const bounded = Math.min(roundToDecimalPlaces(amount), remainingAmount);
     totalDiscount += bounded;
     remainingAmount = safeSubtract(remainingAmount, bounded);
   };
 
   for (const discount of fixedDiscounts) {
     const mode = normalizeDiscountMode(discount.discountMode);
-    const value = toFiniteNumber(discount.discountValue ?? discount.appliedAmount);
+    const rawValue = toFiniteNumber(discount.discountValue ?? discount.appliedAmount);
+    const value = convertAmount(rawValue, discount.currency ?? null, homeCurrency, supportCurrencies);
 
     if (mode === DiscountMode.FREE_GIFT) {
       continue;
@@ -184,7 +202,8 @@ function calculateDiscountTotals(
   }
 
   for (const discount of unspecifiedDiscounts) {
-    const amount = toFiniteNumber(discount.appliedAmount);
+    const rawAmount = toFiniteNumber(discount.appliedAmount);
+    const amount = convertAmount(rawAmount, discount.currency ?? null, homeCurrency, supportCurrencies);
     if (amount <= 0) {
       continue;
     }
@@ -192,13 +211,77 @@ function calculateDiscountTotals(
   }
 
   return {
-    totalDiscount: round(totalDiscount),
+    totalDiscount: roundToDecimalPlaces(totalDiscount),
   };
 }
 
-function roundToDecimalPlaces(value: number, decimalPlaces: number = DECIMAL_PLACES): number {
-  const multiplier = 10 ** decimalPlaces;
-  return Math.round(value * multiplier) / multiplier;
+function getConversionRate(
+  sourceCurrency: string | null | undefined,
+  homeCurrency: string,
+  supportCurrencies: CurrencyConversion[],
+): number | null {
+  if (!sourceCurrency) return null;
+  if (sourceCurrency === homeCurrency) return 1;
+
+  const matched = supportCurrencies.find((currencyItem) => currencyItem.currency === sourceCurrency);
+  if (!matched || !matched.rate || matched.rate <= 0) {
+    return null;
+  }
+
+  return matched.rate;
+}
+
+function convertAmount(
+  amount: number,
+  sourceCurrency: string | null | undefined,
+  homeCurrency: string,
+  supportCurrencies: CurrencyConversion[],
+): number {
+  if (!amount) {
+    return 0;
+  }
+
+  const rate = getConversionRate(sourceCurrency, homeCurrency, supportCurrencies);
+  if (!rate || rate === 1) {
+    return amount;
+  }
+
+  return amount * rate;
+}
+
+function normalizeAccommodationPricing(
+  accommodation: AccommodationPricingInfo,
+  homeCurrency: string,
+  supportCurrencies: CurrencyConversion[],
+): AccommodationPricingInfo {
+  const sourceCurrency = accommodation.priceValue?.currency ?? null;
+  const rate = getConversionRate(sourceCurrency, homeCurrency, supportCurrencies);
+
+  if (!rate || rate === 1 || !accommodation.priceValue) {
+    return accommodation;
+  }
+
+  const paxPricing = accommodation.priceValue.paxPricing || {};
+  const convertedPaxPricing: Partial<Record<BookingPaxType, number>> = {};
+  for (const [paxType, price] of Object.entries(paxPricing)) {
+    const numericPrice = toFiniteNumber(price as number | string | null);
+    convertedPaxPricing[paxType as BookingPaxType] = numericPrice * rate;
+  }
+
+  return {
+    ...accommodation,
+    priceValue: {
+      ...accommodation.priceValue,
+      currency: homeCurrency,
+      paxPricing: convertedPaxPricing,
+      peakSurchargeFixedAmount: accommodation.priceValue.peakSurchargeFixedAmount != null ?
+        accommodation.priceValue.peakSurchargeFixedAmount * rate :
+        accommodation.priceValue.peakSurchargeFixedAmount,
+      extraNightPrice: accommodation.priceValue.extraNightPrice != null ?
+        accommodation.priceValue.extraNightPrice * rate :
+        accommodation.priceValue.extraNightPrice,
+    },
+  };
 }
 
 function normalizeDate(date: string | Date): Date {
@@ -309,12 +392,20 @@ export function calculateAccommodationPrice(
   paxList: IndependentTourBookingPax[],
   travelStartDate: string | Date,
   travelEndDate: string | Date,
+  homeCurrency: string,
+  supportCurrencies: CurrencyConversion[],
 ): AccommodationPriceBreakdown {
+  const normalizedAccommodation = normalizeAccommodationPricing(
+    accommodation,
+    homeCurrency,
+    supportCurrencies,
+  );
+
   const totalNights = calculateNights(travelStartDate, travelEndDate);
   const peakNights = calculatePeakNights(
     travelStartDate,
     travelEndDate,
-    accommodation.peakPeriods || [],
+    normalizedAccommodation.peakPeriods || [],
   );
   const regularNights = totalNights - peakNights;
 
@@ -324,13 +415,13 @@ export function calculateAccommodationPrice(
   let totalPeakSurcharge = 0;
 
   paxByType.forEach((quantity, paxType) => {
-    const basePricePerNight = getPaxPrice(accommodation.priceValue?.paxPricing, paxType);
+    const basePricePerNight = getPaxPrice(normalizedAccommodation.priceValue?.paxPricing, paxType);
     const { unitPrice, subTotal, peakSurcharge } = calculatePaxTypePrice(
       quantity,
       basePricePerNight,
       regularNights,
       peakNights,
-      accommodation.priceValue?.peakSurchargeFixedAmount ?? null,
+      normalizedAccommodation.priceValue?.peakSurchargeFixedAmount ?? null,
     );
 
     paxPrices.push({
@@ -344,7 +435,7 @@ export function calculateAccommodationPrice(
     totalPeakSurcharge += peakSurcharge;
   });
 
-  const taxRate = accommodation.priceValue?.tax ?? 0;
+  const taxRate = normalizedAccommodation.priceValue?.tax ?? 0;
   const totalTax = taxRate ? totalAccommodationCost * (toFiniteNumber(taxRate) / 100) : 0;
 
   return {
@@ -441,6 +532,8 @@ export function calculateIndependentTourBookingPrice(
     addons = [],
     discounts = [],
     overwriteTax,
+    homeCurrency = "USD",
+    supportCurrencies = [],
   } = input;
 
   let accommodationCost = 0;
@@ -452,13 +545,18 @@ export function calculateIndependentTourBookingPrice(
       paxList,
       travelStartDate,
       travelEndDate,
+      homeCurrency,
+      supportCurrencies,
     );
     accommodationCost = accommodationBreakdown.totalAccommodationCost;
     accommodationTax = accommodationBreakdown.totalTax;
   }
 
   const optionalServicesCost = addons.reduce(
-    (total, addon) => total + toFiniteNumber(addon.totalPrice),
+    (total, addon) => {
+      const amount = toFiniteNumber(addon.totalPrice);
+      return total + convertAmount(amount, addon.currency ?? null, homeCurrency, supportCurrencies);
+    },
     0,
   );
 
@@ -467,6 +565,8 @@ export function calculateIndependentTourBookingPrice(
   const discountTotals = calculateDiscountTotals(
     accommodationCost + optionalServicesCost + miscellaneousCost,
     discounts,
+    homeCurrency,
+    supportCurrencies,
   );
   const discountAmount = discountTotals.totalDiscount;
 
