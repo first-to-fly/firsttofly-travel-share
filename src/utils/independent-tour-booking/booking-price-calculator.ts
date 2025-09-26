@@ -228,7 +228,7 @@ function getConversionRate(
     return null;
   }
 
-  return matched.rate;
+  return 1 / matched.rate;
 }
 
 function convertAmount(
