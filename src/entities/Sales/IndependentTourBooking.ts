@@ -33,7 +33,6 @@ export const IndependentTourBookingZ = EntityZ.extend({
   isCustomerConfirmed: z.boolean().default(false),
   finalConfirmed: z.boolean().default(false),
 
-  snapshot: z.any().nullish(), // IndependentTourBookingSnapshotData
   metadata: IndependentTourBookingMetadataZ.nullish(),
   specialInstructions: z.array(z.string()).nullish(),
   overwriteTax: z.object({
