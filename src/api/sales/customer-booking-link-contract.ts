@@ -290,7 +290,8 @@ export const customerBookingLinkContract = initContract().router({
       200: z.object({
         verified: z.boolean(),
         message: z.string(),
-        secureToken: z.string().optional(), // Return secure token on successful validation
+        secureToken: z.string(), // Return secure token on successful validation
+        expiresAt: z.string(),
       }),
     },
   },
