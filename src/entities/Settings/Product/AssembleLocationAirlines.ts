@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { NamedURLZ } from "../../../types/url";
 import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -16,7 +17,7 @@ export const AssembleLocationAirlinesZ = EntityZ.extend({
 
   airlineCode: z.string(),
   airportCode: z.string(),
-  files: z.array(z.string().url()).nullable(),
+  files: z.array(NamedURLZ).nullable(),
   location: z.string().nullable(),
   isActive: z.boolean(),
 });
