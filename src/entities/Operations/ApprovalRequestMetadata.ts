@@ -382,6 +382,8 @@ export const ApprovalRequestCustomerRefundMetadataZ = z.object({
   tenantOID: EntityOIDZ,
   currencyCode: z.string().optional(),
   notes: z.string().optional(),
+  internalRemarks: z.string().optional(),
+  externalRemarks: z.string().optional(),
 });
 
 export type ApprovalRequestCustomerRefundMetadata =
@@ -395,6 +397,8 @@ export const ApprovalRequestCustomerCancellationFeeMetadataZ = z.object({
   tenantOID: EntityOIDZ,
   currencyCode: z.string().optional(),
   notes: z.string().optional(),
+  internalRemarks: z.string().optional(),
+  externalRemarks: z.string().optional(),
 });
 
 export type ApprovalRequestCustomerCancellationFeeMetadata =

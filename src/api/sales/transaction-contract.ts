@@ -25,6 +25,8 @@ const CreateTransactionZ = TransactionZ.pick({
   status: true,
   transactionReference: true,
   notes: true,
+  internalRemarks: true,
+  externalRemarks: true,
   metadata: true,
   files: true,
 });
