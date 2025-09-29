@@ -5,6 +5,7 @@ import { BookingDiscountTypeZ, BookingPaxPersonalDetailsZ, BookingPaxType } from
 import { EntityOIDZ } from "../entity";
 import { BillStatus } from "../Finance/Bill";
 import { MatchDocStatus } from "../Finance/MatchDoc";
+import { GroupTourPricingFareStructureZ } from "../Products/GroupTourPricing";
 import { GroupTourBookingAddonTypeZ } from "../Sales/GroupTourBookingAddon";
 import { IndependentTourBookingAddonTypeZ } from "../Sales/IndependentTourBookingAddon";
 import { ApprovalType } from "../Settings/General/Approval";
@@ -165,6 +166,10 @@ export const ApprovalRequestGroupTourBookingAmendmentMetadataZ = z.object({
       rate: z.number(),
     }).optional(),
     totalAmount: z.number(),
+    overridePricing: z.object({
+      fullFare: GroupTourPricingFareStructureZ.partial().optional(),
+      landFare: GroupTourPricingFareStructureZ.partial().optional(),
+    }).optional(),
     primaryContact: z.object({
       oid: z.string().optional(),
       title: z.string(),
