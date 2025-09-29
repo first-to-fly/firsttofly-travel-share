@@ -74,6 +74,7 @@ const UpdateIndependentTourBookingPaxBodyZ = IndependentTourBookingPaxZ.pick({
   mealPreference: true,
   documentOIDs: true,
   isConfirmed: true,
+  isLocked: true,
 }).partial();
 export type UpdateIndependentTourBookingPaxBody = z.infer<typeof UpdateIndependentTourBookingPaxBodyZ>;
 
