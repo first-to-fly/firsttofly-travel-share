@@ -48,6 +48,8 @@ export const TransactionZ = EntityZ.extend({
   status: TransactionStatusZ,
   transactionReference: z.string().nullish(),
   notes: z.string().nullish(),
+  internalRemarks: z.string().nullish(),
+  externalRemarks: z.string().nullish(),
   metadata: z.record(z.unknown()).nullish(),
   files: z.array(NamedURLZ).default([]),
 });

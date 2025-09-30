@@ -72,6 +72,7 @@ const CreateGroupTourBookingPaxBodyZ = GroupTourBookingPaxZ.pick({
   mealPreference: true,
   transportRecordId: true,
   documentOIDs: true,
+  isLocked: true,
 });
 export type CreateGroupTourBookingPaxBody = z.infer<typeof CreateGroupTourBookingPaxBodyZ>;
 

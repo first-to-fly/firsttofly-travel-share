@@ -15,6 +15,7 @@ export const IndependentTourBookingPaxZ = EntityZ.extend({
   remarks: z.string().nullish(),
   isConfirmed: z.boolean().default(false),
   confirmedAt: z.string().nullish(),
+  isLocked: z.boolean().default(false),
 });
 
 export type IndependentTourBookingPax = z.infer<typeof IndependentTourBookingPaxZ>;
