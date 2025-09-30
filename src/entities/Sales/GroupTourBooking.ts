@@ -28,7 +28,6 @@ export const GroupTourBookingZ = EntityZ.extend({
   expectedCancelTime: z.string().datetime().nullish(),
   platform: ProductPlatformZ.default(ProductPlatform.B2C),
   isCustomerConfirmed: z.boolean().default(false),
-  finalConfirmed: z.boolean().default(false),
   metadata: GroupTourBookingMetadataZ.nullish(),
   specialInstructions: z.array(z.string()).nullish(),
   overwriteTax: z.object({
