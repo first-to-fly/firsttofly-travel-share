@@ -12,12 +12,8 @@ export enum TenantApiStatus {
 
 export const TenantApiZ = EntityZ.extend({
   entityType: z.literal(EntityType.FTF_TENANT_API),
-  code: z.string(),
   name: z.string(),
   status: z.nativeEnum(TenantApiStatus).default(TenantApiStatus.ACTIVE),
-  allowedIPs: z.array(z.string()).optional(),
-  rateLimitPerMin: z.number().int().positive().optional(),
-  description: z.string().optional(),
   keyId: z.string(),
   secretMasked: z.string(),
   revokedAt: DateISOStringZ.optional(),
