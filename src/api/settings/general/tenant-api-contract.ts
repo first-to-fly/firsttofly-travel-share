@@ -7,20 +7,29 @@ import { TenantApiZ } from "../../../entities/Settings/General/TenantApi";
 
 const basePath = "/api/settings/tenant-apis";
 
-export const CreateTenantApiZ = TenantApiZ.pick({
-  code: true,
-  name: true,
-  description: true,
-  allowedIPs: true,
-  rateLimitPerMin: true,
+// Create request - only includes name and tenantOID
+export const CreateTenantApiZ = z.object({
+  tenantOID: z.string().describe("OID of the tenant this API key belongs to"),
+  name: z.string().describe("Human-readable name for the API key"),
 });
 export type CreateTenantApi = z.infer<typeof CreateTenantApiZ>;
 
-export const UpdateTenantApiZ = CreateTenantApiZ.partial().extend({
+// Create response - returns OID, keyId, and secret
+export const CreateTenantApiResponseZ = z.object({
+  tenantApiOID: z.string().describe("OID of the created tenant API key"),
+  keyId: z.string().describe("The public key ID (e.g., 'ftf_live_abc123')"),
+  secret: z.string().describe("The secret key (returned only once - store it securely!)"),
+});
+export type CreateTenantApiResponse = z.infer<typeof CreateTenantApiResponseZ>;
+
+// Update request - only name and status can be updated
+export const UpdateTenantApiZ = z.object({
+  name: z.string().optional(),
   status: TenantApiZ.shape.status.optional(),
 });
 export type UpdateTenantApi = z.infer<typeof UpdateTenantApiZ>;
 
+// Rotate key response
 export const RotateKeyResponseZ = z.object({
   keyId: z.string(),
   secret: z.string(),
@@ -35,7 +44,7 @@ export const tenantApiContract = initContract().router({
     summary: "Create a new tenant API key",
     body: CreateTenantApiZ,
     responses: {
-      200: z.string().describe("OID of the created tenant API key"),
+      200: CreateTenantApiResponseZ,
     },
   },
   updateTenantApi: {
