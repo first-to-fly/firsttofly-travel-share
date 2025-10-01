@@ -59,6 +59,7 @@ export enum EntityType {
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
   TENANT_CONFIG = "tenantConfig",
+  FTF_TENANT_API = "ftfTenantApi",
 
   // SUPPLIER MANAGEMENT
   SUPPLIER = "supplier",
