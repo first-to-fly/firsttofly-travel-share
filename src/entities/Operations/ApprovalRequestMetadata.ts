@@ -404,6 +404,38 @@ export const ApprovalRequestCustomerCancellationFeeMetadataZ = z.object({
 export type ApprovalRequestCustomerCancellationFeeMetadata =
   z.infer<typeof ApprovalRequestCustomerCancellationFeeMetadataZ>;
 
+export const ApprovalRequestBookingCancellationMetadataZ = z.object({
+  type: z.literal(ApprovalType.BOOKING_CANCELLATION_WITH_FINANCIALS),
+  bookingOID: EntityOIDZ,
+  tenantOID: EntityOIDZ,
+  cancellationReason: z.string().optional(),
+  refund: z
+    .object({
+      requestedAmount: z.number().nonnegative(),
+      currencyCode: z.string().optional(),
+      internalRemarks: z.string().optional(),
+      externalRemarks: z.string().optional(),
+    })
+    .optional(),
+  cancellationFee: z
+    .object({
+      amount: z.number().nonnegative(),
+      currencyCode: z.string().optional(),
+      internalRemarks: z.string().optional(),
+      externalRemarks: z.string().optional(),
+    })
+    .optional(),
+  financialSummary: z.object({
+    receivedAmount: z.number(),
+    refundAmount: z.number(),
+    cancellationFeeAmount: z.number(),
+    netImpactToCustomer: z.number(),
+  }),
+});
+
+export type ApprovalRequestBookingCancellationMetadata =
+  z.infer<typeof ApprovalRequestBookingCancellationMetadataZ>;
+
 export const ApprovalRequestBookingExtensionMetadataZ = z.object({
   type: z.literal(ApprovalType.BOOKING_EXTENSION),
   extensionRequestID: z.string(),
@@ -547,6 +579,7 @@ export const ApprovalRequestMetadataZ = z.union([
   ApprovalRequestBillDraftToSubmittedMetadataZ,
   ApprovalRequestCustomerRefundMetadataZ,
   ApprovalRequestCustomerCancellationFeeMetadataZ,
+  ApprovalRequestBookingCancellationMetadataZ,
   ApprovalRequestBookingExtensionMetadataZ,
   ApprovalRequestBookingTransferMetadataZ,
 ]);
