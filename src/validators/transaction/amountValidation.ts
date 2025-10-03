@@ -10,6 +10,7 @@ export interface MinimalTransaction {
 
 export interface PaymentOrderAggregates {
   received: number; // net: receipts (+) + refunds (-)
+  totalJournals: number; // sum of journal amounts
   totalReceipts: number; // sum of receipt amounts (positive)
   totalRefundsAbs: number; // sum of abs(refund amounts) for display
   totalCancellationFeeAbs: number; // sum of abs(cancellation fees)
@@ -44,6 +45,7 @@ export function computePaymentOrderAggregates(
   let totalReceipts = 0;
   let totalRefundsAbs = 0;
   let totalCancellationFeeAbs = 0;
+  let totalJournals = 0;
 
   for (const t of transactions) {
     if (t.status !== TransactionStatus.COMPLETED) continue;
@@ -55,6 +57,9 @@ export function computePaymentOrderAggregates(
       totalRefundsAbs += Math.abs(t.amount);
     } else if (t.transactionType === TransactionType.CANCELLATION_FEE) {
       totalCancellationFeeAbs += Math.abs(t.amount);
+    } else if (t.transactionType === TransactionType.JOURNAL) {
+      received += t.amount;
+      totalJournals += t.amount;
     }
   }
 
@@ -63,6 +68,7 @@ export function computePaymentOrderAggregates(
 
   return {
     received: received,
+    totalJournals: totalJournals,
     totalReceipts: totalReceipts,
     totalRefundsAbs: totalRefundsAbs,
     totalCancellationFeeAbs: totalCancellationFeeAbs,
