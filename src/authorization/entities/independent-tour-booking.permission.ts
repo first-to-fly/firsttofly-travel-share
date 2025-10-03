@@ -50,6 +50,10 @@ export const IndependentTourBookingPermissions = {
     name: "Apply Discount to Department Independent Tour Bookings",
     description: "Can apply discounts to Independent Tour Bookings within their department's scope",
   },
+  "dept:independent-tour-booking:edit-tour-fare-pricing": {
+    name: "Edit Department Independent Tour Booking Tour Fare Pricing",
+    description: "Can edit tour fare pricing (fare overrides) for Independent Tour Bookings within their department's scope",
+  },
 
   // Tenant level permissions
   "tenant:independent-tour-booking:view-list": {
@@ -103,5 +107,9 @@ export const IndependentTourBookingPermissions = {
   "tenant:independent-tour-booking:approve-special-discount": {
     name: "Approve Special Discounts for Tenant Independent Tour Bookings",
     description: "Can approve special discount requests for Independent Tour Bookings within the tenant",
+  },
+  "tenant:independent-tour-booking:edit-tour-fare-pricing": {
+    name: "Edit Tenant Independent Tour Booking Tour Fare Pricing",
+    description: "Can edit tour fare pricing (fare overrides) for Independent Tour Bookings within the tenant",
   },
 };

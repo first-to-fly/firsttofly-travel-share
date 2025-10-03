@@ -38,6 +38,10 @@ export const GroupTourBookingPermissions = {
     name: "Manual Extend Department Group Tour Booking Expiry",
     description: "Can manually extend expiry time of Group Tour Bookings within their department's scope",
   },
+  "dept:group-tour-booking:edit-tour-fare-pricing": {
+    name: "Edit Department Group Tour Booking Tour Fare Pricing",
+    description: "Can edit tour fare pricing (fare overrides) for Group Tour Bookings within their department's scope",
+  },
 
   // Tenant level permissions
   "tenant:group-tour-booking:view-list": {
@@ -75,5 +79,9 @@ export const GroupTourBookingPermissions = {
   "tenant:group-tour-booking:manual-extend-expiry": {
     name: "Manual Extend Tenant Group Tour Booking Expiry",
     description: "Can manually extend expiry time of Group Tour Bookings within the tenant",
+  },
+  "tenant:group-tour-booking:edit-tour-fare-pricing": {
+    name: "Edit Tenant Group Tour Booking Tour Fare Pricing",
+    description: "Can edit tour fare pricing (fare overrides) for Group Tour Bookings within the tenant",
   },
 };
