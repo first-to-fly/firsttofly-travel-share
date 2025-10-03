@@ -16,7 +16,10 @@ export const GroupTourBookingPaxZ = EntityZ.extend({
   remarks: z.string().nullish(),
   isConfirmed: z.boolean().default(false),
   confirmedAt: z.string().nullish(),
+  confirmedByEmail: z.string().nullish(),
   isLocked: z.boolean().default(false),
+  lockedAt: z.string().nullish(),
+  lockedBy: z.string().nullish(),
 }).omit({
   tenantOID: true,
 });
