@@ -161,6 +161,8 @@ const FlightScheduleLocationZ = z.object({
   icaoCode: z.string().describe("The ICAO code of the departure/arrival airport. Example: KJFK, KLAX"),
   scheduledTime: z.string().describe("The scheduled departure/arrival time"),
   terminal: z.string().nullable().describe("The departure/arrival terminal"),
+  timezone: z.string().optional().describe("The timezone of the departure/arrival airport"),
+  date: z.string().optional().describe("The date of departure/arrival in YYYY-MM-DD format"),
 });
 
 const FlightScheduleAirlineZ = z.object({
@@ -188,6 +190,7 @@ const FlightScheduleZ = z.object({
   flight: FlightScheduleFlightZ.describe("The flight information including numbers and codes"),
   status: z.string().describe("The current status of the flight. Possible values: scheduled, active, landed, cancelled, incident, diverted"),
   type: z.enum(["departure", "arrival"]).describe("The type of flight schedule (departure or arrival)"),
+  flightDate: z.string().optional().describe("The date of the flight in YYYY-MM-DD format"),
 });
 
 const GetFlightSchedulesResponseZ = z.object({
