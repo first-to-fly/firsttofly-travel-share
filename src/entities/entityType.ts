@@ -59,6 +59,7 @@ export enum EntityType {
   DEPARTMENT = "department",
   PRIVACY_POLICY = "privacyPolicy",
   TENANT_CONFIG = "tenantConfig",
+  EMAIL_TEMPLATE = "emailTemplate",
 
   // SUPPLIER MANAGEMENT
   SUPPLIER = "supplier",
