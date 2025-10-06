@@ -22,6 +22,7 @@ const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   destinationLocation: true,
   originTimezone: true,
   destinationTimezone: true,
+  zoneOffset: true,
 
   // Actual mode fields
   departureDateTime: true,
@@ -34,6 +35,8 @@ const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   plannedArrivalTime: true,
 
   isActive: true,
+}).extend({
+  zoneOffset: z.number().int().min(-2).max(2),
 });
 
 // Create specialized schemas based on segment type
