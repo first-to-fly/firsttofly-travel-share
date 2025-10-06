@@ -5,11 +5,12 @@ import { BudgetStatus } from "../../entities/Operations/Budget";
  * Defines valid status transitions for a Budget.
  */
 export const BUDGET_VALID_STATUS_TRANSITIONS: Record<BudgetStatus, BudgetStatus[]> = {
-  [BudgetStatus.DRAFT]: [BudgetStatus.WFA],
-  [BudgetStatus.WFA]: [BudgetStatus.APPROVED, BudgetStatus.REJECTED],
-  [BudgetStatus.APPROVED]: [BudgetStatus.COMPLETED],
-  [BudgetStatus.REJECTED]: [BudgetStatus.DRAFT, BudgetStatus.COMPLETED],
+  [BudgetStatus.DRAFT]: [BudgetStatus.WFA, BudgetStatus.CANCELLED],
+  [BudgetStatus.WFA]: [BudgetStatus.APPROVED, BudgetStatus.REJECTED, BudgetStatus.CANCELLED],
+  [BudgetStatus.APPROVED]: [BudgetStatus.COMPLETED, BudgetStatus.CANCELLED],
+  [BudgetStatus.REJECTED]: [BudgetStatus.DRAFT, BudgetStatus.COMPLETED, BudgetStatus.CANCELLED],
   [BudgetStatus.COMPLETED]: [],
+  [BudgetStatus.CANCELLED]: [],
 };
 
 
