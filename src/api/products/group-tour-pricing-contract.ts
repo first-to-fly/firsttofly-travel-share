@@ -17,6 +17,7 @@ const CreateGroupTourPricingZ = GroupTourPricingZ.omit({
   deletedAt: true,
 }).extend({
   code: GroupTourPricingZ.shape.code.optional(),
+  startingPricePaxType: GroupTourPricingZ.shape.startingPricePaxType.optional(),
 });
 
 const UpdateGroupTourPricingZ = CreateGroupTourPricingZ.omit({

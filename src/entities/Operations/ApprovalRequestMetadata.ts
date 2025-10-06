@@ -384,6 +384,9 @@ export const ApprovalRequestCustomerRefundMetadataZ = z.object({
   notes: z.string().optional(),
   internalRemarks: z.string().optional(),
   externalRemarks: z.string().optional(),
+  customerName: z.string().optional(),
+  customerFirstName: z.string().optional(),
+  customerLastName: z.string().optional(),
 });
 
 export type ApprovalRequestCustomerRefundMetadata =
@@ -399,6 +402,9 @@ export const ApprovalRequestCustomerCancellationFeeMetadataZ = z.object({
   notes: z.string().optional(),
   internalRemarks: z.string().optional(),
   externalRemarks: z.string().optional(),
+  customerName: z.string().optional(),
+  customerFirstName: z.string().optional(),
+  customerLastName: z.string().optional(),
 });
 
 export type ApprovalRequestCustomerCancellationFeeMetadata =
@@ -409,6 +415,9 @@ export const ApprovalRequestBookingCancellationMetadataZ = z.object({
   bookingOID: EntityOIDZ,
   tenantOID: EntityOIDZ,
   cancellationReason: z.string().optional(),
+  customerName: z.string().optional(),
+  customerFirstName: z.string().optional(),
+  customerLastName: z.string().optional(),
   refund: z
     .object({
       requestedAmount: z.number().nonnegative(),

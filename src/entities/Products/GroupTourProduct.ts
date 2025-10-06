@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { BookingPaxType } from "../../enums/BookingTypes";
 import { DateISOStringZ } from "../../types/date";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
 import { FTFSafeMaxNumberZ } from "../../types/number";
@@ -58,6 +59,8 @@ export const GroupTourProductZ = EntityZ.extend({
 
   defaultFullPaymentDueDays: z.number().nullish(),
   pricingPlaceholder: z.record(z.string(), z.number()).nullish(),
+
+  defaultStartingPricePaxType: z.nativeEnum(BookingPaxType).default(BookingPaxType.TWIN),
 
   isActive: z.boolean(),
   published: z.boolean(),

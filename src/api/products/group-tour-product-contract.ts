@@ -44,6 +44,7 @@ const CreateGroupTourProductZ = GroupTourProductZ.pick({
 
   defaultFullPaymentDueDays: true,
   pricingPlaceholder: true,
+  defaultStartingPricePaxType: true,
 
   isActive: true,
   published: true,
