@@ -98,7 +98,8 @@ export const BaseTransportSegmentZ = EntityZ.extend({
   destinationLocation: z.string(),
   originTimezone: z.string(),
   destinationTimezone: z.string(),
-  /** Calendar day difference between departure and arrival dates in their local timezones. Range: -2 to +2. User-provided value from airline tickets/booking confirmations. */
+  /** Calendar day difference between departure and arrival dates in their local timezones.
+   * Range: -2 to +2. User-provided value from airline tickets/booking confirmations. */
   zoneOffset: z.number().int().min(-2).max(2)
     .optional(),
 

@@ -43,19 +43,27 @@ const PENDING_STATUSES = new Set<ApprovalRequestStatus>([
   ApprovalRequestStatus.IN_PROGRESS,
 ]);
 
-function isCustomerRefundMetadata(metadata: ApprovalRequestMetadata | null | undefined): metadata is ApprovalRequestCustomerRefundMetadata {
+function isCustomerRefundMetadata(
+  metadata: ApprovalRequestMetadata | null | undefined,
+): metadata is ApprovalRequestCustomerRefundMetadata {
   return metadata?.type === ApprovalType.CUSTOMER_REFUND_REQUEST;
 }
 
-function isCustomerCancellationFeeMetadata(metadata: ApprovalRequestMetadata | null | undefined): metadata is ApprovalRequestCustomerCancellationFeeMetadata {
+function isCustomerCancellationFeeMetadata(
+  metadata: ApprovalRequestMetadata | null | undefined,
+): metadata is ApprovalRequestCustomerCancellationFeeMetadata {
   return metadata?.type === ApprovalType.CUSTOMER_CANCELLATION_FEE_REQUEST;
 }
 
-function isBookingCancellationMetadata(metadata: ApprovalRequestMetadata | null | undefined): metadata is ApprovalRequestBookingCancellationMetadata {
+function isBookingCancellationMetadata(
+  metadata: ApprovalRequestMetadata | null | undefined,
+): metadata is ApprovalRequestBookingCancellationMetadata {
   return metadata?.type === ApprovalType.BOOKING_CANCELLATION_WITH_FINANCIALS;
 }
 
-function isBookingTransferMetadata(metadata: ApprovalRequestMetadata | null | undefined): metadata is ApprovalRequestBookingTransferMetadata {
+function isBookingTransferMetadata(
+  metadata: ApprovalRequestMetadata | null | undefined,
+): metadata is ApprovalRequestBookingTransferMetadata {
   return metadata?.type === ApprovalType.BOOKING_TRANSFER;
 }
 
@@ -82,12 +90,16 @@ function normalizeCurrencyCode(value: string | null | undefined): string | null 
 }
 
 function calculatePendingCancelBookingCents(metadata: ApprovalRequestBookingCancellationMetadata): number {
-  const refundAmountCents = toPositiveCents(metadata.refund?.requestedAmount ?? metadata.financialSummary?.refundAmount);
+  const refundAmountCents = toPositiveCents(
+    metadata.refund?.requestedAmount ?? metadata.financialSummary?.refundAmount,
+  );
   if (refundAmountCents === 0) {
     return 0;
   }
 
-  const cancellationFeeAmountCents = toPositiveCents(metadata.cancellationFee?.amount ?? metadata.financialSummary?.cancellationFeeAmount);
+  const cancellationFeeAmountCents = toPositiveCents(
+    metadata.cancellationFee?.amount ?? metadata.financialSummary?.cancellationFeeAmount,
+  );
   if (cancellationFeeAmountCents === 0) {
     return refundAmountCents;
   }
