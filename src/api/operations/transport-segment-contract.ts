@@ -35,8 +35,6 @@ const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   plannedArrivalTime: true,
 
   isActive: true,
-}).extend({
-  zoneOffset: z.number().int().min(-2).max(2),
 });
 
 // Create specialized schemas based on segment type
