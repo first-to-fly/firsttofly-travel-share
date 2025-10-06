@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { BookingPaxType } from "../../enums/BookingTypes";
 import { DateISOStringZ } from "../../types/date";
 import { FTFSafeMaxNumberZ } from "../../types/number";
 import { EntityOIDZ, EntityZ } from "../entity";
@@ -144,6 +145,8 @@ export const GroupTourPricingZ = EntityZ.extend({
   groupTourPricingEntries: z.array(GroupTourPricingEntryZ),
 
   changeHistory: GroupTourPricingMatrixChangeHistoryZ.nullish(),
+
+  startingPricePaxType: z.nativeEnum(BookingPaxType).default(BookingPaxType.TWIN),
 });
 
 export type GroupTourPricing = z.infer<typeof GroupTourPricingZ>;
