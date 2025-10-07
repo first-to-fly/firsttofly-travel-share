@@ -21,15 +21,17 @@ const EmailTemplateOIDsResponseZ = z.object({
 const PreviewEmailTemplateRequestZ = z.object({
   key: EmailTemplateKeyZ,
   tenantOID: z.string().optional(),
-  langCode: z.string().optional(),
-  context: z.record(z.unknown()),
+  subjectTemplate: z.string(),
+  bodyTemplate: z.string(),
+  textTemplate: z.string().optional().nullable(),
+  context: z.record(z.unknown()).optional(),
 });
 
 const EmailTemplatePreviewResponseZ = z.object({
   subject: z.string(),
   html: z.string(),
   text: z.string().nullish(),
-  source: z.enum(["dynamic", "default"]),
+  source: z.enum(["dynamic", "default", "override"]),
   metadata: z.object({
     templateId: z.string().optional(),
     tenantId: z.string().nullish().optional(),
@@ -39,10 +41,12 @@ const EmailTemplatePreviewResponseZ = z.object({
 });
 
 const TestSendEmailTemplateRequestZ = z.object({
-  emailTemplateOID: z.string(),
+  key: EmailTemplateKeyZ,
   tenantOID: z.string().optional(),
   to: z.string().email(),
-  langCode: z.string().optional(),
+  subjectTemplate: z.string(),
+  bodyTemplate: z.string(),
+  textTemplate: z.string().optional().nullable(),
   context: z.record(z.unknown()).optional(),
 });
 
