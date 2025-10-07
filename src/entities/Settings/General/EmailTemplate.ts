@@ -4,6 +4,7 @@ import { MultiLangRecordZ } from "../../../types/multipleLanguage";
 import { EntityOIDZ, EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
+
 export const EmailTemplateKeyZ = z.enum([
   "payment.request",
   "user.invitation",

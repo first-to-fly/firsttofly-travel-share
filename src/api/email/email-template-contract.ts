@@ -4,16 +4,11 @@ import { z } from "zod";
 import { EmailTemplateKeyZ } from "../../entities/Settings/General/EmailTemplate";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
 
+
 const basePath = "/api/email/templates";
 
 const UpdateEmailTemplateZ = z.object({
   tenantOID: z.string().optional(),
-  subjectTemplate: MultiLangRecordZ(z.string()).optional(),
-  bodyTemplate: MultiLangRecordZ(z.string()).optional(),
-  textTemplate: MultiLangRecordZ(z.string().nullish()).optional(),
-});
-
-const OverridesZ = z.object({
   subjectTemplate: MultiLangRecordZ(z.string()).optional(),
   bodyTemplate: MultiLangRecordZ(z.string()).optional(),
   textTemplate: MultiLangRecordZ(z.string().nullish()).optional(),
@@ -27,7 +22,6 @@ const PreviewEmailTemplateRequestZ = z.object({
   key: EmailTemplateKeyZ,
   tenantOID: z.string().optional(),
   langCode: z.string().optional(),
-  overrides: OverridesZ.optional(),
   context: z.record(z.unknown()),
 });
 
@@ -35,7 +29,7 @@ const EmailTemplatePreviewResponseZ = z.object({
   subject: z.string(),
   html: z.string(),
   text: z.string().nullish(),
-  source: z.enum(["dynamic", "static", "override"]),
+  source: z.enum(["dynamic", "default"]),
   metadata: z.object({
     templateId: z.string().optional(),
     tenantId: z.string().nullish().optional(),
@@ -49,7 +43,6 @@ const TestSendEmailTemplateRequestZ = z.object({
   tenantOID: z.string().optional(),
   to: z.string().email(),
   langCode: z.string().optional(),
-  overrides: OverridesZ.optional(),
   context: z.record(z.unknown()).optional(),
 });
 
