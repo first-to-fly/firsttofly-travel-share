@@ -1,35 +1,26 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import {
-  EmailTemplateKeyZ,
-  EmailTemplateZ,
-} from "../../entities/Settings/General/EmailTemplate";
+import { EmailTemplateKeyZ } from "../../entities/Settings/General/EmailTemplate";
 import { MultiLangRecordZ } from "../../types/multipleLanguage";
 
 const basePath = "/api/email/templates";
 
-const CreateEmailTemplateZ = z.object({
-  tenantOID: EmailTemplateZ.shape.tenantOID.optional(),
-  key: EmailTemplateKeyZ,
-  subjectTemplate: MultiLangRecordZ(z.string()),
-  bodyTemplate: MultiLangRecordZ(z.string()),
+const UpdateEmailTemplateZ = z.object({
+  tenantOID: z.string().optional(),
+  subjectTemplate: MultiLangRecordZ(z.string()).optional(),
+  bodyTemplate: MultiLangRecordZ(z.string()).optional(),
   textTemplate: MultiLangRecordZ(z.string().nullish()).optional(),
-});
-
-const UpdateEmailTemplateZ = CreateEmailTemplateZ.omit({
-  tenantOID: true,
-  key: true,
-}).partial();
-
-const EmailTemplateOIDsResponseZ = z.object({
-  oids: z.array(z.string()),
 });
 
 const OverridesZ = z.object({
   subjectTemplate: MultiLangRecordZ(z.string()).optional(),
   bodyTemplate: MultiLangRecordZ(z.string()).optional(),
   textTemplate: MultiLangRecordZ(z.string().nullish()).optional(),
+});
+
+const EmailTemplateOIDsResponseZ = z.object({
+  oids: z.array(z.string()),
 });
 
 const PreviewEmailTemplateRequestZ = z.object({
@@ -62,7 +53,6 @@ const TestSendEmailTemplateRequestZ = z.object({
   context: z.record(z.unknown()).optional(),
 });
 
-export type CreateEmailTemplateRequest = z.infer<typeof CreateEmailTemplateZ>;
 export type UpdateEmailTemplateRequest = z.infer<typeof UpdateEmailTemplateZ>;
 export type PreviewEmailTemplateRequest = z.infer<typeof PreviewEmailTemplateRequestZ>;
 export type EmailTemplatePreviewResponse = z.infer<typeof EmailTemplatePreviewResponseZ>;
@@ -83,22 +73,11 @@ export const emailTemplateContract = initContract().router({
       200: EmailTemplateOIDsResponseZ,
     },
   },
-
-  createEmailTemplate: {
-    summary: "Create a new email template",
-    method: "POST",
-    path: basePath,
-    body: CreateEmailTemplateZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updateEmailTemplates: {
     summary: "Update multiple existing email templates",
     method: "POST",
     path: `${basePath}/batch-update`,
-    body: z.record(z.string(), UpdateEmailTemplateZ),
+    body: z.record(EmailTemplateKeyZ, UpdateEmailTemplateZ),
     responses: {
       200: z.array(z.string()),
     },
