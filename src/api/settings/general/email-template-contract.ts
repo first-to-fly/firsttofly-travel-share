@@ -17,6 +17,17 @@ const EmailTemplateOIDsResponseZ = z.object({
   oids: z.array(z.string()),
 });
 
+const DefaultEmailTemplateStringsZ = z.object({
+  subjectTemplate: z.string(),
+  bodyTemplate: z.string(),
+  textTemplate: z.string().nullable().optional(),
+  sampleContext: z.unknown(),
+});
+
+const DefaultEmailTemplatesResponseZ = z.object({
+  templates: z.record(EmailTemplateKeyZ, DefaultEmailTemplateStringsZ),
+});
+
 const PreviewEmailTemplateRequestZ = z.object({
   key: EmailTemplateKeyZ,
   tenantOID: z.string().optional(),
@@ -67,6 +78,17 @@ export const emailTemplateContract = initContract().router({
       .passthrough(),
     responses: {
       200: EmailTemplateOIDsResponseZ,
+    },
+  },
+  getDefaultEmailTemplates: {
+    summary: "Get default email template strings",
+    method: "GET",
+    path: `${basePath}/defaults`,
+    query: z.object({
+      key: EmailTemplateKeyZ.optional(),
+    }).optional(),
+    responses: {
+      200: DefaultEmailTemplatesResponseZ,
     },
   },
   updateEmailTemplates: {
