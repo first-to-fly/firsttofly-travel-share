@@ -13,6 +13,7 @@ import { stationCodeContract } from "./station-code-contract";
 import { tenantConfigContract } from "./tenant-config-contract";
 import { tenantContract } from "./tenant-contract";
 import { termContract } from "./term-contract";
+import { emailTemplateContract } from "./email-template-contract";
 
 
 export const generalSettingContract = initContract().router({
@@ -29,4 +30,5 @@ export const generalSettingContract = initContract().router({
   tenantConfig: tenantConfigContract,
   term: termContract,
   media: mediaContract,
+  emailTemplate: emailTemplateContract,
 });

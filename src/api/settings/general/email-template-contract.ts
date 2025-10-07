@@ -1,10 +1,10 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { EmailTemplateKeyZ, EmailTemplateZ } from "../../entities/Settings/General/EmailTemplate";
+import { EmailTemplateKeyZ, EmailTemplateZ } from "../../../entities/Settings/General/EmailTemplate";
 
 
-const basePath = "/api/email/templates";
+const basePath = "/api/settings/general/email/templates";
 
 const UpdateEmailTemplateZ = EmailTemplateZ.pick({
   tenantOID: true,
