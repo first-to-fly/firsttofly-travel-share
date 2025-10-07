@@ -21,6 +21,11 @@ export const EmailTemplateKeyZ = z.enum([
 ]);
 export type EmailTemplateKey = z.infer<typeof EmailTemplateKeyZ>;
 
+export enum EmailTemplateEvents {
+  EMAIL_TEMPLATE_UPDATED = "EMAIL_TEMPLATE_UPDATED",
+  EMAIL_TEMPLATE_LIST_UPDATED = "EMAIL_TEMPLATE_LIST_UPDATED",
+}
+
 export const EmailTemplateZ = EntityZ.extend({
   entityType: z.literal(EntityType.EMAIL_TEMPLATE),
   tenantOID: EntityOIDZ.nullish(),

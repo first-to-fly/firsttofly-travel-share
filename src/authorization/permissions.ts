@@ -13,6 +13,7 @@ import { DepositPermissions } from "./entities/deposit.permission";
 import { DesignationPermissions } from "./entities/designation.permission";
 import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
+import { EmailTemplatePermissions } from "./entities/email-template.permission";
 import { ExchangeOrderPermissions } from "./entities/exchange-order.permission";
 import { GroupTourBookingPermissions } from "./entities/group-tour-booking.permission";
 import { GroupTourBookingPaxPermissions } from "./entities/group-tour-booking-pax.permission";
@@ -115,6 +116,7 @@ const EntityPermissions = {
   "Independent Tour Booking": IndependentTourBookingPermissions,
   "Approval Management": ApprovalPermissions,
   "Approval Request": ApprovalRequestPermissions,
+  "Email Template": EmailTemplatePermissions,
   "User Message": UserMessagePermissions,
   "Payment Order": PaymentOrderPermissions,
   Transaction: TransactionPermissions,

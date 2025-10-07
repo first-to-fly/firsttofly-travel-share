@@ -3,6 +3,7 @@ import { initContract } from "@ts-rest/core";
 import { aviationStackContract } from "../../misc/aviationstack-contract";
 import { accountCodeContract } from "./account-code-contract";
 import { approvalContract } from "./approval-contract";
+import { emailTemplateContract } from "./email-template-contract";
 import { locationContract } from "./location-contract";
 import { mediaContract } from "./media-contract";
 import { paymentWayContract } from "./payment-way-contract";
@@ -13,7 +14,6 @@ import { stationCodeContract } from "./station-code-contract";
 import { tenantConfigContract } from "./tenant-config-contract";
 import { tenantContract } from "./tenant-contract";
 import { termContract } from "./term-contract";
-import { emailTemplateContract } from "./email-template-contract";
 
 
 export const generalSettingContract = initContract().router({
