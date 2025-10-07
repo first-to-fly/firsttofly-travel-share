@@ -22,6 +22,7 @@ const BaseCreateTransportSegmentZ = BaseTransportSegmentZ.pick({
   destinationLocation: true,
   originTimezone: true,
   destinationTimezone: true,
+  zoneOffset: true,
 
   // Actual mode fields
   departureDateTime: true,
