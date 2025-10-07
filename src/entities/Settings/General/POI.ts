@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { CountryCodeZ } from "../../../validators/countryCode";
 import { EntityZ } from "../../entity";
 import { EntityType } from "../../entityType";
 
@@ -46,7 +47,7 @@ export const POIZ = EntityZ.extend({
   name: z.string(),
   address: z.string(),
   type: z.nativeEnum(POIType),
-  country: z.string(),
+  countryCode: CountryCodeZ,
   area: z.string(),
   category: z.nativeEnum(POICategory),
   description: z.string().nullish(),
