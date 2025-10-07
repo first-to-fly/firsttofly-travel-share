@@ -1,18 +1,17 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { EmailTemplateKeyZ } from "../../entities/Settings/General/EmailTemplate";
-import { MultiLangRecordZ } from "../../types/multipleLanguage";
+import { EmailTemplateKeyZ, EmailTemplateZ } from "../../entities/Settings/General/EmailTemplate";
 
 
 const basePath = "/api/email/templates";
 
-const UpdateEmailTemplateZ = z.object({
-  tenantOID: z.string().optional(),
-  subjectTemplate: MultiLangRecordZ(z.string()).optional(),
-  bodyTemplate: MultiLangRecordZ(z.string()).optional(),
-  textTemplate: MultiLangRecordZ(z.string().nullish()).optional(),
-});
+const UpdateEmailTemplateZ = EmailTemplateZ.pick({
+  tenantOID: true,
+  subjectTemplate: true,
+  bodyTemplate: true,
+  textTemplate: true,
+}).partial();
 
 const EmailTemplateOIDsResponseZ = z.object({
   oids: z.array(z.string()),

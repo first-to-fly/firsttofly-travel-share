@@ -3,7 +3,7 @@ import { initContract } from "@ts-rest/core";
 import { activityContract } from "./activity/activity.contract";
 import { authorizationContract } from "./authorization/contract";
 import { documentContract } from "./document/document-contract";
-import { emailTemplateContract } from "./email/email-template-contract";
+import { emailTemplateContract } from "./settings/general/email-template-contract";
 import { financeContract } from "./finance/contract";
 import { i18nContract } from "./i18n/contract";
 import { miscContract } from "./misc/contract";
