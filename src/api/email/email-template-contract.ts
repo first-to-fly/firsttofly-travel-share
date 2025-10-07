@@ -1,183 +1,138 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
+import {
+  EmailTemplateKeyZ,
+  EmailTemplateZ,
+} from "../../entities/Settings/General/EmailTemplate";
+import { MultiLangRecordZ } from "../../types/multipleLanguage";
 
 const basePath = "/api/email/templates";
 
-const EmailTemplateEngineZ = z.enum(["handlebars", "html", "mjml"]);
-const EmailTemplateKeyZ = z.enum([
-  "payment.request",
-  "user.invitation",
-  "group-tour.booking.confirmation",
-  "independent-tour.booking.confirmation",
-  "independent-tour.booking.cancellation",
-  "user-message.notification",
-  "approval.notification",
-  "approval.outcome",
-  "approval.timeout-warning",
-  "tour-departure.min-pax-alert",
-  "customer.verification-otp",
-  "customer.booking-link",
-]);
-
-const EmailTemplateResponseZ = z.object({
-  oid: z.string(),
-  id: z.string(),
+const CreateEmailTemplateZ = z.object({
+  tenantOID: EmailTemplateZ.shape.tenantOID.optional(),
   key: EmailTemplateKeyZ,
-  tenantOID: z.string().nullable().optional(),
-  locale: z.string().nullable().optional(),
-  engine: EmailTemplateEngineZ,
-  subjectTemplate: z.string(),
-  bodyTemplate: z.string(),
-  textTemplate: z.string().nullable(),
-  isActive: z.boolean(),
-  version: z.number(),
-  createdAt: z.string(),
-  updatedAt: z.string(),
-  createdBy: z.string(),
-  updatedBy: z.string().nullable(),
+  subjectTemplate: MultiLangRecordZ(z.string()),
+  bodyTemplate: MultiLangRecordZ(z.string()),
+  textTemplate: MultiLangRecordZ(z.string().nullish()).optional(),
 });
 
-const EmailTemplateListResponseZ = z.object({
-  data: z.array(EmailTemplateResponseZ),
+const UpdateEmailTemplateZ = CreateEmailTemplateZ.omit({
+  tenantOID: true,
+  key: true,
+}).partial();
+
+const EmailTemplateOIDsResponseZ = z.object({
+  oids: z.array(z.string()),
 });
 
-const CreateEmailTemplateRequestZ = z.object({
-  key: EmailTemplateKeyZ,
-  tenantOID: z.string().optional(),
-  locale: z.string().optional(),
-  engine: EmailTemplateEngineZ.optional(),
-  subjectTemplate: z.string(),
-  bodyTemplate: z.string(),
-  textTemplate: z.string().nullable().optional(),
-  activate: z.boolean().optional(),
-});
-
-const UpdateEmailTemplateRequestZ = z.object({
-  subjectTemplate: z.string().optional(),
-  bodyTemplate: z.string().optional(),
-  textTemplate: z.string().nullable().optional(),
-  engine: EmailTemplateEngineZ.optional(),
+const OverridesZ = z.object({
+  subjectTemplate: MultiLangRecordZ(z.string()).optional(),
+  bodyTemplate: MultiLangRecordZ(z.string()).optional(),
+  textTemplate: MultiLangRecordZ(z.string().nullish()).optional(),
 });
 
 const PreviewEmailTemplateRequestZ = z.object({
   key: EmailTemplateKeyZ,
   tenantOID: z.string().optional(),
-  locale: z.string().optional(),
-  overrides: z.object({
-    subjectTemplate: z.string().optional(),
-    bodyTemplate: z.string().optional(),
-    textTemplate: z.string().nullable().optional(),
-    engine: EmailTemplateEngineZ.optional(),
-  }).optional(),
+  langCode: z.string().optional(),
+  overrides: OverridesZ.optional(),
   context: z.record(z.unknown()),
 });
 
 const EmailTemplatePreviewResponseZ = z.object({
   subject: z.string(),
   html: z.string(),
-  text: z.string().nullable(),
+  text: z.string().nullish(),
   source: z.enum(["dynamic", "static", "override"]),
   metadata: z.object({
     templateId: z.string().optional(),
-    version: z.number().optional(),
-    tenantId: z.string().nullable().optional(),
-    locale: z.string().nullable().optional(),
-    engine: EmailTemplateEngineZ.or(z.literal("static")),
+    tenantId: z.string().nullish().optional(),
+    locale: z.string().nullish().optional(),
     errors: z.array(z.string()).optional(),
   }),
 });
 
-export type CreateEmailTemplateRequest = z.infer<typeof CreateEmailTemplateRequestZ>;
-export type UpdateEmailTemplateRequest = z.infer<typeof UpdateEmailTemplateRequestZ>;
+const TestSendEmailTemplateRequestZ = z.object({
+  emailTemplateOID: z.string(),
+  tenantOID: z.string().optional(),
+  to: z.string().email(),
+  langCode: z.string().optional(),
+  overrides: OverridesZ.optional(),
+  context: z.record(z.unknown()).optional(),
+});
+
+export type CreateEmailTemplateRequest = z.infer<typeof CreateEmailTemplateZ>;
+export type UpdateEmailTemplateRequest = z.infer<typeof UpdateEmailTemplateZ>;
 export type PreviewEmailTemplateRequest = z.infer<typeof PreviewEmailTemplateRequestZ>;
-export type EmailTemplateResponse = z.infer<typeof EmailTemplateResponseZ>;
 export type EmailTemplatePreviewResponse = z.infer<typeof EmailTemplatePreviewResponseZ>;
+export type TestSendEmailTemplateRequest = z.infer<typeof TestSendEmailTemplateRequestZ>;
 
 export const emailTemplateContract = initContract().router({
-  listTemplates: {
+  getEmailTemplates: {
+    summary: "Get email templates",
     method: "GET",
     path: basePath,
-    query: z.object({
-      key: EmailTemplateKeyZ.optional(),
-      tenantOID: z.string().optional(),
-      locale: z.string().optional(),
-      includeInactive: z.boolean().optional(),
-      limit: z.number().min(1).max(100).optional(),
-      offset: z.number().min(0).optional(),
-    }).passthrough(),
+    query: z
+      .object({
+        tenantOID: z.string(),
+        key: EmailTemplateKeyZ.optional(),
+      })
+      .passthrough(),
     responses: {
-      200: EmailTemplateListResponseZ,
+      200: EmailTemplateOIDsResponseZ,
     },
-    summary: "List email templates",
   },
 
-  getTemplate: {
-    method: "GET",
-    path: `${basePath}/oid/:templateOID`,
-    responses: {
-      200: EmailTemplateResponseZ,
-    },
-    summary: "Get an email template by OID",
-  },
-
-  createTemplate: {
-    method: "POST",
-    path: basePath,
-    body: CreateEmailTemplateRequestZ,
-    responses: {
-      201: EmailTemplateResponseZ,
-    },
+  createEmailTemplate: {
     summary: "Create a new email template",
-  },
-
-  updateTemplate: {
-    method: "PATCH",
-    path: `${basePath}/oid/:templateOID`,
-    body: UpdateEmailTemplateRequestZ,
-    responses: {
-      200: EmailTemplateResponseZ,
-    },
-    summary: "Update an email template",
-  },
-
-  publishTemplate: {
     method: "POST",
-    path: `${basePath}/oid/:templateOID/publish`,
-    body: z.void(),
+    path: basePath,
+    body: CreateEmailTemplateZ,
     responses: {
-      200: EmailTemplateResponseZ,
+      200: z.string(),
     },
-    summary: "Publish an email template version",
   },
 
-  rollbackTemplate: {
+  updateEmailTemplates: {
+    summary: "Update multiple existing email templates",
     method: "POST",
-    path: `${basePath}/oid/:templateOID/rollback`,
-    body: z.void(),
+    path: `${basePath}/batch-update`,
+    body: z.record(z.string(), UpdateEmailTemplateZ),
     responses: {
-      200: EmailTemplateResponseZ,
+      200: z.array(z.string()),
     },
-    summary: "Rollback to previous email template version",
   },
 
-  deleteTemplate: {
-    method: "DELETE",
-    path: `${basePath}/oid/:templateOID`,
-    body: z.void(),
+  deleteEmailTemplates: {
+    summary: "Delete multiple email templates",
+    method: "POST",
+    path: `${basePath}/batch-delete`,
+    body: z.object({
+      emailTemplateOIDs: z.array(z.string()),
+    }),
     responses: {
-      204: z.void(),
+      200: z.boolean(),
     },
-    summary: "Delete an email template",
   },
 
-  previewTemplate: {
+  previewEmailTemplate: {
+    summary: "Preview an email template rendering",
     method: "POST",
     path: `${basePath}/preview`,
     body: PreviewEmailTemplateRequestZ,
     responses: {
       200: EmailTemplatePreviewResponseZ,
     },
-    summary: "Preview an email template rendering",
+  },
+
+  testSendEmailTemplate: {
+    summary: "Send a test email using a template",
+    method: "POST",
+    path: `${basePath}/test-send`,
+    body: TestSendEmailTemplateRequestZ,
+    responses: {
+      200: z.boolean(),
+    },
   },
 });
