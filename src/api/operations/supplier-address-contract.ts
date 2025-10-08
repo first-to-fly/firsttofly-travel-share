@@ -13,7 +13,7 @@ const CreateSupplierAddressZ = SupplierAddressZ.pick({
   city: true,
   state: true,
   postalCode: true,
-  country: true,
+  countryCode: true,
 }).extend({
   isDefaultAddress: z.boolean().optional(),
 });

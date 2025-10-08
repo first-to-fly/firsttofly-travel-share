@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { CountryCodeZ } from "../../validators/countryCode";
 import { EntityOIDZ, EntityZ } from "../entity";
 
 
@@ -9,7 +10,7 @@ export const SupplierAddressZ = EntityZ.extend({
   city: z.string(),
   state: z.string().nullish(),
   postalCode: z.string().nullish(),
-  country: z.string(),
+  countryCode: CountryCodeZ,
 });
 
 export type SupplierAddress = z.infer<typeof SupplierAddressZ>;

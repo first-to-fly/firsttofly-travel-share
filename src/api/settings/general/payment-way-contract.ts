@@ -12,7 +12,7 @@ const CreatePaymentWayZ = PaymentWayZ.pick({
   paymentMethod: true,
   name: true,
   mode: true,
-  status: true,
+  isActive: true,
   icon: true,
   remarks: true,
   isDaily: true,
