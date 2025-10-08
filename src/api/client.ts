@@ -6,9 +6,8 @@ import type {
   AppRouter,
   AreAllPropertiesOptional,
   ClientArgs,
-  ExtractExtraParametersFromClientArgs,
   OptionalIfAllOptional,
-  PathParamsFromUrl,
+  ParamsFromUrl,
   Prettify,
   Without,
   ZodInferOrType,
@@ -24,6 +23,7 @@ import { apiContract } from "./contract";
 /**
  * Override types
  */
+type ExtractExtraParametersFromClientArgs<TClientArgs extends ClientArgs> = TClientArgs["api"] extends ApiFetcher ? Omit<Parameters<TClientArgs["api"]>[0], keyof Parameters<ApiFetcher>[0]> : {};
 type AppRouteMutationType<T> = ZodInputOrType<T>;
 
 type AppRouteBodyOrFormData<T extends AppRouteMutation> = T["contentType"] extends "multipart/form-data"
@@ -32,7 +32,7 @@ type AppRouteBodyOrFormData<T extends AppRouteMutation> = T["contentType"] exten
 
 type DataReturnArgsBase<TRoute extends AppRoute, TClientArgs extends ClientArgs> = {
   body: TRoute extends AppRouteMutation ? AppRouteBodyOrFormData<TRoute> : never;
-  params: PathParamsFromUrl<TRoute>;
+  params: ParamsFromUrl<TRoute["path"]>;
   query: "query" extends keyof TRoute ? AppRouteMutationType<TRoute["query"]> : never;
   /**
    * Additional headers to send with the request, merged over baseHeaders,
