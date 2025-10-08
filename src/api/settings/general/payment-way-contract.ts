@@ -57,16 +57,6 @@ export const paymentWayContract = initContract().router({
     },
   },
 
-  updatePaymentWay: {
-    summary: "Update an existing payment way",
-    method: "PATCH",
-    path: `${basePath}/:paymentWayOID`,
-    body: UpdatePaymentWayZ,
-    responses: {
-      200: z.string(),
-    },
-  },
-
   updatePaymentWays: {
     summary: "Update multiple existing payment ways",
     method: "POST",
@@ -77,16 +67,6 @@ export const paymentWayContract = initContract().router({
     ),
     responses: {
       200: z.array(z.string().describe("OIDs of updated payment ways")),
-    },
-  },
-
-  deletePaymentWay: {
-    summary: "Delete a payment way",
-    method: "DELETE",
-    path: `${basePath}/:paymentWayOID`,
-    body: z.object({}),
-    responses: {
-      200: z.boolean(),
     },
   },
 
