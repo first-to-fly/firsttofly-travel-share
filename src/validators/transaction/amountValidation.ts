@@ -16,6 +16,8 @@ export interface PaymentOrderAggregates {
   totalCancellationFeeAbs: number; // sum of abs(cancellation fees)
   refundableExposure: number; // max(0, received - totalCancellationFeeAbs)
   remainingBalance: number; // max(0, totalAmount - received)
+  overpaymentAmount: number; // max(0, received - totalAmount)
+  isOverpaid: boolean;
 }
 
 export interface ValidateCreateTransactionParams {
@@ -65,6 +67,7 @@ export function computePaymentOrderAggregates(
 
   const refundableExposure = Math.max(0, received - totalCancellationFeeAbs);
   const remainingBalance = Math.max(0, totalAmount - received);
+  const overpaymentAmount = Math.max(0, received - totalAmount);
 
   return {
     received: received,
@@ -74,6 +77,8 @@ export function computePaymentOrderAggregates(
     totalCancellationFeeAbs: totalCancellationFeeAbs,
     refundableExposure: refundableExposure,
     remainingBalance: remainingBalance,
+    overpaymentAmount: overpaymentAmount,
+    isOverpaid: overpaymentAmount > 0,
   };
 }
 
@@ -131,14 +136,6 @@ export function validateCreateTransaction(
       return {
         result: "invalid",
         message: "Receipt amount must be positive.",
-        aggregates: aggregates,
-      };
-    }
-    if (aggregates.received + proposedAmount > bookingTotalAmount) {
-      return {
-        result: "invalid",
-        message: `Receipt exceeds remaining balance. received=${aggregates.received}, total=${bookingTotalAmount}, amount=${proposedAmount}.`
-          .replace(/\n/g, " "),
         aggregates: aggregates,
       };
     }
