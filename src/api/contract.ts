@@ -11,6 +11,7 @@ import { productsContract } from "./products/contract";
 import { salesContract } from "./sales/contract";
 import { settingsContract } from "./settings/contract";
 import { userContract } from "./user/contract";
+import { xeroContract } from "./xero/contract";
 
 
 export const apiContract = initContract().router({
@@ -25,4 +26,5 @@ export const apiContract = initContract().router({
   authorization: authorizationContract,
   misc: miscContract,
   user: userContract,
+  xero: xeroContract,
 });
