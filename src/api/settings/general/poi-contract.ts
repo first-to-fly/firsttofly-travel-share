@@ -11,7 +11,7 @@ const CreatePOIZ = POIZ.pick({
   name: true,
   address: true,
   type: true,
-  country: true,
+  countryCode: true,
   area: true,
   category: true,
   description: true,

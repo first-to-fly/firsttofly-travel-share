@@ -10,11 +10,6 @@ export enum PaymentMode {
   OFFLINE = "offline",
 }
 
-export enum PaymentWayStatus {
-  ACTIVE = "active",
-  INACTIVE = "inactive",
-}
-
 export enum CreditCardBank {
   AMEX = "amex",
   UOB = "uob",
@@ -27,7 +22,6 @@ export enum CreditCardBank {
 
 // Schemas
 export const PaymentModeZ = z.nativeEnum(PaymentMode);
-export const PaymentWayStatusZ = z.nativeEnum(PaymentWayStatus);
 export const PaymentMethodZ = z.nativeEnum(PaymentMethod);
 export const CreditCardBankZ = z.nativeEnum(CreditCardBank);
 
@@ -57,7 +51,7 @@ export const PaymentWayZ = EntityZ.extend({
   remarks: z.string().nullish(),
 
   // Status
-  status: PaymentWayStatusZ.default(PaymentWayStatus.ACTIVE),
+  isActive: z.boolean().default(true),
 
   // Business Rules
   isDaily: z.boolean().default(false),

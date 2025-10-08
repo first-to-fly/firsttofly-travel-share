@@ -3,8 +3,22 @@ import { z } from "zod";
 import { EntityOIDZ, EntityZ } from "../entity";
 
 
+const EmailZ = z
+  .string()
+  .trim()
+  .optional()
+  .refine((value) => !value || z.string().email().safeParse(value).success, {
+    message: "Invalid email",
+  })
+  .transform((value) => {
+    if (!value || value === "") {
+      return undefined;
+    }
+    return value;
+  });
+
 export const ContactInfoZ = z.object({
-  email: z.string().email().optional(),
+  email: EmailZ,
   phone: z.string().optional(),
   fax: z.string().optional(),
   officePhone: z.string().optional(),

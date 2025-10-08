@@ -44,14 +44,14 @@ export enum ReferenceMachineCode {
   FINANCE_PAYMENT_RECEIVED = "finance_payment_received",
   FINANCE_BUDGET_TRANSFER = "finance_budget_transfer",
   FINANCE_REFUND = "finance_refund",
-  FINANCE_MANUAL_JOURNAL = "finance_manual_journal",
-  FINANCE_JOURNAL = "finance_journal",
+  FINANCE_MANUAL_JOURNAL = "finance_manual_journal", // use for Journal
+  FINANCE_JOURNAL = "finance_journal", // use for transaction created during journal
   FINANCE_CANCELLATION_FEE = "finance_cancellation_fee",
   FINANCE_REFUND_REQUEST = "finance_refund_request",
   FINANCE_REVERSE_RECEIPT = "finance_reverse_receipt",
   FINANCE_REVERSE_REFUND = "finance_reverse_refund",
-  FINANCE_REVERSE_MANUAL_JOURNAL = "finance_reverse_manual_journal",
-  FINANCE_REVERSE_JOURNAL = "finance_reverse_journal",
+  FINANCE_REVERSE_MANUAL_JOURNAL = "finance_reverse_manual_journal", // use for reverse Journal
+  FINANCE_REVERSE_JOURNAL = "finance_reverse_journal", // use for transaction created during reverse Journal
   FINANCE_REVERSE_CANCELLATION_FEE = "finance_reverse_cancellation_fee",
 }
 

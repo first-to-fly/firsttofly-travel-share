@@ -12,6 +12,7 @@ export enum BudgetStatus {
   APPROVED = "approved",
   REJECTED = "rejected",
   COMPLETED = "completed",
+  CANCELLED = "cancelled",
 }
 
 export enum BudgetEvents {

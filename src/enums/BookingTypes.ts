@@ -30,9 +30,9 @@ export const BookingPaxPersonalDetailsZ = z.object({
   address: z.string().optional(),
   postalCode: z.string().optional(),
   emergencyContact: z.object({
-    name: z.string(),
-    phone: z.string(),
-    relationship: z.string(),
+    name: z.string().optional(),
+    phone: z.string().optional(),
+    relationship: z.string().optional(),
   }).optional(),
   travelDocuments: z.object({
     visaApplicationRequired: z.boolean(),

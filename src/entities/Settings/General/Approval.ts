@@ -109,6 +109,11 @@ export enum ApprovalType {
    * Booking extension approval workflow
    */
   BOOKING_EXTENSION = "booking-extension-approval",
+
+  /**
+   * Booking cancellation approval workflow covering refunds and fees
+   */
+  BOOKING_CANCELLATION_WITH_FINANCIALS = "booking-cancellation-with-financials-approval",
 }
 
 export enum ApprovalLevelApproverType {
