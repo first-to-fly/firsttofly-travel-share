@@ -36,7 +36,7 @@ export interface IndependentTourOverwriteTax {
 export interface PeakPeriod {
   startDate: string | Date;
   endDate: string | Date;
-  name?: string;
+  name?: string | null;
 }
 
 export interface AccommodationPricingInfo {
