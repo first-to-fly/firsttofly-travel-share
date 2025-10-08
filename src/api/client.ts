@@ -23,7 +23,7 @@ import { apiContract } from "./contract";
 /**
  * Override types
  */
-type ExtractExtraParametersFromClientArgs<TClientArgs extends ClientArgs> = TClientArgs["api"] extends ApiFetcher ? Omit<Parameters<TClientArgs["api"]>[0], keyof Parameters<ApiFetcher>[0]> : {};
+type ExtractExtraParametersFromClientArgs<TClientArgs extends ClientArgs> = TClientArgs["api"] extends ApiFetcher ? Omit<Parameters<TClientArgs["api"]>[0], keyof Parameters<ApiFetcher>[0]> : Record<string, never>;
 type AppRouteMutationType<T> = ZodInputOrType<T>;
 
 type AppRouteBodyOrFormData<T extends AppRouteMutation> = T["contentType"] extends "multipart/form-data"
