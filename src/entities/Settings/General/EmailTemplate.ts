@@ -276,3 +276,5 @@ export const EmailTemplateContextRegistry = {
     description: "Secure link email for customer to access their booking",
   },
 } as const;
+
+export type EmailTemplateContext<K extends EmailTemplateKey> = typeof EmailTemplateContextRegistry[K]["context"];
