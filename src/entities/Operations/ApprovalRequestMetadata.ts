@@ -225,7 +225,7 @@ export const IndependentTourAccommodationPriceOverrideZ = z.object({
 });
 
 export const IndependentTourOptionalServicePricingOverrideZ = z.object({
-  independentTourBookingAddonOID: z.string().optional(),
+  independentTourOptionalServiceOID: z.string().optional(),
   unitPrice: z.number().optional(),
 });
 
