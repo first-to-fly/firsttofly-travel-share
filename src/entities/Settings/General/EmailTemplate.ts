@@ -39,7 +39,6 @@ export const EmailTemplateZ = EntityZ.extend({
 
 export type EmailTemplate = z.infer<typeof EmailTemplateZ>;
 
-
 // Email Context Interfaces
 
 export interface BaseEmailContext {
@@ -213,58 +212,67 @@ export interface ApprovalTimeoutWarningEmailContext extends BaseEmailContext {
   originalTimeoutDays: number;
 }
 
+// Email Template Context Registry with labels and descriptions
 
-// Email Template Context Registry with descriptions
-
-export interface EmailTemplateContextRegistry {
+export const EmailTemplateContextRegistry = {
   [EmailTemplateKey.PAYMENT_REQUEST]: {
-    context: PaymentEmailContext;
-    description: "Payment request email for tour bookings";
-  };
+    context: {} as PaymentEmailContext,
+    label: "Payment Request",
+    description: "Payment request email for tour bookings",
+  },
   [EmailTemplateKey.USER_INVITATION]: {
-    context: UserInvitationEmailContext;
-    description: "User invitation email with activation link";
-  };
+    context: {} as UserInvitationEmailContext,
+    label: "User Invitation",
+    description: "User invitation email with activation link",
+  },
   [EmailTemplateKey.GROUP_TOUR_BOOKING_CONFIRMATION]: {
-    context: GroupTourBookingConfirmationEmailContext;
-    description: "Confirmation email for group tour bookings";
-  };
+    context: {} as GroupTourBookingConfirmationEmailContext,
+    label: "Group Tour Booking Confirmation",
+    description: "Confirmation email for group tour bookings",
+  },
   [EmailTemplateKey.INDEPENDENT_TOUR_BOOKING_CONFIRMATION]: {
-    context: IndependentTourBookingConfirmationEmailContext;
-    description: "Confirmation email for independent tour bookings";
-  };
+    context: {} as IndependentTourBookingConfirmationEmailContext,
+    label: "Independent Tour Booking Confirmation",
+    description: "Confirmation email for independent tour bookings",
+  },
   [EmailTemplateKey.INDEPENDENT_TOUR_BOOKING_CANCELLATION]: {
-    context: IndependentTourBookingCancellationEmailContext;
-    description: "Cancellation notification for independent tour bookings";
-  };
+    context: {} as IndependentTourBookingCancellationEmailContext,
+    label: "Independent Tour Booking Cancellation",
+    description: "Cancellation notification for independent tour bookings",
+  },
   [EmailTemplateKey.USER_MESSAGE_NOTIFICATION]: {
-    context: UserMessageEmailContext;
-    description: "General user message notification";
-  };
+    context: {} as UserMessageEmailContext,
+    label: "User Message Notification",
+    description: "General user message notification",
+  },
   [EmailTemplateKey.APPROVAL_NOTIFICATION]: {
-    context: ApprovalNotificationEmailContext;
-    description: "Notification to approver for pending approval request";
-  };
+    context: {} as ApprovalNotificationEmailContext,
+    label: "Approval Notification",
+    description: "Notification to approver for pending approval request",
+  },
   [EmailTemplateKey.APPROVAL_OUTCOME]: {
-    context: ApprovalOutcomeEmailContext;
-    description: "Notification of approval request outcome to submitter";
-  };
+    context: {} as ApprovalOutcomeEmailContext,
+    label: "Approval Outcome",
+    description: "Notification of approval request outcome to submitter",
+  },
   [EmailTemplateKey.APPROVAL_TIMEOUT_WARNING]: {
-    context: ApprovalTimeoutWarningEmailContext;
-    description: "Warning to approver about approaching timeout";
-  };
+    context: {} as ApprovalTimeoutWarningEmailContext,
+    label: "Approval Timeout Warning",
+    description: "Warning to approver about approaching timeout",
+  },
   [EmailTemplateKey.TOUR_DEPARTURE_MIN_PAX_ALERT]: {
-    context: TourDepartureMinPaxAlertEmailContext;
-    description: "Alert for tour departures below minimum passenger count";
-  };
+    context: {} as TourDepartureMinPaxAlertEmailContext,
+    label: "Tour Departure Minimum Pax Alert",
+    description: "Alert for tour departures below minimum passenger count",
+  },
   [EmailTemplateKey.CUSTOMER_VERIFICATION_OTP]: {
-    context: CustomerVerificationOtpEmailContext;
-    description: "OTP verification email for customer booking access";
-  };
+    context: {} as CustomerVerificationOtpEmailContext,
+    label: "Customer Verification OTP",
+    description: "OTP verification email for customer booking access",
+  },
   [EmailTemplateKey.CUSTOMER_BOOKING_LINK]: {
-    context: CustomerBookingLinkEmailContext;
-    description: "Secure link email for customer to access their booking";
-  };
-}
-
-export type EmailTemplateContext<K extends EmailTemplateKey> = EmailTemplateContextRegistry[K]["context"];
+    context: {} as CustomerBookingLinkEmailContext,
+    label: "Customer Booking Link",
+    description: "Secure link email for customer to access their booking",
+  },
+} as const;
