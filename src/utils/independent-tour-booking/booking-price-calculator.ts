@@ -103,6 +103,7 @@ export interface IndependentTourBookingPriceInput {
   overwriteTax?: IndependentTourOverwriteTax | null;
   homeCurrency?: string;
   supportCurrencies?: CurrencyConversion[];
+  roomCount?: number;
 }
 
 function toFiniteNumber(value: number | string | null | undefined): number {
@@ -369,28 +370,14 @@ function calculatePeakNights(
 function calculatePaxTypePrice(
   quantity: number,
   basePricePerNight: number,
-  regularNights: number,
-  peakNights: number,
-  peakSurchargeFixedAmount?: number | null,
-): { unitPrice: number; subTotal: number; peakSurcharge: number } {
-  const regularNightsCost = basePricePerNight * regularNights;
-  let peakNightsCost = 0;
-  let peakSurcharge = 0;
-
-  if (peakNights > 0 && peakSurchargeFixedAmount) {
-    peakNightsCost = (basePricePerNight + peakSurchargeFixedAmount) * peakNights;
-    peakSurcharge = peakSurchargeFixedAmount * peakNights * quantity;
-  } else if (peakNights > 0) {
-    peakNightsCost = basePricePerNight * peakNights;
-  }
-
-  const unitPrice = regularNightsCost + peakNightsCost;
-  const subTotal = unitPrice * quantity;
+  totalNights: number,
+): { unitPrice: number; subTotal: number } {
+  const unitPricePerPax = basePricePerNight * totalNights;
+  const baseCost = unitPricePerPax * quantity;
 
   return {
-    unitPrice: unitPrice,
-    subTotal: subTotal,
-    peakSurcharge: peakSurcharge,
+    unitPrice: unitPricePerPax,
+    subTotal: baseCost,
   };
 }
 
@@ -401,6 +388,7 @@ export function calculateAccommodationPrice(
   travelEndDate: string | Date,
   homeCurrency: string,
   supportCurrencies: CurrencyConversion[],
+  roomCount: number,
 ): AccommodationPriceBreakdown {
   const normalizedAccommodation = normalizeAccommodationPricing(
     accommodation,
@@ -414,8 +402,6 @@ export function calculateAccommodationPrice(
     travelEndDate,
     normalizedAccommodation.peakPeriods || [],
   );
-  const regularNights = totalNights - peakNights;
-
   const paxByType = groupPaxByType(paxList);
   const paxPrices: PaxPriceDetails[] = [];
   let totalAccommodationCost = 0;
@@ -423,12 +409,10 @@ export function calculateAccommodationPrice(
 
   paxByType.forEach((quantity, paxType) => {
     const basePricePerNight = getPaxPrice(normalizedAccommodation.priceValue?.paxPricing, paxType);
-    const { unitPrice, subTotal, peakSurcharge } = calculatePaxTypePrice(
+    const { unitPrice, subTotal } = calculatePaxTypePrice(
       quantity,
       basePricePerNight,
-      regularNights,
-      peakNights,
-      normalizedAccommodation.priceValue?.peakSurchargeFixedAmount ?? null,
+      totalNights,
     );
 
     paxPrices.push({
@@ -439,8 +423,14 @@ export function calculateAccommodationPrice(
     });
 
     totalAccommodationCost += subTotal;
-    totalPeakSurcharge += peakSurcharge;
   });
+
+  const peakSurchargeFixedAmount = normalizedAccommodation.priceValue?.peakSurchargeFixedAmount ?? null;
+  if (peakNights > 0 && peakSurchargeFixedAmount && roomCount > 0) {
+    const roomsForSurcharge = Math.max(1, Math.floor(roomCount));
+    totalPeakSurcharge = peakSurchargeFixedAmount * peakNights * roomsForSurcharge;
+    totalAccommodationCost += totalPeakSurcharge;
+  }
 
   const taxRate = normalizedAccommodation.priceValue?.tax ?? 0;
   const totalTax = taxRate ? totalAccommodationCost * (toFiniteNumber(taxRate) / 100) : 0;
@@ -542,6 +532,7 @@ export function calculateIndependentTourBookingPrice(
     overwriteTax,
     homeCurrency = "USD",
     supportCurrencies = [],
+    roomCount,
   } = input;
 
   let accommodationCost = 0;
@@ -555,6 +546,7 @@ export function calculateIndependentTourBookingPrice(
       travelEndDate,
       homeCurrency,
       supportCurrencies,
+      roomCount ?? 0,
     );
     accommodationCost = accommodationBreakdown.totalAccommodationCost;
     accommodationTax = accommodationBreakdown.totalTax;
