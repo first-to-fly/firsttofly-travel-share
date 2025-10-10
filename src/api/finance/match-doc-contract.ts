@@ -13,6 +13,7 @@ export const CreateMatchDocZ = MatchDocZ.pick({
   issueDate: true,
   dueDate: true,
   supplierOID: true,
+  supplierPaymentOID: true,
   totalAmount: true,
   currency: true,
   remarks: true,

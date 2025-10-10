@@ -9,7 +9,6 @@ const basePath = "/api/operations/supplier-payments";
 const CreateSupplierPaymentZ = SupplierPaymentZ.pick({
   tenantOID: true,
   supplierOID: true,
-  paymentType: true,
   bankName: true,
   accountNumber: true,
   accountName: true,
@@ -17,12 +16,12 @@ const CreateSupplierPaymentZ = SupplierPaymentZ.pick({
   routingNumber: true,
   swiftCode: true,
   iban: true,
-  currency: true,
+  currencies: true,
   cnapCode: true,
   bicCode: true,
   branchNo: true,
   branch: true,
-  beneficiary: true,
+  beneficiaryInfo: true,
   remarks: true,
 });
 
