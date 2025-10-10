@@ -41,6 +41,7 @@ export const MatchDocZ = EntityZ.extend({
 
   // Supplier reference
   supplierOID: EntityOIDZ.nullish(),
+  supplierPaymentOID: EntityOIDZ.nullish(),
 
   totalAmount: z.number(),
   currency: z.string(),

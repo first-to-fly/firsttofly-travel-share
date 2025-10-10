@@ -216,6 +216,37 @@ export const ApprovalRequestGroupTourBookingAmendmentMetadataZ = z.object({
 export type ApprovalRequestGroupTourBookingAmendmentMetadata =
   z.infer<typeof ApprovalRequestGroupTourBookingAmendmentMetadataZ>;
 
+export const IndependentTourAccommodationPriceOverrideZ = z.object({
+  currency: z.string().optional(),
+  tax: z.number().optional(),
+  paxPricing: z.record(z.nativeEnum(BookingPaxType), z.number()).optional(),
+  peakSurchargeFixedAmount: z.number().optional(),
+  extraNightPrice: z.number().optional(),
+});
+
+export const IndependentTourOptionalServicePricingOverrideZ = z.object({
+  independentTourOptionalServiceOID: z.string().optional(),
+  unitPrice: z.number().optional(),
+});
+
+export const IndependentTourMiscellaneousPricingOverrideZ = z.object({
+  independentTourMiscellaneousOID: z.string().optional(),
+  amount: z.number().optional(),
+});
+
+export const IndependentTourBookingPricingOverrideZ = z.object({
+  accommodation: IndependentTourAccommodationPriceOverrideZ.optional(),
+  optionalServices: z.array(IndependentTourOptionalServicePricingOverrideZ).optional(),
+  miscellaneous: z.array(IndependentTourMiscellaneousPricingOverrideZ).optional(),
+});
+
+export type IndependentTourAccommodationPriceOverride = z.infer<typeof IndependentTourAccommodationPriceOverrideZ>;
+export type IndependentTourOptionalServicePricingOverride =
+  z.infer<typeof IndependentTourOptionalServicePricingOverrideZ>;
+export type IndependentTourMiscellaneousPricingOverride =
+  z.infer<typeof IndependentTourMiscellaneousPricingOverrideZ>;
+export type IndependentTourBookingPricingOverride = z.infer<typeof IndependentTourBookingPricingOverrideZ>;
+
 // Independent Tour Booking Amendment metadata (parallel to group tour, adapted for independent tour forms)
 export const ApprovalRequestIndependentTourBookingAmendmentMetadataZ = z.object({
   type: z.literal(ApprovalType.INDEPENDENT_TOUR_BOOKING_AMENDMENT),
@@ -301,6 +332,7 @@ export const ApprovalRequestIndependentTourBookingAmendmentMetadataZ = z.object(
       scheme: z.string(),
       rate: z.number(),
     }).optional(),
+    overridePricing: IndependentTourBookingPricingOverrideZ.optional(),
     totalAmount: z.number(),
   }),
 

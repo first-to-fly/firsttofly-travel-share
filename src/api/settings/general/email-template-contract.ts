@@ -6,12 +6,12 @@ import { EmailTemplateKeyZ, EmailTemplateZ } from "../../../entities/Settings/Ge
 
 const basePath = "/api/settings/general/email/templates";
 
-const UpdateEmailTemplateZ = EmailTemplateZ.pick({
-  tenantOID: true,
-  subjectTemplate: true,
-  bodyTemplate: true,
-  textTemplate: true,
-}).partial();
+const UpdateEmailTemplateZ = z.object({
+  tenantOID: z.string(),
+  subjectTemplate: EmailTemplateZ.shape.subjectTemplate.optional(),
+  bodyTemplate: EmailTemplateZ.shape.bodyTemplate.optional(),
+  textTemplate: EmailTemplateZ.shape.textTemplate.optional(),
+});
 
 const EmailTemplateOIDsResponseZ = z.object({
   oids: z.array(z.string()),
@@ -70,12 +70,9 @@ export const emailTemplateContract = initContract().router({
     summary: "Get email templates",
     method: "GET",
     path: basePath,
-    query: z
-      .object({
-        tenantOID: z.string(),
-        key: EmailTemplateKeyZ.optional(),
-      })
-      .passthrough(),
+    query: z.object({
+      tenantOID: z.string(),
+    }),
     responses: {
       200: EmailTemplateOIDsResponseZ,
     },

@@ -29,6 +29,12 @@ export interface IndependentTourBookingDiscount {
   currency?: string | null;
 }
 
+export interface IndependentTourBookingMiscellaneousItem {
+  totalPrice?: number | string | null;
+  currency?: string | null;
+  tax?: number | string | null;
+}
+
 export interface IndependentTourOverwriteTax {
   rate?: number | null;
 }
@@ -36,7 +42,7 @@ export interface IndependentTourOverwriteTax {
 export interface PeakPeriod {
   startDate: string | Date;
   endDate: string | Date;
-  name?: string;
+  name?: string | null;
 }
 
 export interface AccommodationPricingInfo {
@@ -92,10 +98,12 @@ export interface IndependentTourBookingPriceInput {
   paxList: IndependentTourBookingPax[];
   addons?: IndependentTourBookingAddon[];
   discounts?: IndependentTourBookingDiscount[];
+  miscellaneous?: IndependentTourBookingMiscellaneousItem[];
   accommodation?: AccommodationPricingInfo | null;
   overwriteTax?: IndependentTourOverwriteTax | null;
   homeCurrency?: string;
   supportCurrencies?: CurrencyConversion[];
+  roomCount?: number;
 }
 
 function toFiniteNumber(value: number | string | null | undefined): number {
@@ -362,28 +370,14 @@ function calculatePeakNights(
 function calculatePaxTypePrice(
   quantity: number,
   basePricePerNight: number,
-  regularNights: number,
-  peakNights: number,
-  peakSurchargeFixedAmount?: number | null,
-): { unitPrice: number; subTotal: number; peakSurcharge: number } {
-  const regularNightsCost = basePricePerNight * regularNights;
-  let peakNightsCost = 0;
-  let peakSurcharge = 0;
-
-  if (peakNights > 0 && peakSurchargeFixedAmount) {
-    peakNightsCost = (basePricePerNight + peakSurchargeFixedAmount) * peakNights;
-    peakSurcharge = peakSurchargeFixedAmount * peakNights * quantity;
-  } else if (peakNights > 0) {
-    peakNightsCost = basePricePerNight * peakNights;
-  }
-
-  const unitPrice = regularNightsCost + peakNightsCost;
-  const subTotal = unitPrice * quantity;
+  totalNights: number,
+): { unitPrice: number; subTotal: number } {
+  const unitPricePerPax = basePricePerNight * totalNights;
+  const baseCost = unitPricePerPax * quantity;
 
   return {
-    unitPrice: unitPrice,
-    subTotal: subTotal,
-    peakSurcharge: peakSurcharge,
+    unitPrice: unitPricePerPax,
+    subTotal: baseCost,
   };
 }
 
@@ -394,6 +388,7 @@ export function calculateAccommodationPrice(
   travelEndDate: string | Date,
   homeCurrency: string,
   supportCurrencies: CurrencyConversion[],
+  roomCount: number,
 ): AccommodationPriceBreakdown {
   const normalizedAccommodation = normalizeAccommodationPricing(
     accommodation,
@@ -407,8 +402,6 @@ export function calculateAccommodationPrice(
     travelEndDate,
     normalizedAccommodation.peakPeriods || [],
   );
-  const regularNights = totalNights - peakNights;
-
   const paxByType = groupPaxByType(paxList);
   const paxPrices: PaxPriceDetails[] = [];
   let totalAccommodationCost = 0;
@@ -416,12 +409,10 @@ export function calculateAccommodationPrice(
 
   paxByType.forEach((quantity, paxType) => {
     const basePricePerNight = getPaxPrice(normalizedAccommodation.priceValue?.paxPricing, paxType);
-    const { unitPrice, subTotal, peakSurcharge } = calculatePaxTypePrice(
+    const { unitPrice, subTotal } = calculatePaxTypePrice(
       quantity,
       basePricePerNight,
-      regularNights,
-      peakNights,
-      normalizedAccommodation.priceValue?.peakSurchargeFixedAmount ?? null,
+      totalNights,
     );
 
     paxPrices.push({
@@ -432,8 +423,14 @@ export function calculateAccommodationPrice(
     });
 
     totalAccommodationCost += subTotal;
-    totalPeakSurcharge += peakSurcharge;
   });
+
+  const peakSurchargeFixedAmount = normalizedAccommodation.priceValue?.peakSurchargeFixedAmount ?? null;
+  if (peakNights > 0 && peakSurchargeFixedAmount && roomCount > 0) {
+    const roomsForSurcharge = Math.max(1, Math.floor(roomCount));
+    totalPeakSurcharge = peakSurchargeFixedAmount * peakNights * roomsForSurcharge;
+    totalAccommodationCost += totalPeakSurcharge;
+  }
 
   const taxRate = normalizedAccommodation.priceValue?.tax ?? 0;
   const totalTax = taxRate ? totalAccommodationCost * (toFiniteNumber(taxRate) / 100) : 0;
@@ -531,9 +528,11 @@ export function calculateIndependentTourBookingPrice(
     travelEndDate,
     addons = [],
     discounts = [],
+    miscellaneous = [],
     overwriteTax,
     homeCurrency = "USD",
     supportCurrencies = [],
+    roomCount,
   } = input;
 
   let accommodationCost = 0;
@@ -547,6 +546,7 @@ export function calculateIndependentTourBookingPrice(
       travelEndDate,
       homeCurrency,
       supportCurrencies,
+      roomCount ?? 0,
     );
     accommodationCost = accommodationBreakdown.totalAccommodationCost;
     accommodationTax = accommodationBreakdown.totalTax;
@@ -560,7 +560,23 @@ export function calculateIndependentTourBookingPrice(
     0,
   );
 
-  const miscellaneousCost = 0;
+  let miscellaneousCost = 0;
+  let miscellaneousTax = 0;
+  if (miscellaneous.length > 0) {
+    const paxCount = paxList.length;
+    for (const misc of miscellaneous) {
+      const amount = toFiniteNumber(misc.totalPrice);
+      if (amount <= 0 || paxCount === 0) continue;
+      const baseAmount = convertAmount(amount, misc.currency ?? null, homeCurrency, supportCurrencies);
+      const subtotal = baseAmount * paxCount;
+      miscellaneousCost += subtotal;
+
+      const miscTaxRate = toFiniteNumber(misc.tax ?? null);
+      if (miscTaxRate > 0) {
+        miscellaneousTax += subtotal * (miscTaxRate / 100);
+      }
+    }
+  }
 
   const discountTotals = calculateDiscountTotals(
     accommodationCost + optionalServicesCost + miscellaneousCost,
@@ -573,7 +589,7 @@ export function calculateIndependentTourBookingPrice(
   const subtotal = accommodationCost + optionalServicesCost + miscellaneousCost;
   const taxRate = overwriteTax?.rate ? toFiniteNumber(overwriteTax.rate) : 0;
   const additionalTax = (subtotal - discountAmount) * (taxRate / 100);
-  const taxAmount = accommodationTax + additionalTax;
+  const taxAmount = accommodationTax + miscellaneousTax + additionalTax;
   const totalAmount = subtotal + taxAmount - discountAmount;
 
   return {
