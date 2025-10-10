@@ -5,6 +5,7 @@ import { z } from "zod";
 const basePath = "/api/xero";
 
 const AuthQueryZ = z.object({
+  tenantOID: z.string(),
   state: z.string().optional(),
 });
 
@@ -58,6 +59,7 @@ export const xeroSyncContract = initContract().router({
     summary: "Check current Xero integration status",
     method: "GET",
     path: `${basePath}/status`,
+    query: z.object({ tenantOID: z.string() }),
     responses: {
       200: StatusResponseZ,
     },
@@ -66,6 +68,7 @@ export const xeroSyncContract = initContract().router({
     summary: "Disconnect Xero integration and clear stored tokens",
     method: "GET",
     path: `${basePath}/disconnect`,
+    query: z.object({ tenantOID: z.string() }),
     responses: {
       200: DisconnectResponseZ,
     },

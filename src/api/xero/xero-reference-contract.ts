@@ -5,10 +5,12 @@ import { z } from "zod";
 const basePath = "/api/xero/reference";
 
 export const ContactSearchZ = z.object({
+  tenantOID: z.string(),
   text: z.string(),
   page: z.number().default(1),
 });
 export const ContactCreateZ = z.object({
+  tenantOID: z.string(),
   name: z.string(),
   email: z.string().optional(),
   phone: z.string().optional(),
