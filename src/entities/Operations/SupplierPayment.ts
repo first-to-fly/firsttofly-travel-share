@@ -25,7 +25,7 @@ export const SupplierPaymentZ = EntityZ.extend({
   beneficiaryInfo: z.object({
     name: z.string(),
     uen: z.string().nullish(),
-    gst: z.string().nullish(),
+    gst: z.number().nullish(),
   }),
   remarks: z.string().nullish(),
 });
