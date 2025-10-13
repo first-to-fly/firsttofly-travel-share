@@ -100,22 +100,6 @@ export const groupTourCostingContract = initContract().router({
     path: `${basePath}/regenerate-code`,
     body: z.object({
       groupTourCostingOID: z.string().describe("OID of group tour costing to regenerate code for"),
-      airlineOIDs: z.array(z.string().describe("Airline OIDs to use when regenerating the code")).nullable().optional(),
-    }),
-    responses: {
-      200: z.object({
-        groupTourCostingOID: z.string().describe("OID of the updated group tour costing"),
-        newCode: z.string().describe("The newly generated costing code"),
-      }),
-    },
-  },
-
-  regenerateGroupTourCostingCode: {
-    summary: "Regenerate code for a group tour costing",
-    method: "POST",
-    path: `${basePath}/regenerate-code`,
-    body: z.object({
-      groupTourCostingOID: z.string().describe("OID of group tour costing to regenerate code for"),
       airlineOIDs: z.array(z.string().describe("Airline OIDs to use for regeneration")).nullable().optional(),
     }),
     responses: {
