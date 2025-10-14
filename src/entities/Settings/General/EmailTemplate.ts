@@ -88,6 +88,10 @@ export interface GroupTourBookingConfirmationEmailContext extends BaseEmailConte
   balancePayment: string;
   customerLinkURL: string;
   termAndConditionURL: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
 }
 
 export interface UserMessageEmailContext extends BaseEmailContext {
@@ -100,10 +104,10 @@ export interface UserMessageEmailContext extends BaseEmailContext {
 export interface IndependentTourBookingConfirmationEmailContext extends BaseEmailContext {
   customerName: string;
   bookingRef: string;
-  productName: string;
+  tourName: string;
   productCode: string;
-  travelStartDate: string;
-  travelEndDate: string;
+  tourCode: string;
+  departureDate: string;
   noOfTravellers: string;
   totalAmount: string;
   commission?: string;
@@ -111,22 +115,21 @@ export interface IndependentTourBookingConfirmationEmailContext extends BaseEmai
   balancePayment: string;
   customerLinkURL: string;
   termAndConditionURL: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
 }
 
 export interface CustomerVerificationOtpEmailContext extends BaseEmailContext {
-  otpCode: string;
-  expiryMinutes: number;
-  bookingReference: string;
-  qrCodeDataUrl?: string;
-  customerBookingUrl?: string;
-  tourName?: string;
-  departureDate?: string;
-  departureCode?: string;
-  totalAmount?: number;
-  currency?: string;
-  passengerCount?: number;
-  bookingStatus?: string;
-  paymentStatus?: string;
+  otp: string;
+  expiryMins: number;
+  expiredTime: string;
+  mainContactEmail: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
 }
 
 export interface CustomerBookingLinkEmailContext extends BaseEmailContext {
@@ -224,6 +227,10 @@ export interface PaymentReminderEmailContext extends BaseEmailContext {
   cancelTime: string;
   host: string;
   detailLink: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
 }
 
 export interface PaymentReceivedEmailContext extends BaseEmailContext {
@@ -240,12 +247,20 @@ export interface BookingDetailUpdatedByCustomerEmailContext extends BaseEmailCon
   staffName: string;
   bookingRef: string;
   detailLink: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
 }
 
 export interface UserPasswordResetEmailContext extends BaseEmailContext {
   userName: string;
-  email: string;
+  staffCode: string;
   password: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
 }
 
 export interface StaffAssignmentChangeEmailContext extends BaseEmailContext {
