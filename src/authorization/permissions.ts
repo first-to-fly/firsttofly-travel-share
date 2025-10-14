@@ -41,7 +41,6 @@ import { SectorGroupPermissions } from "./entities/sector-group.permission";
 import { SpecialInstructionPermissions } from "./entities/special-instruction.permission";
 import { StationCodePermissions } from "./entities/station-code.permission";
 import { SupplierPermissions } from "./entities/supplier.permission";
-import { ReportsPermissions } from "./entities/reports.permission";
 import { TenantPermissions } from "./entities/tenant.permission";
 import { TenantConfigPermissions } from "./entities/tenant-config.permission";
 import { TermPermissions } from "./entities/term.permission";
@@ -54,6 +53,7 @@ import { TransportSegmentPermissions } from "./entities/transport-segment.permis
 import { UsefulInfoPermissions } from "./entities/useful-info.permission";
 import { UserPermissions } from "./entities/user.permission";
 import { UserMessagePermissions } from "./entities/user-message.permission";
+import { ReportsPermissions } from "./entities/reports.permission";
 import type { PermissionDeclaration } from "./permissions.types";
 
 
