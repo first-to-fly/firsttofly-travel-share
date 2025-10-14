@@ -75,29 +75,19 @@ export interface UserInvitationEmailContext extends BaseEmailContext {
 }
 
 export interface GroupTourBookingConfirmationEmailContext extends BaseEmailContext {
-  groupTourBookingReference: string;
-  departureCode: string;
+  customerName: string;
+  bookingRef: string;
+  tourName: string;
+  productCode: string;
+  tourCode: string;
   departureDate: string;
+  noOfTravellers: string;
   totalAmount: string;
-  currency: string;
-  passengerCount: number;
-  passengerDetails: Array<{
-    name: string;
-    isAdult: boolean;
-    mealPreference?: string;
-  }>;
-  bookedRooms?: Array<{
-    type: string;
-    quantity: number;
-  }>;
-  itinerary?: {
-    days: Array<{
-      dayNumber: number;
-      title: string;
-      description?: string;
-    }>;
-  };
-  specialInstructions?: string[];
+  commission?: string;
+  receivedTotalAmount: string;
+  balancePayment: string;
+  customerLinkURL: string;
+  termAndConditionURL: string;
 }
 
 export interface UserMessageEmailContext extends BaseEmailContext {
@@ -108,32 +98,19 @@ export interface UserMessageEmailContext extends BaseEmailContext {
 }
 
 export interface IndependentTourBookingConfirmationEmailContext extends BaseEmailContext {
-  bookingReference: string;
+  customerName: string;
+  bookingRef: string;
   productName: string;
-  accommodationName?: string;
+  productCode: string;
   travelStartDate: string;
   travelEndDate: string;
+  noOfTravellers: string;
   totalAmount: string;
-  currency: string;
-  passengerCount: number;
-  adultsCount: number;
-  childrenCount: number;
-  infantsCount: number;
-  rooms: Array<{
-    roomNumber?: string;
-    roomType?: string;
-    passengers: Array<{
-      name: string;
-      type: string;
-      mealPreference?: string;
-    }>;
-  }>;
-  discounts?: Array<{
-    code?: string;
-    amount: number;
-  }>;
-  specialInstructions?: string[];
-  paymentStatus: string;
+  commission?: string;
+  receivedTotalAmount: string;
+  balancePayment: string;
+  customerLinkURL: string;
+  termAndConditionURL: string;
 }
 
 export interface CustomerVerificationOtpEmailContext extends BaseEmailContext {
