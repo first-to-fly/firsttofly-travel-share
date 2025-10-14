@@ -43,7 +43,7 @@ export const TxnPreviewZ = z.object({
     credit: z.number(),
   }),
   posting: z.object({
-    docType: z.enum(["ACCREC", "ACCRECCREDIT", "MANUALJOURNAL"]).optional(),
+    docType: z.enum(["ACCREC", "ACCRECCREDIT", "ACCPAY", "MANUALJOURNAL"]).optional(),
   }).optional(),
 });
 
