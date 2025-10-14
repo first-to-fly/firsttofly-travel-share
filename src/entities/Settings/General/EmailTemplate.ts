@@ -268,11 +268,6 @@ export interface BookingDetailUpdatedByCustomerEmailContext extends BaseEmailCon
   staffName: string;
   bookingRef: string;
   detailLink: string;
-  companyName: string;
-  companySecondNames?: string[];
-  companyCodes?: string[];
-  contacts?: ContactInfo[];
-  socials?: SocialInfo[];
 }
 
 export interface UserPasswordResetEmailContext extends BaseEmailContext {
