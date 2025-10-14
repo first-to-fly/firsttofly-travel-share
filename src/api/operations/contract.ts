@@ -5,6 +5,7 @@ import { budgetContract } from "./budget-contract";
 import { budgetEntryContract } from "./budget-entry-contract";
 import { exchangeOrderContract } from "./exchange-order-contract";
 import { exchangeOrderItemContract } from "./exchange-order-item-contract";
+import { reportsContract } from "./reports-contract";
 import { supplierAddressContract } from "./supplier-address-contract";
 import { supplierContract } from "./supplier-contract";
 import { supplierPaymentContract } from "./supplier-payment-contract";
@@ -26,6 +27,7 @@ export const operationsContract = initContract().router({
   supplierAddress: supplierAddressContract,
   supplierPayment: supplierPaymentContract,
   supplierPerson: supplierPersonContract,
+  reports: reportsContract,
   tourDeparture: tourDepartureContract,
   tourDepartureAccommodation: tourDepartureAccommodationContract,
   tourDepartureRoomAllocation: tourDepartureRoomAllocationContract,
