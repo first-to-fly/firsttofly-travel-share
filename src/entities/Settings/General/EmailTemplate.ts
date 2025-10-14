@@ -224,11 +224,6 @@ export interface PaymentReminderEmailContext extends BaseEmailContext {
   cancelTime: string;
   host: string;
   detailLink: string;
-  companyName: string;
-  companySecondNames?: string[];
-  companyCodes?: string[];
-  contacts?: ContactInfo[];
-  socials?: SocialInfo[];
 }
 
 export interface PaymentReceivedEmailContext extends BaseEmailContext {
