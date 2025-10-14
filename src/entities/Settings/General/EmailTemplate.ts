@@ -277,7 +277,7 @@ export interface BookingDetailUpdatedByCustomerEmailContext extends BaseEmailCon
 
 export interface UserPasswordResetEmailContext extends BaseEmailContext {
   userName: string;
-  staffCode: string;
+  email: string;
   password: string;
 }
 
