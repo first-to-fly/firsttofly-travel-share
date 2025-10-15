@@ -52,4 +52,8 @@ export const JournalPermissions = {
     name: "Void Tenant Journals",
     description: "Can void Journal entries within the tenant",
   },
+  "tenant:journal:sync-xero": {
+    name: "Sync Journals to Xero",
+    description: "Can sync journals to Xero accounting system",
+  },
 };
