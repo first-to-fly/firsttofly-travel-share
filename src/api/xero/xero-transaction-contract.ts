@@ -4,6 +4,9 @@ import { z } from "zod";
 
 const basePath = "/api/xero/transactions";
 
+// Transactions: All fields are READ-ONLY (view only)
+// Account codes are automatically resolved server-side based on transaction type and rules
+// Unlike Bills/CreditNotes, transactions do not support client-side modifications
 export const BuildTxnStateZ = z.object({
   tenantOID: z.string(),
   transactionOIDs: z.array(z.string()).min(1),
@@ -13,11 +16,7 @@ export const BuildTxnStateZ = z.object({
     narration: z.string().optional(),
     date: z.string().optional(),
   }).partial().optional(),
-  lineOverrides: z.record(z.string(), z.object({
-    accountCode: z.string().optional(),
-    taxType: z.string().optional(),
-    description: z.string().optional(),
-  })).optional(),
+  // lineOverrides removed - transactions are view-only
   contactId: z.string().optional(),
   hasAttachments: z.boolean().optional(),
 });
@@ -68,19 +67,8 @@ export const xeroTransactionContract = initContract().router({
     responses: { 200: z.object({ stateId: z.string() }) },
   },
 
-  updateState: {
-    summary: "Update posting state header or overrides",
-    method: "POST",
-    path: `${basePath}/update-state`,
-    body: z.object({
-      stateId: z.string(),
-      header: z.record(z.any()).optional(),
-      lineOverrides: z.record(z.string(), z.record(z.any())).optional(),
-      contactId: z.string().optional(),
-      hasAttachments: z.boolean().optional(),
-    }),
-    responses: { 200: z.boolean() },
-  },
+  // updateState removed - transactions are view-only and do not support client-side modifications
+  // All state updates are handled automatically during preview based on server-side rules
 
   preview: {
     summary: "Preview composed transaction payload",
