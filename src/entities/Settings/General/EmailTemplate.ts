@@ -236,7 +236,6 @@ export interface PaymentReminderEmailContext extends BaseEmailContext {
 export interface PaymentReceivedEmailContext extends BaseEmailContext {
   amount: string;
   paymentDate: string;
-  companyName: string;
   companySecondNames?: string[];
   companyCodes?: string[];
   contacts?: ContactInfo[];
@@ -273,7 +272,6 @@ export interface StaffAssignmentChangeEmailContext extends BaseEmailContext {
   date: string;
   operator: string;
   reason?: string;
-  companyName: string;
   companySecondNames?: string[];
   companyCodes?: string[];
   contacts?: ContactInfo[];
@@ -285,7 +283,6 @@ export interface ApprovalRequestApprovedEmailContext extends BaseEmailContext {
   moduleRef: string;
   details?: string[];
   detailLink: string;
-  companyName: string;
   companySecondNames?: string[];
   companyCodes?: string[];
   contacts?: ContactInfo[];
@@ -298,7 +295,6 @@ export interface ApprovalRequestRejectedEmailContext extends BaseEmailContext {
   moduleRef: string;
   details?: string[];
   detailLink: string;
-  companyName: string;
   companySecondNames?: string[];
   companyCodes?: string[];
   contacts?: ContactInfo[];
@@ -310,7 +306,6 @@ export interface ApprovalRequestAbortedEmailContext extends BaseEmailContext {
   moduleName: string;
   moduleRef: string;
   details?: string[];
-  companyName: string;
   companySecondNames?: string[];
   companyCodes?: string[];
   contacts?: ContactInfo[];
@@ -325,7 +320,6 @@ export interface ApprovalEoFollowUpEmailContext extends BaseEmailContext {
   approvalDate: string;
   host: string;
   detailLink: string;
-  companyName: string;
   companySecondNames?: string[];
   companyCodes?: string[];
   contacts?: ContactInfo[];
@@ -340,7 +334,6 @@ export interface ApprovalRefundFollowUpEmailContext extends BaseEmailContext {
   approvalDate: string;
   host: string;
   refundLink: string;
-  companyName: string;
   companySecondNames?: string[];
   companyCodes?: string[];
   contacts?: ContactInfo[];
