@@ -13,7 +13,10 @@ import { settingsContract } from "./settings/contract";
 import { userContract } from "./user/contract";
 
 
-export const apiContract = initContract().router({
+const c = initContract();
+
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export const apiContract: any = c.router({
   activity: activityContract,
   i18n: i18nContract,
   products: productsContract,

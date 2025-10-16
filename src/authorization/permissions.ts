@@ -34,6 +34,7 @@ import { PaymentWayPermissions } from "./entities/payment-way.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { PrivacyPolicyPermissions } from "./entities/privacy-policy.permission";
 import { ReferenceCodePermissions } from "./entities/reference-code.permission";
+import { ReportsPermissions } from "./entities/reports.permission";
 import { RolePermissions } from "./entities/role.permission"; // Corrected import path and name
 import { RoomConfigurationPermissions } from "./entities/room-configuration.permission";
 import { SectorPermissions } from "./entities/sector.permission";
@@ -53,7 +54,6 @@ import { TransportSegmentPermissions } from "./entities/transport-segment.permis
 import { UsefulInfoPermissions } from "./entities/useful-info.permission";
 import { UserPermissions } from "./entities/user.permission";
 import { UserMessagePermissions } from "./entities/user-message.permission";
-import { ReportsPermissions } from "./entities/reports.permission";
 import type { PermissionDeclaration } from "./permissions.types";
 
 
