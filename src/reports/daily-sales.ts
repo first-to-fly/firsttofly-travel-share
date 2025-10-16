@@ -1,6 +1,8 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import { DateOnlyStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -8,8 +10,8 @@ import type { ReportMetadata } from "./sector-sales";
  * Daily Sales Report Filters
  */
 export const DailySalesFiltersZ = z.object({
-  /** Staff filter - "all" or specific staff ID */
-  staff: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Staff filter (optional) */
+  staffOID: EntityOIDZ.optional(),
 
   /** Station code */
   stationCode: z.string().optional(),
@@ -21,21 +23,21 @@ export const DailySalesFiltersZ = z.object({
   dateRangeType: z.enum([
     "today",
     "yesterday",
-    "this-week",
+    "current-week",
     "last-week",
-    "this-month",
+    "current-month",
     "last-month",
     "custom",
   ]),
 
   /** Start date (for custom range) */
-  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  startDate: DateOnlyStringZ.optional(),
 
   /** End date (for custom range) */
-  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  endDate: DateOnlyStringZ.optional(),
 
   /** Product type filter */
-  productType: z.enum(["all", "git", "fit"]).default("all"),
+  productType: z.enum(["git", "fit"]).optional(),
 
   /** Product code (optional) */
   productCode: z.string().optional(),
@@ -46,11 +48,11 @@ export const DailySalesFiltersZ = z.object({
   /** Sector group (optional) */
   sectorGroup: z.string().optional(),
 
-  /** Sector filter - "all" or specific sector ID */
-  sector: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Sector filter (optional) */
+  sectorOID: EntityOIDZ.optional(),
 
-  /** Departments filter - "all" or specific department OID */
-  departments: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Departments filter (optional) */
+  departmentOID: EntityOIDZ.optional(),
 
   /** Payment balance status */
   paymentBalance: z
@@ -69,7 +71,7 @@ export const DailySalesFiltersZ = z.object({
   excludeTransferredBooking: z.boolean().default(false),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type DailySalesFilters = z.infer<typeof DailySalesFiltersZ>;

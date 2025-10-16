@@ -1,6 +1,8 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import { DateOnlyStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -9,7 +11,7 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const TourSalesFiltersZ = z.object({
   /** Product type filter */
-  productType: z.enum(["all", "git", "fit"]).default("all"),
+  productType: z.enum(["git", "fit"]).optional(),
 
   /** Product code (optional) */
   productCode: z.string().optional(),
@@ -17,8 +19,8 @@ export const TourSalesFiltersZ = z.object({
   /** Date type - booking date or departure date */
   dateType: z.enum(["booking-date", "departure-date"]).default("departure-date"),
 
-  /** Departments filter - "all" or specific department OID */
-  departments: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Departments filter (optional) */
+  departmentOID: EntityOIDZ.optional(),
 
   /** Date range type */
   dateRangeType: z.enum([
@@ -32,10 +34,10 @@ export const TourSalesFiltersZ = z.object({
   ]),
 
   /** Start date (for custom range) */
-  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  startDate: DateOnlyStringZ.optional(),
 
   /** End date (for custom range) */
-  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  endDate: DateOnlyStringZ.optional(),
 
   /** Sales & Cost Status filter */
   salesCostStatus: z.enum([
@@ -45,11 +47,11 @@ export const TourSalesFiltersZ = z.object({
     "with-cost-no-sales",
   ]).default("with-sales-and-cost"),
 
-  /** Sector filter - "all" or specific sector ID */
-  sector: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Sector filter (optional) */
+  sectorOID: EntityOIDZ.optional(),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type TourSalesFilters = z.infer<typeof TourSalesFiltersZ>;

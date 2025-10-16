@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import type { ReportMetadata } from "./sector-sales";
 
@@ -9,7 +10,7 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const PrepaymentReportFiltersZ = z.object({
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type PrepaymentReportFilters = z.infer<typeof PrepaymentReportFiltersZ>;

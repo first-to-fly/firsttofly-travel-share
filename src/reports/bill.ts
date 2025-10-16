@@ -1,7 +1,9 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { BillPaymentStatus, BillStatus } from "../entities/Finance/Bill";
 import { ReportFormat } from "../entities/Operations/Report";
+import { DateOnlyStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -10,11 +12,11 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const BillReportFiltersZ = z.object({
   /** Issue date range */
-  issueDateStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  issueDateEnd: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  issueDateStart: DateOnlyStringZ.optional(),
+  issueDateEnd: DateOnlyStringZ.optional(),
 
   /** Supplier filter - specific supplier OID */
-  supplierOID: z.string().optional(),
+  supplierOID: EntityOIDZ.optional(),
 
   /** Bill statuses - array of statuses */
   billStatuses: z.array(z.nativeEnum(BillStatus)).optional(),
@@ -23,7 +25,7 @@ export const BillReportFiltersZ = z.object({
   paymentStatuses: z.array(z.nativeEnum(BillPaymentStatus)).optional(),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type BillReportFilters = z.infer<typeof BillReportFiltersZ>;

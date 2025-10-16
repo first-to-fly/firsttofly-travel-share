@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import type { ReportMetadata } from "./sector-sales";
 
@@ -9,10 +10,10 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const SectorSalesYoYFiltersZ = z.object({
   /** Product type filter */
-  productType: z.enum(["all", "git", "fit"]).default("all"),
+  productType: z.enum(["git", "fit"]).optional(),
 
-  /** Sectors filter - "all" or specific sector OIDs (comma-separated) */
-  sectors: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Sectors filter - array of sector OIDs (optional) */
+  sectorOIDs: z.array(EntityOIDZ).optional(),
 
   /** Years for comparison (up to 3 years) */
   years: z.array(z.number().int().min(2000))
@@ -27,7 +28,7 @@ export const SectorSalesYoYFiltersZ = z.object({
   filterByDate: z.enum(["booking-date", "departure-date"]).default("booking-date"),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type SectorSalesYoYFilters = z.infer<typeof SectorSalesYoYFiltersZ>;

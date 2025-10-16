@@ -1,6 +1,8 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import { DateOnlyStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -12,11 +14,11 @@ export const RedemptionReportFiltersZ = z.object({
   searchQuery: z.string().optional(),
 
   /** Period date range (optional) */
-  periodStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  periodEnd: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  periodStart: DateOnlyStringZ.optional(),
+  periodEnd: DateOnlyStringZ.optional(),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type RedemptionReportFilters = z.infer<typeof RedemptionReportFiltersZ>;

@@ -1,6 +1,8 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import { DateOnlyStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -20,13 +22,13 @@ export const ReceiptBankCardFiltersZ = z.object({
   ]),
 
   /** Start date (for custom range) */
-  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  startDate: DateOnlyStringZ.optional(),
 
   /** End date (for custom range) */
-  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  endDate: DateOnlyStringZ.optional(),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type ReceiptBankCardFilters = z.infer<typeof ReceiptBankCardFiltersZ>;

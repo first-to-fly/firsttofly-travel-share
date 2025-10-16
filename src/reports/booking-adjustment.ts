@@ -1,6 +1,8 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import { DateOnlyStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -20,13 +22,13 @@ export const BookingAdjustmentFiltersZ = z.object({
   ]),
 
   /** Start date (for custom range) */
-  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  startDate: DateOnlyStringZ.optional(),
 
   /** End date (for custom range) */
-  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  endDate: DateOnlyStringZ.optional(),
 
   /** Departure date (optional) */
-  departureDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  departureDate: DateOnlyStringZ.optional(),
 
   /** Booking station (optional) */
   bookingStation: z.string().optional(),
@@ -34,11 +36,11 @@ export const BookingAdjustmentFiltersZ = z.object({
   /** Tour code (optional) */
   tourCode: z.string().optional(),
 
-  /** Adjustment type filter - "all" or specific adjustment type */
-  adjustmentType: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Adjustment type filter (optional) */
+  adjustmentType: z.string().optional(),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type BookingAdjustmentFilters = z.infer<typeof BookingAdjustmentFiltersZ>;

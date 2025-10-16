@@ -1,6 +1,8 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import { DateOnlyStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -9,17 +11,17 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const TLTMAssignmentFiltersZ = z.object({
   /** Departure date range */
-  departureDateStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
-  departureDateEnd: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),
+  departureDateStart: DateOnlyStringZ,
+  departureDateEnd: DateOnlyStringZ,
 
   /** Product type filter */
-  productType: z.enum(["all", "git", "fit"]).default("all"),
+  productType: z.enum(["git", "fit"]).optional(),
 
-  /** Departments filter - "all" or specific department OID */
-  departments: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Departments filter (optional) */
+  departmentOID: EntityOIDZ.optional(),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type TLTMAssignmentFilters = z.infer<typeof TLTMAssignmentFiltersZ>;

@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import type { ReportMetadata } from "./sector-sales";
 
@@ -15,7 +16,7 @@ export const DepositReconciliationFiltersZ = z.object({
   customMonth: z.string().regex(/^\d{4}-\d{2}$/).optional(),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type DepositReconciliationFilters = z.infer<typeof DepositReconciliationFiltersZ>;

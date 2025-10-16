@@ -1,6 +1,8 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import { DateOnlyStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -9,12 +11,12 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const RefundReportFiltersZ = z.object({
   /** Creation date range */
-  creationDateStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  creationDateEnd: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  creationDateStart: DateOnlyStringZ.optional(),
+  creationDateEnd: DateOnlyStringZ.optional(),
 
   /** Report date range */
-  reportDateStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
-  reportDateEnd: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  reportDateStart: DateOnlyStringZ.optional(),
+  reportDateEnd: DateOnlyStringZ.optional(),
 
   /** Refund payment method */
   refundPaymentMethod: z.enum(["all", "original", "paynow"]).default("all"),
@@ -29,7 +31,7 @@ export const RefundReportFiltersZ = z.object({
   postStatus: z.enum(["all", "unposted", "posted"]).default("all"),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type RefundReportFilters = z.infer<typeof RefundReportFiltersZ>;

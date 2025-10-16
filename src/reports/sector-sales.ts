@@ -1,6 +1,8 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import { DateOnlyStringZ } from "../types/date";
 
 
 /**
@@ -8,7 +10,7 @@ import { ReportFormat } from "../entities/Operations/Report";
  */
 export const SectorSalesFiltersZ = z.object({
   /** Product type filter */
-  productType: z.enum(["all", "git", "fit"]).default("all"),
+  productType: z.enum(["git", "fit"]).optional(),
 
   /** Date range type */
   dateRangeType: z.enum([
@@ -22,13 +24,13 @@ export const SectorSalesFiltersZ = z.object({
   ]),
 
   /** Start date (for custom range) */
-  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  startDate: DateOnlyStringZ.optional(),
 
   /** End date (for custom range) */
-  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  endDate: DateOnlyStringZ.optional(),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type SectorSalesFilters = z.infer<typeof SectorSalesFiltersZ>;

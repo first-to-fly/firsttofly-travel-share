@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import type { ReportMetadata } from "./sector-sales";
 
@@ -9,7 +10,7 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const AirlineSalesYoYFiltersZ = z.object({
   /** Product type filter */
-  productType: z.enum(["all", "git", "fit"]).default("all"),
+  productType: z.enum(["git", "fit"]).optional(),
 
   /** Years for comparison (up to 3 years) */
   years: z.array(z.number().int().min(2000))
@@ -24,7 +25,7 @@ export const AirlineSalesYoYFiltersZ = z.object({
   filterByDate: z.enum(["booking-date", "departure-date"]).default("booking-date"),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type AirlineSalesYoYFilters = z.infer<typeof AirlineSalesYoYFiltersZ>;

@@ -1,6 +1,9 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import { PaymentMethod } from "../entities/Sales/Transaction";
+import { DateOnlyStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -20,19 +23,19 @@ export const ReceiptReportFiltersZ = z.object({
   ]),
 
   /** Start date (for custom range) */
-  startDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  startDate: DateOnlyStringZ.optional(),
 
   /** End date (for custom range) */
-  endDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
+  endDate: DateOnlyStringZ.optional(),
 
-  /** Payment method filter - "all" or specific payment method */
-  paymentMethod: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Payment methods filter (optional) */
+  paymentMethods: z.array(z.nativeEnum(PaymentMethod)).optional(),
 
   /** Tour codes (optional) */
   tourCodes: z.string().optional(),
 
   /** Tenant OID */
-  tenantOID: z.string().min(1),
+  tenantOID: EntityOIDZ,
 });
 
 export type ReceiptReportFilters = z.infer<typeof ReceiptReportFiltersZ>;
