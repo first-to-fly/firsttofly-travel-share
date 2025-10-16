@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+import { ReportFormat } from "../entities/Operations/Report";
+import type { ReportMetadata } from "./sector-sales";
+
 
 /**
  * Tour Sales Report Filters
@@ -50,3 +53,12 @@ export const TourSalesFiltersZ = z.object({
 });
 
 export type TourSalesFilters = z.infer<typeof TourSalesFiltersZ>;
+
+export const TourSalesReportMetadata: ReportMetadata = {
+  id: "tour-sales-report",
+  slug: "tour-sales-report",
+  name: "Tour Sales Report",
+  description: "Summarizes tour sales by product, showing revenue, costs, and gross profit for each tour.",
+  supportedFormats: [ReportFormat.XLSX],
+  supportsWebView: true,
+};

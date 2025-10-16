@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+import { ReportFormat } from "../entities/Operations/Report";
+import type { ReportMetadata } from "./sector-sales";
+
 
 /**
  * Receipt Bank (Card) Report Filters
@@ -27,3 +30,12 @@ export const ReceiptBankCardFiltersZ = z.object({
 });
 
 export type ReceiptBankCardFilters = z.infer<typeof ReceiptBankCardFiltersZ>;
+
+export const ReceiptBankCardReportMetadata: ReportMetadata = {
+  id: "receipt-bank-card-report",
+  slug: "receipt-bank-card-report",
+  name: "Receipt (Bank/Card) Report",
+  description: "Tracks receipts processed through bank cards and other payment channels with transaction details.",
+  supportedFormats: [ReportFormat.XLSX],
+  supportsWebView: false,
+};

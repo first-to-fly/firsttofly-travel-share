@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import { ReportFormat } from "../entities/Operations/Report";
+
 
 /**
  * Sector Sales Report Filters
@@ -30,3 +32,24 @@ export const SectorSalesFiltersZ = z.object({
 });
 
 export type SectorSalesFilters = z.infer<typeof SectorSalesFiltersZ>;
+
+/**
+ * Report Metadata
+ */
+export interface ReportMetadata {
+  id: string;
+  slug: string;
+  name: string;
+  description: string;
+  supportedFormats: ReportFormat[];
+  supportsWebView: boolean;
+}
+
+export const SectorSalesReportMetadata: ReportMetadata = {
+  id: "sector-sales-report",
+  slug: "sector-sales-report",
+  name: "Sector Sales Report",
+  description: "Breakdown of sales by sector (or sector group), showing key metrics like revenue, costs, and gross profit.",
+  supportedFormats: [ReportFormat.XLSX],
+  supportsWebView: true,
+};

@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+import { ReportFormat } from "../entities/Operations/Report";
+import type { ReportMetadata } from "./sector-sales";
+
 
 /**
  * Receipt Report Filters
@@ -33,3 +36,12 @@ export const ReceiptReportFiltersZ = z.object({
 });
 
 export type ReceiptReportFilters = z.infer<typeof ReceiptReportFiltersZ>;
+
+export const ReceiptReportMetadata: ReportMetadata = {
+  id: "receipt-report",
+  slug: "receipt-report",
+  name: "Receipt Report",
+  description: "Lists all receipts collected within the selected date range, by payment type.",
+  supportedFormats: [ReportFormat.XLSX],
+  supportsWebView: true,
+};

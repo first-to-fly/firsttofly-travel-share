@@ -1,5 +1,7 @@
 import { z } from "zod";
 
+import type { ReportMetadata } from "./sector-sales";
+
 
 /**
  * Tour Booking GST Report Filters
@@ -27,3 +29,12 @@ export const TourBookingGSTFiltersZ = z.object({
 });
 
 export type TourBookingGSTFilters = z.infer<typeof TourBookingGSTFiltersZ>;
+
+export const TourBookingGSTReportMetadata: ReportMetadata = {
+  id: "tour-booking-gst-report",
+  slug: "tour-booking-gst-report",
+  name: "Tour Booking GST Report",
+  description: "Summarizes GST amounts for tour bookings within the selected date range.",
+  supportedFormats: [],
+  supportsWebView: true,
+};

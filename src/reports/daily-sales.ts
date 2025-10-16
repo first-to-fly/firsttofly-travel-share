@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+import { ReportFormat } from "../entities/Operations/Report";
+import type { ReportMetadata } from "./sector-sales";
+
 
 /**
  * Daily Sales Report Filters
@@ -70,3 +73,12 @@ export const DailySalesFiltersZ = z.object({
 });
 
 export type DailySalesFilters = z.infer<typeof DailySalesFiltersZ>;
+
+export const DailySalesReportMetadata: ReportMetadata = {
+  id: "daily-sales-report",
+  slug: "daily-sales-report",
+  name: "Daily Sales Report",
+  description: "Generates daily sales breakdown by staff, sector, or salesman, with payment status filtering.",
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.CSV],
+  supportsWebView: true,
+};

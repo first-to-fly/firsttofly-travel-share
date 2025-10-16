@@ -1,5 +1,8 @@
 import { z } from "zod";
 
+import { ReportFormat } from "../entities/Operations/Report";
+import type { ReportMetadata } from "./sector-sales";
+
 
 /**
  * Booking Adjustment Report Filters
@@ -39,3 +42,12 @@ export const BookingAdjustmentFiltersZ = z.object({
 });
 
 export type BookingAdjustmentFilters = z.infer<typeof BookingAdjustmentFiltersZ>;
+
+export const BookingAdjustmentReportMetadata: ReportMetadata = {
+  id: "booking-adjustment-report",
+  slug: "booking-adjustment-report",
+  name: "Booking Adjustment Report",
+  description: "Tracks adjustments made to bookings, including before/after values and reasons.",
+  supportedFormats: [ReportFormat.XLSX],
+  supportsWebView: false,
+};
