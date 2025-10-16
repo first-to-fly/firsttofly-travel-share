@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
-import { DateOnlyStringZ } from "../types/date";
+import { DateISOStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -11,8 +11,8 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const TLTMAssignmentFiltersZ = z.object({
   /** Departure date range */
-  departureDateStart: DateOnlyStringZ,
-  departureDateEnd: DateOnlyStringZ,
+  departureDateStart: DateISOStringZ,
+  departureDateEnd: DateISOStringZ,
 
   /** Product type filter */
   productType: z.enum(["git", "fit"]).optional(),

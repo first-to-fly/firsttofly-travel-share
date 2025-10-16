@@ -3,7 +3,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { ExchangeOrderStatus } from "../entities/Operations/ExchangeOrder";
 import { ReportFormat } from "../entities/Operations/Report";
-import { DateOnlyStringZ } from "../types/date";
+import { DateISOStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -12,8 +12,8 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const EOReportFiltersZ = z.object({
   /** Issue date range */
-  issueDateStart: DateOnlyStringZ.optional(),
-  issueDateEnd: DateOnlyStringZ.optional(),
+  issueDateStart: DateISOStringZ.optional(),
+  issueDateEnd: DateISOStringZ.optional(),
 
   /** Status filter - array of statuses */
   statuses: z.array(z.nativeEnum(ExchangeOrderStatus)).optional(),

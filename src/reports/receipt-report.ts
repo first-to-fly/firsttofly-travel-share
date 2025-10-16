@@ -3,7 +3,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import { PaymentMethod } from "../entities/Sales/Transaction";
-import { DateOnlyStringZ } from "../types/date";
+import { DateISOStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -23,10 +23,10 @@ export const ReceiptReportFiltersZ = z.object({
   ]),
 
   /** Start date (for custom range) */
-  startDate: DateOnlyStringZ.optional(),
+  startDate: DateISOStringZ.optional(),
 
   /** End date (for custom range) */
-  endDate: DateOnlyStringZ.optional(),
+  endDate: DateISOStringZ.optional(),
 
   /** Payment methods filter (optional) */
   paymentMethods: z.array(z.nativeEnum(PaymentMethod)).optional(),

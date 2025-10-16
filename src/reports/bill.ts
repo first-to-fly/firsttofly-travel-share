@@ -3,7 +3,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { BillPaymentStatus, BillStatus } from "../entities/Finance/Bill";
 import { ReportFormat } from "../entities/Operations/Report";
-import { DateOnlyStringZ } from "../types/date";
+import { DateISOStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -12,8 +12,8 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const BillReportFiltersZ = z.object({
   /** Issue date range */
-  issueDateStart: DateOnlyStringZ.optional(),
-  issueDateEnd: DateOnlyStringZ.optional(),
+  issueDateStart: DateISOStringZ.optional(),
+  issueDateEnd: DateISOStringZ.optional(),
 
   /** Supplier filter - specific supplier OID */
   supplierOID: EntityOIDZ.optional(),

@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
-import { DateOnlyStringZ } from "../types/date";
+import { DateISOStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -11,12 +11,12 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const RefundReportFiltersZ = z.object({
   /** Creation date range */
-  creationDateStart: DateOnlyStringZ.optional(),
-  creationDateEnd: DateOnlyStringZ.optional(),
+  creationDateStart: DateISOStringZ.optional(),
+  creationDateEnd: DateISOStringZ.optional(),
 
   /** Report date range */
-  reportDateStart: DateOnlyStringZ.optional(),
-  reportDateEnd: DateOnlyStringZ.optional(),
+  reportDateStart: DateISOStringZ.optional(),
+  reportDateEnd: DateISOStringZ.optional(),
 
   /** Refund payment method */
   refundPaymentMethod: z.enum(["all", "original", "paynow"]).default("all"),

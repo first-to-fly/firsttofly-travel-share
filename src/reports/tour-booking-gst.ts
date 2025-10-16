@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
-import { DateOnlyStringZ } from "../types/date";
+import { DateISOStringZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -21,10 +21,10 @@ export const TourBookingGSTFiltersZ = z.object({
   ]),
 
   /** Start date (for custom range) */
-  startDate: DateOnlyStringZ.optional(),
+  startDate: DateISOStringZ.optional(),
 
   /** End date (for custom range) */
-  endDate: DateOnlyStringZ.optional(),
+  endDate: DateISOStringZ.optional(),
 
   /** Tenant OID */
   tenantOID: EntityOIDZ,
