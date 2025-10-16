@@ -10,7 +10,7 @@ const CreateIndependentTourProductZ = IndependentTourProductZ.pick({
   tenantOID: true,
   departmentOID: true,
   sectorGroupOID: true,
-  sectorOIDs: true,
+  sectorOID: true,
   code: true, // Required - must be manually provided
   name: true,
   description: true,

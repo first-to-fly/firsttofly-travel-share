@@ -17,7 +17,7 @@ const CreateGroupTourProductZ = GroupTourProductZ.pick({
   description: true,
 
   departmentOID: true,
-  sectorOIDs: true,
+  sectorOID: true,
   displaySectorOIDs: true,
 
   sectorGroupOID: true,
