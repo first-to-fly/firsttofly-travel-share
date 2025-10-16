@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { BillPaymentStatus, BillStatus } from "../entities/Finance/Bill";
 import { ReportFormat } from "../entities/Operations/Report";
 import type { ReportMetadata } from "./sector-sales";
 
@@ -12,14 +13,14 @@ export const BillReportFiltersZ = z.object({
   issueDateStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   issueDateEnd: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
 
-  /** Supplier filter - "all" or specific supplier OID */
-  supplier: z.union([z.literal("all"), z.string().min(1)]).default("all"),
+  /** Supplier filter - specific supplier OID */
+  supplierOID: z.string().optional(),
 
-  /** Bill status */
-  billStatus: z.enum(["all", "draft", "approved", "voided"]).default("all"),
+  /** Bill statuses - array of statuses */
+  billStatuses: z.array(z.nativeEnum(BillStatus)).optional(),
 
-  /** Payment status */
-  paymentStatus: z.enum(["all", "unpaid", "partially-paid", "paid", "overdue"]).default("all"),
+  /** Payment statuses - array of statuses */
+  paymentStatuses: z.array(z.nativeEnum(BillPaymentStatus)).optional(),
 
   /** Tenant OID */
   tenantOID: z.string().min(1),

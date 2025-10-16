@@ -1,5 +1,6 @@
 import { z } from "zod";
 
+import { ExchangeOrderStatus } from "../entities/Operations/ExchangeOrder";
 import { ReportFormat } from "../entities/Operations/Report";
 import type { ReportMetadata } from "./sector-sales";
 
@@ -12,8 +13,8 @@ export const EOReportFiltersZ = z.object({
   issueDateStart: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
   issueDateEnd: z.string().regex(/^\d{4}-\d{2}-\d{2}$/).optional(),
 
-  /** Status filter */
-  status: z.enum(["all", "draft", "wfa", "approved", "processing", "completed", "rejected", "voided"]).default("all"),
+  /** Status filter - array of statuses */
+  statuses: z.array(z.nativeEnum(ExchangeOrderStatus)).optional(),
 
   /** Tenant OID */
   tenantOID: z.string().min(1),
