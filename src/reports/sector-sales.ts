@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
-import { DateISOStringZ } from "../types/date";
+import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
 
 
 /**
@@ -13,15 +13,7 @@ export const SectorSalesFiltersZ = z.object({
   productType: z.enum(["git", "fit"]).optional(),
 
   /** Date range type */
-  dateRangeType: z.enum([
-    "today",
-    "yesterday",
-    "current-week",
-    "last-week",
-    "current-month",
-    "last-month",
-    "custom",
-  ]),
+  dateRangeType: DateRangeTypeZ,
 
   /** Start date (for custom range) */
   startDate: DateISOStringZ.optional(),

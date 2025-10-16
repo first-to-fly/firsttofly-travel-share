@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
-import { DateISOStringZ } from "../types/date";
+import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -10,15 +10,7 @@ import type { ReportMetadata } from "./sector-sales";
  */
 export const TourBookingGSTFiltersZ = z.object({
   /** Departure date range type */
-  departureDate: z.enum([
-    "today",
-    "yesterday",
-    "current-week",
-    "last-week",
-    "current-month",
-    "last-month",
-    "custom",
-  ]),
+  departureDate: DateRangeTypeZ,
 
   /** Start date (for custom range) */
   startDate: DateISOStringZ.optional(),
