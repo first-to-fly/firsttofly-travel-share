@@ -15,7 +15,13 @@ export const SectorSalesYoYFiltersZ = z.object({
   sectors: z.union([z.literal("all"), z.string().min(1)]).default("all"),
 
   /** Years for comparison (up to 3 years) */
-  years: z.array(z.number().int().min(2000).max(2100)).min(1).max(3),
+  years: z.array(z.number().int().min(2000))
+    .min(1, "At least 1 year is required")
+    .max(3, "Maximum 3 years allowed for comparison")
+    .refine(
+      (years) => years.every((y) => y <= new Date().getFullYear() + 1),
+      { message: "Years cannot be more than 1 year in the future" },
+    ),
 
   /** Filter by date type */
   filterByDate: z.enum(["booking-date", "departure-date"]).default("booking-date"),
