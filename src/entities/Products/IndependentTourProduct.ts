@@ -39,7 +39,7 @@ export const IndependentTourProductZ = EntityZ.extend({
 
   departmentOID: z.string(),
   sectorGroupOID: z.string().nullish(),
-  sectorOIDs: z.array(z.string()).nullish(),
+  sectorOID: z.string(),
 
   code: z.string(),
 

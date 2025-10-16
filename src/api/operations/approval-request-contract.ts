@@ -120,4 +120,19 @@ export const approvalRequestContract = initContract().router({
       200: z.boolean(),
     },
   },
+
+  cancelApprovalRequest: {
+    summary: "Cancel a single approval request",
+    method: "POST",
+    path: `${basePath}/:requestOID/cancel`,
+    pathParams: z.object({
+      requestOID: z.string().describe("OID of the request"),
+    }),
+    body: z.object({
+      comments: z.string().optional(),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
 });

@@ -19,6 +19,20 @@ export enum EmailTemplateKey {
   TOUR_DEPARTURE_MIN_PAX_ALERT = "tour-departure.min-pax-alert",
   CUSTOMER_VERIFICATION_OTP = "customer.verification-otp",
   CUSTOMER_BOOKING_LINK = "customer.booking-link",
+  // NEW: Payment & Booking
+  PAYMENT_REMINDER = "payment.reminder",
+  PAYMENT_RECEIVED = "payment.received",
+  BOOKING_DETAIL_UPDATED_BY_CUSTOMER = "booking.detail-updated-by-customer",
+  // NEW: System & Account
+  USER_PASSWORD_RESET = "user.password-reset",
+  // NEW: Operations
+  STAFF_ASSIGNMENT_CHANGE = "staff.assignment-change",
+  // NEW: Approval Workflow
+  APPROVAL_REQUEST_APPROVED = "approval.request-approved",
+  APPROVAL_REQUEST_REJECTED = "approval.request-rejected",
+  APPROVAL_REQUEST_ABORTED = "approval.request-aborted",
+  APPROVAL_EO_FOLLOW_UP = "approval.eo-follow-up",
+  APPROVAL_REFUND_FOLLOW_UP = "approval.refund-follow-up",
 }
 
 export const EmailTemplateKeyZ = z.nativeEnum(EmailTemplateKey);
@@ -61,29 +75,23 @@ export interface UserInvitationEmailContext extends BaseEmailContext {
 }
 
 export interface GroupTourBookingConfirmationEmailContext extends BaseEmailContext {
-  groupTourBookingReference: string;
-  departureCode: string;
+  customerName: string;
+  bookingRef: string;
+  tourName: string;
+  productCode: string;
+  tourCode: string;
   departureDate: string;
+  noOfTravellers: string;
   totalAmount: string;
-  currency: string;
-  passengerCount: number;
-  passengerDetails: Array<{
-    name: string;
-    isAdult: boolean;
-    mealPreference?: string;
-  }>;
-  bookedRooms?: Array<{
-    type: string;
-    quantity: number;
-  }>;
-  itinerary?: {
-    days: Array<{
-      dayNumber: number;
-      title: string;
-      description?: string;
-    }>;
-  };
-  specialInstructions?: string[];
+  commission?: string;
+  receivedTotalAmount: string;
+  balancePayment: string;
+  customerLinkURL: string;
+  termAndConditionURL: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
 }
 
 export interface UserMessageEmailContext extends BaseEmailContext {
@@ -94,48 +102,34 @@ export interface UserMessageEmailContext extends BaseEmailContext {
 }
 
 export interface IndependentTourBookingConfirmationEmailContext extends BaseEmailContext {
-  bookingReference: string;
-  productName: string;
-  accommodationName?: string;
-  travelStartDate: string;
-  travelEndDate: string;
+  customerName: string;
+  bookingRef: string;
+  tourName: string;
+  productCode: string;
+  tourCode: string;
+  departureDate: string;
+  noOfTravellers: string;
   totalAmount: string;
-  currency: string;
-  passengerCount: number;
-  adultsCount: number;
-  childrenCount: number;
-  infantsCount: number;
-  rooms: Array<{
-    roomNumber?: string;
-    roomType?: string;
-    passengers: Array<{
-      name: string;
-      type: string;
-      mealPreference?: string;
-    }>;
-  }>;
-  discounts?: Array<{
-    code?: string;
-    amount: number;
-  }>;
-  specialInstructions?: string[];
-  paymentStatus: string;
+  commission?: string;
+  receivedTotalAmount: string;
+  balancePayment: string;
+  customerLinkURL: string;
+  termAndConditionURL: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
 }
 
 export interface CustomerVerificationOtpEmailContext extends BaseEmailContext {
-  otpCode: string;
-  expiryMinutes: number;
-  bookingReference: string;
-  qrCodeDataUrl?: string;
-  customerBookingUrl?: string;
-  tourName?: string;
-  departureDate?: string;
-  departureCode?: string;
-  totalAmount?: number;
-  currency?: string;
-  passengerCount?: number;
-  bookingStatus?: string;
-  paymentStatus?: string;
+  otp: string;
+  expiryMins: number;
+  expiredTime: string;
+  mainContactEmail: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
 }
 
 export interface CustomerBookingLinkEmailContext extends BaseEmailContext {
@@ -212,6 +206,140 @@ export interface ApprovalTimeoutWarningEmailContext extends BaseEmailContext {
   originalTimeoutDays: number;
 }
 
+// NEW: Additional Email Context Interfaces
+
+export interface ContactInfo {
+  icon?: string;
+  value: string;
+  url?: string;
+}
+
+export interface SocialInfo {
+  icon: string;
+  url?: string;
+}
+
+export interface PaymentReminderEmailContext extends BaseEmailContext {
+  ref: string;
+  time: string;
+  totalAmount: string;
+  createTime: string;
+  cancelTime: string;
+  host: string;
+  detailLink: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
+export interface PaymentReceivedEmailContext extends BaseEmailContext {
+  amount: string;
+  paymentDate: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
+export interface BookingDetailUpdatedByCustomerEmailContext extends BaseEmailContext {
+  staffName: string;
+  bookingRef: string;
+  detailLink: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
+export interface UserPasswordResetEmailContext extends BaseEmailContext {
+  userName: string;
+  staffCode: string;
+  password: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
+export interface StaffAssignmentChangeEmailContext extends BaseEmailContext {
+  oldStaff: string;
+  roleType: string;
+  ref: string;
+  oldStaffCode: string;
+  newStaff: string;
+  newStaffCode: string;
+  date: string;
+  operator: string;
+  reason?: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
+export interface ApprovalRequestApprovedEmailContext extends BaseEmailContext {
+  moduleName: string;
+  moduleRef: string;
+  details?: string[];
+  detailLink: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
+export interface ApprovalRequestRejectedEmailContext extends BaseEmailContext {
+  rejectedStaffName: string;
+  moduleName: string;
+  moduleRef: string;
+  details?: string[];
+  detailLink: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
+export interface ApprovalRequestAbortedEmailContext extends BaseEmailContext {
+  requestedStaffName: string;
+  moduleName: string;
+  moduleRef: string;
+  details?: string[];
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
+export interface ApprovalEoFollowUpEmailContext extends BaseEmailContext {
+  moduleName: string;
+  moduleRef: string;
+  supplierFullName: string;
+  tourCode: string;
+  approvalDate: string;
+  host: string;
+  detailLink: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
+export interface ApprovalRefundFollowUpEmailContext extends BaseEmailContext {
+  moduleRef: string;
+  requestRef: string;
+  refundRef: string;
+  bookingRef: string;
+  approvalDate: string;
+  host: string;
+  refundLink: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+}
+
 // Email Template Context Registry with labels and descriptions
 
 export const EmailTemplateContextRegistry = {
@@ -274,6 +402,56 @@ export const EmailTemplateContextRegistry = {
     context: {} as CustomerBookingLinkEmailContext,
     label: "Customer Booking Link",
     description: "Secure link email for customer to access their booking",
+  },
+  [EmailTemplateKey.PAYMENT_REMINDER]: {
+    context: {} as PaymentReminderEmailContext,
+    label: "Payment Reminder",
+    description: "Reminder email for bookings near auto-void deadline",
+  },
+  [EmailTemplateKey.PAYMENT_RECEIVED]: {
+    context: {} as PaymentReceivedEmailContext,
+    label: "Payment Received",
+    description: "Payment confirmation thank you email",
+  },
+  [EmailTemplateKey.BOOKING_DETAIL_UPDATED_BY_CUSTOMER]: {
+    context: {} as BookingDetailUpdatedByCustomerEmailContext,
+    label: "Booking Detail Updated by Customer",
+    description: "Notification to staff when customer updates booking details",
+  },
+  [EmailTemplateKey.USER_PASSWORD_RESET]: {
+    context: {} as UserPasswordResetEmailContext,
+    label: "User Password Reset",
+    description: "Staff password reset notification with new credentials",
+  },
+  [EmailTemplateKey.STAFF_ASSIGNMENT_CHANGE]: {
+    context: {} as StaffAssignmentChangeEmailContext,
+    label: "Staff Assignment Change",
+    description: "Notification when staff is unassigned from a booking",
+  },
+  [EmailTemplateKey.APPROVAL_REQUEST_APPROVED]: {
+    context: {} as ApprovalRequestApprovedEmailContext,
+    label: "Approval Request Approved",
+    description: "Notification when approval request is approved",
+  },
+  [EmailTemplateKey.APPROVAL_REQUEST_REJECTED]: {
+    context: {} as ApprovalRequestRejectedEmailContext,
+    label: "Approval Request Rejected",
+    description: "Notification when approval request is rejected",
+  },
+  [EmailTemplateKey.APPROVAL_REQUEST_ABORTED]: {
+    context: {} as ApprovalRequestAbortedEmailContext,
+    label: "Approval Request Aborted",
+    description: "Notification when approval request is withdrawn by submitter",
+  },
+  [EmailTemplateKey.APPROVAL_EO_FOLLOW_UP]: {
+    context: {} as ApprovalEoFollowUpEmailContext,
+    label: "Approval EO Follow Up",
+    description: "EO approval follow-up notification for operations staff",
+  },
+  [EmailTemplateKey.APPROVAL_REFUND_FOLLOW_UP]: {
+    context: {} as ApprovalRefundFollowUpEmailContext,
+    label: "Approval Refund Follow Up",
+    description: "Refund approval follow-up notification for finance staff",
   },
 } as const;
 
