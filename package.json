@@ -2,6 +2,7 @@
   "name": "@firsttofly/travel-share",
   "version": "0.0.1",
   "private": true,
+  "type": "module",
   "description": "Some description.",
   "author": {
     "name": "NAB Studio"
