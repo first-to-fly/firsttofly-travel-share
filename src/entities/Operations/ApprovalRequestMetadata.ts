@@ -412,6 +412,7 @@ export const ApprovalRequestCustomerRefundMetadataZ = z.object({
   paymentOrderOID: EntityOIDZ,
   bookingOID: EntityOIDZ,
   tenantOID: EntityOIDZ,
+  paymentWayOID: EntityOIDZ.optional(),
   currencyCode: z.string().optional(),
   notes: z.string().optional(),
   internalRemarks: z.string().optional(),
