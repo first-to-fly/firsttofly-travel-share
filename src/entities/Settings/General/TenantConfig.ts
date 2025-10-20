@@ -9,6 +9,7 @@ export const TENANT_CONFIG_KEYS = {
   BOOKING_EXTENSION_RULE: "BOOKING_EXTENSION_RULE",
   TRAVEL_INSURANCE_DECLARATION_OPTIONS: "TRAVEL_INSURANCE_DECLARATION_OPTIONS",
   TRAVEL_INSURANCE_DECLARATION_TEXT: "TRAVEL_INSURANCE_DECLARATION_TEXT",
+  REFUND_REASON_SETTINGS: "REFUND_REASON_SETTINGS",
 } as const;
 
 export type TenantConfigKey = keyof typeof TENANT_CONFIG_KEYS;
@@ -32,6 +33,25 @@ export type BookingExtensionRule = {
   };
 };
 
+export type RefundReasonOption = {
+  code: string;
+  label: string;
+  description?: string | null;
+  enabled: boolean;
+};
+
+export type RefundReasonSettings = {
+  requireReason: boolean;
+  reasons: RefundReasonOption[];
+  customReason: {
+    enabled: boolean;
+    label: string;
+    placeholder: string;
+    maxLength: number;
+    helperText?: string | null;
+  };
+};
+
 export type TenantConfigTypes = {
   [TENANT_CONFIG_KEYS.GIT_BOOKING_EXPECTED_CANCEL_TIME]: Record<ProductPlatform, number>;
   [TENANT_CONFIG_KEYS.BOOKING_EXTENSION_RULE]: BookingExtensionRule[];
@@ -40,6 +60,7 @@ export type TenantConfigTypes = {
     mandatory: boolean;
   };
   [TENANT_CONFIG_KEYS.TRAVEL_INSURANCE_DECLARATION_TEXT]: string;
+  [TENANT_CONFIG_KEYS.REFUND_REASON_SETTINGS]: RefundReasonSettings;
 };
 
 export const DEFAULT_TENANT_CONFIG_VALUES: TenantConfigTypes = {
@@ -128,6 +149,38 @@ export const DEFAULT_TENANT_CONFIG_VALUES: TenantConfigTypes = {
     mandatory: false,
   },
   [TENANT_CONFIG_KEYS.TRAVEL_INSURANCE_DECLARATION_TEXT]: "As stipulated in Regulation 21, Travel Insurance of Travel Agents Regulations, we are required to inform you to consider purchasing travel insurance.",
+  [TENANT_CONFIG_KEYS.REFUND_REASON_SETTINGS]: {
+    requireReason: true,
+    reasons: [
+      {
+        code: "overpayment",
+        label: "Overpayment",
+        enabled: true,
+      },
+      {
+        code: "unable-to-confirm",
+        label: "Tour unable to confirm due to no group size",
+        enabled: true,
+      },
+      {
+        code: "medical-condition",
+        label: "Medical condition",
+        enabled: true,
+      },
+      {
+        code: "personal-reasons",
+        label: "Personal reasons",
+        enabled: true,
+      },
+    ],
+    customReason: {
+      enabled: true,
+      label: "Other (Please specify)",
+      placeholder: "Enter refund reason",
+      maxLength: 500,
+      helperText: "Provide additional details up to 500 characters.",
+    },
+  },
 };
 
 export const TenantConfigZ = EntityZ.extend({
