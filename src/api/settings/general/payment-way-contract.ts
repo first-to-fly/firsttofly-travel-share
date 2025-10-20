@@ -13,6 +13,7 @@ const CreatePaymentWayZ = PaymentWayZ.pick({
   name: true,
   mode: true,
   isActive: true,
+  isRefund: true,
   icon: true,
   remarks: true,
   isDaily: true,
@@ -28,6 +29,8 @@ const UpdatePaymentWayZ = CreatePaymentWayZ.omit({
 const PaymentWayListParamsZ = z.object({
   tenantOID: z.string(),
   paymentMethod: z.nativeEnum(PaymentMethod).optional(),
+  isActive: z.boolean().optional(),
+  isRefund: z.boolean().optional(),
 }).passthrough();
 
 export type CreatePaymentWay = z.infer<typeof CreatePaymentWayZ>;
