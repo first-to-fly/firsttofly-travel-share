@@ -2,7 +2,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
-import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
+import { DateISOStringZ } from "../types/date";
 
 
 /**
@@ -12,17 +12,17 @@ export const SectorSalesFiltersZ = z.object({
   /** Product type filter */
   productType: z.enum(["git", "fit"]).optional(),
 
-  /** Date range type */
-  dateRangeType: DateRangeTypeZ,
+  /** Start date */
+  startDate: DateISOStringZ,
 
-  /** Start date (for custom range) */
-  startDate: DateISOStringZ.optional(),
-
-  /** End date (for custom range) */
-  endDate: DateISOStringZ.optional(),
+  /** End date */
+  endDate: DateISOStringZ,
 
   /** Tenant OID */
   tenantOID: EntityOIDZ,
+}).refine((value) => new Date(value.startDate).getTime() <= new Date(value.endDate).getTime(), {
+  message: "startDate must be less than or equal to endDate",
+  path: ["endDate"],
 });
 
 export type SectorSalesFilters = z.infer<typeof SectorSalesFiltersZ>;
