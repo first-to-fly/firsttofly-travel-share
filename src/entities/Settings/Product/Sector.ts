@@ -20,6 +20,7 @@ export const SectorZ = EntityZ.extend({
   parentOID: EntityOIDZ.nullish(),
 
   isPopular: z.boolean().default(false),
+  allowOverbooking: z.boolean().default(false),
 
   productTypes: z.array(z.nativeEnum(ProductType)).nullish(),
 

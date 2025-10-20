@@ -12,6 +12,7 @@ const CreateSectorZ = SectorZ.pick({
   parentOID: true,
   isActive: true,
   isPopular: true,
+  allowOverbooking: true,
   images: true,
   productTypes: true,
   departmentOID: true,

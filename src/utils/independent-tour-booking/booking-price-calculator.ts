@@ -35,10 +35,6 @@ export interface IndependentTourBookingMiscellaneousItem {
   tax?: number | string | null;
 }
 
-export interface IndependentTourOverwriteTax {
-  rate?: number | null;
-}
-
 export interface PeakPeriod {
   startDate: string | Date;
   endDate: string | Date;
@@ -100,7 +96,7 @@ export interface IndependentTourBookingPriceInput {
   discounts?: IndependentTourBookingDiscount[];
   miscellaneous?: IndependentTourBookingMiscellaneousItem[];
   accommodation?: AccommodationPricingInfo | null;
-  overwriteTax?: IndependentTourOverwriteTax | null;
+  taxRate?: number | null;
   homeCurrency?: string;
   supportCurrencies?: CurrencyConversion[];
   roomCount?: number;
@@ -229,9 +225,11 @@ function getConversionRate(
   supportCurrencies: CurrencyConversion[],
 ): number | null {
   if (!sourceCurrency) return null;
-  if (sourceCurrency === homeCurrency) return 1;
+  if (sourceCurrency.toUpperCase() === homeCurrency.toUpperCase()) return 1;
 
-  const matched = supportCurrencies.find((currencyItem) => currencyItem.currency === sourceCurrency);
+  const matched = supportCurrencies.find(
+    (currencyItem) => currencyItem.currency.toUpperCase() === sourceCurrency.toUpperCase(),
+  );
   if (!matched || !matched.rate || matched.rate <= 0) {
     return null;
   }
@@ -529,7 +527,7 @@ export function calculateIndependentTourBookingPrice(
     addons = [],
     discounts = [],
     miscellaneous = [],
-    overwriteTax,
+    taxRate,
     homeCurrency = "USD",
     supportCurrencies = [],
     roomCount,
@@ -586,11 +584,10 @@ export function calculateIndependentTourBookingPrice(
   );
   const discountAmount = discountTotals.totalDiscount;
 
-  const subtotal = accommodationCost + optionalServicesCost + miscellaneousCost;
-  const taxRate = overwriteTax?.rate ? toFiniteNumber(overwriteTax.rate) : 0;
-  const additionalTax = (subtotal - discountAmount) * (taxRate / 100);
-  const taxAmount = accommodationTax + miscellaneousTax + additionalTax;
-  const totalAmount = subtotal + taxAmount - discountAmount;
+  const subtotal = accommodationCost + optionalServicesCost + miscellaneousCost + accommodationTax + miscellaneousTax;
+  const taxRateValue = taxRate ? toFiniteNumber(taxRate) : 0;
+  const taxAmount = (subtotal - discountAmount) * (taxRateValue / 100);
+  const totalAmount = subtotal + taxAmount;
 
   return {
     accommodationCost: accommodationCost,
