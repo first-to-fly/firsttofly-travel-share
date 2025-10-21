@@ -59,7 +59,7 @@ export const SubmitBillPostZ = z.object({
 
 export const SubmitBillResultZ = z.object({
   success: z.boolean(),
-  xeroInvoiceId: z.string().optional(),
+  xeroInvoiceIds: z.array(z.string()).min(1).optional(),
   errors: z.array(z.string()).optional(),
 });
 
