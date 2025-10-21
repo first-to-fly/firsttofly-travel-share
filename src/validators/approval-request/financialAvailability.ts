@@ -85,7 +85,7 @@ function calculatePendingCancellationFeeCents(metadata: ApprovalRequestCustomerC
   return toPositiveCents(metadata.amount);
 }
 
-function normalizeCurrencyCode(value: string | null | undefined): string | null {
+export function normalizeCurrencyCode(value: string | null | undefined): string | null {
   return value ? value.trim().toUpperCase() : null;
 }
 

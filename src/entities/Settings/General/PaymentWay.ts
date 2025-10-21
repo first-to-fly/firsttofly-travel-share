@@ -52,6 +52,7 @@ export const PaymentWayZ = EntityZ.extend({
 
   // Status
   isActive: z.boolean().default(true),
+  isRefund: z.boolean().default(false),
 
   // Business Rules
   isDaily: z.boolean().default(false),

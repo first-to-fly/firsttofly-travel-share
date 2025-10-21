@@ -5,6 +5,48 @@ import { EntityOIDZ } from "../entity";
 
 
 /**
+ * Metadata describing an outstanding Airwallex payment link for a booking.
+ */
+export const BookingPendingPaymentLinkZ = z.object({
+  /** Airwallex payment link identifier */
+  id: z.string(),
+  /** Direct URL for the payment link */
+  url: z.string(),
+  /** Requested amount (in major currency units) */
+  amount: z.number().optional(),
+  /** Currency code associated with the payment link */
+  currency: z.string().optional(),
+  /** Booking reference supplied to Airwallex */
+  reference: z.string().optional(),
+  /** Human readable title assigned during link creation */
+  title: z.string().optional(),
+  /** Description provided to Airwallex */
+  description: z.string().optional(),
+  /** Current status returned by Airwallex */
+  status: z.enum(["UNPAID", "PAID"]).optional(),
+  /** ISO timestamp when the payment link was created */
+  createdAt: z.string().optional(),
+  /** ISO timestamp when the payment link will expire */
+  expiresAt: z.string().optional(),
+  /** Internal user ID who initiated the link */
+  createdBy: z.string().optional(),
+  /** Customer email used when the link was requested */
+  customerEmail: z.string().optional(),
+  /** Preferred payment way reference for reconciliation */
+  paymentWayOID: z.string().optional(),
+});
+export type BookingPendingPaymentLink = z.infer<typeof BookingPendingPaymentLinkZ>;
+
+/**
+ * Booking-level payment link metadata grouping.
+ */
+export const BookingPaymentLinksMetadataZ = z.object({
+  /** Outstanding payment links awaiting payment */
+  pendingPaymentLinks: z.array(BookingPendingPaymentLinkZ).optional(),
+});
+export type BookingPaymentLinksMetadata = z.infer<typeof BookingPaymentLinksMetadataZ>;
+
+/**
  * Base customer/contact metadata reused across bookings.
  * Contains the primary contact details for the booking.
  */
