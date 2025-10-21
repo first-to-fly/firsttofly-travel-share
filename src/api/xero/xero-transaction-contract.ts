@@ -54,6 +54,7 @@ export const SubmitTxnPostZ = z.object({
 export const SubmitTxnResultZ = z.object({
   success: z.boolean(),
   xeroId: z.string().optional(),
+  xeroIds: z.array(z.string()).min(1).optional(),
   errors: z.array(z.string()).optional(),
 });
 
