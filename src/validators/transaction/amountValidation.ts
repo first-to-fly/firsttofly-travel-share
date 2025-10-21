@@ -1,5 +1,6 @@
 import { TransactionStatus, TransactionType } from "../../entities/Sales/Transaction";
 import type { BookingStatus } from "../../enums/BookingTypes";
+import { normalizeCurrencyCode } from "../approval-request/financialAvailability";
 
 
 export interface MinimalTransaction {
@@ -101,6 +102,9 @@ export function validateCreateTransaction(
     existingTransactions = [],
   } = params;
 
+  const normalizedPOCurrencyCode = normalizeCurrencyCode(paymentOrderCurrencyCode);
+  const normalizedInputCurrencyCode = normalizeCurrencyCode(inputCurrencyCode);
+
   const aggregates = computePaymentOrderAggregates(bookingTotalAmount, existingTransactions);
 
   // Tenant check
@@ -122,10 +126,14 @@ export function validateCreateTransaction(
   }
 
   // Optional currency check (only when a PO already exists and has a currency)
-  if (paymentOrderCurrencyCode && inputCurrencyCode && paymentOrderCurrencyCode !== inputCurrencyCode) {
+  if (
+    normalizedPOCurrencyCode &&
+    normalizedInputCurrencyCode &&
+    normalizedPOCurrencyCode !== normalizedInputCurrencyCode
+  ) {
     return {
       result: "invalid",
-      message: `Currency mismatch. PaymentOrder currency ${paymentOrderCurrencyCode} does not match input ${inputCurrencyCode}.`,
+      message: `Currency mismatch. PaymentOrder currency ${normalizedPOCurrencyCode} does not match input ${normalizedInputCurrencyCode}.`,
       aggregates: aggregates,
     };
   }
