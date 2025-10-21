@@ -29,8 +29,6 @@ const CreateBudgetEntryZ = BudgetEntryZ.pick({
   forexRate: true,
   localCurrency: true,
   localAmount: true,
-  paymentStatus: true,
-  paidAmount: true,
 });
 
 const UpdateBudgetEntryZ = CreateBudgetEntryZ.omit({
