@@ -4,6 +4,7 @@ import { z } from "zod";
 import { BookingPaymentStatus } from "../../enums/BookingTypes";
 import { EntityOIDZ, EntityZ } from "../entity";
 
+
 export enum CustomizedTourBookingStatus {
   DRAFT = "draft",
   PENDING = "pending",
