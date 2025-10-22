@@ -43,7 +43,6 @@ export type CreateIndependentTourBookingBody = z.infer<typeof CreateIndependentT
 const UpdateIndependentTourBookingBodyZ = CreateIndependentTourBookingBodyZ.omit({
   tenantOID: true,
   departmentOID: true,
-  stationCodeOID: true,
   independentTourProductOID: true,
   tcpBookingOID: true,
 }).partial();
