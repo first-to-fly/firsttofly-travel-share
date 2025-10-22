@@ -1,0 +1,432 @@
+// simple-import-sort
+import { initContract } from "@ts-rest/core";
+import { z } from "zod";
+
+import { EntityOIDZ } from "../../entities/entity";
+import { CustomizedTourBookingZ } from "../../entities/Sales/CustomizedTourBooking";
+import { CustomizedTourCostItemZ } from "../../entities/Sales/CustomizedTourCostItem";
+import { CustomizedTourItineraryZ } from "../../entities/Sales/CustomizedTourItinerary";
+import { CustomizedTourItineraryDayZ } from "../../entities/Sales/CustomizedTourItineraryDay";
+import { CustomizedTourItineraryItemZ } from "../../entities/Sales/CustomizedTourItineraryItem";
+import { CustomizedTourTaskZ } from "../../entities/Sales/CustomizedTourTask";
+
+
+const basePath = "/api/sales/customized-tour-bookings";
+
+// --- CustomizedTourBooking Schemas ---
+const CreateCustomizedTourBookingBodyZ = CustomizedTourBookingZ.pick({
+  tenantOID: true,
+  customerOID: true,
+  departmentOID: true,
+  stationCodeOID: true,
+  saleStaffOID: true,
+  saleReferrerOID: true,
+  bookingReference: true,
+  status: true,
+  paymentStatus: true,
+  overwriteDeposit: true,
+  expectedCancelTime: true,
+  specialInstructions: true,
+  insuranceDeclaration: true,
+  remarks: true,
+  isCustomerConfirmed: true,
+  customerConfirmedAt: true,
+  totalAmount: true,
+  receivedAmount: true,
+});
+export type CreateCustomizedTourBookingBody = z.infer<typeof CreateCustomizedTourBookingBodyZ>;
+
+const UpdateCustomizedTourBookingBodyZ = CreateCustomizedTourBookingBodyZ.omit({
+  tenantOID: true,
+  customerOID: true,
+})
+  .partial()
+  .merge(
+    CustomizedTourBookingZ.pick({
+      paymentOrderOID: true,
+      budgetOID: true,
+    }).partial(),
+  );
+export type UpdateCustomizedTourBookingBody = z.infer<typeof UpdateCustomizedTourBookingBodyZ>;
+
+// --- CustomizedTourItinerary Schemas ---
+const CreateCustomizedTourItineraryBodyZ = CustomizedTourItineraryZ.pick({
+  tenantOID: true,
+  customizedTourBookingOID: true,
+  name: true,
+  validityStartDate: true,
+  validityEndDate: true,
+  pdfs: true,
+});
+export type CreateCustomizedTourItineraryBody = z.infer<typeof CreateCustomizedTourItineraryBodyZ>;
+
+const UpdateCustomizedTourItineraryBodyZ = CreateCustomizedTourItineraryBodyZ.omit({
+  tenantOID: true,
+  customizedTourBookingOID: true,
+}).partial();
+export type UpdateCustomizedTourItineraryBody = z.infer<typeof UpdateCustomizedTourItineraryBodyZ>;
+
+// --- CustomizedTourItineraryDay Schemas ---
+const CreateCustomizedTourItineraryDayBodyZ = CustomizedTourItineraryDayZ.pick({
+  tenantOID: true,
+  customizedTourItineraryOID: true,
+  dayNumber: true,
+  title: true,
+  description: true,
+  files: true,
+});
+export type CreateCustomizedTourItineraryDayBody = z.infer<typeof CreateCustomizedTourItineraryDayBodyZ>;
+
+const UpdateCustomizedTourItineraryDayBodyZ = CreateCustomizedTourItineraryDayBodyZ.omit({
+  tenantOID: true,
+  customizedTourItineraryOID: true,
+}).partial();
+export type UpdateCustomizedTourItineraryDayBody = z.infer<typeof UpdateCustomizedTourItineraryDayBodyZ>;
+
+// --- CustomizedTourItineraryItem Schemas ---
+const CreateCustomizedTourItineraryItemBodyZ = CustomizedTourItineraryItemZ.pick({
+  tenantOID: true,
+  customizedTourItineraryDayOID: true,
+  category: true,
+  supplierOID: true,
+  name: true,
+  details: true,
+  costEstimated: true,
+  priceQuoted: true,
+  costActual: true,
+  marginPercentage: true,
+  linkedCostItemOID: true,
+});
+export type CreateCustomizedTourItineraryItemBody = z.infer<typeof CreateCustomizedTourItineraryItemBodyZ>;
+
+const UpdateCustomizedTourItineraryItemBodyZ = CreateCustomizedTourItineraryItemBodyZ.omit({
+  tenantOID: true,
+  customizedTourItineraryDayOID: true,
+}).partial();
+export type UpdateCustomizedTourItineraryItemBody = z.infer<typeof UpdateCustomizedTourItineraryItemBodyZ>;
+
+// --- CustomizedTourCostItem Schemas ---
+const CreateCustomizedTourCostItemBodyZ = CustomizedTourCostItemZ.pick({
+  tenantOID: true,
+  customizedTourBookingOID: true,
+  customizedTourItineraryItemOID: true,
+  category: true,
+  supplierOID: true,
+  estCost: true,
+  quotedPrice: true,
+  actualCost: true,
+  margin: true,
+});
+export type CreateCustomizedTourCostItemBody = z.infer<typeof CreateCustomizedTourCostItemBodyZ>;
+
+const UpdateCustomizedTourCostItemBodyZ = CreateCustomizedTourCostItemBodyZ.omit({
+  tenantOID: true,
+  customizedTourBookingOID: true,
+}).partial();
+export type UpdateCustomizedTourCostItemBody = z.infer<typeof UpdateCustomizedTourCostItemBodyZ>;
+
+// --- CustomizedTourTask Schemas ---
+const CreateCustomizedTourTaskBodyZ = CustomizedTourTaskZ.pick({
+  tenantOID: true,
+  customizedTourBookingOID: true,
+  customizedTourItineraryItemOID: true,
+  supplierOID: true,
+  assignedTo: true,
+  title: true,
+  description: true,
+  status: true,
+  priority: true,
+  startDate: true,
+  endDate: true,
+  paxCount: true,
+  amount: true,
+  category: true,
+});
+export type CreateCustomizedTourTaskBody = z.infer<typeof CreateCustomizedTourTaskBodyZ>;
+
+const UpdateCustomizedTourTaskBodyZ = CreateCustomizedTourTaskBodyZ.omit({
+  tenantOID: true,
+  customizedTourBookingOID: true,
+}).partial();
+export type UpdateCustomizedTourTaskBody = z.infer<typeof UpdateCustomizedTourTaskBodyZ>;
+
+
+export const customizedTourBookingContract = initContract().router({
+  getCustomizedTourBookings: {
+    summary: "Get customized tour bookings",
+    method: "GET",
+    path: basePath,
+    query: z.object({
+      tenantOID: EntityOIDZ,
+    }),
+    responses: {
+      200: z.object({
+        oids: z.array(EntityOIDZ),
+      }),
+    },
+  },
+  createCustomizedTourBooking: {
+    summary: "Create a customized tour booking",
+    method: "POST",
+    path: basePath,
+    body: CreateCustomizedTourBookingBodyZ,
+    responses: {
+      201: EntityOIDZ,
+    },
+  },
+  updateCustomizedTourBookings: {
+    summary: "Update customized tour bookings",
+    method: "POST",
+    path: `${basePath}/batch-update`,
+    body: z.record(EntityOIDZ, UpdateCustomizedTourBookingBodyZ),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  deleteCustomizedTourBookings: {
+    summary: "Delete customized tour bookings",
+    method: "POST",
+    path: `${basePath}/batch-delete`,
+    body: z.object({
+      bookingOIDs: z.array(EntityOIDZ),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  confirmCustomizedTourBooking: {
+    summary: "Confirm customized tour booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/confirm`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({}).optional(),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  cancelCustomizedTourBooking: {
+    summary: "Cancel customized tour booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/cancel`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({ remarks: z.string() }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
+  // #region Customized Tour Itineraries
+  getCustomizedTourItineraries: {
+    summary: "List itineraries for a customized tour booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/itineraries`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  createCustomizedTourItinerary: {
+    summary: "Create customized tour itinerary",
+    method: "POST",
+    path: `${basePath}/:bookingOID/itineraries`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: CreateCustomizedTourItineraryBodyZ.omit({
+      customizedTourBookingOID: true,
+    }),
+    responses: {
+      201: EntityOIDZ,
+    },
+  },
+  updateCustomizedTourItineraries: {
+    summary: "Update customized tour itineraries",
+    method: "POST",
+    path: `${basePath}/:bookingOID/itineraries/batch-update`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.record(EntityOIDZ, UpdateCustomizedTourItineraryBodyZ),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  deleteCustomizedTourItineraries: {
+    summary: "Delete customized tour itineraries",
+    method: "POST",
+    path: `${basePath}/:bookingOID/itineraries/batch-delete`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({ itineraryOIDs: z.array(EntityOIDZ) }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
+  // #region Customized Tour Itinerary Days
+  getCustomizedTourItineraryDays: {
+    summary: "List days for a customized tour itinerary",
+    method: "GET",
+    path: `${basePath}/:itineraryOID/days`,
+    pathParams: z.object({ itineraryOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  createCustomizedTourItineraryDay: {
+    summary: "Create customized tour itinerary day",
+    method: "POST",
+    path: `${basePath}/:itineraryOID/days`,
+    pathParams: z.object({ itineraryOID: EntityOIDZ }),
+    body: CreateCustomizedTourItineraryDayBodyZ.omit({
+      customizedTourItineraryOID: true,
+    }),
+    responses: {
+      201: EntityOIDZ,
+    },
+  },
+  updateCustomizedTourItineraryDays: {
+    summary: "Update customized tour itinerary days",
+    method: "POST",
+    path: `${basePath}/:itineraryOID/days/batch-update`,
+    pathParams: z.object({ itineraryOID: EntityOIDZ }),
+    body: z.record(EntityOIDZ, UpdateCustomizedTourItineraryDayBodyZ),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  deleteCustomizedTourItineraryDays: {
+    summary: "Delete customized tour itinerary days",
+    method: "POST",
+    path: `${basePath}/:itineraryOID/days/batch-delete`,
+    pathParams: z.object({ itineraryOID: EntityOIDZ }),
+    body: z.object({ itineraryDayOIDs: z.array(EntityOIDZ) }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
+  // #region Customized Tour Itinerary Items
+  getCustomizedTourItineraryItems: {
+    summary: "List items for a customized tour itinerary day",
+    method: "GET",
+    path: `${basePath}/:dayOID/items`,
+    pathParams: z.object({ dayOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  createCustomizedTourItineraryItem: {
+    summary: "Create customized tour itinerary item",
+    method: "POST",
+    path: `${basePath}/:dayOID/items`,
+    pathParams: z.object({ dayOID: EntityOIDZ }),
+    body: CreateCustomizedTourItineraryItemBodyZ.omit({
+      customizedTourItineraryDayOID: true,
+    }),
+    responses: {
+      201: EntityOIDZ,
+    },
+  },
+  updateCustomizedTourItineraryItems: {
+    summary: "Update customized tour itinerary items",
+    method: "POST",
+    path: `${basePath}/:dayOID/items/batch-update`,
+    pathParams: z.object({ dayOID: EntityOIDZ }),
+    body: z.record(EntityOIDZ, UpdateCustomizedTourItineraryItemBodyZ),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  deleteCustomizedTourItineraryItems: {
+    summary: "Delete customized tour itinerary items",
+    method: "POST",
+    path: `${basePath}/:dayOID/items/batch-delete`,
+    pathParams: z.object({ dayOID: EntityOIDZ }),
+    body: z.object({ itineraryItemOIDs: z.array(EntityOIDZ) }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
+  // #region Customized Tour Cost Items
+  getCustomizedTourCostItems: {
+    summary: "List cost items for a customized tour booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/cost-items`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  createCustomizedTourCostItem: {
+    summary: "Create customized tour cost item",
+    method: "POST",
+    path: `${basePath}/:bookingOID/cost-items`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: CreateCustomizedTourCostItemBodyZ.omit({
+      customizedTourBookingOID: true,
+    }),
+    responses: {
+      201: EntityOIDZ,
+    },
+  },
+  updateCustomizedTourCostItems: {
+    summary: "Update customized tour cost items",
+    method: "POST",
+    path: `${basePath}/:bookingOID/cost-items/batch-update`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.record(EntityOIDZ, UpdateCustomizedTourCostItemBodyZ),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  deleteCustomizedTourCostItems: {
+    summary: "Delete customized tour cost items",
+    method: "POST",
+    path: `${basePath}/:bookingOID/cost-items/batch-delete`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({ costItemOIDs: z.array(EntityOIDZ) }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+
+  // #region Customized Tour Tasks
+  getCustomizedTourTasks: {
+    summary: "List tasks for a customized tour booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/tasks`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  createCustomizedTourTask: {
+    summary: "Create customized tour task",
+    method: "POST",
+    path: `${basePath}/:bookingOID/tasks`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: CreateCustomizedTourTaskBodyZ.omit({
+      customizedTourBookingOID: true,
+    }),
+    responses: {
+      201: EntityOIDZ,
+    },
+  },
+  updateCustomizedTourTasks: {
+    summary: "Update customized tour tasks",
+    method: "POST",
+    path: `${basePath}/:bookingOID/tasks/batch-update`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.record(EntityOIDZ, UpdateCustomizedTourTaskBodyZ),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  deleteCustomizedTourTasks: {
+    summary: "Delete customized tour tasks",
+    method: "POST",
+    path: `${basePath}/:bookingOID/tasks/batch-delete`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({ taskOIDs: z.array(EntityOIDZ) }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+});

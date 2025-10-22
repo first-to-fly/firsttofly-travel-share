@@ -109,6 +109,13 @@ export enum EntityType {
   INDEPENDENT_TOUR_BOOKING_ADDON = "independentTourBookingAddon",
   INDEPENDENT_TOUR_BOOKING_DISCOUNT = "independentTourBookingDiscount",
 
+  CUSTOMIZED_TOUR_BOOKING = "customizedTourBooking",
+  CUSTOMIZED_TOUR_ITINERARY = "customizedTourItinerary",
+  CUSTOMIZED_TOUR_ITINERARY_DAY = "customizedTourItineraryDay",
+  CUSTOMIZED_TOUR_ITINERARY_ITEM = "customizedTourItineraryItem",
+  CUSTOMIZED_TOUR_COST_ITEM = "customizedTourCostItem",
+  CUSTOMIZED_TOUR_TASK = "customizedTourTask",
+
   // PAYMENT AND TRANSACTION
   PAYMENT_ORDER = "paymentOrder",
   TRANSACTION = "transaction",
