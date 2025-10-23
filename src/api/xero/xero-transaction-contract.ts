@@ -48,6 +48,7 @@ export const TxnPreviewZ = z.object({
 
 export const SubmitTxnPostZ = z.object({
   stateId: z.string(),
+  tenantOID: z.string(),
   xeroContactId: z.string().optional(),
 });
 
@@ -75,7 +76,10 @@ export const xeroTransactionContract = initContract().router({
     summary: "Preview composed transaction payload",
     method: "POST",
     path: `${basePath}/preview`,
-    body: z.object({ stateId: z.string() }),
+    body: z.object({
+      stateId: z.string(),
+      tenantOID: z.string(),
+    }),
     responses: { 200: TxnPreviewZ },
   },
 
