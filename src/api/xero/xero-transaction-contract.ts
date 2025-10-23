@@ -41,9 +41,6 @@ export const TxnPreviewZ = z.object({
     debit: z.number(),
     credit: z.number(),
   }),
-  posting: z.object({
-    docType: z.enum(["ACCREC", "ACCRECCREDIT", "ACCPAY", "MANUALJOURNAL"]).optional(),
-  }).optional(),
 });
 
 export const SubmitTxnPostZ = z.object({
