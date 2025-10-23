@@ -42,7 +42,6 @@ const UpdateGroupTourBookingBodyZ = CreateGroupTourBookingBodyZ.omit({
   tenantOID: true,
   departmentOID: true,
   tourDepartureOID: true,
-  stationCodeOID: true,
   tcpBookingOID: true,
 }).partial();
 export type UpdateGroupTourBookingBody = z.infer<typeof UpdateGroupTourBookingBodyZ>;
@@ -116,6 +115,12 @@ const CreateAirWallexPaymentLinkBodyZ = z.object({
   currency: z.string().length(3).describe("Currency code (e.g., USD, EUR)"),
   customerEmail: z.string().email().describe("Customer email address"),
   paymentWayOID: EntityOIDZ.optional().describe("Payment way OID to use for this transaction"),
+  validityDurationMinutes: z
+    .number()
+    .int()
+    .positive()
+    .describe("Optional validity duration in minutes. Defaults to 7 days when omitted.")
+    .optional(),
 });
 export type CreateAirWallexPaymentLinkBody = z.infer<typeof CreateAirWallexPaymentLinkBodyZ>;
 
@@ -124,6 +129,11 @@ const AirWallexPaymentLinkResponseZ = z.object({
   paymentLinkId: z.string().describe("AirWallex payment link ID"),
 });
 export type AirWallexPaymentLinkResponse = z.infer<typeof AirWallexPaymentLinkResponseZ>;
+
+const ResendAirWallexPaymentLinkBodyZ = z.object({
+  customerEmail: z.string().email().optional(),
+});
+export type ResendAirWallexPaymentLinkBody = z.infer<typeof ResendAirWallexPaymentLinkBodyZ>;
 
 
 export const groupTourBookingContract = initContract().router({
@@ -455,6 +465,32 @@ export const groupTourBookingContract = initContract().router({
     body: CreateAirWallexPaymentLinkBodyZ,
     responses: {
       201: AirWallexPaymentLinkResponseZ,
+    },
+  },
+  cancelAirWallexPaymentLink: {
+    summary: "Cancel an existing AirWallex payment link for the booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/airwallex-payment-link/:paymentLinkId/cancel`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+      paymentLinkId: z.string(),
+    }),
+    body: z.object({}).optional(),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  resendAirWallexPaymentLink: {
+    summary: "Resend an AirWallex payment link to the customer",
+    method: "POST",
+    path: `${basePath}/:bookingOID/airwallex-payment-link/:paymentLinkId/resend`,
+    pathParams: z.object({
+      bookingOID: EntityOIDZ,
+      paymentLinkId: z.string(),
+    }),
+    body: ResendAirWallexPaymentLinkBodyZ.optional(),
+    responses: {
+      200: z.boolean(),
     },
   },
   // #endregion
