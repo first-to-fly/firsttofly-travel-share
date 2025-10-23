@@ -10,7 +10,6 @@ const basePath = "/api/xero/transactions";
 export const BuildTxnStateZ = z.object({
   tenantOID: z.string(),
   transactionOIDs: z.array(z.string()).min(1),
-  xeroType: z.enum(["invoice_based", "transaction_based"]).default("invoice_based"),
   xeroPaymentType: z.enum(["refund", "receipt", "cancellationFee"]).optional(),
   header: z.object({
     narration: z.string().optional(),
