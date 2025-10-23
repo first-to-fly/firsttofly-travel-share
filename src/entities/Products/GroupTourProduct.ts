@@ -80,12 +80,15 @@ export const GroupTourProductZ = EntityZ.extend({
     file: NamedURLZ,
     updatedAt: z.string(),
   })).nullish(),
+
   documentations: z.array(z.object({
     active: z.boolean(),
     type: z.nativeEnum(GroupTourProductDocumentationType),
     file: NamedURLZ,
     updatedAt: z.string(),
   })).nullish(),
+
+  startingPrice: z.number().nullish(),
 });
 
 export type GroupTourProduct = z.infer<typeof GroupTourProductZ>;
