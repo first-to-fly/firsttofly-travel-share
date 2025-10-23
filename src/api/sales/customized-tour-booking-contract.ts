@@ -49,6 +49,19 @@ const UpdateCustomizedTourBookingBodyZ = CreateCustomizedTourBookingBodyZ.omit({
   );
 export type UpdateCustomizedTourBookingBody = z.infer<typeof UpdateCustomizedTourBookingBodyZ>;
 
+const ConfirmBookingResponseZ = z.object({
+  success: z.boolean(),
+  message: z.string().optional(),
+  errors: z.array(z.string()).optional(),
+});
+export type ConfirmBookingResponse = z.infer<typeof ConfirmBookingResponseZ>;
+
+const CanModifyResponseZ = z.object({
+  canModify: z.boolean(),
+  reason: z.string().optional(),
+});
+export type CanModifyResponse = z.infer<typeof CanModifyResponseZ>;
+
 // --- CustomizedTourItinerary Schemas ---
 const CreateCustomizedTourItineraryBodyZ = CustomizedTourItineraryZ.pick({
   tenantOID: true,
@@ -199,9 +212,41 @@ export const customizedTourBookingContract = initContract().router({
     method: "POST",
     path: `${basePath}/:bookingOID/confirm`,
     pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({
+      remarks: z.string().optional(),
+    }).optional(),
+    responses: {
+      200: ConfirmBookingResponseZ,
+      400: ConfirmBookingResponseZ,
+    },
+  },
+  markCustomerConfirmed: {
+    summary: "Mark customer confirmed for customized tour booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/customer-confirm`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
     body: z.object({}).optional(),
     responses: {
-      200: z.boolean(),
+      200: ConfirmBookingResponseZ,
+    },
+  },
+  unmarkCustomerConfirmed: {
+    summary: "Unmark customer confirmation for customized tour booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/customer-unconfirm`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({}).optional(),
+    responses: {
+      200: ConfirmBookingResponseZ,
+    },
+  },
+  canModifyCustomizedTourBooking: {
+    summary: "Check if customized tour booking can be modified",
+    method: "GET",
+    path: `${basePath}/:bookingOID/can-modify`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: CanModifyResponseZ,
     },
   },
   cancelCustomizedTourBooking: {
