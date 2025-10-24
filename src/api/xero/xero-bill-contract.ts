@@ -54,6 +54,7 @@ export const BillPreviewZ = z.object({
 
 export const SubmitBillPostZ = z.object({
   stateId: z.string(),
+  tenantOID: z.string(),
   xeroContactId: z.string(),
 });
 
@@ -77,7 +78,10 @@ export const xeroBillContract = initContract().router({
     summary: "Preview composed bill payload",
     method: "POST",
     path: `${basePath}/preview`,
-    body: z.object({ stateId: z.string() }),
+    body: z.object({
+      stateId: z.string(),
+      tenantOID: z.string(),
+    }),
     responses: { 200: BillPreviewZ },
   },
 

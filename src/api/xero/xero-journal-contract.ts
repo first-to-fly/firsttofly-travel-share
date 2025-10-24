@@ -29,7 +29,10 @@ export const BuildJournalStateZ = z.object({
   }).partial().optional(),
 });
 
-export const SubmitJournalPostZ = z.object({ stateId: z.string() });
+export const SubmitJournalPostZ = z.object({
+  stateId: z.string(),
+  tenantOID: z.string(),
+});
 export const SubmitJournalResultZ = z.object({
   success: z.boolean(),
   xeroId: z.string().optional(),
@@ -50,7 +53,10 @@ export const xeroJournalContract = initContract().router({
     summary: "Preview composed manual journal",
     method: "POST",
     path: `${basePath}/preview`,
-    body: z.object({ stateId: z.string() }),
+    body: z.object({
+      stateId: z.string(),
+      tenantOID: z.string(),
+    }),
     responses: { 200: JournalPreviewZ },
   },
 
