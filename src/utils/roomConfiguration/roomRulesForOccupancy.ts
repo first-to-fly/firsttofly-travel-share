@@ -23,7 +23,7 @@ function normalizeOccupancy(o: RoomOccupancy): {
 /**
  * Calculate the total number of beds needed based on adults and children with beds
  */
-function calculateTotalBeds(occupancy: RoomOccupancy): number {
+export function calculateTotalBeds(occupancy: RoomOccupancy): number {
   const normalized = normalizeOccupancy(occupancy);
   return normalized.adultNum + normalized.childWithBedNum;
 }
@@ -32,7 +32,7 @@ function calculateTotalBeds(occupancy: RoomOccupancy): number {
 /**
  * Determine the room type based on total number of beds needed
  */
-function determineRoomType(totalBeds: number): RoomType {
+export function determineRoomType(totalBeds: number): RoomType {
   if (totalBeds <= 0) {
     throw new Error("Invalid occupancy: total beds must be greater than 0");
   }
