@@ -43,7 +43,6 @@ export type CreateIndependentTourBookingBody = z.infer<typeof CreateIndependentT
 const UpdateIndependentTourBookingBodyZ = CreateIndependentTourBookingBodyZ.omit({
   tenantOID: true,
   departmentOID: true,
-  stationCodeOID: true,
   independentTourProductOID: true,
   tcpBookingOID: true,
 }).partial();
@@ -131,6 +130,12 @@ const CreateAirWallexPaymentLinkBodyZ = z.object({
   currency: z.string().length(3).describe("Currency code (e.g., USD, EUR)"),
   customerEmail: z.string().email().describe("Customer email address"),
   paymentWayOID: EntityOIDZ.optional().describe("Payment way OID to use for this transaction"),
+  validityDurationMinutes: z
+    .number()
+    .int()
+    .positive()
+    .describe("Optional validity duration in minutes. Defaults to 7 days when omitted.")
+    .optional(),
 });
 export type CreateAirWallexPaymentLinkBody = z.infer<typeof CreateAirWallexPaymentLinkBodyZ>;
 
