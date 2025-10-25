@@ -7,6 +7,7 @@ import { emailTemplateContract } from "./email-template-contract";
 import { locationContract } from "./location-contract";
 import { mediaContract } from "./media-contract";
 import { paymentWayContract } from "./payment-way-contract";
+import { pdfTemplateContract } from "./pdf-template-contract";
 import { poiContract } from "./poi-contract";
 import { privacyPolicyContract } from "./privacy-policy-contract";
 import { referenceCodeContract } from "./reference-code-contract";
@@ -31,4 +32,5 @@ export const generalSettingContract = initContract().router({
   term: termContract,
   media: mediaContract,
   emailTemplate: emailTemplateContract,
+  pdfTemplate: pdfTemplateContract,
 });

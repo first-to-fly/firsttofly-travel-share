@@ -60,6 +60,7 @@ export enum EntityType {
   PRIVACY_POLICY = "privacyPolicy",
   TENANT_CONFIG = "tenantConfig",
   EMAIL_TEMPLATE = "emailTemplate",
+  PDF_TEMPLATE = "pdfTemplate",
 
   // SUPPLIER MANAGEMENT
   SUPPLIER = "supplier",
