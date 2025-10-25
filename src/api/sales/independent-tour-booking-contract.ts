@@ -33,6 +33,8 @@ const CreateIndependentTourBookingBodyZ = IndependentTourBookingZ.pick({
   saleStaffOID: true,
   saleReferrerOID: true,
   insuranceDeclaration: true,
+  agreeToTerms: true,
+  signatureUrl: true,
 }).extend({
   bookingReference: IndependentTourBookingZ.shape.bookingReference.optional(),
   travelStartDate: IndependentTourBookingZ.shape.travelStartDate.optional(),
