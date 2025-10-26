@@ -53,6 +53,20 @@ export interface PaxStatementPdfContext extends Record<string, unknown> {
   tenantEmail: string;
   tenantPhoneNumber: string;
   tenantLogoUrl?: string | null;
+  stationCode?: string | null;
+  salesStaffName?: string | null;
+  bookingStaffName?: string | null;
+  printTime?: string | null;
+  agentEmail?: string | null;
+  agentPhoneNumber?: string | null;
+  salesOffice?: string | null;
+  bookingViewType?: string | null;
+  statusFlags?: {
+    hasTag?: boolean;
+    cancelled?: boolean;
+    voided?: boolean;
+    waitingList?: boolean;
+  };
 
   bookingReference: string;
   productName: string;
@@ -118,8 +132,10 @@ export interface PaxStatementPdfContext extends Record<string, unknown> {
     reference: string;
     method: string;
     amount: number;
+    transactionType?: string | null;
     receivedBy?: string | null;
     note?: string | null;
+    runningBalance?: number | null;
   }>;
 
   externalNotes?: string[] | null;
