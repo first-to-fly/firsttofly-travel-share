@@ -11,6 +11,11 @@ export enum PdfTemplateKey {
 
 export const PdfTemplateKeyZ = z.nativeEnum(PdfTemplateKey);
 
+export enum PdfTemplateEvents {
+  PDF_TEMPLATE_UPDATED = "PDF_TEMPLATE_UPDATED",
+  PDF_TEMPLATE_LIST_UPDATED = "PDF_TEMPLATE_LIST_UPDATED",
+}
+
 export const PdfTemplateZ = EntityZ.extend({
   entityType: z.literal(EntityType.PDF_TEMPLATE),
   tenantOID: EntityOIDZ.nullish(),
