@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 import { ProductPlatform, ProductPlatformZ } from "../../types/platform";
+import { NamedURLZ } from "../../types/url";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { BaseBookingCustomerMetadataZ, BookingPaymentLinksMetadataZ, GTBTransferMetadataZ } from "./BookingMetadata";
 
@@ -41,6 +42,8 @@ export const GroupTourBookingZ = EntityZ.extend({
   saleReferrerOID: EntityOIDZ.nullish(),
   remarks: z.string().nullish(),
   insuranceDeclaration: z.string().nullish(),
+  agreeToTerms: z.boolean().nullish(),
+  signatureUrl: NamedURLZ.nullish(),
 
   // Owner information
   ownerOIDs: z.array(EntityOIDZ).optional(),

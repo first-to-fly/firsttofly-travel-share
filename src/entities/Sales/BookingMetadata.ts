@@ -23,7 +23,7 @@ export const BookingPendingPaymentLinkZ = z.object({
   /** Description provided to Airwallex */
   description: z.string().optional(),
   /** Current status returned by Airwallex */
-  status: z.enum(["UNPAID", "PAID"]).optional(),
+  status: z.enum(["UNPAID", "PAID", "CANCELLED", "EXPIRED", "DISABLED"]).optional(),
   /** ISO timestamp when the payment link was created */
   createdAt: z.string().optional(),
   /** ISO timestamp when the payment link will expire */
@@ -34,6 +34,8 @@ export const BookingPendingPaymentLinkZ = z.object({
   customerEmail: z.string().optional(),
   /** Preferred payment way reference for reconciliation */
   paymentWayOID: z.string().optional(),
+  /** ISO timestamp when the link was last sent to the customer */
+  lastSentAt: z.string().optional(),
 });
 export type BookingPendingPaymentLink = z.infer<typeof BookingPendingPaymentLinkZ>;
 
