@@ -3,6 +3,7 @@ import { z } from "zod";
 
 import { BookingPaymentStatus } from "../../enums/BookingTypes";
 import { EntityOIDZ, EntityZ } from "../entity";
+import { BaseBookingCustomerMetadataZ, BookingPaymentLinksMetadataZ } from "./BookingMetadata";
 
 
 export enum CustomizedTourBookingStatus {
@@ -12,6 +13,10 @@ export enum CustomizedTourBookingStatus {
   COMPLETED = "completed",
   CANCELLED = "cancelled",
 }
+
+
+export const CustomizedTourBookingMetadataZ = BaseBookingCustomerMetadataZ.merge(BookingPaymentLinksMetadataZ);
+export type CustomizedTourBookingMetadata = z.infer<typeof CustomizedTourBookingMetadataZ>;
 
 
 export const CustomizedTourBookingZ = EntityZ.extend({
@@ -34,6 +39,7 @@ export const CustomizedTourBookingZ = EntityZ.extend({
   budgetOID: EntityOIDZ.nullish(),
   totalAmount: z.number().nullish(),
   receivedAmount: z.number().nullish(),
+  metadata: CustomizedTourBookingMetadataZ.nullish(),
 });
 
 export type CustomizedTourBooking = z.infer<typeof CustomizedTourBookingZ>;
