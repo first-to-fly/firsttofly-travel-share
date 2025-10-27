@@ -7,7 +7,7 @@ import { PdfTemplateKeyZ } from "../../../entities/Settings/General/PdfTemplate"
 const basePath = "/api/settings/general/pdf/templates";
 
 const UpsertPdfTemplateZ = z.object({
-  tenantOID: z.string().optional(),
+  tenantOID: z.string(),
   template: z.string(),
 });
 
@@ -24,6 +24,13 @@ const DefaultPdfTemplatesResponseZ = z.object({
   templates: z.record(PdfTemplateKeyZ, DefaultPdfTemplateDefinitionZ),
 });
 
+const PreviewPdfRequestZ = z.object({
+  key: PdfTemplateKeyZ,
+  template: z.string(),
+  context: z.record(z.unknown()).optional(),
+  options: z.object({}).passthrough().optional(),
+});
+
 const PreviewPdfResponseZ = z.object({
   html: z.string(),
   errors: z.array(z.string()),
@@ -38,8 +45,8 @@ export const pdfTemplateContract = initContract().router({
     method: "GET",
     path: basePath,
     query: z.object({
-      tenantOID: z.string().optional(),
-    }).optional(),
+      tenantOID: z.string(),
+    }),
     responses: {
       200: PdfTemplateOIDsResponseZ,
     },
@@ -49,8 +56,9 @@ export const pdfTemplateContract = initContract().router({
     method: "GET",
     path: `${basePath}/defaults`,
     query: z.object({
+      tenantOID: z.string(),
       key: PdfTemplateKeyZ.optional(),
-    }).optional(),
+    }),
     responses: {
       200: DefaultPdfTemplatesResponseZ,
     },
@@ -69,6 +77,7 @@ export const pdfTemplateContract = initContract().router({
     method: "POST",
     path: `${basePath}/batch-delete`,
     body: z.object({
+      tenantOID: z.string(),
       pdfTemplateOIDs: z.array(z.string()),
     }),
     responses: {
@@ -79,11 +88,10 @@ export const pdfTemplateContract = initContract().router({
     summary: "Render preview PDF",
     method: "POST",
     path: `${basePath}/preview`,
-    body: z.object({
-      key: PdfTemplateKeyZ,
-      tenantOID: z.string().optional(),
-      options: z.object({}).passthrough().optional(),
+    query: z.object({
+      tenantOID: z.string(),
     }),
+    body: PreviewPdfRequestZ,
     responses: {
       200: PreviewPdfResponseZ,
     },
