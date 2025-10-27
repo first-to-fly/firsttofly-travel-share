@@ -4,6 +4,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../../entities/entity";
 import { CustomizedTourBookingZ } from "../../entities/Sales/CustomizedTourBooking";
+import { CustomizedTourBookingPaxZ } from "../../entities/Sales/CustomizedTourBookingPax";
 import { CustomizedTourCostItemZ } from "../../entities/Sales/CustomizedTourCostItem";
 import { CustomizedTourItineraryZ } from "../../entities/Sales/CustomizedTourItinerary";
 import { CustomizedTourItineraryDayZ } from "../../entities/Sales/CustomizedTourItineraryDay";
@@ -16,7 +17,6 @@ const basePath = "/api/sales/customized-tour-bookings";
 // --- CustomizedTourBooking Schemas ---
 const CreateCustomizedTourBookingBodyZ = CustomizedTourBookingZ.pick({
   tenantOID: true,
-  customerOID: true,
   departmentOID: true,
   stationCodeOID: true,
   saleStaffOID: true,
@@ -38,7 +38,6 @@ export type CreateCustomizedTourBookingBody = z.infer<typeof CreateCustomizedTou
 
 const UpdateCustomizedTourBookingBodyZ = CreateCustomizedTourBookingBodyZ.omit({
   tenantOID: true,
-  customerOID: true,
 })
   .partial()
   .merge(
@@ -61,6 +60,41 @@ const CanModifyResponseZ = z.object({
   reason: z.string().optional(),
 });
 export type CanModifyResponse = z.infer<typeof CanModifyResponseZ>;
+
+// --- CustomizedTourBookingPax Schemas ---
+const CreateCustomizedTourBookingPaxEntryZ = z.object({
+  type: CustomizedTourBookingPaxZ.shape.type,
+  personalDetails: CustomizedTourBookingPaxZ.shape.personalDetails,
+  mealPreference: CustomizedTourBookingPaxZ.shape.mealPreference,
+  documentOIDs: CustomizedTourBookingPaxZ.shape.documentOIDs,
+  remarks: CustomizedTourBookingPaxZ.shape.remarks,
+  isConfirmed: CustomizedTourBookingPaxZ.shape.isConfirmed,
+  confirmedAt: CustomizedTourBookingPaxZ.shape.confirmedAt,
+  confirmedByEmail: CustomizedTourBookingPaxZ.shape.confirmedByEmail,
+  isLocked: CustomizedTourBookingPaxZ.shape.isLocked,
+  lockedAt: CustomizedTourBookingPaxZ.shape.lockedAt,
+  lockedBy: CustomizedTourBookingPaxZ.shape.lockedBy,
+});
+
+const CreateCustomizedTourBookingPaxBodyZ = z.object({
+  pax: z.array(CreateCustomizedTourBookingPaxEntryZ),
+});
+export type CreateCustomizedTourBookingPaxBody = z.infer<typeof CreateCustomizedTourBookingPaxBodyZ>;
+
+const UpdateCustomizedTourBookingPaxBodyZ = CustomizedTourBookingPaxZ.pick({
+  type: true,
+  personalDetails: true,
+  mealPreference: true,
+  documentOIDs: true,
+  remarks: true,
+  isConfirmed: true,
+  confirmedAt: true,
+  confirmedByEmail: true,
+  isLocked: true,
+  lockedAt: true,
+  lockedBy: true,
+}).partial();
+export type UpdateCustomizedTourBookingPaxBody = z.infer<typeof UpdateCustomizedTourBookingPaxBodyZ>;
 
 // --- CustomizedTourItinerary Schemas ---
 const CreateCustomizedTourItineraryBodyZ = CustomizedTourItineraryZ.pick({
@@ -259,6 +293,50 @@ export const customizedTourBookingContract = initContract().router({
       200: z.boolean(),
     },
   },
+
+  // #region Customized Tour Booking Pax
+  getCustomizedTourBookingPax: {
+    summary: "List passengers for a customized tour booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/pax`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  createCustomizedTourBookingPax: {
+    summary: "Create passengers for a customized tour booking",
+    method: "POST",
+    path: `${basePath}/:bookingOID/pax`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: CreateCustomizedTourBookingPaxBodyZ,
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  updateCustomizedTourBookingPax: {
+    summary: "Batch update passengers for a customized tour booking",
+    method: "PUT",
+    path: `${basePath}/:bookingOID/pax/batch-update`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.record(z.string(), UpdateCustomizedTourBookingPaxBodyZ),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
+  deleteCustomizedTourBookingPax: {
+    summary: "Batch delete passengers for a customized tour booking",
+    method: "DELETE",
+    path: `${basePath}/:bookingOID/pax/batch-delete`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: z.object({
+      paxOIDs: z.array(EntityOIDZ),
+    }),
+    responses: {
+      200: z.boolean(),
+    },
+  },
+  // #endregion
 
   // #region Customized Tour Itineraries
   getCustomizedTourItineraries: {

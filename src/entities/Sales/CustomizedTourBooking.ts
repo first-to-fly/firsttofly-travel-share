@@ -20,7 +20,6 @@ export type CustomizedTourBookingMetadata = z.infer<typeof CustomizedTourBooking
 
 
 export const CustomizedTourBookingZ = EntityZ.extend({
-  customerOID: EntityOIDZ,
   departmentOID: EntityOIDZ.nullish(),
   stationCodeOID: EntityOIDZ.nullish(),
   saleStaffOID: EntityOIDZ.nullish(),

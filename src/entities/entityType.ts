@@ -110,6 +110,7 @@ export enum EntityType {
   INDEPENDENT_TOUR_BOOKING_DISCOUNT = "independentTourBookingDiscount",
 
   CUSTOMIZED_TOUR_BOOKING = "customizedTourBooking",
+  CUSTOMIZED_TOUR_BOOKING_PAX = "customizedTourBookingPax",
   CUSTOMIZED_TOUR_ITINERARY = "customizedTourItinerary",
   CUSTOMIZED_TOUR_ITINERARY_DAY = "customizedTourItineraryDay",
   CUSTOMIZED_TOUR_ITINERARY_ITEM = "customizedTourItineraryItem",
