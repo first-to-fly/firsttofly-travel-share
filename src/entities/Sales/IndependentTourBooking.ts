@@ -3,7 +3,7 @@ import { z } from "zod";
 
 import { BookingPaymentStatus, BookingPaymentStatusZ, BookingStatus, BookingStatusZ } from "../../enums/BookingTypes";
 import { ProductPlatform, ProductPlatformZ } from "../../types/platform";
-import { NamedURLZ } from "../../types/url";
+import { SignatureDataZ } from "../../types/signature";
 import { DateISOStringZ, EntityOIDZ, EntityZ } from "../entity";
 import { BaseBookingCustomerMetadataZ, BookingPaymentLinksMetadataZ, ITBTransferMetadataZ } from "./BookingMetadata";
 
@@ -47,7 +47,7 @@ export const IndependentTourBookingZ = EntityZ.extend({
   remarks: z.string().nullish(),
   insuranceDeclaration: z.string().nullish(),
   agreeToTerms: z.boolean().nullish(),
-  signatureUrl: NamedURLZ.nullish(),
+  signature: SignatureDataZ.nullish(),
 });
 
 export type IndependentTourBooking = z.infer<typeof IndependentTourBookingZ>;
