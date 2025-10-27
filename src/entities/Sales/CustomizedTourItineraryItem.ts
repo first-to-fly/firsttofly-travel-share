@@ -1,15 +1,45 @@
 // simple-import-sort
 import { z } from "zod";
 
+import { DateISOStringZ } from "../../types/date";
 import { EntityOIDZ, EntityZ } from "../entity";
+import { GeoPointZ } from "../Settings/General/POI";
 
+
+const POIAccommodationDetailsZ = z.object({
+  type: z.literal("poi-accommodation"),
+  poiOID: EntityOIDZ,
+  checkIn: DateISOStringZ.nullish(),
+  checkOut: DateISOStringZ.nullish(),
+  roomType: z.string().nullish(),
+  specialRequests: z.string().nullish(),
+  notes: z.string().nullish(),
+});
+
+const FreeFormAccommodationDetailsZ = z.object({
+  type: z.literal("free-form-accommodation"),
+  hotelName: z.string(),
+  address: z.string().nullish(),
+  location: GeoPointZ.nullish(),
+  checkIn: DateISOStringZ.nullish(),
+  checkOut: DateISOStringZ.nullish(),
+  roomType: z.string().nullish(),
+  contactNumber: z.string().nullish(),
+  specialRequests: z.string().nullish(),
+  notes: z.string().nullish(),
+});
+
+export const CustomizedTourItineraryItemDetailsZ = z.discriminatedUnion("type", [
+  POIAccommodationDetailsZ,
+  FreeFormAccommodationDetailsZ,
+]);
 
 export const CustomizedTourItineraryItemZ = EntityZ.extend({
   customizedTourItineraryDayOID: EntityOIDZ,
   category: z.string(),
   supplierOID: EntityOIDZ.nullish(),
   name: z.string(),
-  details: z.record(z.string(), z.string()).nullish(),
+  details: CustomizedTourItineraryItemDetailsZ.nullish(),
   costEstimated: z.number().nullish(),
   priceQuoted: z.number().nullish(),
   costActual: z.number().nullish(),
@@ -18,6 +48,11 @@ export const CustomizedTourItineraryItemZ = EntityZ.extend({
 });
 
 export type CustomizedTourItineraryItem = z.infer<typeof CustomizedTourItineraryItemZ>;
+export type CustomizedTourItineraryItemDetails = z.infer<
+  typeof CustomizedTourItineraryItemDetailsZ
+>;
+export type POIAccommodationDetails = z.infer<typeof POIAccommodationDetailsZ>;
+export type FreeFormAccommodationDetails = z.infer<typeof FreeFormAccommodationDetailsZ>;
 
 export enum CustomizedTourItineraryItemEvents {
   CUSTOMIZED_TOUR_ITINERARY_ITEM_UPDATED = "CUSTOMIZED_TOUR_ITINERARY_ITEM_UPDATED",
