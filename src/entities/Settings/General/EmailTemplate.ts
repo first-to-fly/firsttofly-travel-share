@@ -64,9 +64,9 @@ export interface PaymentEmailContext extends BaseEmailContext {
   tourName: string;
   bookingReference: string;
   departureDate?: string;
-  amount: number;
   currency: string;
   paymentLinkUrl: string;
+  formattedAmount: string;
 }
 
 export interface UserInvitationEmailContext extends BaseEmailContext {
