@@ -3,7 +3,6 @@ import { z } from "zod";
 import { FTFSafeMaxNumberZ } from "../../types/number";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { EntityType } from "../entityType";
-import { PaymentStatus } from "../Products/GroupTourCosting";
 import { CalculationBasis, CostingItemCategory, OccupancyType, PackageType, QuantityMode } from "../Settings/Product/CostingItem";
 
 
@@ -41,8 +40,6 @@ export const BudgetEntryZ = EntityZ.extend({
   forexRate: FTFSafeMaxNumberZ({ name: "Forex rate" }).nullish(),
   localCurrency: z.string().nullish(),
   localAmount: FTFSafeMaxNumberZ({ name: "Local amount" }).nullish(),
-  paymentStatus: z.nativeEnum(PaymentStatus).nullish(),
-  paidAmount: FTFSafeMaxNumberZ({ name: "Paid amount" }).nullish(),
 });
 
 export type BudgetEntry = z.infer<typeof BudgetEntryZ>;

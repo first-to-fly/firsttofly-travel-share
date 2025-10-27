@@ -30,6 +30,7 @@ export function validateMatchDocStatusTransition(
   currentStatus: MatchDocStatus,
   nextStatus: MatchDocStatus,
 ): { result: "invalid"; from: MatchDocStatus; to: MatchDocStatus } | { result: "valid" } {
+  if (currentStatus === nextStatus) return { result: "valid" };
   const allowedNextStatuses = MATCH_DOC_VALID_STATUS_TRANSITIONS[currentStatus];
   if (!allowedNextStatuses.includes(nextStatus)) {
     return {
