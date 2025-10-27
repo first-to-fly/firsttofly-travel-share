@@ -24,6 +24,12 @@ const DefaultPdfTemplatesResponseZ = z.object({
   templates: z.record(PdfTemplateKeyZ, DefaultPdfTemplateDefinitionZ),
 });
 
+const PreviewPdfResponseZ = z.object({
+  html: z.string(),
+  errors: z.array(z.string()),
+  pdf: z.string(),
+});
+
 export type UpsertPdfTemplateRequest = z.infer<typeof UpsertPdfTemplateZ>;
 
 export const pdfTemplateContract = initContract().router({
@@ -67,6 +73,19 @@ export const pdfTemplateContract = initContract().router({
     }),
     responses: {
       200: z.boolean(),
+    },
+  },
+  previewTemplate: {
+    summary: "Render preview PDF",
+    method: "POST",
+    path: `${basePath}/preview`,
+    body: z.object({
+      key: PdfTemplateKeyZ,
+      tenantOID: z.string().optional(),
+      options: z.object({}).passthrough().optional(),
+    }),
+    responses: {
+      200: PreviewPdfResponseZ,
     },
   },
 });
