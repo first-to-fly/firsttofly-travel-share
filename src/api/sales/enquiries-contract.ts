@@ -50,10 +50,7 @@ const ListEnquiriesQueryZ = z.object({
 }).passthrough();
 
 const EnquiryListResponseZ = z.object({
-  items: z.array(EnquiryZ),
-  total: z.number().int(),
-  page: z.number().int(),
-  pageSize: z.number().int(),
+  oids: z.array(EntityOIDZ),
 });
 
 export type CreateEnquiry = z.infer<typeof CreateEnquiryZ>;
