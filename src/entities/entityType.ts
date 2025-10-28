@@ -113,6 +113,9 @@ export enum EntityType {
   PAYMENT_ORDER = "paymentOrder",
   TRANSACTION = "transaction",
 
+  // SALES FUNNEL
+  ENQUIRY = "enquiry",
+
   // BUDGET
   BUDGET = "budget",
   BUDGET_ENTRY = "budgetEntry",

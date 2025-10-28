@@ -14,6 +14,7 @@ import { DesignationPermissions } from "./entities/designation.permission";
 import { DiscountPermissions, DiscountTemplatePermissions } from "./entities/discount.permission"; // Import new permissions
 import { DocumentPermissions } from "./entities/document.permission";
 import { EmailTemplatePermissions } from "./entities/email-template.permission";
+import { EnquiryPermissions } from "./entities/enquiry.permission";
 import { ExchangeOrderPermissions } from "./entities/exchange-order.permission";
 import { GroupTourBookingPermissions } from "./entities/group-tour-booking.permission";
 import { GroupTourBookingPaxPermissions } from "./entities/group-tour-booking-pax.permission";
@@ -113,6 +114,7 @@ const EntityPermissions = {
   Supplier: SupplierPermissions,
   "Group Tour Booking": GroupTourBookingPermissions,
   "Customer Booking Link": CustomerBookingLinkPermissions,
+  Enquiry: EnquiryPermissions,
   "Independent Tour Booking": IndependentTourBookingPermissions,
   "Approval Management": ApprovalPermissions,
   "Approval Request": ApprovalRequestPermissions,
