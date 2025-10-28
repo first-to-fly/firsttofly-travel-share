@@ -77,8 +77,6 @@ export const EnquiryZ = EntityZ.extend({
   notes: z.string().nullish(),
   status: EnquiryStatusZ,
   statusReason: z.string().nullish(),
-  statusChangedAt: DateISOStringZ.nullish(),
-  lastActivityAt: DateISOStringZ,
 });
 
 export type Enquiry = z.infer<typeof EnquiryZ>;
