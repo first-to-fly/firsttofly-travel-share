@@ -7,8 +7,6 @@ import { EntityOIDZ, EntityZ } from "../entity";
 export const CustomizedTourItineraryZ = EntityZ.extend({
   customizedTourBookingOID: EntityOIDZ,
   name: z.string(),
-  validityStartDate: z.string().datetime().nullish(),
-  validityEndDate: z.string().datetime().nullish(),
   pdfs: z.record(z.string(), z.string()).nullish(),
 });
 

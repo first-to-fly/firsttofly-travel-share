@@ -25,12 +25,9 @@ const CreateCustomizedTourBookingBodyZ = CustomizedTourBookingZ.pick({
   status: true,
   paymentStatus: true,
   overwriteDeposit: true,
-  expectedCancelTime: true,
   specialInstructions: true,
   insuranceDeclaration: true,
   remarks: true,
-  isCustomerConfirmed: true,
-  customerConfirmedAt: true,
   totalAmount: true,
   receivedAmount: true,
 });
@@ -40,12 +37,7 @@ const UpdateCustomizedTourBookingBodyZ = CreateCustomizedTourBookingBodyZ.omit({
   tenantOID: true,
 })
   .partial()
-  .merge(
-    CustomizedTourBookingZ.pick({
-      paymentOrderOID: true,
-      budgetOID: true,
-    }).partial(),
-  );
+  .partial();
 export type UpdateCustomizedTourBookingBody = z.infer<typeof UpdateCustomizedTourBookingBodyZ>;
 
 const ConfirmBookingResponseZ = z.object({
@@ -101,8 +93,6 @@ const CreateCustomizedTourItineraryBodyZ = CustomizedTourItineraryZ.pick({
   tenantOID: true,
   customizedTourBookingOID: true,
   name: true,
-  validityStartDate: true,
-  validityEndDate: true,
   pdfs: true,
 });
 export type CreateCustomizedTourItineraryBody = z.infer<typeof CreateCustomizedTourItineraryBodyZ>;
@@ -252,26 +242,6 @@ export const customizedTourBookingContract = initContract().router({
     responses: {
       200: ConfirmBookingResponseZ,
       400: ConfirmBookingResponseZ,
-    },
-  },
-  markCustomerConfirmed: {
-    summary: "Mark customer confirmed for customized tour booking",
-    method: "POST",
-    path: `${basePath}/:bookingOID/customer-confirm`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: z.object({}).optional(),
-    responses: {
-      200: ConfirmBookingResponseZ,
-    },
-  },
-  unmarkCustomerConfirmed: {
-    summary: "Unmark customer confirmation for customized tour booking",
-    method: "POST",
-    path: `${basePath}/:bookingOID/customer-unconfirm`,
-    pathParams: z.object({ bookingOID: EntityOIDZ }),
-    body: z.object({}).optional(),
-    responses: {
-      200: ConfirmBookingResponseZ,
     },
   },
   canModifyCustomizedTourBooking: {
