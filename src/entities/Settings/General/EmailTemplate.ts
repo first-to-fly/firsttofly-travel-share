@@ -10,6 +10,7 @@ export enum EmailTemplateKey {
   PAYMENT_REQUEST = "payment.request",
   USER_INVITATION = "user.invitation",
   GROUP_TOUR_BOOKING_CONFIRMATION = "group-tour.booking.confirmation",
+  CUSTOMIZED_TOUR_BOOKING_CONFIRMATION = "customized-tour.booking.confirmation",
   INDEPENDENT_TOUR_BOOKING_CONFIRMATION = "independent-tour.booking.confirmation",
   INDEPENDENT_TOUR_BOOKING_CANCELLATION = "independent-tour.booking.cancellation",
   USER_MESSAGE_NOTIFICATION = "user-message.notification",
@@ -92,6 +93,30 @@ export interface GroupTourBookingConfirmationEmailContext extends BaseEmailConte
   companyCodes?: string[];
   contacts?: ContactInfo[];
   socials?: SocialInfo[];
+}
+
+export interface CustomizedTourBookingConfirmationEmailContext extends BaseEmailContext {
+  customerName: string;
+  bookingRef: string;
+  tourName: string;
+  productCode: string;
+  tourCode: string;
+  departureDate: string;
+  noOfTravellers: string;
+  totalAmount: string;
+  receivedTotalAmount: string;
+  balancePayment: string;
+  customerLinkURL: string;
+  termAndConditionURL: string;
+  commission?: string;
+  companySecondNames?: string[];
+  companyCodes?: string[];
+  contacts?: ContactInfo[];
+  socials?: SocialInfo[];
+  itineraryHighlights?: Array<{
+    title: string;
+    date?: string;
+  }>;
 }
 
 export interface UserMessageEmailContext extends BaseEmailContext {
@@ -357,6 +382,11 @@ export const EmailTemplateContextRegistry = {
     context: {} as GroupTourBookingConfirmationEmailContext,
     label: "Group Tour Booking Confirmation",
     description: "Confirmation email for group tour bookings",
+  },
+  [EmailTemplateKey.CUSTOMIZED_TOUR_BOOKING_CONFIRMATION]: {
+    context: {} as CustomizedTourBookingConfirmationEmailContext,
+    label: "Customized Tour Booking Confirmation",
+    description: "Confirmation email for customized tour bookings",
   },
   [EmailTemplateKey.INDEPENDENT_TOUR_BOOKING_CONFIRMATION]: {
     context: {} as IndependentTourBookingConfirmationEmailContext,
