@@ -79,6 +79,7 @@ export interface PaxStatementPdfContext extends Record<string, unknown> {
   customerName: string;
   customerEmail?: string | null;
   customerPhoneNumber?: string | null;
+  customerAddress?: string | null;
   agentName?: string | null;
 
   options: {
