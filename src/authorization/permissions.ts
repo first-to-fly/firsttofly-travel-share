@@ -32,6 +32,7 @@ import { MatchDocPermissions } from "./entities/match-doc.permission";
 import { MediaPermissions } from "./entities/media.permission";
 import { PaymentOrderPermissions } from "./entities/payment-order.permission";
 import { PaymentWayPermissions } from "./entities/payment-way.permission";
+import { PdfTemplatePermissions } from "./entities/pdf-template.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { PrivacyPolicyPermissions } from "./entities/privacy-policy.permission";
 import { ReferenceCodePermissions } from "./entities/reference-code.permission";
@@ -119,6 +120,7 @@ const EntityPermissions = {
   "Approval Management": ApprovalPermissions,
   "Approval Request": ApprovalRequestPermissions,
   "Email Template": EmailTemplatePermissions,
+  "PDF Template": PdfTemplatePermissions,
   "User Message": UserMessagePermissions,
   "Payment Order": PaymentOrderPermissions,
   Transaction: TransactionPermissions,
