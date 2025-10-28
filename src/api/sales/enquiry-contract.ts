@@ -43,10 +43,6 @@ const BatchUpdateEnquiryZ = z.record(EntityOIDZ.describe("Enquiry OID"), UpdateE
 const ListEnquiriesQueryZ = z.object({
   tenantOID: EntityOIDZ,
   status: z.array(EnquiryStatusZ).max(6).nullish(),
-  search: z.string().nullish(),
-  page: z.number().int().min(1).nullish(),
-  pageSize: z.number().int().min(1).max(100)
-    .nullish(),
 }).passthrough();
 
 const EnquiryListResponseZ = z.object({
