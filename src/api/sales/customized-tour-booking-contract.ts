@@ -111,6 +111,8 @@ const CreateCustomizedTourItineraryDayBodyZ = CustomizedTourItineraryDayZ.pick({
   title: true,
   description: true,
   files: true,
+  internalRemarks: true,
+  externalRemarks: true,
 });
 export type CreateCustomizedTourItineraryDayBody = z.infer<typeof CreateCustomizedTourItineraryDayBodyZ>;
 
@@ -123,11 +125,15 @@ export type UpdateCustomizedTourItineraryDayBody = z.infer<typeof UpdateCustomiz
 // --- CustomizedTourItineraryItem Schemas ---
 const CreateCustomizedTourItineraryItemBodyZ = CustomizedTourItineraryItemZ.pick({
   tenantOID: true,
-  customizedTourItineraryDayOID: true,
+  customizedTourItineraryOID: true,
   category: true,
   supplierOID: true,
   name: true,
   details: true,
+  internalRemarks: true,
+  externalRemarks: true,
+  startsAt: true,
+  endsAt: true,
   costEstimated: true,
   priceQuoted: true,
   costActual: true,
@@ -138,9 +144,17 @@ export type CreateCustomizedTourItineraryItemBody = z.infer<typeof CreateCustomi
 
 const UpdateCustomizedTourItineraryItemBodyZ = CreateCustomizedTourItineraryItemBodyZ.omit({
   tenantOID: true,
-  customizedTourItineraryDayOID: true,
+  customizedTourItineraryOID: true,
 }).partial();
 export type UpdateCustomizedTourItineraryItemBody = z.infer<typeof UpdateCustomizedTourItineraryItemBodyZ>;
+
+const SetCustomizedTourItineraryDayItemsBatchBodyZ = z.object({
+  entries: z.array(z.object({
+    dayOID: EntityOIDZ,
+    itineraryItemOIDs: z.array(EntityOIDZ),
+  })),
+});
+export type SetCustomizedTourItineraryDayItemsBatchBody = z.infer<typeof SetCustomizedTourItineraryDayItemsBatchBodyZ>;
 
 // --- CustomizedTourCostItem Schemas ---
 const CreateCustomizedTourCostItemBodyZ = CustomizedTourCostItemZ.pick({
@@ -395,6 +409,15 @@ export const customizedTourBookingContract = initContract().router({
   },
 
   // #region Customized Tour Itinerary Items
+  getCustomizedTourItineraryBacklogItems: {
+    summary: "List unscheduled items for a customized tour itinerary",
+    method: "GET",
+    path: `${basePath}/:itineraryOID/items/unscheduled`,
+    pathParams: z.object({ itineraryOID: EntityOIDZ }),
+    responses: {
+      200: z.array(EntityOIDZ),
+    },
+  },
   getCustomizedTourItineraryItems: {
     summary: "List items for a customized tour itinerary day",
     method: "GET",
@@ -409,11 +432,18 @@ export const customizedTourBookingContract = initContract().router({
     method: "POST",
     path: `${basePath}/:dayOID/items`,
     pathParams: z.object({ dayOID: EntityOIDZ }),
-    body: CreateCustomizedTourItineraryItemBodyZ.omit({
-      customizedTourItineraryDayOID: true,
-    }),
+    body: CreateCustomizedTourItineraryItemBodyZ,
     responses: {
       201: EntityOIDZ,
+    },
+  },
+  setCustomizedTourItineraryDayItemsBatch: {
+    summary: "Replace ordered customized tour itinerary items for multiple days",
+    method: "PUT",
+    path: `${basePath}/day-items`,
+    body: SetCustomizedTourItineraryDayItemsBatchBodyZ,
+    responses: {
+      200: z.object({ updatedDayOIDs: z.array(EntityOIDZ) }),
     },
   },
   updateCustomizedTourItineraryItems: {

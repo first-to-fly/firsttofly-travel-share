@@ -35,11 +35,15 @@ export const CustomizedTourItineraryItemDetailsZ = z.discriminatedUnion("type", 
 ]);
 
 export const CustomizedTourItineraryItemZ = EntityZ.extend({
-  customizedTourItineraryDayOID: EntityOIDZ,
+  customizedTourItineraryOID: EntityOIDZ,
   category: z.string(),
   supplierOID: EntityOIDZ.nullish(),
   name: z.string(),
   details: CustomizedTourItineraryItemDetailsZ.nullish(),
+  internalRemarks: z.array(z.string()).nullish(),
+  externalRemarks: z.array(z.string()).nullish(),
+  startsAt: DateISOStringZ.nullish(),
+  endsAt: DateISOStringZ.nullish(),
   costEstimated: z.number().nullish(),
   priceQuoted: z.number().nullish(),
   costActual: z.number().nullish(),
