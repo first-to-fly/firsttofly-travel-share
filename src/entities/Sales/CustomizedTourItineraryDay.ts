@@ -11,8 +11,8 @@ export const CustomizedTourItineraryDayZ = EntityZ.extend({
   title: z.record(z.string(), z.string()).nullish(),
   description: z.record(z.string(), z.string()).nullish(),
   files: z.array(NamedURLZ).nullish(),
-  internalRemarks: z.array(z.string()).nullish(),
-  externalRemarks: z.array(z.string()).nullish(),
+  internalRemarks: z.string().nullish(),
+  externalRemarks: z.string().nullish(),
   itineraryItemOIDs: z.array(EntityOIDZ).nullish(),
 });
 

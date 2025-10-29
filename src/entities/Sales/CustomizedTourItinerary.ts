@@ -8,6 +8,8 @@ export const CustomizedTourItineraryZ = EntityZ.extend({
   customizedTourBookingOID: EntityOIDZ,
   name: z.string(),
   pdfs: z.record(z.string(), z.string()).nullish(),
+  internalRemarks: z.string().nullish(),
+  externalRemarks: z.string().nullish(),
 });
 
 export type CustomizedTourItinerary = z.infer<typeof CustomizedTourItineraryZ>;
