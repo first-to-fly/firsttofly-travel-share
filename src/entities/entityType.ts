@@ -60,6 +60,7 @@ export enum EntityType {
   PRIVACY_POLICY = "privacyPolicy",
   TENANT_CONFIG = "tenantConfig",
   EMAIL_TEMPLATE = "emailTemplate",
+  PDF_TEMPLATE = "pdfTemplate",
 
   // SUPPLIER MANAGEMENT
   SUPPLIER = "supplier",
@@ -114,6 +115,9 @@ export enum EntityType {
   // PAYMENT AND TRANSACTION
   PAYMENT_ORDER = "paymentOrder",
   TRANSACTION = "transaction",
+
+  // SALES FUNNEL
+  ENQUIRY = "enquiry",
 
   // BUDGET
   BUDGET = "budget",

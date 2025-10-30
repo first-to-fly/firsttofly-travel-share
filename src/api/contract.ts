@@ -11,6 +11,7 @@ import { productsContract } from "./products/contract";
 import { salesContract } from "./sales/contract";
 import { settingsContract } from "./settings/contract";
 import { userContract } from "./user/contract";
+import { xeroContract } from "./xero/contract";
 
 
 const c = initContract();
@@ -28,4 +29,5 @@ export const apiContract: any = c.router({
   authorization: authorizationContract,
   misc: miscContract,
   user: userContract,
+  xero: xeroContract,
 });
