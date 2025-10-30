@@ -4,6 +4,7 @@ import { z } from "zod";
 import { DateISOStringZ } from "../../types/date";
 import { EntityOIDZ, EntityZ } from "../entity";
 import { GeoPointZ } from "../Settings/General/POI";
+import { RoomType } from "../Settings/Product/RoomConfiguration";
 
 
 const POIAccommodationDetailsZ = z.object({
@@ -11,7 +12,7 @@ const POIAccommodationDetailsZ = z.object({
   poiOID: EntityOIDZ,
   checkIn: DateISOStringZ.nullish(),
   checkOut: DateISOStringZ.nullish(),
-  roomType: z.string().nullish(),
+  roomType: z.nativeEnum(RoomType).nullish(),
   specialRequests: z.string().nullish(),
   notes: z.string().nullish(),
 });
@@ -23,7 +24,7 @@ const FreeFormAccommodationDetailsZ = z.object({
   location: GeoPointZ.nullish(),
   checkIn: DateISOStringZ.nullish(),
   checkOut: DateISOStringZ.nullish(),
-  roomType: z.string().nullish(),
+  roomType: z.nativeEnum(RoomType).nullish(),
   contactNumber: z.string().nullish(),
   specialRequests: z.string().nullish(),
   notes: z.string().nullish(),
@@ -34,9 +35,18 @@ export const CustomizedTourItineraryItemDetailsZ = z.discriminatedUnion("type", 
   FreeFormAccommodationDetailsZ,
 ]);
 
+export enum CustomizedTourItineraryItemCategory {
+  ACCOMMODATION = "accommodation",
+  TRANSPORT = "transport",
+  ACTIVITY = "activity",
+  FOOD_DINING = "food-dining",
+  SERVICES = "services",
+  OTHER = "other",
+}
+
 export const CustomizedTourItineraryItemZ = EntityZ.extend({
   customizedTourItineraryOID: EntityOIDZ,
-  category: z.string(),
+  category: z.nativeEnum(CustomizedTourItineraryItemCategory),
   supplierOID: EntityOIDZ.nullish(),
   name: z.string(),
   details: CustomizedTourItineraryItemDetailsZ.nullish(),

@@ -116,6 +116,8 @@ export enum EntityType {
   CUSTOMIZED_TOUR_ITINERARY_ITEM = "customizedTourItineraryItem",
   CUSTOMIZED_TOUR_COST_ITEM = "customizedTourCostItem",
   CUSTOMIZED_TOUR_TASK = "customizedTourTask",
+  CUSTOMIZED_TOUR_QUOTE = "customizedTourQuote",
+  CUSTOMIZED_TOUR_QUOTE_ITEM = "customizedTourQuoteItem",
 
   // PAYMENT AND TRANSACTION
   PAYMENT_ORDER = "paymentOrder",

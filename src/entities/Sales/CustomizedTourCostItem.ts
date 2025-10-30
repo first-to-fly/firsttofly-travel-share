@@ -4,10 +4,25 @@ import { z } from "zod";
 import { EntityOIDZ, EntityZ } from "../entity";
 
 
+export enum CustomizedTourCostItemCategory {
+  GENERAL = "general",
+  ACCOMMODATION = "accommodation",
+  TRANSPORTATION = "transportation",
+  MEAL = "meal",
+  ACTIVITY = "activity",
+  SERVICE = "service",
+  TICKET = "ticket",
+  FEE = "fee",
+  TAX = "tax",
+  INSURANCE = "insurance",
+  MISCELLANEOUS = "miscellaneous",
+  OTHER = "other",
+}
+
 export const CustomizedTourCostItemZ = EntityZ.extend({
   customizedTourBookingOID: EntityOIDZ,
   customizedTourItineraryItemOID: EntityOIDZ.nullish(),
-  category: z.string(),
+  category: z.nativeEnum(CustomizedTourCostItemCategory),
   supplierOID: EntityOIDZ.nullish(),
   estCost: z.number().nullish(),
   quotedPrice: z.number().nullish(),

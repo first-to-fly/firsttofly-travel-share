@@ -2,17 +2,24 @@
 import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
-import { EntityOIDZ } from "../../entities/entity";
+import { DateISOStringZ, EntityOIDZ } from "../../entities/entity";
 import { CustomizedTourBookingZ } from "../../entities/Sales/CustomizedTourBooking";
 import { CustomizedTourBookingPaxZ } from "../../entities/Sales/CustomizedTourBookingPax";
 import { CustomizedTourCostItemZ } from "../../entities/Sales/CustomizedTourCostItem";
 import { CustomizedTourItineraryZ } from "../../entities/Sales/CustomizedTourItinerary";
 import { CustomizedTourItineraryDayZ } from "../../entities/Sales/CustomizedTourItineraryDay";
 import { CustomizedTourItineraryItemZ } from "../../entities/Sales/CustomizedTourItineraryItem";
+import {
+  CustomizedTourQuoteAdjustmentZ,
+  CustomizedTourQuoteDepositZ,
+  CustomizedTourQuotePaymentScheduleZ,
+  CustomizedTourQuoteStatus,
+} from "../../entities/Sales/CustomizedTourQuote";
 import { CustomizedTourTaskZ } from "../../entities/Sales/CustomizedTourTask";
 
 
 const basePath = "/api/sales/customized-tour-bookings";
+const quoteBasePath = "/api/sales/customized-tour-quotes";
 
 // --- CustomizedTourBooking Schemas ---
 const CreateCustomizedTourBookingBodyZ = CustomizedTourBookingZ.pick({
@@ -175,6 +182,71 @@ const UpdateCustomizedTourCostItemBodyZ = CreateCustomizedTourCostItemBodyZ.omit
   customizedTourBookingOID: true,
 }).partial();
 export type UpdateCustomizedTourCostItemBody = z.infer<typeof UpdateCustomizedTourCostItemBodyZ>;
+
+// --- CustomizedTourQuote Schemas ---
+const CreateCustomizedTourQuoteBodyZ = z.object({
+  quoteDate: DateISOStringZ.optional(),
+  validUntil: DateISOStringZ.optional(),
+  currencyCode: z.string().min(3).max(3),
+  tax: CustomizedTourQuoteAdjustmentZ.nullish(),
+  discount: CustomizedTourQuoteAdjustmentZ.nullish(),
+  deposit: CustomizedTourQuoteDepositZ.nullish(),
+  finalPaymentDate: DateISOStringZ.nullish(),
+  paymentMethods: z.array(z.string()).nullish(),
+  paymentSchedule: CustomizedTourQuotePaymentScheduleZ.nullish(),
+  termsInternal: z.string().nullish(),
+  termsExternal: z.string().nullish(),
+  notesInternal: z.string().nullish(),
+  notesExternal: z.string().nullish(),
+  costItemOIDs: z.array(EntityOIDZ).optional(),
+});
+export type CreateCustomizedTourQuoteBody = z.infer<typeof CreateCustomizedTourQuoteBodyZ>;
+
+const UpdateCustomizedTourQuoteBodyZ = CreateCustomizedTourQuoteBodyZ.partial().extend({
+  status: z.nativeEnum(CustomizedTourQuoteStatus).optional(),
+  code: z.string().optional(),
+  costItemOIDs: z.array(EntityOIDZ).optional(),
+  sentAt: DateISOStringZ.nullish(),
+  sentBy: z.string().nullish(),
+  sentTo: z.array(z.string()).nullish(),
+  acceptedAt: DateISOStringZ.nullish(),
+});
+export type UpdateCustomizedTourQuoteBody = z.infer<typeof UpdateCustomizedTourQuoteBodyZ>;
+
+const SendCustomizedTourQuoteBodyZ = z.object({
+  recipients: z.array(z.string().email()).min(1),
+  cc: z.array(z.string().email()).optional(),
+  subject: z.string().optional(),
+  message: z.string().optional(),
+  attachPdf: z.boolean().optional(),
+});
+export type SendCustomizedTourQuoteBody = z.infer<typeof SendCustomizedTourQuoteBodyZ>;
+
+const CustomizedTourQuoteListQueryZ = z.object({
+  statuses: z.array(z.nativeEnum(CustomizedTourQuoteStatus)).optional(),
+  includeItems: z.boolean().optional(),
+});
+export type CustomizedTourQuoteListQuery = z.infer<typeof CustomizedTourQuoteListQueryZ>;
+
+const CustomizedTourQuotePreviewQueryZ = z.object({
+  format: z.enum(["html", "pdf", "both"]).default("html"),
+});
+export type CustomizedTourQuotePreviewQuery = z.infer<typeof CustomizedTourQuotePreviewQueryZ>;
+
+const CustomizedTourQuotePreviewResponseZ = z.object({
+  format: z.enum(["html", "pdf", "both"]),
+  html: z.string().optional(),
+  pdfBase64: z.string().optional(),
+  fileName: z.string(),
+});
+export type CustomizedTourQuotePreviewResponse = z.infer<typeof CustomizedTourQuotePreviewResponseZ>;
+
+const CreateCustomizedTourQuoteResponseZ = z.object({
+  quoteOID: EntityOIDZ,
+  previewPath: z.string(),
+  sendPath: z.string(),
+});
+export type CreateCustomizedTourQuoteResponse = z.infer<typeof CreateCustomizedTourQuoteResponseZ>;
 
 // --- CustomizedTourTask Schemas ---
 const CreateCustomizedTourTaskBodyZ = CustomizedTourTaskZ.pick({
@@ -509,6 +581,51 @@ export const customizedTourBookingContract = initContract().router({
       200: z.boolean(),
     },
   },
+
+  // #region Customized Tour Quotes
+  listCustomizedTourQuotes: {
+    summary: "List quotes for a customized tour booking",
+    method: "GET",
+    path: `${basePath}/:bookingOID/quotes`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    query: CustomizedTourQuoteListQueryZ,
+    responses: {
+      200: z.object({
+        quoteOIDs: z.array(EntityOIDZ),
+      }),
+    },
+  },
+  createCustomizedTourQuote: {
+    summary: "Create a customized tour quote",
+    method: "POST",
+    path: `${basePath}/:bookingOID/quotes`,
+    pathParams: z.object({ bookingOID: EntityOIDZ }),
+    body: CreateCustomizedTourQuoteBodyZ,
+    responses: {
+      201: CreateCustomizedTourQuoteResponseZ,
+    },
+  },
+  updateCustomizedTourQuote: {
+    summary: "Update a customized tour quote",
+    method: "PATCH",
+    path: `${quoteBasePath}/:quoteOID`,
+    pathParams: z.object({ quoteOID: EntityOIDZ }),
+    body: UpdateCustomizedTourQuoteBodyZ,
+    responses: {
+      200: CreateCustomizedTourQuoteResponseZ,
+    },
+  },
+  sendCustomizedTourQuote: {
+    summary: "Send a customized tour quote",
+    method: "POST",
+    path: `${quoteBasePath}/:quoteOID/send`,
+    pathParams: z.object({ quoteOID: EntityOIDZ }),
+    body: SendCustomizedTourQuoteBodyZ,
+    responses: {
+      200: z.object({ success: z.boolean() }),
+    },
+  },
+  // #endregion
 
   // #region Customized Tour Tasks
   getCustomizedTourTasks: {
