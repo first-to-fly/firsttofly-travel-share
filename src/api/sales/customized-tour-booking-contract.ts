@@ -605,6 +605,16 @@ export const customizedTourBookingContract = initContract().router({
       201: CreateCustomizedTourQuoteResponseZ,
     },
   },
+  previewCustomizedTourQuote: {
+    summary: "Preview a customized tour quote",
+    method: "GET",
+    path: `${quoteBasePath}/:quoteOID/preview`,
+    pathParams: z.object({ quoteOID: EntityOIDZ }),
+    query: CustomizedTourQuotePreviewQueryZ.optional(),
+    responses: {
+      200: CustomizedTourQuotePreviewResponseZ,
+    },
+  },
   updateCustomizedTourQuote: {
     summary: "Update a customized tour quote",
     method: "PATCH",
