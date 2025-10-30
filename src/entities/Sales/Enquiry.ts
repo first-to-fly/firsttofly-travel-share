@@ -56,7 +56,7 @@ export const EnquiryTravelPeriodZ = z.object({
 export const EnquiryShortlistItemZ = z.object({
   productOID: EntityOIDZ,
   label: z.string().nullish(),
-  productType: z.string().nullish(),
+  productType: EnquiryProductTypeZ.nullish(),
 });
 
 export const EnquiryZ = EntityZ.extend({
@@ -64,8 +64,6 @@ export const EnquiryZ = EntityZ.extend({
   customerName: z.string().min(1),
   mobile: z.string().min(1),
   email: z.string().email().nullish(),
-
-  productType: EnquiryProductTypeZ,
   enquiryChannel: EnquiryChannelZ,
 
   occupancy: EnquiryOccupancyZ,

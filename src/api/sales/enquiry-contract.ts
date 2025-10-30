@@ -22,7 +22,6 @@ const CreateEnquiryZ = EnquiryZ.extend({
   customerName: true,
   mobile: true,
   email: true,
-  productType: true,
   enquiryChannel: true,
   occupancy: true,
   budget: true,
