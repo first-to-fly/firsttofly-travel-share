@@ -274,7 +274,9 @@ const UpdateCustomizedTourTaskBodyZ = CreateCustomizedTourTaskBodyZ.omit({
 export type UpdateCustomizedTourTaskBody = z.infer<typeof UpdateCustomizedTourTaskBodyZ>;
 
 
-export const customizedTourBookingContract = initContract().router({
+const contract = initContract();
+
+export const customizedTourBookingContract = contract.router({
   getCustomizedTourBookings: {
     summary: "Get customized tour bookings",
     method: "GET",
@@ -605,14 +607,25 @@ export const customizedTourBookingContract = initContract().router({
       201: CreateCustomizedTourQuoteResponseZ,
     },
   },
-  previewCustomizedTourQuote: {
-    summary: "Preview a customized tour quote",
+  previewCustomizedTourQuoteHtml: {
+    summary: "Preview a customized tour quote as HTML",
     method: "GET",
-    path: `${quoteBasePath}/:quoteOID/preview`,
+    path: `${quoteBasePath}/:quoteOID/preview/html`,
     pathParams: z.object({ quoteOID: EntityOIDZ }),
-    query: CustomizedTourQuotePreviewQueryZ.optional(),
     responses: {
       200: CustomizedTourQuotePreviewResponseZ,
+    },
+  },
+  previewCustomizedTourQuotePdf: {
+    summary: "Preview a customized tour quote as PDF",
+    method: "GET",
+    path: `${quoteBasePath}/:quoteOID/preview/pdf`,
+    pathParams: z.object({ quoteOID: EntityOIDZ }),
+    responses: {
+      200: contract.otherResponse({
+        contentType: "application/pdf",
+        body: z.instanceof(Uint8Array),
+      }),
     },
   },
   updateCustomizedTourQuote: {
