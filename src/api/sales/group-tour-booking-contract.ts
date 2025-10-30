@@ -33,7 +33,7 @@ const CreateGroupTourBookingBodyZ = GroupTourBookingZ.pick({
   saleReferrerOID: true,
   insuranceDeclaration: true,
   agreeToTerms: true,
-  signatureUrl: true,
+  signature: true,
   ownerOIDs: true,
 }).extend({
   bookingReference: GroupTourBookingZ.shape.bookingReference.optional(),

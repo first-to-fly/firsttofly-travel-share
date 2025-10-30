@@ -36,4 +36,8 @@ export const TransactionPermissions = {
     name: "Delete Tenant Transactions",
     description: "Can delete transactions within the tenant",
   },
+  "tenant:transaction:sync-xero": {
+    name: "Sync Transactions to Xero",
+    description: "Can sync transactions to Xero accounting system",
+  },
 };
