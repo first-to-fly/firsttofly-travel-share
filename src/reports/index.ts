@@ -16,6 +16,7 @@ export * from "./daily-sales";
 export * from "./deposit-reconciliation";
 export * from "./eo";
 export * from "./min-deposit";
+export * from "./outstanding-booking";
 export * from "./prepayment";
 export * from "./receipt-bank-card";
 export * from "./receipt-report";
