@@ -112,7 +112,7 @@ const CustomerPaymentInfoZ = z.object({
   totalAmount: z.number(),
   receivedAmount: z.number(),
   outstandingAmount: z.number(),
-  currency: z.string().optional(),
+  currency: z.string(),
   paymentStatus: z.string(),
   fullPaymentDueDate: z.string().optional(),
   paymentOrder: CustomerPaymentOrderZ.optional(),
