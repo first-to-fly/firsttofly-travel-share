@@ -28,16 +28,15 @@ export const TLTMAssignmentFiltersZ = z.object({
 export type TLTMAssignmentFilters = z.infer<typeof TLTMAssignmentFiltersZ>;
 
 export interface TLTMAssignmentRow {
-  departureId: string;
-  departureCode: string;
   departureDate: Date;
   tourCode: string;
-  productType: string;
-  departmentName: string;
-  tourLeaderName: string | null;
-  tourManagerName: string | null;
+  tourName: string;
+  department: string;
   paxCount: number;
+  tlTmName: string;
   status: string;
+  notes: string;
+  updatedAt: Date | null;
 }
 
 export interface TLTMAssignmentReportData {
