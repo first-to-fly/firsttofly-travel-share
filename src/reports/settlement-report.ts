@@ -3,6 +3,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -25,11 +26,17 @@ export const SettlementReportFiltersZ = z.object({
 
 export type SettlementReportFilters = z.infer<typeof SettlementReportFiltersZ>;
 
+export interface SettlementReportReportJsonMetadata {
+  [key: string]: unknown;
+}
+
+export type SettlementReportReportJsonOutput = BaseReportJsonOutput<SettlementReportReportJsonMetadata>;
+
 export const SettlementReportMetadata: ReportMetadata = {
   id: "settlement-report",
   slug: "settlement-report",
   name: "Settlement Report (Terminal/Channel)",
   description: "Shows settlement of receipts by payment channel/terminal, with booking details.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: false,
 };

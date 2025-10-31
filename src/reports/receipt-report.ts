@@ -4,6 +4,7 @@ import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import { PaymentMethod } from "../entities/Sales/Transaction";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -32,11 +33,17 @@ export const ReceiptReportFiltersZ = z.object({
 
 export type ReceiptReportFilters = z.infer<typeof ReceiptReportFiltersZ>;
 
+export interface ReceiptReportReportJsonMetadata {
+  [key: string]: unknown;
+}
+
+export type ReceiptReportReportJsonOutput = BaseReportJsonOutput<ReceiptReportReportJsonMetadata>;
+
 export const ReceiptReportMetadata: ReportMetadata = {
   id: "receipt-report",
   slug: "receipt-report",
   name: "Receipt Report",
   description: "Lists all receipts collected within the selected date range, by payment type.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: true,
 };

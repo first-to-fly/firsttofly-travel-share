@@ -5,7 +5,10 @@
  * These schemas define the structure and validation rules for report parameters.
  */
 
-// Consolidated Report Files (Filter Schemas + Metadata)
+// Base JSON Output Types
+export * from "./report-json-output.types";
+
+// Consolidated Report Files (Filter Schemas + Metadata + JSON Output Types)
 export * from "./airline-sales-yoy";
 export * from "./bill";
 export * from "./booking-adjustment";

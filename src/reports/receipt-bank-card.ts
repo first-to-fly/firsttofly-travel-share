@@ -3,6 +3,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -25,11 +26,17 @@ export const ReceiptBankCardFiltersZ = z.object({
 
 export type ReceiptBankCardFilters = z.infer<typeof ReceiptBankCardFiltersZ>;
 
+export interface ReceiptBankCardReportJsonMetadata {
+  [key: string]: unknown;
+}
+
+export type ReceiptBankCardReportJsonOutput = BaseReportJsonOutput<ReceiptBankCardReportJsonMetadata>;
+
 export const ReceiptBankCardReportMetadata: ReportMetadata = {
   id: "receipt-bank-card-report",
   slug: "receipt-bank-card-report",
   name: "Receipt (Bank/Card) Report",
   description: "Tracks receipts processed through bank cards and other payment channels with transaction details.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: false,
 };

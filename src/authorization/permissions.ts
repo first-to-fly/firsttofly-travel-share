@@ -36,6 +36,7 @@ import { PdfTemplatePermissions } from "./entities/pdf-template.permission";
 import { POIPermissions } from "./entities/poi.permission";
 import { PrivacyPolicyPermissions } from "./entities/privacy-policy.permission";
 import { ReferenceCodePermissions } from "./entities/reference-code.permission";
+import { ReportTemplatePermissions } from "./entities/report-template.permission";
 import { ReportsPermissions } from "./entities/reports.permission";
 import { RolePermissions } from "./entities/role.permission"; // Corrected import path and name
 import { RoomConfigurationPermissions } from "./entities/room-configuration.permission";
@@ -127,6 +128,7 @@ const EntityPermissions = {
   Transaction: TransactionPermissions,
   "Exchange Order": ExchangeOrderPermissions,
   Reports: ReportsPermissions,
+  "Report Template": ReportTemplatePermissions,
 } as const;
 
 export type PermissionsModules = keyof typeof EntityPermissions;

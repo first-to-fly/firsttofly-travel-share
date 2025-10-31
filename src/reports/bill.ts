@@ -4,6 +4,7 @@ import { EntityOIDZ } from "../entities/entity";
 import { BillPaymentStatus, BillStatus } from "../entities/Finance/Bill";
 import { ReportFormat } from "../entities/Operations/Report";
 import { DateISOStringZ } from "../types/date";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -30,11 +31,17 @@ export const BillReportFiltersZ = z.object({
 
 export type BillReportFilters = z.infer<typeof BillReportFiltersZ>;
 
+export interface BillReportJsonMetadata {
+  [key: string]: unknown;
+}
+
+export type BillReportJsonOutput = BaseReportJsonOutput<BillReportJsonMetadata>;
+
 export const BillReportMetadata: ReportMetadata = {
   id: "bill-report",
   slug: "bill-report",
   name: "Bill Report",
   description: "Lists supplier bills issued, including payment and status information.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: true,
 };

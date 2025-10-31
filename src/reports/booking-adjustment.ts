@@ -3,6 +3,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -37,11 +38,19 @@ export const BookingAdjustmentFiltersZ = z.object({
 
 export type BookingAdjustmentFilters = z.infer<typeof BookingAdjustmentFiltersZ>;
 
+export interface BookingAdjustmentReportJsonMetadata {
+  placeholder?: boolean;
+  reason?: string;
+  [key: string]: unknown;
+}
+
+export type BookingAdjustmentReportJsonOutput = BaseReportJsonOutput<BookingAdjustmentReportJsonMetadata>;
+
 export const BookingAdjustmentReportMetadata: ReportMetadata = {
   id: "booking-adjustment-report",
   slug: "booking-adjustment-report",
   name: "Booking Adjustment Report",
   description: "Tracks adjustments made to bookings, including before/after values and reasons.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: false,
 };

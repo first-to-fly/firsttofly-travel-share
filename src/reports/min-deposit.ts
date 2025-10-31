@@ -3,6 +3,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -25,11 +26,17 @@ export const MinDepositFiltersZ = z.object({
 
 export type MinDepositFilters = z.infer<typeof MinDepositFiltersZ>;
 
+export interface MinDepositReportJsonMetadata {
+  [key: string]: unknown;
+}
+
+export type MinDepositReportJsonOutput = BaseReportJsonOutput<MinDepositReportJsonMetadata>;
+
 export const MinDepositReportMetadata: ReportMetadata = {
   id: "min-deposit-report",
   slug: "min-deposit-report",
   name: "Min Deposit Report",
   description: "Shows bookings with deposits received compared to required minimum deposit.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: true,
 };

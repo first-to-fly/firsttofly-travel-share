@@ -28,6 +28,6 @@ export const RedemptionReportMetadata: ReportMetadata = {
   slug: "redemption-report",
   name: "Redemption Report",
   description: "Tracks gift redemptions linked to receipts/bookings, including value spent.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: true,
 };

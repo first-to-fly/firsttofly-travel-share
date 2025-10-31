@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -23,6 +24,12 @@ export const TourBookingGSTFiltersZ = z.object({
 });
 
 export type TourBookingGSTFilters = z.infer<typeof TourBookingGSTFiltersZ>;
+
+export interface TourBookingGstReportJsonMetadata {
+  [key: string]: unknown;
+}
+
+export type TourBookingGstReportJsonOutput = BaseReportJsonOutput<TourBookingGstReportJsonMetadata>;
 
 export const TourBookingGSTReportMetadata: ReportMetadata = {
   id: "tour-booking-gst-report",

@@ -35,6 +35,6 @@ export const AirlineSalesYoYReportMetadata: ReportMetadata = {
   slug: "airline-sales-yoy-report",
   name: "Airline Sales YoY",
   description: "Compares airline sales and pax counts across up to 3 years, by month.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: false,
 };

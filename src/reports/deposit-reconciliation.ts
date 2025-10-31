@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -21,11 +22,17 @@ export const DepositReconciliationFiltersZ = z.object({
 
 export type DepositReconciliationFilters = z.infer<typeof DepositReconciliationFiltersZ>;
 
+export interface DepositReconciliationReportJsonMetadata {
+  [key: string]: unknown;
+}
+
+export type DepositReconciliationReportJsonOutput = BaseReportJsonOutput<DepositReconciliationReportJsonMetadata>;
+
 export const DepositReconciliationReportMetadata: ReportMetadata = {
   id: "deposit-reconciliation-report",
   slug: "deposit-reconciliation-report",
   name: "Deposit Reconciliation Report",
   description: "Summarizes deposits collected and reconciles against cash sales, refunds, and cancellation fees.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: true,
 };

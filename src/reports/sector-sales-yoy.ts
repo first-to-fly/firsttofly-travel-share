@@ -2,6 +2,7 @@ import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -33,11 +34,20 @@ export const SectorSalesYoYFiltersZ = z.object({
 
 export type SectorSalesYoYFilters = z.infer<typeof SectorSalesYoYFiltersZ>;
 
+export interface SectorSalesYoYReportJsonMetadata {
+  years: number[];
+  productType: string;
+  filterByDate: string;
+  sectorOIDs: string[];
+}
+
+export type SectorSalesYoYReportJsonOutput = BaseReportJsonOutput<SectorSalesYoYReportJsonMetadata>;
+
 export const SectorSalesYoYReportMetadata: ReportMetadata = {
   id: "sector-sales-yoy-report",
   slug: "sector-sales-yoy-report",
   name: "Sector Sales YoY",
   description: "Compares sales and pax counts across up to 3 years, by sector and month.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: false,
 };

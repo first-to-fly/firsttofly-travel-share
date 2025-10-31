@@ -90,6 +90,7 @@ export enum EntityType {
   EXCHANGE_ORDER_ITEM = "exchangeOrderItem",
   REPORT = "report",
   SCHEDULED_REPORT = "scheduledReport",
+  REPORT_TEMPLATE = "reportTemplate",
 
   // APPROVAL MANAGEMENT
   APPROVAL = "approval",

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import { DateISOStringZ } from "../types/date";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -36,11 +37,17 @@ export const RefundReportFiltersZ = z.object({
 
 export type RefundReportFilters = z.infer<typeof RefundReportFiltersZ>;
 
+export interface RefundReportJsonMetadata {
+  [key: string]: unknown;
+}
+
+export type RefundReportJsonOutput = BaseReportJsonOutput<RefundReportJsonMetadata>;
+
 export const RefundReportMetadata: ReportMetadata = {
   id: "refund-report",
   slug: "refund-report",
   name: "Refund Report",
   description: "Tracks all refund transactions within a selected date range.",
-  supportedFormats: [ReportFormat.XLSX],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: true,
 };

@@ -3,6 +3,7 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import { DateISOStringZ } from "../types/date";
+import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -26,11 +27,17 @@ export const TLTMAssignmentFiltersZ = z.object({
 
 export type TLTMAssignmentFilters = z.infer<typeof TLTMAssignmentFiltersZ>;
 
+export interface TlTmAssignmentReportJsonMetadata {
+  [key: string]: unknown;
+}
+
+export type TlTmAssignmentReportJsonOutput = BaseReportJsonOutput<TlTmAssignmentReportJsonMetadata>;
+
 export const TLTMAssignmentReportMetadata: ReportMetadata = {
   id: "tl-tm-assignment-report",
   slug: "tl-tm-assignment-report",
   name: "TL/TM Assignment Report",
   description: "Lists all tours with departure dates, showing assigned Tour Leaders / Managers.",
-  supportedFormats: [ReportFormat.CSV],
+  supportedFormats: [ReportFormat.CSV, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: false,
 };
