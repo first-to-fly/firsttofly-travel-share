@@ -26,29 +26,43 @@ export const TourBookingGSTFiltersZ = z.object({
 
 export type TourBookingGSTFilters = z.infer<typeof TourBookingGSTFiltersZ>;
 
-export interface TourBookingGSTRow {
-  bookingId: string;
-  bookingReference: string;
-  bookingDate: Date;
-  tourCode: string | null;
-  departureDate: Date | null;
-  totalAmount: number;
+export interface TourBookingGSTLineItem {
+  itemName: string;
+  quantity: number;
+  totalCharge: number;
+  baseAmount: number;
   gstAmount: number;
-  netAmount: number;
-  gstPercentage: number;
 }
 
-export interface TourBookingGSTSummary {
-  totalBookings: number;
-  totalAmount: number;
-  totalGST: number;
-  totalNet: number;
+export interface TourBookingGSTBookingItem {
+  bookingId: string;
+  bookingReference: string;
+  bookingDate: Date | null;
+  tourCode: string;
+  departureDate: Date | null;
+  bookingAmount: number;
+  totalCharge: number;
+  baseAmount: number;
+  gstAmount: number;
+  isCancelled: boolean;
+  lineItems: TourBookingGSTLineItem[];
+}
+
+export interface TourBookingGSTTotals {
+  bookingAmount: number;
+  totalCharge: number;
+  baseAmount: number;
+  gstAmount: number;
 }
 
 export interface TourBookingGSTReportData {
-  rows: TourBookingGSTRow[];
-  summary: TourBookingGSTSummary;
+  bookingItems: TourBookingGSTBookingItem[];
+  grandTotal: TourBookingGSTTotals;
+  cancelTotal: TourBookingGSTTotals;
+  netTotal: TourBookingGSTTotals;
   tenantName: string;
+  currencyCode: string;
+  currencySymbol: string;
 }
 
 export interface TourBookingGstReportJsonMetadata {
@@ -73,14 +87,28 @@ export const TourBookingGSTReportMetadata: ReportMetadata = {
 };
 
 export const TOUR_BOOKING_GST_REPORT_SAMPLE_CONTEXT: TourBookingGSTReportTemplateContext = {
-  rows: [],
-  summary: {
-    totalBookings: 0,
-    totalAmount: 0,
-    totalGST: 0,
-    totalNet: 0,
+  bookingItems: [],
+  grandTotal: {
+    bookingAmount: 0,
+    totalCharge: 0,
+    baseAmount: 0,
+    gstAmount: 0,
+  },
+  cancelTotal: {
+    bookingAmount: 0,
+    totalCharge: 0,
+    baseAmount: 0,
+    gstAmount: 0,
+  },
+  netTotal: {
+    bookingAmount: 0,
+    totalCharge: 0,
+    baseAmount: 0,
+    gstAmount: 0,
   },
   tenantName: "Sample Company",
+  currencyCode: "SGD",
+  currencySymbol: "$",
 };
 
 export const TOUR_BOOKING_GST_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
@@ -95,7 +123,7 @@ export const TOUR_BOOKING_GST_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
 </head>
 <body>
   <h1>{{tenantName}} - Tour Booking GST Report</h1>
-  <p><strong>Total GST:</strong> {{summary.totalGST}}</p>
+  <p><strong>Total GST:</strong> {{currencySymbol}}{{netTotal.gstAmount}}</p>
   <p>Use formatToTables() for detailed Excel/CSV export or customize this template for HTML/PDF.</p>
 </body>
 </html>`;
