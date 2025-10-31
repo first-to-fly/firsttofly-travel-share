@@ -11,6 +11,7 @@ import { pdfTemplateContract } from "./pdf-template-contract";
 import { poiContract } from "./poi-contract";
 import { privacyPolicyContract } from "./privacy-policy-contract";
 import { referenceCodeContract } from "./reference-code-contract";
+import { reportTemplateContract } from "./report-template-contract";
 import { stationCodeContract } from "./station-code-contract";
 import { tenantConfigContract } from "./tenant-config-contract";
 import { tenantContract } from "./tenant-contract";
@@ -26,6 +27,7 @@ export const generalSettingContract = initContract().router({
   poi: poiContract,
   privacyPolicy: privacyPolicyContract,
   referenceCode: referenceCodeContract,
+  reportTemplate: reportTemplateContract,
   stationCode: stationCodeContract,
   tenant: tenantContract,
   tenantConfig: tenantConfigContract,

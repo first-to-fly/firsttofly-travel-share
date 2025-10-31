@@ -2,7 +2,7 @@ import { initContract } from "@ts-rest/core";
 import { z } from "zod";
 
 
-const basePath = "/api/reports/templates";
+const basePath = "/api/settings/report-templates";
 
 const UpsertReportTemplateZ = z.object({
   tenantOID: z.string(),
