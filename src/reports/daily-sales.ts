@@ -261,7 +261,7 @@ export const DAILY_SALES_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
 </head>
 <body>
   <h1>{{tenant.name}} - Daily Sales Report</h1>
-  
+
   <div class="meta">
     <p><strong>Period:</strong> {{filters.dateRange.start}} to {{filters.dateRange.end}}</p>
     <p><strong>Date Type:</strong> {{filters.dateType}}</p>

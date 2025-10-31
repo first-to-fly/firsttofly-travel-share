@@ -14,6 +14,15 @@ const ReportTemplateOIDsResponseZ = z.object({
   oids: z.array(z.string()),
 });
 
+const DefaultReportTemplateDefinitionZ = z.object({
+  template: z.string(),
+  sampleContext: z.record(z.unknown()),
+});
+
+const DefaultReportTemplatesResponseZ = z.object({
+  templates: z.record(z.string(), DefaultReportTemplateDefinitionZ),
+});
+
 const PreviewReportTemplateRequestZ = z.object({
   key: z.string(),
   template: z.string(),
@@ -50,6 +59,18 @@ export const reportTemplateContract = initContract().router({
     }),
     responses: {
       200: ReportTemplateOIDsResponseZ,
+    },
+  },
+  getDefaultReportTemplates: {
+    summary: "Get default report template definitions",
+    method: "GET",
+    path: `${basePath}/defaults`,
+    query: z.object({
+      tenantOID: z.string(),
+      key: z.string().optional(),
+    }),
+    responses: {
+      200: DefaultReportTemplatesResponseZ,
     },
   },
   upsertReportTemplates: {
