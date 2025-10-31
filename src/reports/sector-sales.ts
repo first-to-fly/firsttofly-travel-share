@@ -205,16 +205,28 @@ export const SECTOR_SALES_REPORT_SAMPLE_CONTEXT: SectorSalesReportTemplateContex
       monthLabel: "Jan 2025",
       monthStart: "2025-01-01",
       bySector: {
-        "sector-japan": { headcount: 45, amount: 150000 },
-        "sector-europe": { headcount: 28, amount: 95000 },
+        "sector-japan": {
+          headcount: 45,
+          amount: 150000,
+        },
+        "sector-europe": {
+          headcount: 28,
+          amount: 95000,
+        },
       },
     },
     {
       monthLabel: "Feb 2025",
       monthStart: "2025-02-01",
       bySector: {
-        "sector-japan": { headcount: 52, amount: 180000 },
-        "sector-europe": { headcount: 30, amount: 110000 },
+        "sector-japan": {
+          headcount: 52,
+          amount: 180000,
+        },
+        "sector-europe": {
+          headcount: 30,
+          amount: 110000,
+        },
       },
     },
   ],
@@ -261,77 +273,182 @@ export const SECTOR_SALES_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
   <meta charset="utf-8">
   <title>{{tenant.name}} - Sector Sales Report</title>
   <style>
-    body { font-family: Arial, sans-serif; margin: 20px; }
-    h1 { color: #333; }
-    h2 { color: #555; margin-top: 30px; }
-    .meta { margin: 20px 0; color: #666; }
-    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
-    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
-    th { background-color: #f4f4f4; font-weight: bold; }
-    .totals { font-weight: bold; background-color: #f9f9f9; }
-    .number { text-align: right; }
+    body { font-family: Arial, sans-serif; margin: 20px; font-size: 13px; }
+    h1 { color: #333; font-size: 20px; margin-bottom: 10px; }
+    h2 { color: #555; margin-top: 30px; font-size: 16px; }
+    .meta { margin: 15px 0; padding: 10px; background: #f8f8f8; border-left: 3px solid #667eea; }
+    .meta p { margin: 4px 0; color: #555; }
+    .section { margin: 30px 0; page-break-inside: avoid; }
+    table { width: 100%; border-collapse: collapse; margin: 15px 0; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; font-size: 12px; }
+    th { background-color: #f4f4f4; font-weight: bold; text-align: center; }
+    .totals { font-weight: bold; background-color: #fff3cd; }
+    .grand-totals { font-weight: bold; background-color: #d4edda; }
+    .number { text-align: right; font-family: monospace; }
+    .sector-header { background-color: #e7f3ff; font-weight: bold; }
   </style>
 </head>
 <body>
   <h1>{{tenant.name}} - Sector Sales Report</h1>
-
+  
   <div class="meta">
     <p><strong>Period:</strong> {{filters.dateRange.start}} to {{filters.dateRange.end}}</p>
-    <p><strong>Report Mode:</strong> {{reportMode}}</p>
+    <p><strong>Report Mode:</strong> {{config.mode}}</p>
+    {{#if filters.productType}}
+    <p><strong>Product Type:</strong> {{filters.productType}}</p>
+    {{/if}}
     <p><strong>Generated:</strong> {{generatedAt}}</p>
   </div>
 
-  {{#each rows}}
-  <h2>{{this.sectorName}}</h2>
-  <table>
-    <thead>
-      <tr>
-        <th>Month</th>
-        <th class="number">Revenue</th>
-        <th class="number">Cost</th>
-        <th class="number">Profit</th>
-        <th class="number">Margin %</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each this.monthlyData}}
-      <tr>
-        <td>{{this.monthLabel}}</td>
-        <td class="number">{{this.revenue}}</td>
-        <td class="number">{{this.cost}}</td>
-        <td class="number">{{this.profit}}</td>
-        <td class="number">{{this.margin}}</td>
-      </tr>
-      {{/each}}
-      <tr class="totals">
-        <td>TOTAL</td>
-        <td class="number">{{this.totalRevenue}}</td>
-        <td class="number">{{this.totalCost}}</td>
-        <td class="number">{{this.totalProfit}}</td>
-        <td class="number">{{this.totalMargin}}</td>
-      </tr>
-    </tbody>
-  </table>
-  {{/each}}
+  {{#if config.hasMonthly}}
+  <div class="section">
+    <h2>Monthly Breakdown</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Sector</th>
+          {{#each monthlyData}}
+          <th class="number" colspan="2">{{this.monthLabel}}</th>
+          {{/each}}
+          <th class="number" colspan="2">Total</th>
+        </tr>
+        <tr>
+          <th></th>
+          {{#each monthlyData}}
+          <th class="number">HC</th>
+          <th class="number">Amount</th>
+          {{/each}}
+          <th class="number">HC</th>
+          <th class="number">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each sectors}}
+        <tr>
+          <td>{{this.sectorName}}</td>
+          {{#each ../monthlyData}}
+          <td class="number">{{lookup this.bySector ../sectorId 'headcount'}}</td>
+          <td class="number">{{lookup this.bySector ../sectorId 'amount'}}</td>
+          {{/each}}
+          <td class="number">-</td>
+          <td class="number">-</td>
+        </tr>
+        {{/each}}
+      </tbody>
+      <tfoot>
+        <tr class="grand-totals">
+          <td>GRAND TOTAL</td>
+          {{#each monthlyData}}
+          <td class="number">-</td>
+          <td class="number">-</td>
+          {{/each}}
+          <td class="number">{{totals.headcount}}</td>
+          <td class="number">{{totals.amount}}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  {{/if}}
 
-  <h2>Overall Totals</h2>
-  <table>
-    <tr>
-      <th>Total Revenue</th>
-      <td class="number">{{totals.revenue}}</td>
-    </tr>
-    <tr>
-      <th>Total Cost</th>
-      <td class="number">{{totals.cost}}</td>
-    </tr>
-    <tr>
-      <th>Total Profit</th>
-      <td class="number">{{totals.profit}}</td>
-    </tr>
-    <tr class="totals">
-      <th>Overall Margin %</th>
-      <td class="number">{{totals.margin}}</td>
-    </tr>
-  </table>
+  {{#if config.hasWeekly}}
+  <div class="section">
+    <h2>Weekly Breakdown</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Sector</th>
+          {{#each weeklyData}}
+          <th class="number" colspan="2">{{this.weekLabel}}</th>
+          {{/each}}
+          <th class="number" colspan="2">Total</th>
+        </tr>
+        <tr>
+          <th></th>
+          {{#each weeklyData}}
+          <th class="number">HC</th>
+          <th class="number">Amount</th>
+          {{/each}}
+          <th class="number">HC</th>
+          <th class="number">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each sectors}}
+        <tr>
+          <td>{{this.sectorName}}</td>
+          {{#each ../weeklyData}}
+          <td class="number">{{lookup this.bySector ../sectorId 'headcount'}}</td>
+          <td class="number">{{lookup this.bySector ../sectorId 'amount'}}</td>
+          {{/each}}
+          <td class="number">-</td>
+          <td class="number">-</td>
+        </tr>
+        {{/each}}
+      </tbody>
+      <tfoot>
+        <tr class="grand-totals">
+          <td>GRAND TOTAL</td>
+          {{#each weeklyData}}
+          <td class="number">-</td>
+          <td class="number">-</td>
+          {{/each}}
+          <td class="number">{{totals.headcount}}</td>
+          <td class="number">{{totals.amount}}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  {{/if}}
+
+  {{#if config.hasDaily}}
+  <div class="section">
+    <h2>Daily Breakdown</h2>
+    <table>
+      <thead>
+        <tr>
+          <th>Date</th>
+          <th>Sector</th>
+          <th class="number">Headcount</th>
+          <th class="number">Amount</th>
+        </tr>
+      </thead>
+      <tbody>
+        {{#each dailyData}}
+        <tr>
+          <td>{{this.date}}</td>
+          <td>{{this.sectorName}} ({{this.sectorGroup}})</td>
+          <td class="number">{{this.headcount}}</td>
+          <td class="number">{{this.amount}}</td>
+        </tr>
+        {{/each}}
+      </tbody>
+      <tfoot>
+        <tr class="grand-totals">
+          <td colspan="2">TOTAL</td>
+          <td class="number">{{totals.headcount}}</td>
+          <td class="number">{{totals.amount}}</td>
+        </tr>
+      </tfoot>
+    </table>
+  </div>
+  {{/if}}
+
+  <div class="section">
+    <h2>Summary</h2>
+    <table style="width: 50%;">
+      <tr>
+        <th>Total Headcount</th>
+        <td class="number">{{totals.headcount}}</td>
+      </tr>
+      <tr>
+        <th>Total Amount</th>
+        <td class="number">{{totals.amount}}</td>
+      </tr>
+      <tr class="totals">
+        <th>Report Mode</th>
+        <td>{{config.mode}}</td>
+      </tr>
+    </table>
+  </div>
 </body>
 </html>`;
