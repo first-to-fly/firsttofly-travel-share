@@ -1,7 +1,8 @@
 import { z } from "zod";
 
+import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
-import { BookingStatus } from "../enums/BookingTypes";
+import { BookingPaymentStatus, BookingStatus } from "../enums/BookingTypes";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
 import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
@@ -16,8 +17,22 @@ export const OutstandingBookingFiltersZ = z.object({
   endDate: DateISOStringZ.optional(),
   dateType: z.enum(["booking-date", "departure-date"]).default("booking-date"),
   bookingStatuses: z.array(z.nativeEnum(BookingStatus)).optional(),
-  includeCancel: z.boolean().optional().default(false),
-  includeTransferred: z.boolean().optional().default(false),
+  paymentStatuses: z.array(z.nativeEnum(BookingPaymentStatus)).optional(),
+  stationCode: z.string().optional(),
+  departmentId: z.string().optional(),
+  sectorId: z.string().optional(),
+  search: z.string().optional(),
+  paymentBalance: z.enum([
+    "all",
+    "outstanding",
+    "outstanding-unpaid",
+    "outstanding-partially-paid",
+    "fully-paid",
+    "overpaid",
+  ]).default("outstanding"),
+  page: z.number().int().nonnegative().default(0),
+  pageSize: z.number().int().positive().max(200).default(50),
+  tenantOID: EntityOIDZ,
 });
 
 export type OutstandingBookingFilters = z.infer<typeof OutstandingBookingFiltersZ>;
