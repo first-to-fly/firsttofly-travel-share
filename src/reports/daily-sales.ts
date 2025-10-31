@@ -169,3 +169,164 @@ export const DailySalesReportMetadata: ReportMetadata = {
   supportedFormats: [ReportFormat.XLSX, ReportFormat.CSV, ReportFormat.JSON, ReportFormat.PDF],
   supportsWebView: true,
 };
+
+/**
+ * Sample context for Daily Sales Report template preview
+ */
+export const DAILY_SALES_REPORT_SAMPLE_CONTEXT: DailySalesReportTemplateContext = {
+  rows: [
+    {
+      bookingDate: "2025-10-15",
+      bookingCode: "BB251015001",
+      productType: "GIT",
+      productCode: "JP-DISC-2025",
+      productName: "Discover Japan 10D",
+      departureDate: "2025-12-01",
+      paxCount: 4,
+      salesPerson: "John Agent",
+      sectorName: "Japan",
+      departmentName: "Asia Pacific",
+      totalAmount: 18000,
+      depositPaid: 9000,
+      balance: 9000,
+      paymentStatus: "Partially Paid",
+      currency: "SGD",
+    },
+    {
+      bookingDate: "2025-10-16",
+      bookingCode: "BB251016002",
+      productType: "FIT",
+      productCode: "EU-CUSTOM-001",
+      productName: "European Highlights",
+      departureDate: "2025-11-20",
+      paxCount: 2,
+      salesPerson: "Mary Agent",
+      sectorName: "Europe",
+      departmentName: "Europe",
+      totalAmount: 12000,
+      depositPaid: 12000,
+      balance: 0,
+      paymentStatus: "Fully Paid",
+      currency: "SGD",
+    },
+  ],
+  summary: {
+    totalBookings: 2,
+    totalPax: 6,
+    totalAmount: 30000,
+    totalDeposit: 21000,
+    totalBalance: 9000,
+    byPaymentStatus: {
+      "Fully Paid": { count: 1, amount: 12000 },
+      "Partially Paid": { count: 1, amount: 18000 },
+    },
+    bySector: {
+      Japan: { count: 1, amount: 18000 },
+      Europe: { count: 1, amount: 12000 },
+    },
+  },
+  filters: {
+    dateRange: {
+      start: "2025-10-01",
+      end: "2025-10-31",
+    },
+    dateType: "booking-date",
+    groupBy: "sector",
+    paymentBalance: "all",
+  },
+  tenant: {
+    name: "Sample Travel Company",
+  },
+  generatedAt: "2025-10-31T12:00:00Z",
+};
+
+/**
+ * Default HTML template for Daily Sales Report
+ */
+export const DAILY_SALES_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>{{tenant.name}} - Daily Sales Report</title>
+  <style>
+    body { font-family: Arial, sans-serif; margin: 20px; }
+    h1, h2 { color: #333; }
+    .meta { margin: 20px 0; color: #666; }
+    table { width: 100%; border-collapse: collapse; margin: 20px 0; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background-color: #f4f4f4; font-weight: bold; }
+    .summary { font-weight: bold; background-color: #f9f9f9; }
+    .number { text-align: right; }
+  </style>
+</head>
+<body>
+  <h1>{{tenant.name}} - Daily Sales Report</h1>
+  
+  <div class="meta">
+    <p><strong>Period:</strong> {{filters.dateRange.start}} to {{filters.dateRange.end}}</p>
+    <p><strong>Date Type:</strong> {{filters.dateType}}</p>
+    <p><strong>Group By:</strong> {{filters.groupBy}}</p>
+    <p><strong>Generated:</strong> {{generatedAt}}</p>
+  </div>
+
+  <h2>Bookings</h2>
+  <table>
+    <thead>
+      <tr>
+        <th>Date</th>
+        <th>Booking Code</th>
+        <th>Type</th>
+        <th>Product</th>
+        <th>Departure</th>
+        <th class="number">PAX</th>
+        <th>Sales Person</th>
+        <th class="number">Amount</th>
+        <th class="number">Deposit</th>
+        <th class="number">Balance</th>
+        <th>Status</th>
+      </tr>
+    </thead>
+    <tbody>
+      {{#each rows}}
+      <tr>
+        <td>{{this.bookingDate}}</td>
+        <td>{{this.bookingCode}}</td>
+        <td>{{this.productType}}</td>
+        <td>{{this.productName}}</td>
+        <td>{{this.departureDate}}</td>
+        <td class="number">{{this.paxCount}}</td>
+        <td>{{this.salesPerson}}</td>
+        <td class="number">{{this.totalAmount}}</td>
+        <td class="number">{{this.depositPaid}}</td>
+        <td class="number">{{this.balance}}</td>
+        <td>{{this.paymentStatus}}</td>
+      </tr>
+      {{/each}}
+    </tbody>
+  </table>
+
+  <h2>Summary</h2>
+  <table>
+    <tr class="summary">
+      <th>Total Bookings</th>
+      <td class="number">{{summary.totalBookings}}</td>
+    </tr>
+    <tr class="summary">
+      <th>Total PAX</th>
+      <td class="number">{{summary.totalPax}}</td>
+    </tr>
+    <tr class="summary">
+      <th>Total Amount</th>
+      <td class="number">{{summary.totalAmount}}</td>
+    </tr>
+    <tr class="summary">
+      <th>Total Deposit</th>
+      <td class="number">{{summary.totalDeposit}}</td>
+    </tr>
+    <tr class="summary">
+      <th>Total Balance</th>
+      <td class="number">{{summary.totalBalance}}</td>
+    </tr>
+  </table>
+</body>
+</html>`;
