@@ -19,15 +19,22 @@ export enum CustomizedTourCostItemCategory {
   OTHER = "other",
 }
 
+export enum CustomizedTourCostItemOrigin {
+  AUTO = "auto",
+  MANUAL = "manual",
+}
+
 export const CustomizedTourCostItemZ = EntityZ.extend({
   customizedTourBookingOID: EntityOIDZ,
   customizedTourItineraryItemOID: EntityOIDZ.nullish(),
+  origin: z.nativeEnum(CustomizedTourCostItemOrigin),
   category: z.nativeEnum(CustomizedTourCostItemCategory),
   supplierOID: EntityOIDZ.nullish(),
   estCost: z.number().nullish(),
   quotedPrice: z.number().nullish(),
   actualCost: z.number().nullish(),
   margin: z.number().nullish(),
+  overrideLocked: z.boolean(),
 });
 
 export type CustomizedTourCostItem = z.infer<typeof CustomizedTourCostItemZ>;
