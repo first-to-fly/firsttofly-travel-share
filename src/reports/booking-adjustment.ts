@@ -39,19 +39,64 @@ export const BookingAdjustmentFiltersZ = z.object({
 export type BookingAdjustmentFilters = z.infer<typeof BookingAdjustmentFiltersZ>;
 
 /**
- * Booking Adjustment Report - Placeholder
- * 
- * Note: Legacy data source (`booking_adjustment` table) is not available.
- * This is a placeholder until a migration strategy is defined.
+ * Booking Adjustment Report Row
+ */
+export interface BookingAdjustmentRow {
+  approvalRequestId: string;
+  approvalRequestCode: string;
+  requestDate: Date;
+  bookingOID: string;
+  bookingReference: string;
+  customerName: string;
+  bookingType: "Group Tour" | "Independent Tour";
+  amendmentReason: string;
+  status: string;
+  completedAt: Date | null;
+  originalTotal: number;
+  amendedTotal: number;
+  totalDifference: number;
+  originalOutstanding: number;
+  amendedOutstanding: number;
+  receivedAmount: number;
+  refundRequired: boolean;
+  refundAmount: number;
+  additionalPaymentRequired: boolean;
+  additionalPaymentAmount: number;
+  changedFields: string[];
+  submitterName: string;
+}
+
+/**
+ * Booking Adjustment Report Summary
+ */
+export interface BookingAdjustmentSummary {
+  totalAdjustments: number;
+  totalIncreases: number;
+  totalDecreases: number;
+  totalRefundsRequired: number;
+  totalAdditionalPaymentsRequired: number;
+  groupTourCount: number;
+  independentTourCount: number;
+}
+
+/**
+ * Booking Adjustment Report Data
  */
 export interface BookingAdjustmentReportData {
-  message: string;
+  rows: BookingAdjustmentRow[];
+  summary: BookingAdjustmentSummary;
   tenantName: string;
+  currencySymbol: string;
 }
 
 export interface BookingAdjustmentReportJsonMetadata {
-  placeholder: boolean;
-  reason: string;
+  totalAdjustments: number;
+  totalIncreases: number;
+  totalDecreases: number;
+  totalRefundsRequired: number;
+  totalAdditionalPaymentsRequired: number;
+  groupTourCount: number;
+  independentTourCount: number;
   tenantName: string;
 }
 
@@ -69,8 +114,18 @@ export const BookingAdjustmentReportMetadata: ReportMetadata = {
 };
 
 export const BOOKING_ADJUSTMENT_REPORT_SAMPLE_CONTEXT: BookingAdjustmentReportTemplateContext = {
-  message: "Legacy data source not available. Awaiting migration strategy.",
+  rows: [],
+  summary: {
+    totalAdjustments: 0,
+    totalIncreases: 0,
+    totalDecreases: 0,
+    totalRefundsRequired: 0,
+    totalAdditionalPaymentsRequired: 0,
+    groupTourCount: 0,
+    independentTourCount: 0,
+  },
   tenantName: "Sample Company",
+  currencySymbol: "$",
 };
 
 export const BOOKING_ADJUSTMENT_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
@@ -81,13 +136,42 @@ export const BOOKING_ADJUSTMENT_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     h1 { color: #333; }
-    .notice { padding: 20px; background: #fff3cd; border: 1px solid #ffc107; border-radius: 4px; }
+    .summary { margin: 20px 0; display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; }
+    .summary-item { padding: 15px; background: #f5f5f5; border-radius: 4px; }
+    .summary-item strong { display: block; margin-bottom: 5px; color: #666; }
+    .summary-item .value { font-size: 24px; font-weight: bold; color: #333; }
+    .increase { color: #28a745; }
+    .decrease { color: #dc3545; }
   </style>
 </head>
 <body>
   <h1>{{tenantName}} - Booking Adjustment Report</h1>
-  <div class="notice">
-    <strong>Notice:</strong> {{message}}
+  <div class="summary">
+    <div class="summary-item">
+      <strong>Total Adjustments</strong>
+      <div class="value">{{summary.totalAdjustments}}</div>
+    </div>
+    <div class="summary-item">
+      <strong>Group Tour Adjustments</strong>
+      <div class="value">{{summary.groupTourCount}}</div>
+    </div>
+    <div class="summary-item">
+      <strong>Independent Tour Adjustments</strong>
+      <div class="value">{{summary.independentTourCount}}</div>
+    </div>
+    <div class="summary-item">
+      <strong>Total Increases</strong>
+      <div class="value increase">{{currencySymbol}}{{summary.totalIncreases}}</div>
+    </div>
+    <div class="summary-item">
+      <strong>Total Decreases</strong>
+      <div class="value decrease">{{currencySymbol}}{{summary.totalDecreases}}</div>
+    </div>
+    <div class="summary-item">
+      <strong>Refunds Required</strong>
+      <div class="value">{{currencySymbol}}{{summary.totalRefundsRequired}}</div>
+    </div>
   </div>
+  <p>Use formatToTables() for detailed Excel/CSV export or customize this template for HTML/PDF.</p>
 </body>
 </html>`;

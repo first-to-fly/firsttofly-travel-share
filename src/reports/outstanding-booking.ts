@@ -129,4 +129,3 @@ export const OUTSTANDING_BOOKING_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
   <p>Use formatToTables() for detailed Excel/CSV export or customize this template for HTML/PDF.</p>
 </body>
 </html>`;
-
