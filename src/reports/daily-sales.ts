@@ -3,7 +3,6 @@ import { z } from "zod";
 import { EntityOIDZ } from "../entities/entity";
 import { ReportFormat } from "../entities/Operations/Report";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
-import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
 
 
@@ -142,6 +141,12 @@ export interface DailySalesReportJsonMetadata {
   totalBookings: number;
   totalAmount: number;
 }
+
+/**
+ * Daily Sales Report Template Context - for Handlebars template rendering
+ * This is the data structure passed to HTML/PDF templates
+ */
+export type DailySalesReportTemplateContext = DailySalesReportData;
 
 /**
  * Daily Sales Report JSON Output - for JSON export format
