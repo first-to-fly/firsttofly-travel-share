@@ -79,7 +79,6 @@ export interface EOReportData {
   currencySummary: EOCurrencySummary[];
   totalPayments: number;
   totalItems: number;
-  filters: EOReportFilters;
   tenantName: string;
 }
 
@@ -108,12 +107,6 @@ export const EO_REPORT_SAMPLE_CONTEXT: EOReportTemplateContext = {
   currencySummary: [],
   totalPayments: 0,
   totalItems: 0,
-  filters: {
-    issueDateStart: undefined,
-    issueDateEnd: undefined,
-    statuses: undefined,
-    tenantOID: "ftf-tenant-sample",
-  },
   tenantName: "Sample Company",
 };
 
