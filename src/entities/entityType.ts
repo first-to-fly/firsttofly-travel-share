@@ -88,8 +88,6 @@ export enum EntityType {
   TOUR_DEPARTURE_ACCOMMODATION = "tourDepartureAccommodation",
   EXCHANGE_ORDER = "exchangeOrder",
   EXCHANGE_ORDER_ITEM = "exchangeOrderItem",
-  REPORT = "report",
-  SCHEDULED_REPORT = "scheduledReport",
   REPORT_TEMPLATE = "reportTemplate",
 
   // APPROVAL MANAGEMENT
