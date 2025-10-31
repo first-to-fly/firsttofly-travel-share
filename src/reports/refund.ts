@@ -162,9 +162,9 @@ export const REFUND_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
   <h1>{{tenantName}} - Refund Report</h1>
   <div class="summary">
     <div class="summary-item">
-      <strong>Total Refunds:</strong> {{totals.count}} | 
-      <strong>Total Amount:</strong> {{totals.amount}} | 
-      <strong>Confirmed:</strong> {{totals.confirmedCount}} | 
+      <strong>Total Refunds:</strong> {{totals.count}} |
+      <strong>Total Amount:</strong> {{totals.amount}} |
+      <strong>Confirmed:</strong> {{totals.confirmedCount}} |
       <strong>Posted:</strong> {{totals.postedCount}}
     </div>
   </div>
