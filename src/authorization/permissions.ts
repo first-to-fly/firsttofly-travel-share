@@ -43,6 +43,7 @@ import { SectorGroupPermissions } from "./entities/sector-group.permission";
 import { SpecialInstructionPermissions } from "./entities/special-instruction.permission";
 import { StationCodePermissions } from "./entities/station-code.permission";
 import { SupplierPermissions } from "./entities/supplier.permission";
+import { TaxTypePermissions } from "./entities/tax-type.permission";
 import { TenantPermissions } from "./entities/tenant.permission";
 import { TenantConfigPermissions } from "./entities/tenant-config.permission";
 import { TermPermissions } from "./entities/term.permission";
@@ -108,6 +109,7 @@ const EntityPermissions = {
   "Match Doc": MatchDocPermissions,
   Journal: JournalPermissions,
   "Account Code": AccountCodePermissions,
+  "Tax Type": TaxTypePermissions,
   "Payment Way": PaymentWayPermissions,
   "Transport Group": TransportGroupPermissions,
   "Transport Segment": TransportSegmentPermissions,

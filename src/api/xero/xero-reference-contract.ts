@@ -75,33 +75,4 @@ export const xeroReferenceContract = initContract().router({
     },
   },
 
-  syncTaxTypes: {
-    summary: "Sync tax types from Xero",
-    method: "POST",
-    path: `${basePath}/tax-types/sync`,
-    body: z.object({ tenantOID: z.string() }),
-    responses: {
-      200: z.object({
-        imported: z.number(),
-        updated: z.number(),
-      }),
-    },
-  },
-
-  listTaxTypes: {
-    summary: "List cached tax types",
-    method: "GET",
-    path: `${basePath}/tax-types/list`,
-    query: z.object({ tenantOID: z.string() }).passthrough(),
-    responses: {
-      200: z.object({
-        items: z.array(z.object({
-          code: z.string(),
-          name: z.string(),
-          rate: z.number(),
-        })),
-      }),
-    },
-  },
-
 });

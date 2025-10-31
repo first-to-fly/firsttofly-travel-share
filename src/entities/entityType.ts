@@ -127,6 +127,7 @@ export enum EntityType {
   ACCOUNT_CODE = "accountCode",
   PAYMENT_WAY = "paymentWay",
   JOURNAL = "journal",
+  TAX_TYPE = "taxType",
 
   // USER MESSAGES
   USER_MESSAGE = "userMessage",
