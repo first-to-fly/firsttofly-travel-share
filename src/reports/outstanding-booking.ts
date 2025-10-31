@@ -25,31 +25,35 @@ export type OutstandingBookingFilters = z.infer<typeof OutstandingBookingFilters
 export interface OutstandingBookingRow {
   bookingId: string;
   bookingReference: string;
+  customerName: string;
+  paxEmail?: string;
   bookingDate: Date;
   departureDate: Date | null;
-  departureCode: string | null;
-  tourCode: string;
   bookingStatus: string;
   paymentStatus: string;
+  tourCode: string;
+  departmentName?: string;
+  sectorName?: string;
+  stationCode?: string;
+  platform?: string;
+  saleStaffId?: string;
   totalAmount: number;
   receivedAmount: number;
-  balance: number;
-  paxCount: number;
-  paxNames: string;
-  departmentName: string;
-  sectorName: string;
-  saleStaffName: string;
-  currencyCode: string;
-  isCancelled: boolean;
-  isTransferred: boolean;
+  outstandingAmount: number;
+  refundAmount: number;
+  cancellationFeeAmount: number;
+  netReceivedAmount: number;
+  lastPaymentDate: Date | null;
+  tcpBookingId?: string | null;
 }
 
 export interface OutstandingBookingSummary {
   totalBookings: number;
   totalAmount: number;
   totalReceived: number;
-  totalBalance: number;
-  currencyCode: string;
+  totalOutstanding: number;
+  totalRefunds: number;
+  totalCancellationFees: number;
 }
 
 export interface OutstandingBookingReportData {
@@ -86,8 +90,9 @@ export const OUTSTANDING_BOOKING_REPORT_SAMPLE_CONTEXT: OutstandingBookingReport
     totalBookings: 0,
     totalAmount: 0,
     totalReceived: 0,
-    totalBalance: 0,
-    currencyCode: "SGD",
+    totalOutstanding: 0,
+    totalRefunds: 0,
+    totalCancellationFees: 0,
   },
   tenantName: "Sample Company",
 };
@@ -104,7 +109,7 @@ export const OUTSTANDING_BOOKING_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
 </head>
 <body>
   <h1>{{tenantName}} - Outstanding Booking Report</h1>
-  <p><strong>Total Outstanding:</strong> {{summary.currencyCode}} {{summary.totalBalance}}</p>
+  <p><strong>Total Outstanding:</strong> {{summary.totalOutstanding}}</p>
   <p>Use formatToTables() for detailed Excel/CSV export or customize this template for HTML/PDF.</p>
 </body>
 </html>`;
