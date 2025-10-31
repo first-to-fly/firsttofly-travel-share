@@ -119,7 +119,7 @@ export const RECEIPT_REPORT_SAMPLE_CONTEXT: ReceiptReportTemplateContext = {
   },
   currencyCodes: ["SGD"],
   filters: {
-    dateRangeType: "this-month",
+    dateRangeType: "current-month",
     startDate: undefined,
     endDate: undefined,
     paymentMethods: undefined,
