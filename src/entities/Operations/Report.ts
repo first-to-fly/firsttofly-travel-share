@@ -17,6 +17,7 @@ export enum ReportFormat {
   XLSX = "xlsx",
   CSV = "csv",
   JSON = "json",
+  HTML = "html",
 }
 
 export enum ReportEvents {

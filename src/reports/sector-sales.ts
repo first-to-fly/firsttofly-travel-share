@@ -290,7 +290,7 @@ export const SECTOR_SALES_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
 </head>
 <body>
   <h1>{{tenant.name}} - Sector Sales Report</h1>
-  
+
   <div class="meta">
     <p><strong>Period:</strong> {{filters.dateRange.start}} to {{filters.dateRange.end}}</p>
     <p><strong>Report Mode:</strong> {{config.mode}}</p>
