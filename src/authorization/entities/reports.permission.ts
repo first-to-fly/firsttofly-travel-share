@@ -2,6 +2,16 @@
  * Reports module permissions cover direct report export actions by team.
  */
 export const ReportsPermissions = {
+  // View permissions
+  "tenant:reports:view": {
+    name: "View Reports",
+    description: "Can view and access the reports module",
+  },
+  "dept:reports:view": {
+    name: "View Department Reports",
+    description: "Can view reports within assigned departments",
+  },
+
   // Team-based export permissions
   "tenant:reports:sales:run": {
     name: "Run Sales Reports",
