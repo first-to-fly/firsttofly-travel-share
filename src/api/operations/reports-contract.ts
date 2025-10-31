@@ -49,30 +49,14 @@ export {
   TourSalesFiltersZ,
 };
 
-export const ReportOutputFormatZ = z.enum(["web", "xlsx", "csv"]);
+export const ReportOutputFormatZ = z.enum(["xlsx", "csv", "pdf", "html", "json"]);
 export type ReportOutputFormat = z.infer<typeof ReportOutputFormatZ>;
 
-export const ReportQueryPayloadZ = z.object({
+export const ReportExportPayloadZ = z.object({
   tenantOID: z.string(),
   filters: z.record(z.string(), z.unknown()).optional().default({}),
-  pagination: z.object({
-    page: z.number().int().min(1).default(1),
-    pageSize: z.number().int().min(1).max(500)
-      .default(100),
-  }).optional(),
 });
-export type ReportQueryPayload = z.infer<typeof ReportQueryPayloadZ>;
-
-export const ReportQueryResponseZ = z.object({
-  rows: z.array(z.record(z.string(), z.unknown())),
-  pagination: z.object({
-    page: z.number().int().min(1),
-    pageSize: z.number().int().min(1),
-    totalRows: z.number().int().min(0),
-  }),
-  metadata: z.record(z.string(), z.unknown()).optional(),
-});
-export type ReportQueryResponse = z.infer<typeof ReportQueryResponseZ>;
+export type ReportExportPayload = z.infer<typeof ReportExportPayloadZ>;
 
 export const ReportExportResponseZ = z.object({
   downloadURL: z.string(),
@@ -80,42 +64,43 @@ export const ReportExportResponseZ = z.object({
 });
 export type ReportExportResponse = z.infer<typeof ReportExportResponseZ>;
 
-export const ReportSlugRequestMap = {
-  "sector-sales-report": SectorSalesFiltersZ,
-  "daily-sales-report": DailySalesFiltersZ,
-  "tour-sales-report": TourSalesFiltersZ,
-  "receipt-bank-card-report": ReceiptBankCardFiltersZ,
-  "settlement-report": SettlementReportFiltersZ,
-  "receipt-report": ReceiptReportFiltersZ,
-  "booking-adjustment-report": BookingAdjustmentFiltersZ,
-  "tour-booking-gst-report": TourBookingGSTFiltersZ,
-} as const;
-export type ReportSlug = keyof typeof ReportSlugRequestMap;
-export type ReportSpecificRequest<Slug extends ReportSlug> = z.infer<(typeof ReportSlugRequestMap)[Slug]>;
+export enum ReportType {
+  SECTOR_SALES = "sector-sales-report",
+  DAILY_SALES = "daily-sales-report",
+  TOUR_SALES = "tour-sales-report",
+  RECEIPT_BANK_CARD = "receipt-bank-card-report",
+  SETTLEMENT = "settlement-report",
+  RECEIPT = "receipt-report",
+  BOOKING_ADJUSTMENT = "booking-adjustment-report",
+  TOUR_BOOKING_GST = "tour-booking-gst-report",
+  MIN_DEPOSIT = "min-deposit-report",
+  REFUND = "refund-report",
+  DEPOSIT_RECONCILIATION = "deposit-reconciliation-report",
+  PREPAYMENT = "prepayment-report",
+  EO = "eo-report",
+  BILL = "bill-report",
+  SECTOR_SALES_YOY = "sector-sales-yoy-report",
+  TL_TM_ASSIGNMENT = "tl-tm-assignment-report",
+  OUTSTANDING_BOOKING = "outstanding-booking-report",
+}
+
+export const ReportTypeZ = z.nativeEnum(ReportType);
 
 const basePath = "/api/reports";
 
 export const reportsContract = c.router({
-  run: {
-    method: "POST",
-    path: `${basePath}/:slug/query`,
-    summary: "Execute a report query",
-    body: ReportQueryPayloadZ,
-    responses: {
-      200: ReportQueryResponseZ,
-      501: z.object({ message: z.string() }),
-    },
-  },
   export: {
     method: "POST",
-    path: `${basePath}/:slug/export`,
+    path: `${basePath}/:reportType/export`,
     summary: "Export a report",
-    body: ReportQueryPayloadZ.extend({
+    pathParams: z.object({
+      reportType: ReportTypeZ,
+    }),
+    body: ReportExportPayloadZ.extend({
       format: ReportOutputFormatZ.default("xlsx"),
     }),
     responses: {
       200: ReportExportResponseZ,
-      501: z.object({ message: z.string() }),
     },
   },
 });

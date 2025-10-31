@@ -57,7 +57,7 @@ export interface TourSalesReportRow {
   productCode: string;
   tourCode: string;
   tourName: string;
-  departureDate: string;
+  departureDate: Date;
   departmentName: string;
   bookingCount: number;
   bookingPax: number;
@@ -75,44 +75,43 @@ export interface TourSalesReportRow {
 }
 
 /**
+ * Tour Sales Report - Totals structure
+ */
+export interface TourSalesTotals {
+  bookingCount: number;
+  bookingPax: number;
+  tlCount: number;
+  tmCount: number;
+  sales: number;
+  gst: number;
+  netSales: number;
+  cost: number;
+  cancellationFee: number;
+  profit: number;
+  profitMargin: number;
+  entryCost: number;
+}
+
+/**
  * Tour Sales Report Data - RAW domain data structure
+ * This structure is what's passed to templates and formatters
  */
 export interface TourSalesReportData {
   rows: TourSalesReportRow[];
-  totals: {
-    bookingCount: number;
-    bookingPax: number;
-    tlCount: number;
-    tmCount: number;
-    sales: number;
-    gst: number;
-    netSales: number;
-    cost: number;
-    cancellationFee: number;
-    profit: number;
-    profitMargin: number;
-    entryCost: number;
+  totals: TourSalesTotals;
+  currencySymbol: string;
+  currencyCode: string;
+  tenantName: string;
+  dateRange: {
+    start: Date;
+    end: Date;
   };
-  filters: {
-    dateRange: {
-      start: string;
-      end: string;
-    };
-    productType?: string;
-    productCode?: string;
-    dateType: string;
-    salesCostStatus: string;
+  filters: TourSalesFilters;
+  filterLabels: {
     sector: string;
     department: string;
   };
-  currency: {
-    code: string;
-    symbol: string;
-  };
-  tenant: {
-    name: string;
-  };
-  generatedAt: string;
+  generatedAt: Date;
   generatedBy: string;
 }
 
@@ -153,7 +152,7 @@ export const TourSalesReportMetadata: ReportMetadata = {
   slug: "tour-sales-report",
   name: "Tour Sales Report",
   description: "Summarizes tour sales by product, showing revenue, costs, and gross profit for each tour.",
-  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF],
+  supportedFormats: [ReportFormat.XLSX, ReportFormat.JSON, ReportFormat.PDF, ReportFormat.HTML],
   supportsWebView: true,
 };
 
@@ -161,85 +160,40 @@ export const TourSalesReportMetadata: ReportMetadata = {
  * Sample context for Tour Sales Report template preview
  */
 export const TOUR_SALES_REPORT_SAMPLE_CONTEXT: TourSalesReportTemplateContext = {
-  rows: [
-    {
-      productType: "GIT",
-      sectorName: "Japan",
-      productCode: "JP-DISC-2025",
-      tourCode: "GT-2025-JP-15",
-      tourName: "Discover Japan 10D",
-      departureDate: "2025-07-15",
-      departmentName: "Asia Pacific",
-      bookingCount: 15,
-      bookingPax: 28,
-      tlCount: 1,
-      tmCount: 1,
-      sales: 125000,
-      gst: 11363.64,
-      netSales: 113636.36,
-      cost: 85000,
-      cancellationFee: 0,
-      profit: 28636.36,
-      profitMargin: 22.91,
-      entryCost: 85000,
-      currency: "SGD",
-    },
-    {
-      productType: "FIT",
-      sectorName: "Europe",
-      productCode: "EU-CUSTOM-001",
-      tourCode: "FIT-2025-EU-20",
-      tourName: "European Highlights",
-      departureDate: "2025-08-20",
-      departmentName: "Europe",
-      bookingCount: 3,
-      bookingPax: 6,
-      tlCount: 0,
-      tmCount: 0,
-      sales: 45000,
-      gst: 4090.91,
-      netSales: 40909.09,
-      cost: 32000,
-      cancellationFee: 0,
-      profit: 8909.09,
-      profitMargin: 19.80,
-      entryCost: 32000,
-      currency: "SGD",
-    },
-  ],
+  rows: [],
   totals: {
-    bookingCount: 18,
-    bookingPax: 34,
-    tlCount: 1,
-    tmCount: 1,
-    sales: 170000,
-    gst: 15454.55,
-    netSales: 154545.45,
-    cost: 117000,
+    bookingCount: 0,
+    bookingPax: 0,
+    tlCount: 0,
+    tmCount: 0,
+    sales: 0,
+    gst: 0,
+    netSales: 0,
+    cost: 0,
     cancellationFee: 0,
-    profit: 37545.45,
-    profitMargin: 22.09,
-    entryCost: 117000,
+    profit: 0,
+    profitMargin: 0,
+    entryCost: 0,
+  },
+  currencySymbol: "$",
+  currencyCode: "SGD",
+  tenantName: "Sample Company",
+  dateRange: {
+    start: new Date("2025-01-01"),
+    end: new Date("2025-01-31"),
   },
   filters: {
-    dateRange: {
-      start: "2025-07-01",
-      end: "2025-08-31",
-    },
+    tenantOID: "tenant_xxx",
+    dateRangeType: "current-month",
     dateType: "departure-date",
-    salesCostStatus: "with-sales-and-cost",
-    sector: "All",
-    department: "All",
+    salesCostStatus: "all",
   },
-  currency: {
-    code: "SGD",
-    symbol: "$",
+  filterLabels: {
+    sector: "All Sectors",
+    department: "All Departments",
   },
-  tenant: {
-    name: "Sample Travel Company",
-  },
-  generatedAt: "2025-10-31T12:00:00Z",
-  generatedBy: "admin@example.com",
+  generatedAt: new Date(),
+  generatedBy: "system",
 };
 
 /**
@@ -249,7 +203,7 @@ export const TOUR_SALES_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <title>{{tenant.name}} - Tour Sales Report</title>
+  <title>{{tenantName}} - Tour Sales Report</title>
   <style>
     body { font-family: Arial, sans-serif; margin: 20px; }
     h1 { color: #333; }
@@ -262,60 +216,13 @@ export const TOUR_SALES_REPORT_DEFAULT_TEMPLATE = `<!DOCTYPE html>
   </style>
 </head>
 <body>
-  <h1>{{tenant.name}} - Tour Sales Report</h1>
-
+  <h1>{{tenantName}} - Tour Sales Report</h1>
   <div class="meta">
-    <p><strong>Period:</strong> {{filters.dateRange.start}} to {{filters.dateRange.end}}</p>
-    <p><strong>Date Type:</strong> {{filters.dateType}}</p>
-    <p><strong>Sector:</strong> {{filters.sector}}</p>
-    <p><strong>Department:</strong> {{filters.department}}</p>
-    <p><strong>Generated:</strong> {{generatedAt}} by {{generatedBy}}</p>
+    <p><strong>Total Bookings:</strong> {{totals.bookingCount}}</p>
+    <p><strong>Total PAX:</strong> {{totals.bookingPax}}</p>
+    <p><strong>Total Sales:</strong> {{currencySymbol}}{{totals.sales}}</p>
+    <p><strong>Total Profit:</strong> {{currencySymbol}}{{totals.profit}} ({{totals.profitMargin}}%)</p>
   </div>
-
-  <table>
-    <thead>
-      <tr>
-        <th>Type</th>
-        <th>Sector</th>
-        <th>Product Code</th>
-        <th>Tour Name</th>
-        <th>Departure</th>
-        <th class="number">Bookings</th>
-        <th class="number">PAX</th>
-        <th class="number">Sales ({{currency.symbol}})</th>
-        <th class="number">Cost ({{currency.symbol}})</th>
-        <th class="number">Profit ({{currency.symbol}})</th>
-        <th class="number">Margin %</th>
-      </tr>
-    </thead>
-    <tbody>
-      {{#each rows}}
-      <tr>
-        <td>{{this.productType}}</td>
-        <td>{{this.sectorName}}</td>
-        <td>{{this.productCode}}</td>
-        <td>{{this.tourName}}</td>
-        <td>{{this.departureDate}}</td>
-        <td class="number">{{this.bookingCount}}</td>
-        <td class="number">{{this.bookingPax}}</td>
-        <td class="number">{{this.sales}}</td>
-        <td class="number">{{this.cost}}</td>
-        <td class="number">{{this.profit}}</td>
-        <td class="number">{{this.profitMargin}}</td>
-      </tr>
-      {{/each}}
-    </tbody>
-    <tfoot>
-      <tr class="totals">
-        <td colspan="5">TOTAL</td>
-        <td class="number">{{totals.bookingCount}}</td>
-        <td class="number">{{totals.bookingPax}}</td>
-        <td class="number">{{totals.sales}}</td>
-        <td class="number">{{totals.cost}}</td>
-        <td class="number">{{totals.profit}}</td>
-        <td class="number">{{totals.profitMargin}}</td>
-      </tr>
-    </tfoot>
-  </table>
+  <p>Use formatToTables() for detailed Excel/CSV export or customize this template for HTML/PDF.</p>
 </body>
 </html>`;
