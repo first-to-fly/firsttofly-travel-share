@@ -8,6 +8,9 @@
 // Base JSON Output Types
 export * from "./report-json-output.types";
 
+// Report Template Defaults (Sample Contexts & Default Templates)
+export * from "./report-templates.defaults";
+
 // Consolidated Report Files (Filter Schemas + Metadata + JSON Output Types)
 export * from "./airline-sales-yoy";
 export * from "./bill";
