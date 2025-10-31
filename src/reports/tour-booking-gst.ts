@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 import { EntityOIDZ } from "../entities/entity";
+import { ReportFormat } from "../entities/Operations/Report";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
 import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";

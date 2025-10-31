@@ -1,7 +1,7 @@
 import { z } from "zod";
 
-import { BookingStatus } from "../enums/BookingTypes";
 import { ReportFormat } from "../entities/Operations/Report";
+import { BookingStatus } from "../enums/BookingTypes";
 import { DateISOStringZ, DateRangeTypeZ } from "../types/date";
 import type { BaseReportJsonOutput } from "./report-json-output.types";
 import type { ReportMetadata } from "./sector-sales";
