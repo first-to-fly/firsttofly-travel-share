@@ -4,6 +4,10 @@ export const ApprovalRequestPermissions = {
     name: "View Tenant Approval Requests",
     description: "Can view all approval requests within the tenant",
   },
+  "tenant:approval-request:view-own": {
+    name: "View Own Tenant Approval Requests",
+    description: "Can view own approval requests within the tenant",
+  },
   "tenant:approval-request:create": {
     name: "Create Tenant Approval Requests",
     description: "Can create approval requests within the tenant",
