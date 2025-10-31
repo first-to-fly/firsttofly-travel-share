@@ -20,10 +20,9 @@ export type PrepaymentReportFilters = z.infer<typeof PrepaymentReportFiltersZ>;
  * Prepayment Report - Allocation
  */
 export interface PrepaymentAllocation {
-  tourCode: string;
-  departureDate: Date | null;
+  allocatedTo: string;
   allocatedAmount: number;
-  eoNumber?: string;
+  allocationDate: Date | null;
 }
 
 /**
