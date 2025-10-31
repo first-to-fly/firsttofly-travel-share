@@ -28,41 +28,82 @@ export const SectorSalesFiltersZ = z.object({
 export type SectorSalesFilters = z.infer<typeof SectorSalesFiltersZ>;
 
 /**
- * Sector Sales Report Row - RAW domain data for a single sector
+ * Sector Sales Report - Daily data point
  */
-export interface SectorSalesReportRow {
+export interface SectorSalesDailyData {
+  date: string;
+  sectorId: string;
   sectorName: string;
-  weeklyData?: Array<{
-    weekLabel: string;
-    revenue: number;
-    cost: number;
-    profit: number;
-    margin: number;
+  sectorGroup: string;
+  headcount: number;
+  amount: number;
+}
+
+/**
+ * Sector Sales Report - Weekly aggregation
+ */
+export interface SectorSalesWeeklyData {
+  weekLabel: string;
+  weekStart: string;
+  weekEnd: string;
+  bySector: Record<string, {
+    headcount: number;
+    amount: number;
   }>;
-  monthlyData?: Array<{
-    monthLabel: string;
-    revenue: number;
-    cost: number;
-    profit: number;
-    margin: number;
+}
+
+/**
+ * Sector Sales Report - Monthly aggregation
+ */
+export interface SectorSalesMonthlyData {
+  monthLabel: string;
+  monthStart: string;
+  bySector: Record<string, {
+    headcount: number;
+    amount: number;
   }>;
-  totalRevenue: number;
-  totalCost: number;
-  totalProfit: number;
-  totalMargin: number;
+}
+
+/**
+ * Sector Sales Report - Sector structure definition
+ */
+export interface SectorSalesSectorInfo {
+  sectorId: string;
+  sectorName: string;
+  sectorGroup: string;
 }
 
 /**
  * Sector Sales Report Data - RAW domain data structure
  */
 export interface SectorSalesReportData {
-  rows: SectorSalesReportRow[];
+  /** Raw daily sales data points */
+  dailyData: SectorSalesDailyData[];
+
+  /** Weekly aggregations (if applicable) */
+  weeklyData?: SectorSalesWeeklyData[];
+
+  /** Monthly aggregations (if applicable) */
+  monthlyData?: SectorSalesMonthlyData[];
+
+  /** Sector structure/catalogue */
+  sectors: SectorSalesSectorInfo[];
+
+  /** Overall totals */
   totals: {
-    revenue: number;
-    cost: number;
-    profit: number;
-    margin: number;
+    headcount: number;
+    amount: number;
   };
+
+  /** Report configuration */
+  config: {
+    mode: "single-day" | "week" | "month";
+    hasDaily: boolean;
+    hasWeekly: boolean;
+    hasMonthly: boolean;
+  };
+
+  /** Applied filters */
   filters: {
     dateRange: {
       start: string;
@@ -70,10 +111,13 @@ export interface SectorSalesReportData {
     };
     productType?: string;
   };
-  reportMode: "weekly" | "monthly" | "both";
+
+  /** Tenant info */
   tenant: {
     name: string;
   };
+
+  /** Generation timestamp */
   generatedAt: string;
 }
 
@@ -130,81 +174,78 @@ export const SectorSalesReportMetadata: ReportMetadata = {
  * Sample context for Sector Sales Report template preview
  */
 export const SECTOR_SALES_REPORT_SAMPLE_CONTEXT: SectorSalesReportTemplateContext = {
-  rows: [
+  dailyData: [
     {
+      date: "2025-01-15",
+      sectorId: "sector-japan",
       sectorName: "Japan",
-      totalRevenue: 450000,
-      totalCost: 320000,
-      totalProfit: 130000,
-      totalMargin: 28.89,
-      monthlyData: [
-        {
-          monthLabel: "Jan 2025",
-          revenue: 150000,
-          cost: 105000,
-          profit: 45000,
-          margin: 30.00,
-        },
-        {
-          monthLabel: "Feb 2025",
-          revenue: 180000,
-          cost: 125000,
-          profit: 55000,
-          margin: 30.56,
-        },
-        {
-          monthLabel: "Mar 2025",
-          revenue: 120000,
-          cost: 90000,
-          profit: 30000,
-          margin: 25.00,
-        },
-      ],
+      sectorGroup: "Asia",
+      headcount: 12,
+      amount: 45000,
     },
     {
+      date: "2025-01-15",
+      sectorId: "sector-europe",
       sectorName: "Europe",
-      totalRevenue: 320000,
-      totalCost: 235000,
-      totalProfit: 85000,
-      totalMargin: 26.56,
-      monthlyData: [
-        {
-          monthLabel: "Jan 2025",
-          revenue: 110000,
-          cost: 82000,
-          profit: 28000,
-          margin: 25.45,
-        },
-        {
-          monthLabel: "Feb 2025",
-          revenue: 95000,
-          cost: 70000,
-          profit: 25000,
-          margin: 26.32,
-        },
-        {
-          monthLabel: "Mar 2025",
-          revenue: 115000,
-          cost: 83000,
-          profit: 32000,
-          margin: 27.83,
-        },
-      ],
+      sectorGroup: "Europe",
+      headcount: 8,
+      amount: 32000,
+    },
+    {
+      date: "2025-01-22",
+      sectorId: "sector-japan",
+      sectorName: "Japan",
+      sectorGroup: "Asia",
+      headcount: 15,
+      amount: 52000,
+    },
+  ],
+  monthlyData: [
+    {
+      monthLabel: "Jan 2025",
+      monthStart: "2025-01-01",
+      bySector: {
+        "sector-japan": { headcount: 45, amount: 150000 },
+        "sector-europe": { headcount: 28, amount: 95000 },
+      },
+    },
+    {
+      monthLabel: "Feb 2025",
+      monthStart: "2025-02-01",
+      bySector: {
+        "sector-japan": { headcount: 52, amount: 180000 },
+        "sector-europe": { headcount: 30, amount: 110000 },
+      },
+    },
+  ],
+  sectors: [
+    {
+      sectorId: "sector-japan",
+      sectorName: "Japan",
+      sectorGroup: "Asia",
+    },
+    {
+      sectorId: "sector-europe",
+      sectorName: "Europe",
+      sectorGroup: "Europe",
     },
   ],
   totals: {
-    revenue: 770000,
-    cost: 555000,
-    profit: 215000,
-    margin: 27.92,
+    headcount: 155,
+    amount: 535000,
+  },
+  config: {
+    mode: "month",
+    hasDaily: true,
+    hasWeekly: false,
+    hasMonthly: true,
   },
   filters: {
     dateRange: {
       start: "2025-01-01",
-      end: "2025-03-31",
+      end: "2025-02-28",
     },
   },
-  reportMode: "monthly",
   tenant: {
     name: "Sample Travel Company",
   },
