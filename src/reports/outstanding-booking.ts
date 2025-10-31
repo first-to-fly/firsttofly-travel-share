@@ -31,7 +31,8 @@ export const OutstandingBookingFiltersZ = z.object({
     "overpaid",
   ]).default("outstanding"),
   page: z.number().int().nonnegative().default(0),
-  pageSize: z.number().int().positive().max(200).default(50),
+  pageSize: z.number().int().positive().max(200)
+    .default(50),
   tenantOID: EntityOIDZ,
 });
 
