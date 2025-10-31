@@ -24,6 +24,12 @@ export enum CustomizedTourCostItemOrigin {
   MANUAL = "manual",
 }
 
+export enum CustomizedTourCostItemSyncSource {
+  MANUAL = "manual",
+  BUDGET_ENTRY_SYNC = "budget_entry_sync",
+  CONFIRMATION_SYNC = "confirmation_sync",
+}
+
 export const CustomizedTourCostItemZ = EntityZ.extend({
   customizedTourBookingOID: EntityOIDZ,
   customizedTourItineraryItemOID: EntityOIDZ.nullish(),
@@ -35,6 +41,10 @@ export const CustomizedTourCostItemZ = EntityZ.extend({
   actualCost: z.number().nullish(),
   margin: z.number().nullish(),
   overrideLocked: z.boolean(),
+  linkedBudgetEntryOID: EntityOIDZ.nullish(),
+  syncSource: z.nativeEnum(CustomizedTourCostItemSyncSource).nullish(),
+  syncLocked: z.boolean(),
+  syncedAt: z.string().nullish(),
 });
 
 export type CustomizedTourCostItem = z.infer<typeof CustomizedTourCostItemZ>;
