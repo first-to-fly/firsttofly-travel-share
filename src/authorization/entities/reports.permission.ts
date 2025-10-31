@@ -7,10 +7,6 @@ export const ReportsPermissions = {
     name: "View Reports",
     description: "Can view and access the reports module",
   },
-  "dept:reports:view": {
-    name: "View Department Reports",
-    description: "Can view reports within assigned departments",
-  },
 
   // Team-based export permissions
   "tenant:reports:sales:run": {
