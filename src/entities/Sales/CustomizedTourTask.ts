@@ -21,7 +21,7 @@ export const CustomizedTourTaskZ = EntityZ.extend({
   customizedTourBookingOID: EntityOIDZ,
   customizedTourItineraryItemOID: EntityOIDZ.nullish(),
   supplierOID: EntityOIDZ.nullish(),
-  assignedTo: z.string().nullish(),
+  assignedToOID: EntityOIDZ.nullish(),
   title: z.string(),
   description: z.string().nullish(),
   status: z.nativeEnum(CustomizedTourTaskStatus),

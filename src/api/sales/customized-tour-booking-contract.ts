@@ -42,9 +42,7 @@ export type CreateCustomizedTourBookingBody = z.infer<typeof CreateCustomizedTou
 
 const UpdateCustomizedTourBookingBodyZ = CreateCustomizedTourBookingBodyZ.omit({
   tenantOID: true,
-})
-  .partial()
-  .partial();
+}).partial();
 export type UpdateCustomizedTourBookingBody = z.infer<typeof UpdateCustomizedTourBookingBodyZ>;
 
 const ConfirmBookingResponseZ = z.object({
@@ -254,7 +252,7 @@ const CreateCustomizedTourTaskBodyZ = CustomizedTourTaskZ.pick({
   customizedTourBookingOID: true,
   customizedTourItineraryItemOID: true,
   supplierOID: true,
-  assignedTo: true,
+  assignedToOID: true,
   title: true,
   description: true,
   status: true,
