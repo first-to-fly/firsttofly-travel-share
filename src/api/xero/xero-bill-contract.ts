@@ -5,11 +5,12 @@ import { z } from "zod";
 const basePath = "/api/xero/bills";
 
 // Shared types
-// Bills/CreditNotes: Only accountCode can be modified from client side
-// All other fields (amount, description, taxType) are read-only and determined server-side
+// Bills/CreditNotes: accountCode and taxType can be modified from client side
+// All other fields (amount, description) are read-only and determined server-side
 // lineOverrides are keyed by preview lineId (bill + source identifier)
 export const XeroLineOverrideZ = z.object({
   accountCode: z.string().optional(),
+  taxType: z.string().optional(),
 });
 
 export const BuildBillStateZ = z.object({
