@@ -226,6 +226,7 @@ const CustomizedTourQuoteListQueryZ = z.object({
 });
 export type CustomizedTourQuoteListQuery = z.infer<typeof CustomizedTourQuoteListQueryZ>;
 
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 const CustomizedTourQuotePreviewQueryZ = z.object({
   format: z.enum(["html", "pdf", "both"]).default("html"),
 });
