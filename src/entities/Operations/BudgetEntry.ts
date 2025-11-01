@@ -40,6 +40,8 @@ export const BudgetEntryZ = EntityZ.extend({
   forexRate: FTFSafeMaxNumberZ({ name: "Forex rate" }).nullish(),
   localCurrency: z.string().nullish(),
   localAmount: FTFSafeMaxNumberZ({ name: "Local amount" }).nullish(),
+
+  syncLocked: z.boolean(),
 });
 
 export type BudgetEntry = z.infer<typeof BudgetEntryZ>;

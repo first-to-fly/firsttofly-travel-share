@@ -166,12 +166,14 @@ const CreateCustomizedTourCostItemBodyZ = CustomizedTourCostItemZ.pick({
   tenantOID: true,
   customizedTourBookingOID: true,
   customizedTourItineraryItemOID: true,
+  origin: true,
   category: true,
   supplierOID: true,
   estCost: true,
   quotedPrice: true,
   actualCost: true,
   margin: true,
+  overrideLocked: true,
 });
 export type CreateCustomizedTourCostItemBody = z.infer<typeof CreateCustomizedTourCostItemBodyZ>;
 
